@@ -30,6 +30,12 @@ jobs:
         run: npm ci
 
       - name: Build assets via Vite
+        env:
+          # Vite reads these via loadEnv() — must be set in CI (locally they come from .env)
+          VITE_ENTRY_POINT: /src/js/bundle.js
+          VITE_STYLES: /src/scss/main.scss
+          VITE_STYLES_NEW: /src/scss/new.scss
+          VITE_STYLES_BLOCKS: /src/scss/blocks.scss
         run: npm run build
 
       - name: Deploy theme to staging
