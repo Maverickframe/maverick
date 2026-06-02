@@ -1,0 +1,60 @@
+name: Deploy theme to Rocket.net Staging
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # manual trigger from GitHub Actions UI
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false # don't cancel mid-deploy
+
+jobs:
+  build-and-deploy:
+    name: Build assets & deploy via FTPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets via Vite
+        run: npm run build
+
+      - name: Deploy theme to staging
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.STAGING_FTP_HOST }}
+          username: ${{ secrets.STAGING_FTP_USER }}
+          password: ${{ secrets.STAGING_FTP_PASSWORD }}
+          server-dir: /e2i1j0xyf5-staging.onrocket.site/wp-content/themes/maverickframe/
+          protocol: ftps
+          port: 21
+          state-name: .ftp-deploy-state.json
+          # files NOT to deploy (dev/build config, internal docs, git stuff)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/.env*
+            .ftp-deploy-state.json
+            .github/**
+            CLAUDE.md
+            README.md
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "::notice title=Deployed::Theme deployed to staging — verify at https://e2i1j0xyf5-staging.onrocket.site/"
