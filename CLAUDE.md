@@ -19,10 +19,12 @@ Anything in this folder: `.php`, `.scss`, `.js`, `.css`, `.json` (incl.
 
 ```
 LocalWP (mfs-local.local) → Claude Code edits files locally
-        → git commit + git push
-        → GitHub
-        → GitHub Action / SSH deploy → Staging
-        → manual Rocket "push to live" → Production
+        → git commit + git push origin main
+        → GitHub (Maverickframe/maverick)
+        → GitHub Action (.github/workflows/deploy-staging.yml)
+        → Rocket Staging (e2i1j0xyf5-staging.onrocket.site)
+        → manual Rocket "Publish to Production" button
+        → Production (maverickframe.com)
 ```
 
 ### Cycle 2 — CONTENT (rows in the WP database)
@@ -56,16 +58,21 @@ migration time and intentionally drifts from prod.
 
 ## 3. Environments
 
-| Env | URL | Role | Who/what writes here |
+| Env | URL | Files location | Who writes here |
 |---|---|---|---|
-| Local | `http://mfs-local.local/` | Dev preview | Claude Code via local files |
-| Local Live Link | `https://bouncy-subway.localsite.io/` (rotates) | Share-with-team preview | (read-only for outsiders) |
-| Staging | `https://e2i1j0xyf5-staging.onrocket.site/` | QA before prod | Auto-deploy from GitHub `main` (target) + Vibe AI MCP for content |
-| Production | `https://maverickframe.com/` | Live | Rocket "push to live" from staging + Vibe AI MCP for content |
+| **Local** | `http://mfs-local.local/` | `~/Local Sites/mfs-local/app/public/wp-content/themes/maverickframe/` | Cowork / Claude Code on local files |
+| **GitHub** | `github.com/Maverickframe/maverick` | (cloud, branch `main`) | `git push` from local |
+| **Staging** | `https://e2i1j0xyf5-staging.onrocket.site/` | Rocket server, path `/e2i1j0xyf5-staging.onrocket.site/wp-content/themes/maverickframe/` | GitHub Action (auto on push) + Vibe AI MCP for content |
+| **Production** | `https://maverickframe.com/` | Rocket server, path `/wp-content/themes/maverickframe/` (root) | Rocket "Publish to Production" button + Vibe AI MCP for content |
 
-The Vibe AI MCP (a.k.a. WPVibe) is connected to **both** staging and prod.
-That means a careless command can hit prod directly. Default rule: always
-work on staging unless you're explicitly told to touch production.
+**LocalWP** is the local dev environment (formerly Local by Flywheel). Site
+name is `mfs-local`. Live Link is **off by default** — when on, WordPress
+rewrites siteurl to `bouncy-subway.localsite.io` and `http://mfs-local.local/`
+starts redirecting. Toggle off in LocalWP UI; if `siteurl` got stuck, fix in
+Site Shell: `wp option update siteurl http://mfs-local.local && wp option update home http://mfs-local.local`.
+
+The **Vibe AI MCP** (WPVibe) is connected to both staging and prod. Default
+rule: content goes through it; code does not.
 
 ---
 
@@ -77,28 +84,27 @@ maverickframe/
 ├── header.php, footer.php, functions.php
 ├── style.css                       # WP theme header only — real CSS is built
 ├── inc.vite.php                    # Vite asset enqueue logic
+├── CLAUDE.md                       # this file
 ├── components/
 │   ├── (legacy partials)
-│   └── new-design/                 # Everything for the new design lives here
+│   └── new-design/                 # everything for the new design lives here
 │       ├── common/                 # header, footer, modals, breadcrumbs
-│       ├── blog/                   # blog-specific partials (hero-post, sidebar-cta, articles-item, faq, …)
+│       ├── blog/                   # blog-specific partials
+│       ├── success-stories/        # case-page partials
 │       ├── services/, team/, …
+├── components/blocks/              # ACF Gutenberg blocks (used in success-stories content)
 ├── templates/                      # page-template-* used by `templates/template-*.php`
 ├── src/
-│   ├── scss/
-│   │   ├── main.scss               # legacy entry
-│   │   ├── new.scss                # new-design entry (this is the one prod loads on homepage)
-│   │   ├── blocks.scss             # gutenberg block styles entry
-│   │   └── new/                    # all new-design SCSS, BEM organised
+│   ├── scss/                       # all SCSS sources (main.scss, new.scss, blocks.scss + new/*)
 │   └── js/bundle.js                # main JS entry
 ├── build/                          # Vite output, gitignored
 │   ├── assets/                     # compiled css/js with content-hashed names
 │   ├── fonts/                      # inter-tight-v9-*.woff2
 │   └── img/                        # icons, logos, page-specific imagery
 ├── acf-json/                       # ACF field group definitions (CODE, not content)
-├── blog-v1-overrides.css           # see §8 — current blog redesign lives here
-├── blog-v1-enhancements.js         # see §8 — current blog redesign lives here
-├── .github/workflows/deploy.yml    # legacy SSH-deploy workflow (target branch: master — see §9)
+├── blog-v1-overrides.css           # blog single-post override (see §8)
+├── blog-v1-enhancements.js         # blog single-post enhancements (see §8)
+├── .github/workflows/deploy-staging.yml  # CI: main → staging via FTPS
 └── package.json, vite.config.js    # build config
 ```
 
@@ -151,108 +157,165 @@ maverickframe/
 
 - **WP Rocket "Used CSS" strips inline `<style>`.** Anything you put in
   `wp_head` as an inline tag will disappear on cached pages. Enqueue real
-  files (we do this with `blog-v1-overrides.css`).
+  files.
+
+- **WP Rocket cache lives between deploys.** After a code deploy that
+  affects rendered HTML, in LocalWP Shell run `wp rocket clean --confirm`,
+  `wp cache flush`, `wp rewrite flush --hard`. On staging/prod use the
+  "Clear Cache" button in Rocket dashboard.
 
 - **`File unchanged since last read` from WPVibe.** The MCP caches reads
   per conversation. If you need to re-read, use a slightly different path
   string (e.g. `./././foo.php`). Path-traversal-style tricks (`..`) are
-  rejected. Each unique string is treated as a fresh read.
+  rejected.
 
 - **Cowork bash cannot delete files in the LocalWP mount.** Git from the
-  sandbox fails on `index.lock` cleanup. Real git commands must be run by
-  the user in their own Terminal — Cowork can read/write/edit files, but
-  not orchestrate git plumbing on the mounted path.
+  sandbox fails on `index.lock` cleanup. Real git commands must be run in
+  the user's own Terminal — Cowork can read/write/edit files, but not
+  orchestrate git plumbing on the mounted path.
 
 - **`build/` is gitignored.** Don't commit compiled assets. They're
-  regenerated by `npm run build` (locally) or by the deploy hook on the
-  server (see `.github/workflows/deploy.yml`).
+  regenerated by `npm run build` (locally) or by the GitHub Action on
+  every push to `main`.
+
+- **Vite needs env vars at build time.** `vite.config.js` reads
+  `VITE_ENTRY_POINT`, `VITE_STYLES`, `VITE_STYLES_NEW`,
+  `VITE_STYLES_BLOCKS` from `.env` locally. In CI (GitHub Action) they are
+  hard-coded in `deploy-staging.yml`. If you change paths in
+  `vite.config.js`, update **both** `.env` and the Action's env block.
+
+- **HSTS cache in browser after Live Link.** If LocalWP Live Link was on,
+  the browser remembers `mfs-local.local` should redirect to the tunnel.
+  Clear via `chrome://net-internals/#hsts` → Delete `mfs-local.local`. Or
+  use Incognito.
 
 - **CSS Grid + `grid-row: 1 / span N`:** if the spanning element is taller
-  than the auto-flowed siblings, grid happily resizes the implicit rows to
-  fill the span. You get huge unwanted vertical gaps between siblings.
-  Fix: drop the grid for that layout, use `position: relative` + an
-  absolutely positioned prefix. (V1 in-article CTA was the example.)
+  than the auto-flowed siblings, grid resizes the implicit rows to fill
+  the span — you get huge vertical gaps between siblings. Fix: drop the
+  grid, use `position: relative` + an absolutely positioned prefix. (V1
+  in-article CTA in blog redesign was the example.)
 
 ---
 
-## 8. Active project — blog redesign (single-blog template)
+## 8. Blog redesign — single-blog template
 
-We've been redesigning `single-blog.php`. Most changes live in two files:
+Older project. `single-blog.php` was extensively redesigned with two
+external files:
 
 - `blog-v1-overrides.css` — enqueued only on `is_singular('blog')` from
   `functions.php` (hook: `blog_v1_overrides_enqueue`).
 - `blog-v1-enhancements.js` — same hook.
 
-These files contain numbered "ITERATION" comment blocks. Latest iteration's
-status:
+Files contain numbered "ITERATION" comment blocks. Final state includes:
+dark editorial hero, breadcrumbs at bottom (text strip), TOC sidebar with
+author-mini + reading-status + scroll-spied Contents + "Was this helpful?"
+feedback, sidebar CTA 4-stage scroll-rotator (NEW HERE → RESOURCE → SOCIAL
+PROOF → TALK TO US), 5 in-article CTAs (numbered, left-border, pull-quote,
+bordered card, hr-sandwich) each with pulsing green square live-indicator
+before eyebrow, compact FAQ with brand-blue +/× indicator, Read Next as
+3-column with vertical dividers.
 
-- Dark editorial hero, breadcrumbs moved to bottom (variant A: text strip
-  `Home · Blog · Title`).
-- TOC sidebar with author-mini at top, reading-status, scroll-spied
-  `Contents`, "Was this helpful?" feedback at bottom. Border colour
-  `#0A0A0A` (matches right-CTA sidebar dark).
-- Right sidebar CTA is a **4-stage rotator** driven by scroll progress
-  (NEW HERE → RESOURCE → SOCIAL PROOF → TALK TO US). One `<aside>`,
-  CSS grid `1/1` stack, JS swaps `is-active`.
-- **5 in-article CTAs** (visually distinct) injected by JS at evenly-
-  spaced H2 breaks:
-  - v1 numbered `01` editorial
-  - v2 left-border editor's note
-  - v3 centred italic pull-quote with em-dash
-  - v4 bordered card (no fill, hover → blue border + soft shadow)
-  - v5 hr-sandwich, centred
-  Each has a **pulsing green square dot** before the eyebrow (Hatamex-style
-  "live" indicator).
-- FAQ compacted: 11px brand-blue eyebrow, single column, `+` indicator
-  rotates to `×` on open, hard-collapse via `max-height: 0; opacity: 0`.
-- Read Next: 3-column with vertical dividers, no images, no author block.
-- Footer "Let's create visuals that sell" and bottom "View full profile"
-  block hidden on `html.single-blog`.
-
-**Important:** these changes currently exist **only on staging**, not in
-this local copy. If you need to mirror them locally for the team, pull
-`blog-v1-overrides.css` and `blog-v1-enhancements.js` from staging
-(via WPVibe site `https://e2i1j0xyf5-staging.onrocket.site`).
+These files are in production and were pulled into local via the latest
+prod-snapshot SFTP sync. Verify on http://mfs-local.local/blog/[any-post]/
+that they're loading.
 
 ---
 
-## 9. Deploy mechanics
+## 9. Deploy mechanics — how code reaches each environment
 
-- **`.github/workflows/deploy.yml`** exists from a previous dev. It deploys
-  on push to **`master`** via SSH (uses GitHub Secrets: SSH_PRIVATE_KEY,
-  HOST, USER, APP_PATH). The current local repo is on **`main`**. If
-  reconnecting to an existing GitHub remote, either:
-  - rename branch to `master`, or
-  - update the workflow trigger to `branches: [main]`.
-  Right now there's no remote at all — fresh `git init`, single commit.
+### Local → GitHub
+Standard git. `main` is the only long-lived branch. Feature branches OK,
+merge via PR (or fast-forward for solo work). Auth via `gh auth login`
+(GitHub CLI) or PAT.
 
-- **Rocket.net push-to-live** is the final step. Always click it manually,
-  after staging QA.
+### GitHub → Staging (automatic via Action)
+`.github/workflows/deploy-staging.yml` runs on every push to `main`:
 
-- **Vibe AI MCP** (WPVibe) has tools `edit_file`, `write_file`,
-  `publish_draft_theme`. These bypass git entirely and write to the WP
-  install. Use only for content (REST API stuff) once the proper code
-  workflow is in place; **don't** use the file-writing tools for theme
-  code anymore — that's what git is for now.
+1. Checkout repo
+2. Setup Node.js 20
+3. `npm ci` (clean install)
+4. `npm run build` (Vite compiles SCSS/JS into `build/`)
+5. FTPS upload to staging via `SamKirkland/FTP-Deploy-Action@v4.3.5`
+
+**Required secrets** in GitHub repo Settings → Secrets and variables →
+Actions:
+
+- `STAGING_FTP_HOST` = `65.181.120.39`
+- `STAGING_FTP_USER` = `dim-staging@e2i1j0xyf5-staging.onrocket.site`
+- `STAGING_FTP_PASSWORD` = (set when creating the FTP account in Rocket
+  dashboard while in Staging environment context)
+
+**Deploy target path** on Rocket server:
+`/e2i1j0xyf5-staging.onrocket.site/wp-content/themes/maverickframe/`
+
+**How Rocket separates environments via SFTP**: FTP accounts created
+while the Rocket dashboard is in Staging context are namespaced to a
+separate filesystem prefix (`e2i1j0xyf5-staging.onrocket.site/`). FTP
+accounts created in Production context land at the server root (which IS
+production's `public_html/`). The `dim-staging` FTP user sees both
+environments from the SFTP root, but the deploy path explicitly targets
+the staging subdirectory.
+
+State file `.ftp-deploy-state.json` lives on the server — Action uses it
+to incremental-deploy only changed files after first full push.
+
+Excludes: `.git/`, `node_modules/`, `.env*`, `.github/`, `CLAUDE.md`,
+`README.md`, `.DS_Store`. Everything else gets deployed including
+`build/` (regenerated fresh in CI).
+
+### Staging → Production
+**Manual** via Rocket dashboard → switch site env to **Staging** → click
+**"Publish to Production"** button. There is no automated path from
+staging to prod; this is intentional gate-keeping.
+
+### Vibe AI MCP (WPVibe) — for content only
+WPVibe has `edit_file`, `write_file`, `publish_draft_theme` tools. Since
+this project moved to git-based code deploys, **do not use these tools
+for theme code** — only for content via REST API (creating posts, ACF
+values, media uploads).
+
+### Legacy `deploy.yml` is gone
+A previous developer had `.github/workflows/deploy.yml` doing SSH push to
+a non-Rocket server. It's been removed. If you see it reappear in some
+old branch, delete it.
 
 ---
 
 ## 10. Personnel
 
-- **Owner:** Dima Kuzmenko (kuzmenkodmitry@gmail.com).
-- Other devs may have legacy GitHub repo access — ask before assuming
-  there's no existing remote (see §9 about the workflow file).
+- **Owner / lead:** Dima Kuzmenko (kuzmenkodmitry@gmail.com). Works mainly
+  through Cowork + Vibe AI MCP, doesn't write code by hand.
+- **DeLaPablo** — marketer-hybrid. 90% content work (posts, ACF values,
+  media). 10% light technical (Image schema, CSS fixes). Uses Antigravity
+  IDE + Claude Code. GitHub access: add as collaborator with Write role
+  on `Maverickframe/maverick` when needed.
+- **Лёшин** — previous developer. No longer on the project. Old GitHub
+  repo (separate from `Maverickframe/maverick`) may still exist but is
+  archived from our side.
+
+Roles map to cycles: marketers stay on Cycle 2 (content); only Dima and
+contracted developers touch Cycle 1 (code).
 
 ---
 
 ## 11. When in doubt
 
-- Code change? → `git status` first.
-- Content change? → ask "staging or prod?" before writing.
-- "Why is my change invisible?" → check that you targeted `html.single-X`
-  not `body.single-X`, and that WP Rocket's Used CSS isn't stripping it.
-- "WPVibe says File unchanged" → vary the path string.
-- "Local git won't commit" → run it in your real Terminal, not Cowork bash.
+- **Code change?** → `git status` first. Edit file, commit, push, watch
+  the Action in `github.com/Maverickframe/maverick/actions`.
+- **Content change?** → ask "staging or prod?" before writing via WPVibe.
+- **"Why is my change invisible?"** → check that you targeted
+  `html.single-X` not `body.single-X`; clear WP Rocket cache; hard-refresh
+  browser (Cmd+Shift+R).
+- **"WPVibe says File unchanged"** → vary the path string.
+- **"Local git won't commit from Cowork bash"** → run it in real Terminal.
+- **"GitHub Action failed at npm run build"** → check `vite.config.js`
+  for new env vars not set in `deploy-staging.yml`.
+- **"GitHub Action failed at FTPS deploy"** → secrets wrong, or
+  `dim-staging` FTP password rotated. Re-set in Rocket dashboard and
+  update `STAGING_FTP_PASSWORD` secret in GitHub.
+- **"Staging shows old version after deploy"** → clear Rocket CDN cache
+  via dashboard, plus WP Rocket via WP-admin or `wp rocket clean
+  --confirm`.
 
 ---
 
