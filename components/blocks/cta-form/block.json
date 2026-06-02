@@ -1,0 +1,16 @@
+{
+  "name": "acf/cta-form",
+  "title": "CTA Form",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "cta-form.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

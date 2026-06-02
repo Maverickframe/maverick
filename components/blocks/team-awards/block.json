@@ -1,0 +1,16 @@
+{
+  "name": "acf/team-awards",
+  "title": "Team Awards",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "team-awards.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

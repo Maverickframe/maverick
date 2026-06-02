@@ -1,0 +1,16 @@
+{
+  "name": "acf/selective-works",
+  "title": "Selective Works",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "selective-works.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

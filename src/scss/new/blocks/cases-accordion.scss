@@ -1,0 +1,219 @@
+@import "../common/_vars";
+
+.cases-accordion {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+    }
+}
+
+.cases-accordion__info {
+    margin-bottom: toRem(40);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(15);
+
+    h2 {
+        text-align: center;
+    }
+
+    @media (min-width: $md) {
+        margin: 0 auto toRem(40);
+        max-width: toRem(700);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+        max-width: toRem(875);
+    }
+}
+
+.cases-accordion__description {
+    max-width: toRem(694);
+    margin: 0 auto;
+
+    text-align: center;
+    color: var(--text-grey-color);
+    font-size: toRem(16);
+}
+
+.cases-accordion__items {
+    padding: 0 var(--padding);
+
+    @media (min-width: $md) {
+        padding: 0;
+    }
+
+    .splide__pagination {
+        margin-top: toRem(20);
+        display: flex;
+        gap: toRem(4);
+        height: toRem(6);
+
+        li {
+            flex: 1 1 auto;
+            height: 100%;
+        }
+
+        button {
+            @include btn;
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: toRem(1);
+            background-color: var(--stroke-light-grey-color);
+
+            &.is-active {
+                min-width: toRem(100);
+                background-color: var(--accent-color);
+            }
+        }
+
+        @media (min-width: $md) {
+            li {
+                flex: 0 0 auto;
+            }
+
+            button {
+                width: toRem(60);
+
+                &.is-active {
+                    min-width: toRem(143);
+                }
+            }
+        }
+
+        @media (min-width: $lg) {
+            margin-top: toRem(30);
+        }
+    }
+}
+
+.cases-accordion-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    background-color: var(--fill-grey-color);
+    border-radius: toRem(4);
+    overflow: hidden;
+
+    img {
+        display: block;
+        width: 100%;
+        height: toRem(300);
+        object-fit: cover;
+
+        border-radius: toRem(2);
+    }
+
+    @media (min-width: $md) {
+        padding: toRem(30);
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: toRem(30);
+
+        img {
+            height: 100%;
+        }
+    }
+}
+
+.cases-accordion-item__info {
+    padding: toRem(20);
+    padding-top: toRem(30);
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $md) {
+        padding: 0;
+    }
+}
+
+.cases-accordion-item__title {
+    margin-bottom: toRem(15);
+
+    @media (min-width: $md) {
+        font-size: toRem(20);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(24);
+    }
+}
+
+.cases-accordion-item__desc {
+    margin-bottom: toRem(40);
+
+    font-size: toRem(14);
+    color: var(--text-grey-color);
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+        max-width: toRem(500);
+
+        font-size: toRem(16);
+    }
+}
+
+ul.cases-accordion-item__numbers {
+    display: none;
+
+    @media (min-width: $md) {
+        margin-top: auto;
+        margin-bottom: toRem(30);
+        display: flex;
+        gap: toRem(20);
+
+        li {
+            display: flex;
+            flex-direction: column;
+            gap: toRem(20);
+
+            &:not(:last-child) {
+                padding-right: toRem(20);
+                border-right: 1px solid var(--stroke-light-grey-color);
+            }
+        }
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(30);
+
+        li {
+            &:not(:last-child) {
+                padding-right: toRem(30);
+            }
+        }
+    }
+}
+
+.cases-accordion-item__numbers-num {
+    font-size: toRem(36);
+    font-weight: 500;
+
+    span,
+    em {
+        color: var(--accent-color);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(42);
+    }
+}
+
+.cases-accordion-item__numbers-desc {
+    font-size: toRem(12);
+
+    @media (min-width: $lg) {
+        font-size: toRem(14);
+    }
+}
+
+.cases-accordion-item__link {
+    line-height: toRem(60);
+}

@@ -1,0 +1,16 @@
+{
+  "name": "acf/production-process",
+  "title": "Production Process",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "production-process.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

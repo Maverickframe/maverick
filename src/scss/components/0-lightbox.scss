@@ -1,0 +1,11 @@
+$sl-overlay-background: #000;
+$sl-navigation-color: #fff;
+$sl-caption-color: #000;
+$sl-caption-background: #fff;
+$sl-overlay-opacity: 0.7;
+
+@import '../../../node_modules/simplelightbox/src/simple-lightbox.scss';
+
+.sl-wrapper {
+    outline: none;
+}

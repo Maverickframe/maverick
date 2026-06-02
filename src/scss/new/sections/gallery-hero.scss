@@ -1,0 +1,122 @@
+@import "../common/vars";
+
+.gallery-hero {
+    --padding-top: #{toRem(30)};
+    padding-top: calc(var(--header-height) + var(--padding-top));
+    padding-bottom: toRem(20);
+
+    position: relative;
+
+    @media (min-width: $md) {
+        --padding-top: #{toRem(40)};
+        padding-bottom: toRem(50);
+    }
+}
+
+.gallery-hero__main {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(20);
+
+    .single-gallery-hero__breadcrumbs {
+        margin: 0;
+    }
+
+    @media (min-width: $md) {
+        margin-bottom: 0;
+        max-width: toRem(711);
+        gap: toRem(30);
+    }
+
+    @media (min-width: $lg) {
+        max-width: toRem(991);
+    }
+}
+
+.gallery-hero__title {
+    display: inline-block;
+    text-transform: uppercase;
+
+    em {
+        background-color: transparent;
+    }
+}
+
+.gallery-hero__desc {
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        max-width: toRem(583);
+
+        font-size: toRem(18);
+    }
+}
+
+.gallery-hero__numbers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: toRem(20);
+
+        &:nth-child(2) {
+            border-left: 1px solid var(--stroke-light-grey-color);
+            padding-left: toRem(30);
+        }
+    }
+
+    @media (min-width: $md) {
+        align-self: flex-end;
+        flex: 0 0 toRem(452);
+
+        li {
+            gap: toRem(30);
+
+            &:first-child {
+                padding-right: toRem(30);
+            }
+        }
+    }
+
+    @media (min-width: $lg) {
+        flex: 0 0 toRem(542);
+    }
+}
+
+.gallery-hero__numbers-num {
+    font-size: toRem(38);
+    font-weight: 500;
+
+    span,
+    em {
+        color: var(--accent-color);
+    }
+
+    @media (min-width: $md) {
+        font-size: toRem(80);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(100);
+    }
+}
+
+.gallery-hero__numbers-desc {
+    color: var(--text-grey-color);
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}
+
+.gallery-hero__btns {
+    display: grid;
+    grid-template-columns: repeat(2, toRem(165));
+    grid-gap: toRem(15);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(2, toRem(182));
+    }
+}

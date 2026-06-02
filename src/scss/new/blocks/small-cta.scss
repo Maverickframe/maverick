@@ -1,0 +1,74 @@
+@import "../common/_vars";
+
+.small-cta {
+    --margin: #{toRem(100)};
+    --padding: #{toRem(20)};
+    margin: var(--margin) 0;
+    padding: var(--padding);
+
+    background: var(--accent-color);
+    border-radius: toRem(2);
+    color: var(--white-color);
+
+    display: flex;
+    flex-direction: column;
+    gap: toRem(30);
+
+    &.white {
+        background-color: var(--fill-grey-color);
+        color: var(--black-color);
+
+        .small-cta__info .p1 {
+            color: var(--text-grey-color);
+        }
+    }
+
+    button {
+        width: 100%;
+    }
+
+    @media (min-width: $md) {
+        --margin: #{toRem(180)};
+        --padding: #{toRem(60)};
+
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        
+        button {
+            width: toRem(182);
+            flex: 0 0 auto;
+        }
+    }
+
+    @media (min-width: $lg) {
+        --margin: #{toRem(200)};
+    }
+}
+
+.small-cta__info {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+
+    h2 {
+        font-size: toRem(18);
+        font-weight: 500;
+    }
+
+    .p1 {
+        font-size: toRem(14);
+    }
+
+    @media (min-width: $md) {
+        max-width: toRem(461);
+
+        h2 {
+            font-size: toRem(32);
+        }
+
+        .p1 {
+            font-size: toRem(18);
+        }
+    }
+}

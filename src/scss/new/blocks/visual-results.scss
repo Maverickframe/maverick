@@ -1,0 +1,219 @@
+@import "../common/_vars";
+
+.visual-results {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(100) 0 toRem(180);
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(180) 0;
+    }
+}
+
+.visual-results__info {
+    margin-bottom: toRem(40);
+
+    text-align: center;
+
+    .section-subtitle {
+        justify-content: center;
+    }
+
+    h2 {
+        margin-bottom: toRem(15);
+    }
+
+    .p1 {
+        font-size: toRem(14);
+        color: var(--text-grey-color);
+    }
+
+    @media (min-width: $md) {
+        h2 {
+            max-width: toRem(700);
+            margin: 0 auto toRem(15);
+        }
+
+        .p1 {
+            max-width: toRem(600);
+            margin: 0 auto;
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+    }
+}
+
+.visual-results__slider {
+    .splide__slide {
+        transition: transform 0.3s ease;
+        transform: scale(0.94);
+        transform-origin: center;
+
+        &.is-active {
+            transform: scale(1);
+        }
+    }
+
+    .splide__arrows {
+        margin-top: toRem(30);
+
+        display: flex;
+        justify-content: center;
+        gap: toRem(15);
+    }
+
+    .splide__arrow {
+        @include btn;
+        width: toRem(40);
+        height: toRem(40);
+        flex: 0 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+
+        svg {
+            width: toRem(23);
+            height: toRem(23);
+        }
+
+        &--prev {
+            background-color: var(--fill-grey-color);
+
+            &:hover {
+                background-color: var(--stroke-light-grey-color);
+            }
+        }
+
+        &--next {
+            background-color: var(--accent-color);
+
+            &:hover {
+                background-color: var(--accent-light-color);
+            }
+        }
+
+        @media (min-width: $md) {
+            width: toRem(80);
+            height: toRem(80);
+
+            svg {
+                width: toRem(46);
+                height: toRem(46);
+            }
+        }
+    }
+}
+
+.visual-results__items {
+    display: grid;
+    gap: toRem(4);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: toRem(10);
+    }
+}
+
+.visual-results__btn.btn-secondary-black {
+    display: block;
+    margin: toRem(40) auto 0;
+
+    @media (min-width: $lg) {
+        margin-top: toRem(60);
+    }
+}
+
+.visual-results-item {
+    height: toRem(450);
+    --extra-height: #{toRem(250)};
+
+    position: relative;
+    overflow: hidden;
+
+    &.extra-item {
+        display: none;
+    }
+
+    & > div {
+        height: 100%;
+    }
+
+    iframe,
+    img,
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: toRem(2);
+    }
+
+    &:nth-child(22n + 1),
+    &:nth-child(22n + 4),
+    &:nth-child(22n + 6),
+    &:nth-child(22n + 11),
+    &:nth-child(22n + 20) {
+        height: var(--extra-height);
+    }
+
+    @media (min-width: $md) {
+        --extra-height: #{toRem(450)};
+
+        iframe,
+        img,
+        video {
+            width: 100%;
+            object-position: left center;
+            border-radius: toRem(4);
+        }
+
+        &.stretch {
+            grid-column: span 2;
+        }
+
+        &:hover {
+            .visual-results-item__title {
+                opacity: 1;
+            }
+        }
+    }
+
+    @media (min-width: $lg) {
+        height: toRem(700);
+        --extra-height: #{toRem(700)};
+
+        &.is-slider {
+            height: toRem(789);
+        }
+    }
+}
+
+.visual-results-item__title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: toRem(20);
+    min-height: toRem(200);
+
+    display: flex;
+    align-items: flex-end;
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    font-size: toRem(24);
+    font-weight: 500;
+    color: var(--white-color);
+
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.5) 12.98%, rgba(0, 0, 0, 0) 100%);
+    border-radius: toRem(4);
+}

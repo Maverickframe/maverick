@@ -1,0 +1,40 @@
+<section class="team-hero">
+    <div class="container">
+        <div class="team-hero__main js-reveal">
+            <?php // todo: common ?>
+            <ul class="single-team-hero__breadcrumbs">
+                <li><a href="<?php echo home_url(); ?>">Home</a></li>
+                <li><span>Team</span></li> 
+            </ul>
+            <h1 class="team-hero__title js-highlight text-highlight"><?php echo get_field('main_title'); ?></h1>
+
+            <div class="team-hero__desc">
+                <?php the_field('main_description'); ?>
+            </div>
+
+            <div class="team-hero__btns">
+                <button class="btn-main fill js-modal-open" data-modal="book" type="button">Book a call</button>
+                <button class="btn-secondary-black fill js-modal-open" data-modal="download" type="button">Download Catalog</button>
+            </div>
+        </div>
+
+        <ul class="team-hero__numbers js-reveal">
+            <?php
+                while( have_rows('main_numbers')) : the_row();
+                    $number = get_sub_field('number');
+                    $description = get_sub_field('description');
+            ?>
+                <li>
+                    <p class="team-hero__numbers-num">
+                        <?php echo $number; ?>
+                    </p>
+                    <p class="team-hero__numbers-desc">
+                        <?php echo $description; ?>
+                    </p>
+                </li>
+            <?php
+                endwhile; 
+            ?>
+        </ul>
+    </div>
+</section>

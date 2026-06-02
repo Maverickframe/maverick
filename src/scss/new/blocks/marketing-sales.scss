@@ -1,0 +1,128 @@
+@import "../common/_vars";
+
+.marketing-sales {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: toRem(30);
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0;
+    }
+}
+
+.marketing-sales__info {
+    ul {
+        margin-top: 1em;
+
+        li {
+            --padding: #{toRem(25)};
+            padding-left: var(--padding);
+            position: relative;
+
+            &::before {
+                content: "";
+                border-radius: 50%;
+                background-color: currentColor;
+
+                display: block;
+                width: toRem(5);
+                height: toRem(5);
+
+                position: absolute;
+                top: toRem(9);
+                left: calc(var(--padding) / 2);
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    @media (min-width: $md) {
+        h2 {
+            margin-bottom: toRem(40);
+        }
+    }
+
+    @media (min-width: $lg) {
+        h2 {
+            margin-bottom: toRem(60);
+        }
+    }
+}
+
+.marketing-sales__img {
+    margin: toRem(60) 0;
+
+    &.desktop {
+        display: none;
+    }
+
+    &.is-presentation {
+        img {
+            height: toRem(350);
+            object-fit: cover;
+        }
+    }
+
+    img {
+        background-color: var(--fill-grey-color);
+        border-radius: toRem(4);
+
+        display: block;
+        width: 100%;
+        height: toRem(420);
+
+        object-fit: contain;
+        object-position: center;
+    }
+
+    @media (min-width: $md) {
+        margin: 0;
+
+        border-radius: toRem(4);
+        overflow: hidden;
+
+        &.mobile {
+            display: none;
+        }
+
+        &.desktop {
+            display: block;
+        }
+
+        img {
+            height: 100%;
+            border-radius: 0;
+        }
+    }
+}
+
+.marketing-sales__quote {
+    margin-top: toRem(30);
+
+    font-size: toRem(18);
+    font-weight: 500;
+
+    span {
+        color: var(--text-grey-color);
+    }
+
+    @media (min-width: $md) {
+        margin-top: toRem(40);
+
+        font-size: toRem(24);
+    }
+
+    @media (min-width: $lg) {
+        margin-top: toRem(60);
+
+        font-size: toRem(32);
+    }
+}

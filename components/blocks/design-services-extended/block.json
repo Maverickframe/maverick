@@ -1,0 +1,16 @@
+{
+  "name": "acf/design-services-extended",
+  "title": "Design Services Extended",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "design-services-extended.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

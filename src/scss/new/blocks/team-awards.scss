@@ -1,0 +1,189 @@
+@import "../common/vars";
+
+.team-awards {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+
+        &_block {
+            .team-awards__info {
+                max-width: toRem(800);
+            }
+        }
+    }
+}
+
+.team-awards__info {
+    margin-bottom: toRem(40);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+
+    .section-subtitle {
+        margin-bottom: 0;
+        justify-content: center;
+    }
+
+    text-align: center;
+
+    @media (min-width: $md) {
+        margin: 0 auto toRem(40);
+        max-width: toRem(605);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+        max-width: toRem(872);
+    }
+}
+
+.team-awards__description {
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        margin: 0 auto;
+        max-width: toRem(600);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}
+
+.team-awards__items {
+    display: grid;
+    gap: toRem(40);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: toRem(40);
+
+        &:has(.team-award:hover) .team-award:not(:hover) {
+            transform: translateY(40px);
+        }
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(60);
+        max-width: toRem(1344);
+        margin: 0 auto;
+    }
+}
+
+.team-award {
+    padding: toRem(20);
+    display: flex;
+    flex-direction: column;
+
+    border-radius: toRem(4);
+    color: var(--white-color);
+
+    &:first-child {
+        background-color: var(--accent-color);
+    }
+
+    &:nth-child(2) {
+        background-color: var(--fill-grey-color);
+        color: var(--black-color);
+
+        .team-award__year,
+        .team-award__description {
+            color: var(--text-grey-color);
+        }
+    }
+
+    &:nth-child(3) {
+        background-color: var(--fill-dark-color);
+    }
+
+    @media (min-width: $md) {
+        transition: transform 0.3s ease;
+    }
+}
+
+.team-award__year {
+    font-size: toRem(12);
+    color: var(--text-light-grey-color);
+
+    @media (min-width: $md) {
+        font-size: toRem(15);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.team-award__img {
+    height: toRem(236);
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: toRem(144);
+
+        object-fit: contain;
+        object-position: center;
+    }
+
+    @media (min-width: $md) {
+        height: toRem(220);
+
+        img {
+            max-height: toRem(170);
+        }
+    }
+
+    @media (min-width: $lg) {
+        height: toRem(236);
+    }
+}
+
+.team-award__title {
+    margin-bottom: toRem(4);
+
+    font-weight: 500;
+    font-size: toRem(28);
+
+    @media (min-width: $md) {
+        font-size: toRem(24);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(32);
+    }
+}
+
+.team-award__nomination {
+    margin-bottom: toRem(8);
+
+    font-weight: 500;
+    font-size: toRem(20);
+
+    @media (min-width: $md) {
+        font-size: toRem(20);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(24);
+    }
+}
+
+.team-award__description {
+    font-size: toRem(12);
+    color: var(--text-light-grey-color);
+
+    @media (min-width: $md) {
+        font-size: toRem(14);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}

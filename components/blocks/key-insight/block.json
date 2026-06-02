@@ -1,0 +1,16 @@
+{
+  "name": "acf/key-insight",
+  "title": "Key Insight",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "key-insight.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

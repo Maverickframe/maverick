@@ -1,0 +1,16 @@
+{
+  "name": "acf/what-we-do",
+  "title": "What we do",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "what-we-do.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

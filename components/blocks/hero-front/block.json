@@ -1,0 +1,16 @@
+{
+  "name": "acf/hero-front",
+  "title": "Hero Front",
+  "description": "Hero-блок для главной страницы",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": ["hero", "acf"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "hero-front.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

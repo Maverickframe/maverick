@@ -1,0 +1,75 @@
+<?php
+    $link = get_field('link');
+?>
+<section class="cases-accordion">
+    <div class="container">
+        <div class="cases-accordion__info">
+            <h2><?php the_field('title'); ?></h2>
+            <?php if(get_field('description')): ?>
+                <div class="cases-accordion__description">
+                    <?php the_field('description'); ?>
+                </div>
+            <?php endif; ?>
+
+            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="btn-main"><?php echo $link['title']; ?></a>
+        </div>
+    </div>
+
+    <div class="js-reveal cases-accordion__items">
+        <div class="js-cases-accordion-slider splide" role="group" aria-label="<?php the_field('title'); ?> Slider">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <?php
+                        while( have_rows('items')) : the_row();
+                            $case = get_sub_field('case');
+                            $title = get_sub_field('title') ?: $case->post_title;
+                            $description = get_sub_field('description') ?: get_the_excerpt($case->ID);
+                            $image = get_sub_field('image') ?: get_post_thumbnail_id($case->ID);
+                            $numbers = get_sub_field('numbers');
+                    ?>
+                        <li class="splide__slide">
+                            <div class="cases-accordion-item">
+                                <?php lazy_attachment($image, 'large'); ?>
+
+                                <div class="cases-accordion-item__info">
+                                    <h3 class="cases-accordion-item__title">
+                                        <?php echo $title; ?>
+                                    </h3>
+
+                                    <div class="cases-accordion-item__desc">
+                                        <?php echo $description; ?>
+                                    </div>
+
+                                    <ul class="cases-accordion-item__numbers">
+                                        <?php
+                                            if($numbers) :
+                                                foreach($numbers as $number_item) :
+                                                    $number = $number_item['number'];
+                                                    $description = $number_item['description'];
+                                        ?>
+                                            <li>
+                                                <p class="cases-accordion-item__numbers-num">
+                                                    <?php echo $number; ?>
+                                                </p>
+                                                <p class="cases-accordion-item__numbers-desc">
+                                                    <?php echo $description; ?>
+                                                </p>
+                                            </li>
+                                        <?php
+                                                endforeach; 
+                                            endif;
+                                        ?>
+                                    </ul>
+
+                                    <a href="<?php echo get_permalink($case->ID); ?>" class="cases-accordion-item__link btn-main fill" target="_blank">
+                                        Read the story
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

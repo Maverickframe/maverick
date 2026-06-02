@@ -1,0 +1,16 @@
+{
+  "name": "acf/showreel",
+  "title": "Showreel",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "showreel.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

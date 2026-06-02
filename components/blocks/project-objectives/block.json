@@ -1,0 +1,16 @@
+{
+  "name": "acf/project-objectives",
+  "title": "Project Objectives",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "project-objectives.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

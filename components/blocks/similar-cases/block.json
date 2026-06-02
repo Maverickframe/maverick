@@ -1,0 +1,16 @@
+{
+  "name": "acf/similar-cases",
+  "title": "Similar Cases",
+  "description": "Show another success stories cases",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "similar-cases.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "acf/marketing-sales",
+  "title": "Marketing Sales",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "marketing-sales.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

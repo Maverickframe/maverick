@@ -1,0 +1,75 @@
+@import "_vars";
+
+body :where(.editor-styles-wrapper) {
+    font-family: "Inter Tight", sans-serif !important;
+    font-size: 16px !important;
+    font-weight: normal;
+    line-height: 1.4 !important;
+}
+
+.editor-styles-wrapper {
+    .modal {
+        display: none;
+    }
+
+    .splide:not(.is-initialized) .splide__list {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        display: flex;
+        justify-content: center;
+        gap: toRem(15);
+
+        li {
+            flex: 1 0 auto;
+        }
+
+        @media (min-width: $md) {
+            gap: toRem(30);
+        }
+    }
+
+    .js-reveal {
+        opacity: 1;
+    }
+
+    .hero,
+    .hero-block {
+        overflow: hidden;
+    }
+
+    h1 {
+        margin-bottom: 50px;
+    }
+
+    h2 {
+        margin-top: 60px;
+        margin-bottom: 15px;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 50px;
+        margin-bottom: 15px;
+    }
+
+    .rich-text a {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+
+    img,
+    video {
+        margin: 40px 0;
+    }
+
+    .blur-up {
+        filter: none;
+    }
+
+    .blur-overlay {
+        backdrop-filter: none;
+    }
+}

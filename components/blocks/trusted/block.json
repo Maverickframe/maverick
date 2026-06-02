@@ -1,0 +1,16 @@
+{
+  "name": "acf/trusted",
+  "title": "Trusted",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "trusted.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,36 @@
+
+@use 'sass:math';
+
+$sm: 768px;
+$lg: 1200px;
+$xl: 1800px;
+
+@function toRem($value) {
+    $remValue: math.div($value, 16) + rem; 
+    @return $remValue;
+}
+
+@keyframes showOnLoadLines {
+    0% {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes whiteLineMove {
+    0% {
+        transform: none;
+    }
+
+    100% {
+        transform: translateY(toRem(67));
+    }
+}

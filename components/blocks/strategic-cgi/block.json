@@ -1,0 +1,16 @@
+{
+  "name": "acf/strategic-cgi",
+  "title": "Strategic CGI",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "strategic-cgi.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "acf/worldwide-rendering",
+  "title": "Worldwide Rendering",
+  "description": "Блок с анимацией частиц",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": ["hero", "acf"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "worldwide-rendering.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

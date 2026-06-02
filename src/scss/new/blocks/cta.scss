@@ -1,0 +1,67 @@
+@import "../common/_vars";
+
+.cta {
+    background: var(--accent-color) url("/img/icons/cta-lines.svg") no-repeat toRem(-333) toRem(-48);
+    color: var(--white-color);
+
+    text-align: center;
+
+    --margin: #{toRem(100)};
+    margin-top: var(--margin);
+    margin-bottom: var(--margin);
+    margin-left: calc(-1 * var(--padding));
+    width: calc(100% + var(--padding) * 2);
+
+    padding: toRem(120) toRem(15);
+
+    h2 {
+        font-size: toRem(28);
+    }
+
+    @media (min-width: $md) {
+        --margin: #{toRem(180)};
+        padding: toRem(108) 0;
+        margin-left: 0;
+        width: 100%;
+
+        border-radius: toRem(4);
+        background-position: center toRem(-48);
+
+        h2 {
+            font-size: toRem(50);
+        }
+
+        p {
+            max-width: toRem(496);
+            margin: 0 auto;
+        }
+    }
+
+    @media (min-width: $lg) {
+        padding: toRem(188.5) 0;
+
+        background-position: center 0;
+
+        h2 {
+            font-size: toRem(60);
+        }
+
+        p {
+            max-width: toRem(600);
+        }
+    }
+}
+
+.cta__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(30);
+
+    max-width: toRem(800);
+    margin: 0 auto;
+
+    @media (min-width: $lg) {
+        max-width: toRem(1000);
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "extends": [
+        "airbnb-base",
+        "eslint:recommended"
+    ],
+    "env": {
+        "browser": true,
+        "jquery": true,
+        "es6": true
+    },
+    "globals": {
+        "contacts": "readonly",
+        "dataLayer": "readonly",
+        "params": "readonly"
+    },
+    "rules": {
+        "eol-last": [
+            "error",
+            "never"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ]
+    },
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "ignorePatterns": ["*.config.js"]
+}

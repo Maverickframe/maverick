@@ -1,0 +1,16 @@
+{
+  "name": "acf/visuals-slider",
+  "title": "Visuals Slider",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "visuals-slider.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

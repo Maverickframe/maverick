@@ -1,0 +1,71 @@
+@import "../common/_vars";
+
+.key-insight {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0;
+    }
+}
+
+.key-insight__info {
+    padding: toRem(30) toRem(15);
+
+    border: toRem(1) solid var(--stroke-light-grey-color);
+    --size: #{toRem(20)};
+
+    position: relative;
+    text-align: center;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: calc(-1 * var(--size) / 2);
+        top: calc(-1 * var(--size) / 2);
+        width: calc(100% + var(--size));
+        height: calc(100% + var(--size));
+        display: block;
+
+        pointer-events: none;
+        background:
+            url("/img/icons/plus-accent.svg") no-repeat 0 0 / var(--size),
+            url("/img/icons/plus-accent.svg") no-repeat 100% 0 / var(--size),
+            url("/img/icons/plus-accent.svg") no-repeat 0 100% / var(--size),
+            url("/img/icons/plus-accent.svg") no-repeat 100% 100% / var(--size);
+    }
+
+    @media (min-width: $md) {
+        --size-x: #{toRem(55)};
+        padding: toRem(78) var(--size-x);
+        margin-left: calc(-1 * var(--size-x));
+        width: calc(100% + var(--size-x) * 2);
+    }
+}
+
+.key-insight__main {
+    display: inline;
+    font-size: toRem(22);
+
+    background: linear-gradient(90deg, var(--black-color) 0% 50%, var(--text-grey-color) 50%);
+
+    background-size: 200% 100%;
+    background-position: 100% 0;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    transition: background-position 1s;
+
+    @media (min-width: $md) {
+        font-size: toRem(42);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(58);
+    }
+}

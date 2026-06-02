@@ -1,0 +1,16 @@
+{
+  "name": "acf/challenges",
+  "title": "Challenges Slider",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "challenges.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

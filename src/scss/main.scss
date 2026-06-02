@@ -1,0 +1,125 @@
+@import url("./components/0-fonts.scss");
+@import url("./components/0-lightbox.scss");
+@import url("./components/0-slider.scss");
+@import url("./components/1-common.scss");
+@import url("./components/2-btn.scss");
+@import url("./components/4-main.scss");
+@import url("./components/5-portfolio-page.scss");
+@import url("./components/6-portfolio-item-page.scss");
+@import url("./components/7-services-page.scss");
+@import url("./components/8-contacts-page.scss");
+@import url("./components/9-animation-page.scss");
+@import url("./components/9-blog.scss");
+@import url("./components/9-template-service.scss");
+@import url("./components/9-text-page.scss");
+@import url("./components/taplink-page.scss");
+@import url("./components/developers-page.scss");
+
+// todo new design
+
+@import "./new/common/_vars";
+
+.header,
+.footer,
+.modal,
+button {
+    font-family: "Inter Tight", sans-serif;
+    line-height: 1.4;
+}
+
+.header,
+.modal,
+.footer {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+    }
+
+    h1 {
+        font-size: toRem(28);
+        font-weight: 400;
+        line-height: 1.2;
+
+        @media (min-width: $md) {
+            font-size: toRem(50);
+        }
+
+        @media (min-width: $lg) {
+            font-size: toRem(60);
+        }
+    }
+
+    h2 {
+        font-size: toRem(22);
+        font-weight: 400;
+        line-height: 1.4;
+
+        @media (min-width: $md) {
+            font-size: toRem(40);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        @media (min-width: $lg) {
+            font-size: toRem(48);
+        }
+    }
+
+    h3 {
+        font-size: toRem(18);
+        font-weight: 500;
+        line-height: 1.4;
+
+        @media (min-width: $md) {
+            font-size: toRem(32);
+        }
+    }
+
+    h4 {
+        font-size: toRem(14);
+        font-weight: 400;
+        line-height: 1.4;
+
+        @media (min-width: $md) {
+            font-size: toRem(24);
+            font-weight: 500;
+        }
+    }
+
+    h5,
+    h6 {
+        font-size: toRem(12);
+        font-weight: 400;
+        line-height: 1.4;
+
+        @media (min-width: $md) {
+            font-size: toRem(14);
+        }
+
+        @media (min-width: $lg) {
+            font-size: toRem(16);
+        }
+    }
+
+    .container {
+        max-width: calc(var(--container) + var(--padding) * 2);
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 var(--padding);
+
+        &_small {
+            max-width: calc(var(--container-small) + var(--padding) * 2);
+        }
+    }
+}
+
+@import url("./new/common/btns.scss");
+@import url("./new/common/fonts.scss");
+@import url("./new/common/header.scss");
+@import url("./new/common/footer.scss");
+@import url("./new/common/socials.scss");
+@import url("./new/common/modals.scss");

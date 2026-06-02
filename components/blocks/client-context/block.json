@@ -1,0 +1,16 @@
+{
+  "name": "acf/client-context",
+  "title": "Client Context",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "client-context.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

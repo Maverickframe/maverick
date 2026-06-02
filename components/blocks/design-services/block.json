@@ -1,0 +1,16 @@
+{
+  "name": "acf/design-services",
+  "title": "Design Services",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "design-services.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,379 @@
+@import "../common/_vars";
+
+.workflow {
+    display: none;
+    margin: toRem(100) 0;
+
+    &_mobile {
+        display: block;
+    }
+
+    h2 {
+        margin-bottom: toRem(15);
+    }
+
+    @media (min-width: $md) {
+        display: block;
+        margin: toRem(180) 0;
+
+        h2 {
+            margin-bottom: 0;
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0;
+    }
+}
+
+.workflow__subtitle {
+    margin-bottom: toRem(15);
+
+    font-size: toRem(14);
+    color: var(--accent-color);
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.workflow__start {
+    width: toRem(266);
+    margin-left: auto;
+    margin-bottom: toRem(20);
+
+    font-size: toRem(12);
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        width: toRem(500);
+        margin-right: toRem(105);
+        margin-bottom: 0;
+
+        font-size: toRem(16);
+    }
+
+    @media (min-width: $lg) {
+        width: toRem(694);
+        margin-right: toRem(146);
+        font-size: toRem(18);
+    }
+}
+
+.workflow__line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    svg .path-anim {
+        stroke: var(--accent-color);
+        stroke-dasharray: var(--path-length);
+        stroke-dashoffset: var(--path-length);
+        transition: stroke-dashoffset 0.1s ease;
+        will-change: stroke-dashoffset;
+    }
+
+    .desktop,
+    .desktop-big {
+        display: none;
+    }
+
+    @media (min-width: $md) {
+        margin-top: toRem(-30);
+
+        .mobile {
+            display: none;
+        }
+
+        .desktop {
+            display: block;
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin-top: toRem(-25);
+        .desktop {
+            display: none;
+        }
+
+        .desktop-big {
+            display: block;
+        }
+    }
+}
+
+.workflow__items {
+    position: relative;
+    padding-top: toRem(40);
+
+    display: flex;
+    flex-direction: column;
+    gap: toRem(70);
+    width: toRem(345);
+    min-height: toRem(869);
+
+    @media (min-width: $md) {
+        padding-top: toRem(80);
+        width: 100%;
+        min-height: toRem(988);
+        gap: 0;
+    }
+
+    @media (min-width: $lg) {
+        padding-top: toRem(110);
+        min-height: toRem(1214);
+    }
+}
+
+.workflow-item {
+    max-width: toRem(225);
+    width: 100%;
+    position: relative;
+
+    @media (min-width: $md) {
+        margin-left: var(--offset-md);
+        margin-top: var(--mt-md);
+        max-width: var(--max-width-md);
+        min-height: 110px;
+    }
+
+    @media (min-width: $lg) {
+        margin-left: var(--offset-lg);
+        margin-top: var(--mt-lg);
+        max-width: var(--max-width-lg);
+        min-height: 150px;
+    }
+
+    .dot {
+        width: toRem(8);
+        height: toRem(8);
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        display: block;
+
+        transition: transform 0.3s 0.6s ease;
+        transform: scale(0);
+
+        position: absolute;
+        top: toRem(10);
+        z-index: 2;
+
+        @media (min-width: $md) {
+            width: toRem(14);
+            height: toRem(14);
+            top: toRem(11);
+        }
+
+        @media (min-width: $lg) {
+            top: toRem(16);
+        }
+    }
+
+    .connector {
+        display: block;
+        width: toRem(105);
+        height: toRem(1);
+
+        overflow: hidden;
+
+        position: absolute;
+        top: toRem(14);
+
+        &::before {
+            content: "";
+
+            width: 100%;
+            height: 100%;
+            display: block;
+
+            background: url("/img/icons/workflow-dash.svg") repeat-x center / 359px 1px;
+            transform: translateX(-101%);
+            transition: transform 0.3s 0.3s ease;
+        }
+
+        @media (min-width: $md) {
+            top: toRem(18);
+        }
+
+        @media (min-width: $lg) {
+            top: toRem(23);
+        }
+    }
+
+    &.is-active[data-side] {
+        .dot {
+            transform: scale(1);
+            transition-delay: 0s;
+        }
+
+        .connector {
+            &::before {
+                transform: translate(0);
+            }
+        }
+
+        .workflow-item__content {
+            color: var(--black-color);
+
+            h3 {
+                color: var(--accent-color);
+            }
+        }
+    }
+
+    &[data-side="left"] {
+        @media (min-width: $md) {
+            .dot {
+                left: var(--connector-md);
+            }
+
+            .connector {
+                left: 0;
+                width: var(--connector-md);
+
+                &::before {
+                    transform: translateX(101%);
+                }
+            }
+        }
+
+        @media (min-width: $lg) {
+            .dot {
+                left: var(--connector-lg);
+            }
+
+            .connector {
+                width: var(--connector-lg);
+            }
+        }
+    }
+
+    &[data-side="right"] {
+        @media (min-width: $md) {
+            .dot,
+            .connector {
+                right: auto;
+                left: calc(-1 * var(--connector-md) - 15px);
+            }
+
+            .connector {
+                width: var(--connector-md);
+            }
+        }
+
+        @media (min-width: $lg) {
+            .dot,
+            .connector {
+                left: calc(-1 * var(--connector-lg) - 15px);
+            }
+
+            .connector {
+                width: var(--connector-lg);
+            }
+        }
+    }
+
+    @media (max-width: $md) {
+        align-self: flex-end;
+
+        .dot,
+        .connector {
+            left: toRem(-122);
+        }
+
+        &:nth-child(2n) {
+            align-self: flex-start;
+
+            .dot,
+            .connector {
+                left: auto;
+                right: toRem(-39);
+            }
+
+            .connector {
+                transform-origin: right;
+            }
+        }
+
+        &:nth-of-type(2) {
+            .connector {
+                width: toRem(156);
+            }
+        }
+
+        &:nth-of-type(3) {
+            .dot,
+            .connector {
+                left: toRem(-105);
+            }
+
+            .connector {
+                width: toRem(80);
+            }
+        }
+
+        &:nth-of-type(4) {
+            .dot,
+            .connector {
+                right: toRem(-103);
+            }
+
+            .connector {
+                width: toRem(255);
+            }
+        }
+
+        &:nth-of-type(5) {
+            .dot,
+            .connector {
+                left: toRem(-55);
+            }
+
+            .connector {
+                width: toRem(50);
+            }
+        }
+    }
+}
+
+.workflow-item__content {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+
+    color: var(--text-grey-color);
+    transition: color 0.3s 0.6s ease;
+
+    p {
+        font-size: toRem(14);
+    }
+
+    h3 {
+        position: relative;
+        align-self: flex-start;
+        padding-right: toRem(15);
+        background-color: #fff;
+        transition: color 0.3s 0.6s ease;
+    }
+
+    @media (min-width: $md) {
+        gap: toRem(16);
+
+        h3 {
+            font-size: toRem(24);
+        }
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(16);
+
+        h3 {
+            font-size: toRem(32);
+        }
+
+        p {
+            font-size: toRem(16);
+        }
+    }
+}

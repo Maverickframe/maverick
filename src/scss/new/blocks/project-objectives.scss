@@ -1,0 +1,144 @@
+@import "../common/_vars";
+
+.project-objectives {
+    margin: toRem(100) 0 toRem(90);
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0;
+    }
+}
+
+.project-objectives__info {
+    margin-bottom: toRem(30);
+
+    @media (min-width: $md) {
+        margin-bottom: toRem(40);
+        text-align: center;
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+    }
+}
+
+ul.project-objectives__items {
+    overflow-y: hidden;
+    overflow-x: auto;
+    width: calc(100% + var(--padding));
+    padding: toRem(10) 0;
+
+    display: grid;
+    --size: #{toRem(288)};
+    grid-template-columns: repeat(4, var(--size));
+    gap: toRem(15);
+
+    counter-reset: project-objectives-items;
+
+    @media (min-width: $md) {
+        overflow: initial;
+        padding: 0;
+        gap: toRem(30);
+        --size: 1fr;
+    }
+
+    li {
+        min-height: toRem(355);
+        padding: toRem(20);
+        border-radius: toRem(2);
+
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        color: var(--text-grey-color);
+        font-weight: 500;
+
+        &::before {
+            counter-increment: project-objectives-items;
+            content: "0" counter(project-objectives-items);
+
+            display: block;
+
+            font-size: toRem(80);
+            line-height: 1.4;
+            color: var(--text-light-grey-color);
+        }
+
+        &:first-child {
+            background-color: var(--accent-color);
+            color: var(--white-color);
+
+            &::before {
+                color: var(--white-color);
+            }
+        }
+
+        &:nth-child(2) {
+            background-color: var(--fill-grey-color);
+        }
+
+        &:nth-child(3) {
+            border: toRem(1) solid var(--stroke-light-grey-color);
+            --size: #{toRem(20)};
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: calc(-1 * var(--size) / 2);
+                top: calc(-1 * var(--size) / 2);
+                width: calc(100% + var(--size));
+                height: calc(100% + var(--size));
+                display: block;
+
+                background:
+                    url("/img/icons/plus-accent.svg") no-repeat 0 0 / var(--size),
+                    url("/img/icons/plus-accent.svg") no-repeat 100% 0 / var(--size),
+                    url("/img/icons/plus-accent.svg") no-repeat 0 100% / var(--size),
+                    url("/img/icons/plus-accent.svg") no-repeat 100% 100% / var(--size);
+            }
+        }
+
+        &:nth-child(4) {
+            background-color: var(--fill-dark-color);
+            color: var(--text-light-grey-color);
+
+            &::before {
+                color: var(--text-grey-color);
+            }
+        }
+
+        @media (min-width: $md) {
+            font-size: toRem(20);
+
+            flex: 0 1 calc(25% - #{toRem(90)} / 4);
+
+            &::before {
+                font-size: toRem(80);
+            }
+
+            p {
+                max-width: toRem(248);
+            }
+        }
+
+        @media (min-width: $lg) {
+            min-height: toRem(501);
+            font-size: toRem(24);
+            border-radius: toRem(4);
+
+            &::before {
+                font-size: toRem(100);
+            }
+
+            p {
+                max-width: toRem(367);
+            }
+        }
+    }
+}

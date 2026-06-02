@@ -1,0 +1,32 @@
+@use "sass:math";
+
+$sm: 768px;
+$md: 1270px;
+$lg: 1750px;
+
+@function toRem($value) {
+    $remValue: math.div($value, 16) + rem;
+    // @return $remValue;
+    // todo: return back
+    @return $value + px;
+}
+
+@mixin btn {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    font-family: inherit;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    background: transparent;
+    color: var(--white-color);
+
+    cursor: pointer;
+
+    &:disabled {
+        cursor: default;
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "acf/result-business-impact",
+  "title": "Result Business Impact",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "result-business-impact.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "acf/workflow",
+  "title": "Workflow",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "workflow.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

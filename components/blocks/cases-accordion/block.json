@@ -1,0 +1,16 @@
+{
+  "name": "acf/cases-accordion",
+  "title": "Cases Accordion",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "cases-accordion.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

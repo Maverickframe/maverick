@@ -1,0 +1,22 @@
+.share {
+    display: flex;
+    gap: 5px;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background-color: var(--black-color);
+        color: var(--white-color);
+        border-radius: 2px;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            background-color: var(--fill-dark-color);
+        }
+    }
+}

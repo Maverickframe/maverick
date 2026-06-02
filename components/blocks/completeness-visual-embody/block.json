@@ -1,0 +1,16 @@
+{
+  "name": "acf/completeness-visual-embody",
+  "title": "Completeness Visual Embodiment",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "completeness-visual-embody.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

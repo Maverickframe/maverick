@@ -1,0 +1,111 @@
+@import "../common/_vars";
+
+.trusted {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0 toRem(150);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(120);
+    }
+}
+
+.container.trusted__container {
+    margin-bottom: toRem(20);
+    display: flex;
+    align-items: center;
+    gap: toRem(30);
+
+    h2 {
+        max-width: toRem(178);
+        flex: 0 0 auto;
+    }
+
+    @media (min-width: $md) {
+        gap: toRem(30);
+        margin-bottom: toRem(30);
+
+        h2 {
+            max-width: toRem(463);
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(35);
+        gap: toRem(25);
+
+        h2 {
+            max-width: toRem(710);
+        }
+    }
+}
+
+.trusted__slider {
+    min-width: 0;
+
+    &.one {
+        position: relative;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            width: toRem(45);
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: var(--z-index-shadow);
+
+            background: linear-gradient(90deg, var(--white-color) 0%, rgba(255, 255, 255, 0) 100%);
+
+            @media (min-width: $md) {
+                width: toRem(70);
+            }
+
+            @media (min-width: $lg) {
+                width: toRem(97);
+            }
+        }
+
+        @media (min-width: $md) {
+            position: absolute;
+            right: 0;
+            max-width: toRem(773);
+        }
+
+        @media (min-width: $lg) {
+            max-width: toRem(945);
+        }
+    }
+}
+
+.trusted__slider-item {
+    transition: filter 0.3s ease;
+
+    img {
+        width: toRem(120);
+        height: toRem(66);
+        object-fit: cover;
+        display: block;
+    }
+
+    @media (min-width: $md) {
+        &:hover {
+            filter: invert(1);
+        }
+
+        img {
+            width: toRem(182);
+            height: toRem(100);
+        }
+    }
+
+    @media (min-width: $lg) {
+        img {
+            width: toRem(220);
+            height: toRem(121);
+        }
+    }
+}

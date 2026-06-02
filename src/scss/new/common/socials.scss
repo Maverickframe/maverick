@@ -1,0 +1,43 @@
+@import "_vars";
+
+.socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: toRem(8);
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: toRem(42);
+        height: toRem(42);
+
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+
+        svg path {
+            transition: fill 0.3s ease;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--accent-color);
+
+                svg path {
+                    fill: var(--white-color);
+                }
+            }
+        }
+
+        @media (min-width: $md) {
+            &:active {
+                background-color: var(--accent-dark-color);
+
+                svg path {
+                    fill: var(--white-color);
+                }
+            }
+        }
+    }
+}

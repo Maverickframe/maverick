@@ -1,0 +1,46 @@
+@import "_vars";
+
+@import url("../../../node_modules/@splidejs/splide/dist/css/splide-core.min.css");
+
+.splide__pagination:not(.is-custom) {
+    margin-top: 20px;
+}
+
+.splide__pagination__page:not(.is-custom) {
+    border-radius: 0;
+    border: none;
+    background-color: #d9d9d9;
+    opacity: 1;
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    margin: 0 1px;
+
+    &.is-active {
+        background-color: #13a1d4;
+    }
+}
+
+.splide-scrollbar {
+  margin-top: toRem(41);
+  margin-bottom: toRem(7);
+  border-radius: 0;
+  height: toRem(1);
+  background: var(--dark-color);
+
+  &__bar {
+    height: toRem(3);
+    position: relative;
+    top: toRem(-1);
+    background: linear-gradient(90deg, #2c3ada 0%, #13a1d4 100%);
+    border-radius: 0;
+    width: 20%;
+    transition: transform 0.1s linear;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+

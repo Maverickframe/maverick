@@ -1,0 +1,16 @@
+{
+  "name": "acf/our-work",
+  "title": "Our Work",
+  "description": "Show success stories cases",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "our-work.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

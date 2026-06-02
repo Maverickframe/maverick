@@ -1,0 +1,16 @@
+{
+  "name": "acf/reviews",
+  "title": "Reviews",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "reviews.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

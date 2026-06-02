@@ -1,0 +1,35 @@
+@import "../common/_vars";
+
+.success-stories-page {
+    .hero__main {
+        @media (min-width: $md) {
+            max-width: toRem(930);
+        }
+
+        @media (min-width: $lg) {
+            max-width: toRem(1280);
+        }
+    }
+
+    .hero__title {
+        text-transform: uppercase;
+    }
+
+    .hero__desc {
+        color: var(--text-grey-color);
+
+        @media (min-width: $md) {
+            max-width: toRem(550);
+        }
+
+        @media (min-width: $lg) {
+            font-size: toRem(18);
+
+            max-width: toRem(590);
+        }
+    }
+
+    .review-item {
+        color: var(--black-color);
+    }
+}

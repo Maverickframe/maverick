@@ -1,0 +1,149 @@
+@import "../common/_vars";
+
+.faq {
+    margin-bottom: toRem(100);
+
+    @media (min-width: $md) {
+        margin-bottom: toRem(180);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(200);
+    }
+}
+
+.faq__info {
+    margin-bottom: toRem(40);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+
+    h2 {
+        text-align: center;
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+    }
+}
+
+.faq__description {
+    display: none;
+    max-width: toRem(600);
+    margin: 0 auto;
+
+    text-align: center;
+    color: var(--text-grey-color);
+    font-size: toRem(16);
+
+    @media (min-width: $md) {
+        display: block;
+    }
+}
+
+.faq__items {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(20);
+
+    @media (min-width: $md) {
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(2, 1fr);
+        gap: toRem(30) toRem(40);
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(40) toRem(60);
+    }
+}
+
+.faq-item {
+    padding-bottom: toRem(20);
+    border-bottom: toRem(1) solid var(--stroke-light-grey-color);
+
+    &.active {
+        .faq-item__btn {
+            &::after {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    @media (min-width: $md) {
+        padding-bottom: toRem(30);
+    }
+
+    @media (min-width: $lg) {
+        padding-bottom: toRem(40);
+    }
+}
+
+.faq-item__btn {
+    @include btn;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: toRem(30);
+    width: 100%;
+
+    font-weight: 500;
+    font-size: toRem(18);
+    color: var(--black-color);
+    text-align: left;
+    white-space: normal;
+
+    &::after {
+        content: "";
+
+        background-image: url("/img/icons/arrow-down.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+
+        width: toRem(24);
+        height: toRem(24);
+        flex: 0 0 auto;
+
+        transition: transform 0.3s ease;
+    }
+
+    @media (min-width: $md) {
+        font-size: toRem(20);
+        gap: toRem(60);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(24);
+        gap: toRem(200);
+    }
+}
+
+.faq-item__answer {
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.faq-item__answer-inner {
+    width: 100%;
+    padding-right: toRem(54);
+    margin-top: toRem(16);
+
+    font-size: toRem(14);
+
+    @media (min-width: $md) {
+        padding-right: 0;
+        max-width: toRem(600);
+        margin-top: toRem(20);
+
+        font-size: toRem(16);
+    }
+
+    @media (min-width: $lg) {
+        max-width: toRem(650);
+
+        font-size: toRem(18);
+    }
+}

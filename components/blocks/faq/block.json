@@ -1,0 +1,16 @@
+{
+  "name": "acf/faq",
+  "title": "FAQ",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "faq.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

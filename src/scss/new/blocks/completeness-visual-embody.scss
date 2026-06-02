@@ -1,0 +1,213 @@
+@import "../common/_vars";
+
+.completeness-visual-embody {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0;
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0;
+    }
+}
+
+.completeness-visual-embody__info {
+    margin-bottom: toRem(40);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+
+    & > p {
+        color: var(--text-grey-color);
+        font-size: toRem(16);
+    }
+
+    @media (min-width: $md) {
+        gap: 0;
+
+        h2 {
+            max-width: toRem(605);
+        }
+
+        & > p {
+            align-self: flex-end;
+            max-width: toRem(500);
+            margin-right: toRem(106);
+
+            font-size: toRem(16);
+        }
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(60);
+
+        h2 {
+            max-width: toRem(845);
+        }
+
+        & > p {
+            max-width: toRem(694);
+            margin-right: toRem(150);
+            font-size: toRem(18);
+        }
+    }
+}
+
+.completeness-visual-embody__items {
+    display: grid;
+    gap: toRem(30);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.completeness-visual-embody-item__more-btn {
+    margin-top: toRem(8);
+
+    font-weight: 400;
+    font-size: toRem(14);
+    line-height: toRem(17);
+    text-align: left;
+
+    letter-spacing: -0.02em;
+    text-decoration: none;
+
+    color: var(--white-color);
+    border-bottom: toRem(1) solid currentColor;
+    cursor: pointer;
+    transition:
+        border-color 0.3s ease,
+        color 0.3s ease;
+
+    &.hidden {
+        display: none;
+    }
+
+    @media (min-width: $md) {
+        display: none;
+    }
+}
+
+
+.completeness-visual-embody-item {
+    border-radius: toRem(4);
+    background-color: var(--fill-grey-color);
+    overflow: hidden;
+
+    &.expanded {
+        .completeness-visual-embody-item__text {
+            display: block;
+            -webkit-line-clamp: unset;
+            line-clamp: unset;
+            overflow: initial;
+        }
+    }
+
+    @media (min-width: $md) {
+        &:hover {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+.completeness-visual-embody-item__media {
+    height: toRem(450);
+    overflow: hidden;
+    object-fit: cover;
+
+    @media (min-width: $md) {
+        height: toRem(350);
+    }
+
+    @media (min-width: $lg) {
+        height: toRem(420);
+    }
+
+    img,
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    img {
+        transition: transform 0.5s ease;
+    }
+}
+
+.completeness-visual-embody-item__info {
+    padding: toRem(20);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+
+    h3 {
+        font-weight: 500;
+        font-size: toRem(18);
+        text-transform: capitalize;
+    }
+
+    @media (min-width: $md) {
+        h3 {
+            font-size: toRem(24);
+        }
+    }
+
+    @media (min-width: $lg) {
+        h3 {
+            font-size: toRem(32);
+        }
+    }
+}
+
+.completeness-visual-embody-item__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    font-size: toRem(14);
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: initial;
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.completeness-visual-embody-item__more-btn {
+    margin-top: toRem(10);
+
+    font-weight: 400;
+    font-size: toRem(16);
+    line-height: toRem(17);
+    text-align: left;
+
+    letter-spacing: -0.02em;
+    text-decoration: none;
+
+    color: var(--accent-color);
+    border-bottom: toRem(1) solid currentColor;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &.hidden {
+        display: none;
+    }
+
+    @media (min-width: $md) {
+        display: none;
+    }
+}

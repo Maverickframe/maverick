@@ -1,0 +1,16 @@
+{
+  "name": "acf/presentation-clients",
+  "title": "Presentation clients",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "presentation-clients.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

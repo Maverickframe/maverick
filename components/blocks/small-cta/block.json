@@ -1,0 +1,16 @@
+{
+  "name": "acf/small-cta",
+  "title": "Small CTA",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "small-cta.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

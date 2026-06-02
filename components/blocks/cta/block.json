@@ -1,0 +1,16 @@
+{
+  "name": "acf/cta",
+  "title": "CTA",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "cta.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

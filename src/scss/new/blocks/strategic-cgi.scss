@@ -1,0 +1,115 @@
+@import "../common/_vars";
+
+.strategic-cgi {
+    margin: toRem(100) 0;
+
+    @media (min-width: $md) {
+        margin: toRem(180) 0 toRem(280);
+    }
+
+    @media (min-width: $lg) {
+        margin: toRem(200) 0 toRem(300);
+    }
+}
+
+.strategic-cgi__main {
+    margin-bottom: toRem(100);
+
+    display: flex;
+    flex-direction: column;
+    gap: toRem(40);
+
+    @media (min-width: $md) {
+        margin-bottom: toRem(280);
+
+        flex-direction: row;
+        align-items: center;
+        gap: toRem(80);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(300);
+        gap: toRem(30);
+    }
+}
+
+.strategic-cgi__info {
+    flex: 1 1 auto;
+
+    h2 {
+        margin-bottom: toRem(30);
+    }
+
+    .p1 {
+        color: var(--text-grey-color);
+    }
+
+    @media (min-width: $lg) {
+        h2 {
+            max-width: toRem(800);
+        }
+
+        .p1 {
+            max-width: toRem(698);
+        }
+    }
+}
+
+.strategic-cgi__media {
+    flex: 0 0 auto;
+    width: 100%;
+    aspect-ratio: 0.8625;
+
+    img,
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+
+        border-radius: toRem(2);
+    }
+
+    @media (min-width: $md) {
+        width: toRem(580);
+        height: toRem(400);
+        aspect-ratio: auto;
+
+        overflow: hidden;
+        border-radius: toRem(2);
+
+        img,
+        video {
+            border-radius: 0;
+        }
+    }
+
+    @media (min-width: $lg) {
+        width: toRem(845);
+        height: toRem(501);
+
+        border-radius: toRem(4);
+    }
+}
+
+.strategic-cgi__quote {
+    padding: toRem(6) 0 toRem(12);
+
+    text-align: center;
+    font-size: toRem(22);
+
+    span {
+        color: var(--text-grey-color);
+    }
+
+    @media (min-width: $md) {
+        padding: 0;
+
+        font-size: toRem(42);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(58);
+    }
+}

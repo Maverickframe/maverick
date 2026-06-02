@@ -1,0 +1,16 @@
+{
+  "name": "acf/performance-scale",
+  "title": "Performance Scale",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "performance-scale.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

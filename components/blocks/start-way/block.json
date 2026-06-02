@@ -1,0 +1,16 @@
+{
+  "name": "acf/start-way",
+  "title": "Start Way",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "start-way.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

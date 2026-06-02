@@ -1,0 +1,16 @@
+{
+  "name": "acf/services-provided",
+  "title": "Services Provided",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "services-provided.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

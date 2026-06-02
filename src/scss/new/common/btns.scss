@@ -1,0 +1,132 @@
+@import "_vars";
+
+.btn-main {
+    @include btn;
+    width: toRem(182);
+    line-height: toRem(44);
+
+    font-size: toRem(14);
+    font-weight: 500;
+
+    background-color: var(--accent-color);
+    border-radius: toRem(2);
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+        background-color: var(--accent-light-color);
+    }
+
+    &:disabled {
+        background-color: var(--fill-dark-color);
+    }
+
+    &.fill {
+        width: 100%;
+    }
+}
+
+.btn-secondary {
+    @include btn;
+    width: toRem(182);
+    line-height: toRem(42);
+
+    font-size: toRem(14);
+    font-weight: 500;
+
+    border: toRem(1) solid var(--white-color);
+    border-radius: toRem(2);
+    background-color: transparent;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+        background-color: var(--white-color);
+        color: var(--black-color);
+    }
+
+    &:not(:disabled):active {
+        border-color: var(--black-color);
+    }
+
+    &:disabled {
+        border-color: var(--stroke-grey-color);
+        color: var(--stroke-grey-color);
+    }
+
+    &.fill {
+        width: 100%;
+    }
+}
+
+.btn-secondary-black {
+    @include btn;
+    width: toRem(182);
+    line-height: toRem(42);
+
+    font-size: toRem(14);
+    font-weight: 500;
+
+    border: toRem(1) solid var(--black-color);
+    border-radius: toRem(2);
+    background-color: transparent;
+    color: var(--black-color);
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease;
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+        background-color: var(--black-color);
+        color: var(--white-color);
+    }
+
+    &:disabled {
+        border-color: var(--stroke-light-grey-color);
+        color: var(--text-light-grey-color);
+    }
+
+    &.fill {
+        width: 100%;
+    }
+}
+
+.btn-cta {
+    @include btn;
+    width: toRem(182);
+    line-height: toRem(44);
+
+    font-size: toRem(14);
+    font-weight: 500;
+    color: var(--accent-color);
+
+    &.black-color {
+        color: var(--black-color);
+    }
+
+    background-color: var(--white-color);
+    border-radius: toRem(2);
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease,
+        color 0.3s ease;
+
+    &.fill {
+        width: 100%;
+    }
+
+    &:not(:disabled):hover {
+        box-shadow: 2px 2px 10px #bac0e3;
+    }
+
+    &:disabled {
+        background-color: var(--fill-dark-color);
+        color: var(--text-light-grey-color);
+    }
+}

@@ -1,0 +1,145 @@
+@import "_vars";
+
+// Common
+
+html.single-page {
+    @media all and (min-width: $xl) {
+        font-size: calc(1920 / 1440 * 16px);
+    }
+
+    img {
+        overflow: hidden;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// End Common
+
+// Page
+
+.text-page {
+    margin-bottom: toRem(96);
+
+    @media all and (min-width: $sm) {
+        margin-bottom: toRem(136);
+    }
+}
+
+.text-page__title {
+    margin-bottom: toRem(24);
+
+    font-size: toRem(24);
+    line-height: 1.33;
+    font-weight: 400;
+
+    @media all and (min-width: $sm) {
+        margin-bottom: toRem(56);
+
+        font-size: toRem(48);
+        line-height: 1.166667;
+    }
+}
+
+.text-page__content {
+    font-weight: 300;
+    font-size: toRem(14);
+    line-height: 1.42587;
+
+    p + p {
+        margin-top: 1em;
+    }
+
+    b,
+    strong {
+        font-weight: 400;
+    }
+
+    h2 {
+        font-weight: 400;
+        font-size: toRem(16);
+
+        margin-bottom: toRem(16);
+
+        @media all and (min-width: $sm) {
+            font-size: toRem(24);
+            line-height: 1.5;
+        }
+    }
+
+    p + h2 {
+        margin-top: toRem(32);
+
+        @media all and (min-width: $sm) {
+            margin-top: toRem(48);
+        }
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 400;
+        font-size: toRem(16);
+    }
+
+    p + h3,
+    p + h4,
+    p + h5,
+    p + h6 {
+        margin-top: 1em;
+    }
+
+    img {
+        margin: toRem(16) 0;
+
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    a {
+        color: inherit;
+        font-weight: 400;
+        text-decoration: none;
+        border-bottom: 1px solid #000;
+        transition: border-color 0.3s ease;
+
+        &:hover {
+            border-color: transparent;
+        }
+    }
+
+
+    ul {
+        padding-left: toRem(24);
+
+        li {
+            position: relative;
+        }
+
+        li::before {
+            content: "";
+            width: toRem(3);
+            height: toRem(3);
+            display: block;
+
+            background: #000;
+            border-radius: 50%;
+
+            position: absolute;
+            top: toRem(8);
+            left: calc(-1 * #{toRem(13.5)});
+        }
+    }
+
+    @media all and (min-width: $sm) {
+        font-size: toRem(16);
+        line-height: 1.5;
+
+        ul li::before {
+            top: toRem(11);
+        }
+    }
+}
+
+// End Page

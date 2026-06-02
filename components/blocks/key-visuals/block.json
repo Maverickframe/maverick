@@ -1,0 +1,16 @@
+{
+  "name": "acf/key-visuals",
+  "title": "Key Visual Decisions",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "key-visuals.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

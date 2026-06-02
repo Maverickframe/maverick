@@ -1,0 +1,261 @@
+@import "../common/_vars";
+
+.template-blog,
+.single-blog {
+    .hero-block__breadcrumbs {
+        @media (max-width: 1269px) {
+            margin-bottom: toRem(30);
+        }
+    }
+
+    &.theme-white {
+        .hero-block__breadcrumbs {
+            color: var(--black-color);
+
+            li {
+                &::after {
+                    filter: brightness(1) invert(1);
+                }
+            }
+        }
+    }
+}
+
+.template-blog {
+    .hero-blog {
+        margin-bottom: toRem(175);
+
+        @media (min-width: $md) {
+            margin-bottom: toRem(105);
+        }
+
+        @media (min-width: $lg) {
+            margin-bottom: toRem(150);
+        }
+
+        &__grid {
+            @media (min-width: $md) {
+                grid-template-columns: 40.6% 1fr 1fr;
+                gap: toRem(30);
+            }
+        }
+        &__title {
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            font-weight: 400;
+
+            @media (min-width: $md) {
+                font-size: 48px;
+                max-width: toRem(920);
+            }
+
+            @media (min-width: $lg) {
+                font-size: 64px;
+                max-width: toRem(1280);
+            }
+        }
+        &__text {
+            margin: toRem(20) 0 toRem(60);
+            max-width: toRem(610);
+            letter-spacing: 0;
+            color: var(--text-grey-color);
+
+            @media (min-width: $lg) {
+                font-size: 18px;
+            }
+        }
+
+        .case-item {
+            .case-item__img {
+                height: toRem(190);
+
+                @media (min-width: $lg) {
+                    height: toRem(265);
+                }
+            }
+
+            &:not(.--featured) {
+                @media (min-width: $md) {
+                    max-height: toRem(500);
+                }
+                @media (min-width: $lg) {
+                    max-height: toRem(730);
+                }
+            }
+
+            &.--featured {
+                .case-item__img {
+                    @media (min-width: $md) {
+                        max-height: toRem(275);
+                    }
+
+                    @media (min-width: $lg) {
+                        max-height: toRem(385);
+                    }
+                }
+
+                .case-item__title {
+                    font-size: 28px;
+                    font-weight: 400;
+
+                    @media (min-width: $md) {
+                        font-size: 42px;
+                    }
+
+                    @media (min-width: $lg) {
+                        font-size: 58px;
+                    }
+                }
+
+                .author__avatar {
+                    @media (min-width: $lg) {
+                        width: toRem(64);
+                        height: toRem(64);
+                    }
+                }
+                .author__name {
+                    font-size: 18px;
+
+                    @media (min-width: $lg) {
+                        font-size: 24px;
+                    }
+                }
+                .author__text {
+                    font-size: inherit;
+
+                    @media (min-width: $lg) {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.single-blog {
+    .hero-block {
+        .hero-block__main {
+            @media (min-width: $md) {
+                max-width: 40%;
+            }
+
+            @media (min-width: $lg) {
+                max-width: 50%;
+            }
+        }
+
+        .metabox {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: toRem(4);
+
+            margin-bottom: toRem(20);
+
+            @media (min-width: $md) {
+                gap: toRem(20);
+            }
+
+            @media (min-width: $lg) {
+                margin-bottom: toRem(30);
+            }
+
+            &__item {
+                @media (max-width: 1269px) {
+                    padding: toRem(4) toRem(10);
+                    color: var(--text-grey-color);
+                    background-color: var(--fill-grey-color);
+                }
+
+                &--link {
+                    color: var(--accent-color);
+                    text-decoration: underline;
+
+                    @media (min-width: $md) {
+                        color: var(--purple-color);
+                    }
+                }
+            }
+
+            .dot {
+                @media (max-width: 1269px) {
+                    display: none;
+                }
+            }
+        }
+
+        .share {
+            a {
+                @media (min-width: $lg) {
+                    padding: toRem(18);
+                }
+            }
+        }
+    }
+
+    &.theme-white {
+        .header {
+            background-color: var(--black-color);
+        }
+
+        .hero-block {
+            color: var(--black-color);
+
+            .metabox__item--link {
+                color: var(--accent-color);
+            }
+        }
+    }
+
+    &.remove-gradient {
+        .hero-block {
+            &::before,
+            &::after {
+                content: none !important;
+            }
+        }
+    }
+
+    @media (max-width: 1269px) {
+        .hero-block {
+            flex-direction: column-reverse;
+            gap: toRem(40);
+
+            height: auto;
+            padding-bottom: 0;
+            background-color: var(--white-color);
+
+            &::before,
+            &::after {
+                content: none;
+            }
+        }
+
+        .hero-block__media {
+            position: relative;
+            height: toRem(400);
+        }
+
+        .hero-block__main {
+            margin: 0 auto;
+        }
+
+        .hero-block__breadcrumbs {
+            order: 1;
+        }
+
+        .hero-block__title {
+            order: 2;
+        }
+
+        .metabox {
+            order: 3;
+        }
+
+        .share {
+            order: 4;
+        }
+    }
+}

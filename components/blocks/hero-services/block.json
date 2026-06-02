@@ -1,0 +1,16 @@
+{
+  "name": "acf/hero-services",
+  "title": "Hero Services",
+  "description": "Hero-блок Services",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": ["hero", "acf"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "hero-services.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

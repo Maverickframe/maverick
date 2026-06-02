@@ -1,0 +1,16 @@
+{
+  "name": "acf/visual-results",
+  "title": "Visual Results",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "visual-results.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

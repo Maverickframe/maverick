@@ -1,0 +1,16 @@
+{
+  "name": "acf/team-items",
+  "title": "The Project was warked on",
+  "description": "Team",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "team-items.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

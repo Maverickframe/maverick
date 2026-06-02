@@ -1,0 +1,16 @@
+{
+  "name": "acf/blog-items",
+  "title": "Blog Items",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "blog-items.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

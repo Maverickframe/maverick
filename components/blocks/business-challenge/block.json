@@ -1,0 +1,16 @@
+{
+  "name": "acf/business-challenge",
+  "title": "Business challenge",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "business-challenge.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

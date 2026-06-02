@@ -1,0 +1,16 @@
+{
+  "name": "acf/price",
+  "title": "Price Section",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "price.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

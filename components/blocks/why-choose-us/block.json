@@ -1,0 +1,16 @@
+{
+  "name": "acf/why-choose-us",
+  "title": "Why Choose Us",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "why-choose-us.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}
