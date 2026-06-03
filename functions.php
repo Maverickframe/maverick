@@ -672,3 +672,61 @@ add_filter('posts_search', function ($search, $wp_query) {
 }, 999, 2);
 
 // End Search Posts in ACF Fields
+
+/* === Blog v2: conditional enqueue + body class ===
+   Enables the new article layout ONLY for blog posts that have the
+   SCF flag `use_blog_v2` checked. Other posts keep the current
+   layout untouched. */
+function blog_v2_is_active() {
+    if (!is_singular('blog')) return false;
+    if (!function_exists('get_field')) return false;
+    return (bool) get_field('use_blog_v2', get_queried_object_id());
+}
+
+add_action('wp_enqueue_scripts', function () {
+    if (!blog_v2_is_active()) return;
+    $rel = '/blog-v2.css';
+    $abs = get_template_directory() . $rel;
+    $ver = file_exists($abs) ? filemtime($abs) : null;
+    wp_enqueue_style(
+        'blog-v2',
+        get_template_directory_uri() . $rel,
+        array(),
+        $ver
+    );
+}, 100);
+/* === /Blog v2 enqueue === */
+
+/* === Blog v1 overrides: widths + reading colors ===
+   Loads blog-v1-overrides.css on every single-blog post (no toggle).
+   Real enqueued stylesheet (not inline <style>) so WP Rocket's
+   Used-CSS / inline-cleanup optimizations don't strip it. */
+add_action('wp_enqueue_scripts', function () {
+    if (!is_singular('blog')) return;
+
+    // CSS overrides
+    $cssRel = '/blog-v1-overrides.css';
+    $cssAbs = get_template_directory() . $cssRel;
+    if (file_exists($cssAbs)) {
+        wp_enqueue_style(
+            'blog-v1-overrides',
+            get_template_directory_uri() . $cssRel,
+            array(),
+            filemtime($cssAbs)
+        );
+    }
+
+    // JS enhancements (progress bar, TOC scroll-spy, image lightbox)
+    $jsRel = '/blog-v1-enhancements.js';
+    $jsAbs = get_template_directory() . $jsRel;
+    if (file_exists($jsAbs)) {
+        wp_enqueue_script(
+            'blog-v1-enhancements',
+            get_template_directory_uri() . $jsRel,
+            array(),
+            filemtime($jsAbs),
+            true  // in footer
+        );
+    }
+}, 200);
+/* === /Blog v1 width override === */
