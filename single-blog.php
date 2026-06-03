@@ -20,9 +20,10 @@ $toc = $index['toc'];
                     <button class="article-page__toggle js-sidebar-toggle">Contents</button>
 
                     <div class="article-page__sticky js-sidebar">
+                        <?= get_template_part('components/new-design/blog/author-mini'); ?>
+                        <?= get_template_part('components/new-design/blog/reading-status'); ?>
                         <?= get_template_part('components/new-design/toc', null, ['title' => 'Contents', 'toc' => $toc]); ?>
-
-                        <?= get_template_part('components/new-design/share'); ?>
+                        <?= get_template_part('components/new-design/blog/feedback'); ?>
                     </div>
                 </aside>
 
@@ -40,9 +41,23 @@ $toc = $index['toc'];
                 <!-- Sidebar Right -->
                 <aside class="article-page__aside article-page__aside--right">
                     <div class="article-page__sticky">
-                        <?= get_template_part('components/new-design/blog/banner'); ?>
+                        <?= get_template_part('components/new-design/blog/sidebar-cta'); ?>
                     </div>
                 </aside>
+            </div>
+        </div>
+    </div>
+
+    <div class="article-page__breadcrumbs-bottom">
+        <div class="container">
+            <span class="article-page__breadcrumbs-label">You are here</span>
+            <div class="article-page__breadcrumbs-wrap">
+                <?= get_template_part('components/new-design/breadcrumbs', null, [
+                    'breadcrumbs' => [
+                        1 => [ 'name' => 'Home', 'link' => home_url() ],
+                        2 => [ 'name' => 'Blog', 'link' => home_url('/blog/') ]
+                    ]
+                ]); ?>
             </div>
         </div>
     </div>
