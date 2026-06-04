@@ -315,7 +315,7 @@
 }
 
 .header__logo {
-    --size: #{toRem(38)};
+    --size: #{toRem(44)};
     width: var(--size);
     height: var(--size);
 
@@ -394,8 +394,6 @@
         justify-content: space-between;
         align-items: center;
         gap: toRem(25);
-        flex: 1 1 auto;
-        margin-left: toRem(40);
 
         height: 100%;
         padding: 0;
@@ -441,7 +439,7 @@
         height: 100%;
 
         & > li {
-            padding: 0 toRem(10);
+            padding: 0 toRem(15);
             padding-bottom: 0;
             border-bottom: none;
             height: 100%;
@@ -451,8 +449,8 @@
             & > a,
             & > span {
                 color: var(--white-color);
-                font-size: toRem(13);
-                line-height: toRem(18);
+                font-size: toRem(14);
+                line-height: toRem(20);
 
                 gap: 0;
             }
@@ -584,7 +582,7 @@
             padding: toRem(30) toRem(40);
 
             background-color: var(--white-color);
-            border-radius: 0px 0px toRem(8) toRem(8);
+            border-radius: 0px 0px toRem(1) toRem(1);
 
             opacity: 0;
             transition: opacity 0.6s ease;
@@ -814,8 +812,8 @@
     &::after {
         content: "";
         flex: 0 0 auto;
-        width: toRem(24);
-        height: toRem(24);
+        width: toRem(16);
+        height: toRem(16);
 
         background-image: url("/img/icons/arrow-right-menu.svg");
         background-repeat: no-repeat;
@@ -825,7 +823,7 @@
     }
 
     @media (min-width: $md) {
-        padding: toRem(17) 0;
+        padding: toRem(14) 0;
         gap: toRem(15);
 
         font-size: toRem(14);
@@ -847,7 +845,7 @@
     }
 
     @media (min-width: $lg) {
-        padding: toRem(15) 0;
+        padding: toRem(14) 0;
         font-size: toRem(16);
     }
 }
