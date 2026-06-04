@@ -1,18 +1,6 @@
 <footer class="footer">
     <div class="container">
         <div class="footer__top">
-            <?php if (is_front_page()): ?>
-                <span class="footer__logo">
-                    <img src="<?= get_template_directory_uri_vite(); ?>/img//logo.svg"
-                        alt="Maverick Frame Studio logo" width="50" height="50" fetchpriority="high">
-                </span>
-            <?php else: ?>
-                <a href="<?= home_url(); ?>" class="footer__logo">
-                    <img src="<?= get_template_directory_uri_vite(); ?>/img//logo.svg"
-                        alt="Maverick Frame Studio logo" width="50" height="50" fetchpriority="high">
-                </a>
-            <?php endif; ?>
-
             <div class="footer__cta js-reveal">
                 <h2><?php echo $args['footer_title'] ?? get_field('footer_title', 'options'); ?></h2>
                 <p><?php echo $args['footer_description'] ?? get_field('footer_description', 'options'); ?></p>
