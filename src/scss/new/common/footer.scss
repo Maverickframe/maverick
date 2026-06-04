@@ -19,6 +19,8 @@
     margin-bottom: toRem(72.5);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: toRem(42);
 
     @media (min-width: $md) {
