@@ -33,7 +33,7 @@
 
     --container: #{toRem(1240)};
     --container-small: #{toRem(1140)};
-    --header-height: #{toRem(80)};
+    --header-height: #{toRem(64)};
     --padding: #{toRem(15)};
 
     --radius: 14px;
@@ -54,7 +54,7 @@
     --scroll-width: #{toRem(4)};
 
     @media (min-width: $md) {
-        --header-height: #{toRem(84)};
+        --header-height: #{toRem(70)};
     }
 
     @media (min-width: $lg) {
