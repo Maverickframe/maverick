@@ -3,7 +3,10 @@ const locks = new Set();
 function updateUI() {
   const shouldLock = locks.size > 0;
 
-  document.body.classList.toggle('is-fixed', shouldLock);
+  // Only the mobile/burger menu locks page scroll. Desktop dropdowns keep the
+  // page scrollable — locking scroll hid the scrollbar and shifted the whole
+  // layout by the scrollbar width (the menu "jitter" on open).
+  document.body.classList.toggle('is-fixed', locks.has('menu'));
 
   let overlay = document.querySelector('.js-global-overlay');
 
