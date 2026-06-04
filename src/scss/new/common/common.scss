@@ -100,9 +100,9 @@ body {
     overflow: hidden;
     padding-right: var(--scroll-width);
 
-    .header {
-        padding-right: var(--scroll-width);
-    }
+    // NOTE: do not pad the fixed .header here. Its inner container is centered
+    // (margin: auto), so padding-right shifts the menu ~2px left when a dropdown
+    // opens. The body padding above already compensates the page content.
 }
 
 .scrollbar {
