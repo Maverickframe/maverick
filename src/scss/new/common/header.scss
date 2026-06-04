@@ -315,7 +315,7 @@
 }
 
 .header__logo {
-    --size: #{toRem(44)};
+    --size: #{toRem(38)};
     width: var(--size);
     height: var(--size);
 
@@ -394,6 +394,8 @@
         justify-content: space-between;
         align-items: center;
         gap: toRem(25);
+        flex: 1 1 auto;
+        margin-left: toRem(40);
 
         height: 100%;
         padding: 0;
@@ -439,7 +441,7 @@
         height: 100%;
 
         & > li {
-            padding: 0 toRem(15);
+            padding: 0 toRem(10);
             padding-bottom: 0;
             border-bottom: none;
             height: 100%;
@@ -449,8 +451,8 @@
             & > a,
             & > span {
                 color: var(--white-color);
-                font-size: toRem(14);
-                line-height: toRem(20);
+                font-size: toRem(13);
+                line-height: toRem(18);
 
                 gap: 0;
             }
