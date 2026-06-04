@@ -228,8 +228,18 @@ Standard git. `main` is the only long-lived branch. Feature branches OK,
 merge via PR (or fast-forward for solo work). Auth via `gh auth login`
 (GitHub CLI) or PAT.
 
-### GitHub → Staging (automatic via Action)
-`.github/workflows/deploy-staging.yml` runs on every push to `main`:
+### GitHub → Staging (gated by required reviewer)
+`.github/workflows/deploy-staging.yml` runs on every push to `main`, but
+the job uses `environment: staging` — it **pauses before checkout/build/
+deploy** and waits for a required reviewer (Dima) to click "Approve" in
+GitHub Actions → Environments → staging. Reject → nothing deploys.
+Configure reviewers in repo Settings → Environments → staging.
+
+Required reviewers on private repos requires GitHub Team plan (or
+public repo). If the org is on free private — either upgrade or change
+the workflow to `workflow_dispatch`-only.
+
+Once approved, the job:
 
 1. Checkout repo
 2. Setup Node.js 20
@@ -298,7 +308,183 @@ contracted developers touch Cycle 1 (code).
 
 ---
 
-## 11. When in doubt
+## 11. SEO publishing checklist — Rank Math on every post
+
+Whenever a new post (success-stories, blog, page) is created via WPVibe
+or admin, the following Rank Math fields MUST be set. They are NOT
+optional — a post without them is half-published.
+
+### 11.1 SEO Title (`rank_math_title`)
+- **≤ 60 characters / ≤ 580 px** — Rank Math snippet preview must show
+  the green bar. 82 chars / 746 px is red — too long.
+- Must include the **focus keyword** near the start.
+- Must end with brand suffix: `| Maverick Frame Studio` (23 chars).
+- Must differ from `H1` on the page (anti-cannibalisation — one phrase
+  per post can't compete with itself).
+- Example: `Private Padel Court CGI for Estates | Maverick Frame Studio`
+
+### 11.2 Meta description (`rank_math_description`)
+- **≤ 160 characters / ≤ 920 px** — green bar. 194 chars / 1168 px is red.
+- Must include the focus keyword once.
+- Sell the value prop, not the headline — pre-construction CGI, the
+  geographic angle, the deliverable.
+- Example: `Photorealistic private padel court CGI for a tropical villa
+  estate — surface, landscape, and lighting validated before construction
+  begins.`
+
+### 11.3 Focus keyword (`rank_math_focus_keyword`)
+- One long-tail phrase per post (no head-term cases — those go to service
+  pages).
+- Lowercase, matches the most-searched form of the keyphrase.
+- Example: `private padel court CGI`
+
+### 11.4 Slug
+- Must contain the focus keyword.
+- No stop-words (`a`, `the`, `for`) unless they're part of the keyphrase.
+- Example: `private-padel-court-cgi`
+
+### 11.5 Schema markup — custom JSON-LD only, NEVER via Rank Math
+**Hard rule (from `maverickframe-publish` skill):**
+Schema.org on maverickframe.com is **custom JSON-LD only**, placed in
+the ACF **Schema** field `field_64ea0fc545b5a` as a single
+`<script type="application/ld+json">…</script>` tag containing one
+`@graph` array with all node types merged together. Never set
+`rank_math_schema_*` postmeta. Never enable Rank Math's Schema module
+on a post. If a previous run left Rank Math schemas, clear them:
+
+```js
+codemode.rest_api({
+  site_url: "https://maverickframe.com",
+  method: "POST",
+  route: "/rankmath/v1/updateMeta",
+  body: JSON.stringify({
+    objectType: "post", objectID: <ID>,
+    meta: {
+      rank_math_schema_Article: "",
+      rank_math_schema_FAQPage: "",
+      rank_math_rich_snippet: "off",
+      rank_math_snippet_article_type: ""
+    }
+  })
+})
+```
+
+**Why this rule exists:**
+- The site renders custom JSON-LD from the ACF Schema field already.
+  Letting Rank Math also emit Article/FAQPage/Breadcrumb produces
+  **duplicate schema nodes** — Google Rich Results Test flags this
+  and the SEO-analysis skill's Phase 15 audit specifically scans for
+  it: "No duplicate/conflicting schema — same type not emitted twice
+  with different data; Rank Math NOT also emitting FAQPage/Breadcrumb."
+- The `@graph` pattern keeps WebPage + Article + BreadcrumbList +
+  ImageObject + VideoObject (Bunny videos) + FAQPage merged into one
+  document — one source of truth per page, not several competing
+  scripts.
+- ACF Schema field is **NOT exposed via REST** (it's a textarea
+  postmeta with TinyMCE on top). Save it through the wp-admin
+  post.php FormData pattern documented in `maverickframe-publish`
+  Phase 7 ("Schema merge playbook").
+
+**What to put in the @graph for each post type:**
+- **Case page (success-stories):** WebPage + Article (or
+  CollectionPage) + BreadcrumbList + ImageObject (featured image)
+  + VideoObject (only if a Bunny Stream iframe is embedded — include
+  `duration`) + FAQPage (only if a FAQ block is present).
+- **Blog post:** WebPage + BlogPosting + BreadcrumbList +
+  ImageObject (featured) + FAQPage if FAQ block.
+- **Front page (page ID 6):** uses the same field, same merge rule.
+
+**Always merge, never overwrite** the existing `@graph` — re-read
+the field, parse JSON, push/replace specific nodes, re-stringify,
+re-save. Single-shot overwrites lose hand-tuned values.
+
+For the full pipeline (build → save via post.php → clear WP Rocket
+→ verify via Rich Results Test), call the `maverickframe-publish`
+skill (Phase 7 + Schema merge playbook section).
+
+### 11.6 Verification before Publish
+Always view the Rank Math sidebar snippet preview in the post editor
+before flipping `status: draft → publish`. All three bars (Title, URL,
+Description) must be green or yellow — never red.
+
+---
+
+## 12. Case-page block patterns (success-stories CPT)
+
+Standard case-page block order, used by `single-success-stories.php` via
+`the_content()`. Build cases from this exact list — never invent new
+section types without first adding the block under `components/blocks/`.
+
+1. `acf/hero-block` — hero with breadcrumbs, H1, description, tags
+2. `acf/client-context` — Client & Market Context (intro + 2 images)
+3. `acf/business-challenge` — narrative + big_text pull quote + visual
+4. `acf/project-objectives` — **ALWAYS 4 items** (this is a hard rule;
+   3 leaves a visually empty card; 5 overflows the grid)
+5. `acf/services-provided` — services list with links to /services/
+6. `acf/production-process` — 4 phases (slider)
+7. `acf/key-visuals` — 5 items (grid of key decisions)
+8. `acf/visual-results` — 6+ items (gallery, "Show more" after 7th)
+9. `acf/strategic-cgi` — narrative + pull quote + media
+10. `acf/result-business-impact` — 3 stat items + photo
+11. `acf/marketing-sales` — narrative + image + quote
+12. `acf/key-insight` — single pull quote
+13. `acf/team-items` — auto-populated from team CPT (no data)
+14. `acf/faq` — 5 questions (long-tail SEO, must mirror page-relevant Q&A)
+
+Block ACF field keys are extracted from `acf-json/` — see
+`ACF-BLOCKS-REFERENCE.md` in the team handoff package.
+
+### Building Gutenberg block markup programmatically
+ACF blocks are stored in `post_content` as:
+```
+<!-- wp:acf/<block-name> {"name":"acf/<block-name>","data":{...},"mode":"preview"} /-->
+```
+The `data` object has flat keys. Repeater fields use `<key>_<N>_<sub>`
+indexing (0-based). For each field include both `name` and `_name`
+(field key reference). Field keys live in `acf-json/group_<id>.json`.
+
+## 13. Image processing for WP uploads
+
+Original PSD exports and PNG renders from the studio are often **5-15
+MB each** — we never upload them raw. Convert via ImageMagick before
+upload to media library.
+
+### Target sizes
+- **Hero / featured image:** 300-500 KB, max-width 2400 px, WebP q=82
+- **Inline content images (Key Visuals, Visual Results, Strategic CGI):**
+  150-400 KB, max-width 1920 px, WebP q=80
+- **Context / small detail images:** 100-200 KB, max-width 1920 px, q=78
+
+### Conversion command (one image)
+```bash
+convert source.png -resize 2400x\> -quality 82 -define webp:method=6 target.webp
+```
+
+### Batch script — see `scripts/img-to-webp.sh` (if added) or run inline:
+```bash
+for f in *.png; do
+  convert "$f" -resize 1920x\> -quality 80 -define webp:method=6 "${f%.png}.webp"
+done
+```
+
+### Filename rules (SEO)
+- Lowercase, hyphen-separated, descriptive.
+- Include the case slug or product context.
+- Example: `private-padel-court-cgi-tropical-villa-hero.webp` (not
+  `hero1.webp` or `IMG_1234.webp`).
+
+### Alt-text rules
+- One sentence, 80-160 chars, descriptive of what's *in* the image.
+- Include 1 SEO keyword variant if natural.
+- Never leave alt empty on a content image.
+
+### Upload via REST after Chrome upload
+After uploading via wp-admin Media Library (Chrome MCP), set alt-text +
+title via the WPVibe REST: `POST /wp/v2/media/<id>` with
+`{ alt_text, title }` in the body (string-serialized JSON — see
+`maverickframe-publish` skill for exact pattern).
+
+## 14. When in doubt
 
 - **Code change?** → `git status` first. Edit file, commit, push, watch
   the Action in `github.com/Maverickframe/maverick/actions`.
@@ -319,5 +505,5 @@ contracted developers touch Cycle 1 (code).
 
 ---
 
-_Last updated: 2026-06-02. Edit in place when something changes — don't
+_Last updated: 2026-06-03. Edit in place when something changes — don't
 append "as of 2026-08" updates, just rewrite the relevant section._
