@@ -59,7 +59,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: toRem(8) toRem(16);
+        padding: toRem(6) toRem(12);
         gap: toRem(8);
 
         background: #151515;
@@ -70,11 +70,12 @@
         &::before {
             content: '';
             display: block;
-            width: toRem(8);
-            height: toRem(8);
+            width: toRem(7);
+            height: toRem(7);
     
             background: var(--accent-color);
-            border-radius: 50%;
+            border-radius: 1px;
+            animation: mfs-badge-blink 1.4s ease-in-out infinite;
         }
     }
 }
@@ -183,4 +184,11 @@
             opacity: 1;
         }
     }
+}
+
+@keyframes mfs-badge-blink {
+    0%,
+    100% { opacity: 1; }
+
+    50% { opacity: 0.25; }
 }
