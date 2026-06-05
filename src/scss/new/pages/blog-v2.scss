@@ -1,0 +1,49 @@
+/* =========================================================
+   blog-v2.css
+   ---------------------------------------------------------
+   Standalone stylesheet for the Blog v2 article layout.
+   Loaded ONLY when the post has the "Use Blog v2 layout" toggle ON.
+   See functions.php "blog_v2_assets" hook.
+
+   Sections below are appended as we build them.
+   --------------------------------------------------------- */
+
+/* Foundation tokens (shared with service-v2 design system). */
+.blog-v2 {
+    --c-text-black:       #000000;
+    --c-text-white:       #FFFFFF;
+    --c-text-grey:        #575757;
+    --c-text-light-grey:  #DCDCDC;
+    --c-fill-grey:        #F6F6F6;
+    --c-stroke-grey:      #393939;
+    --c-stroke-light:     #DCDCDC;
+    --c-accent-blue:      #2D40AE;
+    --c-bg-white:         #FFFFFF;
+
+    --ff-base: 'Inter Tight', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    /* Article container (matches Figma 1440 / 1920 frames) */
+    --bv2-container-max: 1660px;
+    --bv2-pad-x: clamp(20px, 6vw, 100px);
+
+    font-family: var(--ff-base);
+    color: var(--c-text-black);
+}
+
+.blog-v2 *,
+.blog-v2 *::before,
+.blog-v2 *::after { box-sizing: border-box; }
+
+.blog-v2 img,
+.blog-v2 picture,
+.blog-v2 svg { max-width: 100%; display: block; }
+
+.blog-v2 .bv2-container {
+    width: 100%;
+    max-width: var(--bv2-container-max);
+    margin: 0 auto;
+    padding-left: var(--bv2-pad-x);
+    padding-right: var(--bv2-pad-x);
+}
+
+/* Sections will be appended here. */
