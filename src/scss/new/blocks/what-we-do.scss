@@ -185,7 +185,8 @@ ul.what-we-do__tabs {
                     grid-column: span 6;
                 }
 
-                &.size-1-3 {
+                &.size-1-3,
+                &.size-2-3 {
                     grid-column: span 4;
                 }
             }
@@ -216,7 +217,7 @@ ul.what-we-do__tabs {
     width: toRem(270);
     height: toRem(330);
 
-    border-radius: toRem(2);
+    border-radius: 1px;
     overflow: hidden;
     color: var(--white-color);
 
@@ -235,7 +236,7 @@ ul.what-we-do__tabs {
 
     @media (min-width: $md) {
         width: 100%;
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     @media (min-width: $lg) {
@@ -293,40 +294,58 @@ ul.what-we-do__tabs {
     right: toRem(12);
     z-index: 2;
 
-    width: toRem(34);
-    height: toRem(34);
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: toRem(6);
+    padding: toRem(7) toRem(10);
 
     background: rgba(13, 17, 38, 0.45);
     -webkit-backdrop-filter: blur(14px) saturate(150%);
     backdrop-filter: blur(14px) saturate(150%);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: toRem(2);
+    border-radius: 1px;
 
+    color: var(--white-color);
+    font-size: toRem(12);
+    font-weight: 500;
+    line-height: 1;
     cursor: pointer;
+
+    animation: mfs-cta-pulse 2s ease-in-out infinite;
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease,
         transform 0.3s ease;
 
     svg {
-        width: toRem(16);
-        height: toRem(16);
+        width: toRem(13);
+        height: toRem(13);
     }
 
     &:disabled {
         opacity: 0.45;
         cursor: default;
+        animation: none;
     }
 
     @media (min-width: $md) {
         &:hover:not(:disabled) {
-            background: rgba(45, 64, 174, 0.65);
+            background: rgba(45, 64, 174, 0.7);
             border-color: rgba(255, 255, 255, 0.45);
-            transform: scale(1.08);
+            transform: scale(1.05);
+            animation: none;
         }
+    }
+}
+
+@keyframes mfs-cta-pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(45, 64, 174, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 4px rgba(45, 64, 174, 0.35);
     }
 }
 

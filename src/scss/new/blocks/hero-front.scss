@@ -95,14 +95,15 @@
 
     li {
         position: relative;
-        padding-left: toRem(22);
+        padding-left: toRem(16);
     }
 
     li::before {
         content: "";
         position: absolute;
         left: 0;
-        top: toRem(11);
+        top: 0.62em;
+        transform: translateY(-50%);
         width: toRem(7);
         height: toRem(7);
         background: var(--accent-color);
@@ -112,10 +113,6 @@
     @media (min-width: $lg) {
         max-width: toRem(549);
         font-size: toRem(18);
-
-        li::before {
-            top: toRem(13);
-        }
     }
 }
 

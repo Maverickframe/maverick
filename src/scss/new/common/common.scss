@@ -24,7 +24,7 @@
     --stroke-grey-color: #393939;
     --stroke-light-grey-color: #dcdcdc;
 
-    --text-grey-color: #575757;
+    --text-grey-color: #404040;
     --text-middle-grey-color: #1e1e1e;
     --text-light-grey-color: #dcdcdc;
 
@@ -291,6 +291,7 @@ h6,
 
         background: currentColor;
         border-radius: 1px;
+        animation: mfs-badge-blink 1.4s ease-in-out infinite;
     }
 
     @media (min-width: $lg) {

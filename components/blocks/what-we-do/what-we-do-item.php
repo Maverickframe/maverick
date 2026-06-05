@@ -12,8 +12,9 @@ $modal_title = $item['modal_title'];
     <?php endif; ?>
 
     <?php if ($modal_title && $service_index !== null): ?>
-        <button class="what-we-do-item__btn js-modal-open" data-modal="what-we-do" data-services-source="what-we-do-json" data-service-index="<?php echo $service_index; ?>" type="button" aria-label="Expand">
+        <button class="what-we-do-item__btn js-modal-open" data-modal="what-we-do" data-services-source="what-we-do-json" data-service-index="<?php echo $service_index; ?>" type="button" aria-label="Open">
             <?php echo inline_svg('icons/expand.svg'); ?>
+            <span>Open</span>
         </button>
     <?php endif; ?>
 

@@ -1,29 +1,29 @@
 @import "../common/_vars";
 
 .faq {
-    margin-bottom: toRem(100);
+    margin-bottom: toRem(60);
 
     @media (min-width: $md) {
-        margin-bottom: toRem(180);
+        margin-bottom: toRem(100);
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(200);
+        margin-bottom: toRem(120);
     }
 }
 
 .faq__info {
-    margin-bottom: toRem(40);
+    margin-bottom: toRem(24);
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: toRem(12);
 
     h2 {
         text-align: center;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: toRem(32);
     }
 }
 
@@ -34,7 +34,7 @@
 
     text-align: center;
     color: var(--text-grey-color);
-    font-size: toRem(16);
+    font-size: toRem(15);
 
     @media (min-width: $md) {
         display: block;
@@ -44,22 +44,22 @@
 .faq__items {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: toRem(12);
 
     @media (min-width: $md) {
         display: grid;
         grid-auto-flow: row;
         grid-template-columns: repeat(2, 1fr);
-        gap: toRem(30) toRem(40);
+        gap: toRem(16) toRem(40);
     }
 
     @media (min-width: $lg) {
-        gap: toRem(40) toRem(60);
+        gap: toRem(20) toRem(60);
     }
 }
 
 .faq-item {
-    padding-bottom: toRem(20);
+    padding-bottom: toRem(12);
     border-bottom: toRem(1) solid var(--stroke-light-grey-color);
 
     &.active {
@@ -71,11 +71,11 @@
     }
 
     @media (min-width: $md) {
-        padding-bottom: toRem(30);
+        padding-bottom: toRem(16);
     }
 
     @media (min-width: $lg) {
-        padding-bottom: toRem(40);
+        padding-bottom: toRem(20);
     }
 }
 
@@ -85,11 +85,11 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: toRem(30);
+    gap: toRem(16);
     width: 100%;
 
     font-weight: 500;
-    font-size: toRem(18);
+    font-size: toRem(16);
     color: var(--black-color);
     text-align: left;
     white-space: normal;
@@ -102,21 +102,21 @@
         background-size: contain;
         background-position: center;
 
-        width: toRem(24);
-        height: toRem(24);
+        width: toRem(20);
+        height: toRem(20);
         flex: 0 0 auto;
 
         transition: transform 0.3s ease;
     }
 
     @media (min-width: $md) {
-        font-size: toRem(20);
-        gap: toRem(60);
+        font-size: toRem(17);
+        gap: toRem(24);
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
-        gap: toRem(200);
+        font-size: toRem(18);
+        gap: toRem(40);
     }
 }
 
@@ -128,22 +128,23 @@
 
 .faq-item__answer-inner {
     width: 100%;
-    padding-right: toRem(54);
-    margin-top: toRem(16);
+    padding-right: toRem(40);
+    margin-top: toRem(12);
 
     font-size: toRem(14);
+    color: var(--text-grey-color);
 
     @media (min-width: $md) {
         padding-right: 0;
         max-width: toRem(600);
-        margin-top: toRem(20);
+        margin-top: toRem(14);
 
-        font-size: toRem(16);
+        font-size: toRem(15);
     }
 
     @media (min-width: $lg) {
         max-width: toRem(650);
 
-        font-size: toRem(18);
+        font-size: toRem(16);
     }
 }

@@ -1,13 +1,13 @@
 @import "../common/_vars";
 
 .performance-scale {
-    margin: toRem(100) 0;
-    padding: toRem(100) 0;
+    margin: toRem(80) 0;
+    padding: toRem(64) 0;
 
     background-color: var(--black-color);
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: toRem(120) 0;
     }
 }
 
@@ -69,7 +69,7 @@
 }
 
 .performance-scale-item {
-    border-radius: toRem(2);
+    border-radius: 1px;
     background-color: var(--white-color);
     position: relative;
 
@@ -93,7 +93,7 @@
         display: block;
 
         object-fit: contain;
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {
@@ -116,7 +116,7 @@
 }
 
 .performance-scale-item__num {
-    font-size: toRem(56);
+    font-size: toRem(44);
     font-weight: 500;
 
     span,
@@ -125,12 +125,12 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(80);
+        font-size: toRem(60);
     }
 }
 
 .performance-scale-item__title {
-    color: var(--text-grey-color);
+    color: var(--text-middle-grey-color);
     font-size: toRem(14);
     font-weight: 500;
 
@@ -144,10 +144,10 @@
 }
 
 .performance-scale-case {
-    border-radius: toRem(2);
+    border-radius: 1px;
     overflow: hidden;
     position: relative;
-    height: toRem(300);
+    height: toRem(220);
 
     &:nth-child(5) {
         grid-row: 2;
@@ -174,7 +174,7 @@
     }
 
     @media (min-width: $lg) {
-        height: toRem(350);
+        height: toRem(260);
     }
 }
 
