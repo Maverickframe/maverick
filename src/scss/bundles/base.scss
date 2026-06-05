@@ -1,13 +1,12 @@
-// Base bundle — loads on every new-design page
-@import "../new/common/fonts";
-@import "../new/common/common";
-@import "../new/common/btns";
-@import "../new/common/header";
-@import "../new/common/footer";
-@import "../new/common/modals";
-@import "../new/common/select";
-@import "../new/common/socials";
-@import "../new/common/slider";
-@import "../new/common/lightbox";
-@import "../new/common/case-item";
-@import "../new/common/editor-styles-wrapper";
+@import url("../new/common/fonts.scss");
+@import url("../new/common/common.scss");
+@import url("../new/common/btns.scss");
+@import url("../new/common/header.scss");
+@import url("../new/common/footer.scss");
+@import url("../new/common/modals.scss");
+@import url("../new/common/select.scss");
+@import url("../new/common/socials.scss");
+@import url("../new/common/slider.scss");
+@import url("../new/common/lightbox.scss");
+@import url("../new/common/case-item.scss");
+@import url("../new/common/editor-styles-wrapper.scss");

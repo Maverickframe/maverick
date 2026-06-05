@@ -48,6 +48,13 @@ export default defineConfig(({ mode }) => {
                     css: resolve(__dirname, env.VITE_STYLES),
                     style: resolve(__dirname, env.VITE_STYLES_NEW),
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
+                    front: resolve(__dirname, "src/scss/bundles/front.scss"),
+                    services: resolve(__dirname, "src/scss/bundles/services.scss"),
+                    presentation: resolve(__dirname, "src/scss/bundles/presentation.scss"),
+                    cases: resolve(__dirname, "src/scss/bundles/cases.scss"),
+                    blog: resolve(__dirname, "src/scss/bundles/blog.scss"),
+                    gallery: resolve(__dirname, "src/scss/bundles/gallery.scss"),
+                    team: resolve(__dirname, "src/scss/bundles/team.scss"),
                 },
             },
 

@@ -26,6 +26,18 @@ function get_template_directory_uri_vite($path = '') {
     return esc_url( get_template_directory_uri() ) . '/' . DIST_DEF . $path;
 }
 
+
+function mfs_page_bundle_key() {
+    if (is_front_page()) return 'src/scss/bundles/front.scss';
+    if (is_singular('blog') || is_page_template('templates/template-blog.php')) return 'src/scss/bundles/blog.scss';
+    if (is_singular('success-stories') || is_page_template('templates/success-stories.php')) return 'src/scss/bundles/cases.scss';
+    if (is_page_template('templates/template-services.php')) return 'src/scss/bundles/services.scss';
+    if (is_page_template('templates/template-gallery.php')) return 'src/scss/bundles/gallery.scss';
+    if (is_page_template('templates/team-page.php') || is_singular('team')) return 'src/scss/bundles/team.scss';
+    if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
+    return 'src/scss/new.scss';
+}
+
 add_action( 'wp_enqueue_scripts', function() {
     if (defined('IS_VITE_DEVELOPMENT') && IS_VITE_DEVELOPMENT == true) {
         define('VITE_ENTRY_POINT', $_ENV["VITE_ENTRY_POINT"]);
@@ -84,7 +96,7 @@ add_action( 'wp_enqueue_scripts', function() {
                             }, 10, 2);
                         }
                     }
-                } else if($key == "src/scss/new.scss")
+                } else if($key == mfs_page_bundle_key())
                 {
                     $css_file = $value['file'];
                     if ( ! empty($css_file)) {
