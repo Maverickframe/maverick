@@ -4,11 +4,6 @@
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 
-// Intermediate responsive sizes (fill gap large(1024)->full). Originals untouched;
-// run `wp media regenerate --only-missing` after deploy.
-add_image_size('mfs-1366', 1366, 9999);
-add_image_size('mfs-1920', 1920, 9999);
-
 // End Theme supports
 
 // New Design
