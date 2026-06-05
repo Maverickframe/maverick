@@ -4,6 +4,11 @@
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 
+// Intermediate responsive sizes (fill gap large(1024)->full). Originals untouched;
+// run `wp media regenerate --only-missing` after deploy.
+add_image_size('mfs-1366', 1366, 9999);
+add_image_size('mfs-1920', 1920, 9999);
+
 // End Theme supports
 
 // New Design
@@ -73,7 +78,8 @@ function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '
         'src' => $src,
         'srcset' => $src,
         'data-src' => wp_get_attachment_image_url($attachment_id, $size),
-        'data-srcset' => wp_get_attachment_image_srcset($attachment_id, $size)
+        'data-srcset' => wp_get_attachment_image_srcset($attachment_id, $size),
+        'data-sizes' => 'auto'
     ]);
 }
 
