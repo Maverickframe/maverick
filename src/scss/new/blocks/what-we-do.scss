@@ -87,9 +87,7 @@ ul.what-we-do__tabs {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 
-    background: var(--white-color);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 6px 16px -10px rgba(16, 24, 40, 0.18);
 
     button {
         flex: 0 0 auto;
@@ -117,21 +115,31 @@ ul.what-we-do__tabs {
 
     @media (min-width: $md) {
         position: sticky;
-        top: calc(var(--header-height) + #{toRem(12)});
+        top: var(--header-height);
         z-index: 3;
+
+        background: rgba(13, 17, 38, 0.42);
+        -webkit-backdrop-filter: blur(32px) saturate(185%);
+        backdrop-filter: blur(32px) saturate(185%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
 
         button {
             white-space: normal;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+
+            &.is-active {
+                color: var(--white-color);
+            }
 
             &:hover:not(.is-active) {
-                color: var(--text-middle-grey-color);
+                color: var(--white-color);
             }
         }
     }
 
     @media (min-width: $lg) {
-        top: calc(var(--header-height) + #{toRem(12)});
-
         button {
             padding: toRem(14) toRem(18);
             font-size: toRem(16);
@@ -252,11 +260,10 @@ ul.what-we-do__tabs {
     left: 0;
     right: 0;
 
-    background: linear-gradient(to top, rgba(16, 20, 40, 0.55) 0%, rgba(16, 20, 40, 0.12) 100%);
-    -webkit-backdrop-filter: blur(24px) saturate(185%) brightness(0.95);
-    backdrop-filter: blur(24px) saturate(185%) brightness(0.95);
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+    background: linear-gradient(to top, rgba(10, 12, 24, 0.45) 0%, rgba(10, 12, 24, 0.05) 100%);
+    -webkit-backdrop-filter: blur(30px) saturate(185%) brightness(0.92);
+    backdrop-filter: blur(30px) saturate(185%) brightness(0.92);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
 
     color: var(--white-color);
 
@@ -271,7 +278,7 @@ ul.what-we-do__tabs {
     h3 {
         font-size: toRem(16);
         font-weight: 500;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     }
 
     @media (min-width: $lg) {
