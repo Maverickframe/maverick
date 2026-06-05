@@ -28,6 +28,9 @@ import './components/select';
 import './components/collapse';
 import './components/gallery';
 import './components/gsap';
-import './components/particlesAnimation';
+// three.js (~600KB) loaded lazily — only on pages with the particles block (worldwide-rendering)
+if (document.querySelector('.js-particles-wrapper')) {
+  import('./components/particlesAnimation');
+}
 import './components/showMoreText';
 import './components/showSidebar';
