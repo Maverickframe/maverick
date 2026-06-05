@@ -213,3 +213,23 @@
         stroke: currentColor;
     }
 }
+
+.blog-item:not(:first-child) {
+    .blog-item__title {
+        transition: color 0.3s ease;
+    }
+
+    .blog-item__link {
+        font-size: 0;
+    }
+
+    .blog-item__link svg {
+        display: none;
+    }
+
+    @media (min-width: $md) {
+        &:hover .blog-item__title {
+            color: var(--accent-color);
+        }
+    }
+}

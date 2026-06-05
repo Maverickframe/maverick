@@ -148,3 +148,14 @@
         font-size: toRem(16);
     }
 }
+
+.faq-item__btn span {
+    flex: 1;
+    min-width: 0;
+}
+
+.faq-item:not(.active) .faq-item__btn span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
