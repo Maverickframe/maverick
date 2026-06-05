@@ -78,8 +78,7 @@ function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '
         'src' => $src,
         'srcset' => $src,
         'data-src' => wp_get_attachment_image_url($attachment_id, $size),
-        'data-srcset' => wp_get_attachment_image_srcset($attachment_id, $size),
-        'data-sizes' => 'auto'
+        'data-srcset' => wp_get_attachment_image_srcset($attachment_id, $size)
     ]);
 }
 
