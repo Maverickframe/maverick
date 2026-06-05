@@ -4,6 +4,13 @@
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 
+// Responsive image sizes — owned by the theme (source of truth, in git).
+// Same names/widths as Perfect Images so existing generated files keep matching (no regenerate).
+add_image_size('card_small', 400, 9999, false);
+add_image_size('case_content', 1024, 9999, false);
+add_image_size('big', 1440, 9999, false);
+add_image_size('hero_full', 1920, 9999, false);
+
 // End Theme supports
 
 // New Design
