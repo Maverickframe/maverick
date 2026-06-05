@@ -46,7 +46,6 @@ export default defineConfig(({ mode }) => {
                 input: {
                     main: resolve(__dirname, env.VITE_ENTRY_POINT),
                     css: resolve(__dirname, env.VITE_STYLES),
-                    style: resolve(__dirname, env.VITE_STYLES_NEW),
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
                     front: resolve(__dirname, "src/scss/bundles/front.scss"),
                     services: resolve(__dirname, "src/scss/bundles/services.scss"),

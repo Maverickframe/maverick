@@ -35,7 +35,7 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/template-gallery.php')) return 'src/scss/bundles/gallery.scss';
     if (is_page_template('templates/team-page.php') || is_singular('team')) return 'src/scss/bundles/team.scss';
     if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
-    return 'src/scss/new.scss';
+    return 'src/scss/bundles/front.scss';
 }
 
 add_action( 'wp_enqueue_scripts', function() {

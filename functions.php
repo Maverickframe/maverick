@@ -683,18 +683,6 @@ function blog_v2_is_active() {
     return (bool) get_field('use_blog_v2', get_queried_object_id());
 }
 
-add_action('wp_enqueue_scripts', function () {
-    if (!blog_v2_is_active()) return;
-    $rel = '/blog-v2.css';
-    $abs = get_template_directory() . $rel;
-    $ver = file_exists($abs) ? filemtime($abs) : null;
-    wp_enqueue_style(
-        'blog-v2',
-        get_template_directory_uri() . $rel,
-        array(),
-        $ver
-    );
-}, 100);
 /* === /Blog v2 enqueue === */
 
 /* === Blog v1 overrides: widths + reading colors ===
@@ -703,18 +691,6 @@ add_action('wp_enqueue_scripts', function () {
    Used-CSS / inline-cleanup optimizations don't strip it. */
 add_action('wp_enqueue_scripts', function () {
     if (!is_singular('blog')) return;
-
-    // CSS overrides
-    $cssRel = '/blog-v1-overrides.css';
-    $cssAbs = get_template_directory() . $cssRel;
-    if (file_exists($cssAbs)) {
-        wp_enqueue_style(
-            'blog-v1-overrides',
-            get_template_directory_uri() . $cssRel,
-            array(),
-            filemtime($cssAbs)
-        );
-    }
 
     // JS enhancements (progress bar, TOC scroll-spy, image lightbox)
     $jsRel = '/blog-v1-enhancements.js';
