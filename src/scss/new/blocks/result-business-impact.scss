@@ -59,7 +59,7 @@
         width: 100%;
         height: toRem(400);
         background: var(--black-color);
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {
@@ -72,7 +72,7 @@
         video {
             height: auto;
             background: var(--black-color);
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
     }
 
@@ -95,7 +95,7 @@
         width: 100%;
         height: 100%;
         background: var(--black-color);
-        border-radius: toRem(2);
+        border-radius: 1px;
         border: none;
     }
 
@@ -107,7 +107,7 @@
         padding: 0;
 
         iframe {
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
     }
 
@@ -121,7 +121,7 @@
         width: 100%;
         height: toRem(400);
         background: var(--black-color);
-        border-radius: toRem(2);
+        border-radius: 1px;
         object-fit: cover;
     }
 
@@ -131,7 +131,7 @@
         img {
             height: auto;
             background: var(--black-color);
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
     }
 

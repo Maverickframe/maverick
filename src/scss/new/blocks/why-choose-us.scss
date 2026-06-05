@@ -57,7 +57,7 @@
 .why-choose-us-item {
     height: toRem(260);
     padding: toRem(20);
-    border-radius: toRem(4);
+    border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
     display: flex;
@@ -135,7 +135,7 @@
     gap: toRem(30);
     padding: toRem(20);
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     background: var(--fill-grey-color);
 
     color: var(--black-color);

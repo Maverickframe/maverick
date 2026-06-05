@@ -146,7 +146,7 @@
     padding: toRem(16);
 
     background-color: var(--fill-grey-color);
-    border-radius: toRem(4);
+    border-radius: 1px;
 
     button {
         font-size: toRem(16);
@@ -186,7 +186,7 @@
 }
 
 .gallery-item {
-    border-radius: toRem(2);
+    border-radius: 1px;
     overflow: hidden;
 
     position: relative;
@@ -255,7 +255,7 @@
 
     @media (min-width: $lg) {
         max-height: toRem(804);
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     iframe,

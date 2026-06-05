@@ -203,7 +203,7 @@
                 scroll-snap-type: x mandatory;
                 scrollbar-width: none;
                 border: toRem(1) solid var(--stroke-light-grey-color);
-                border-radius: toRem(4);
+                border-radius: 1px;
 
                 table {
                     table-layout: auto !important;
@@ -352,7 +352,7 @@
         flex-direction: column;
         justify-content: flex-end;
         overflow: hidden;
-        border-radius: toRem(4);
+        border-radius: 1px;
 
         &-img {
             position: absolute;
@@ -405,7 +405,7 @@
         margin-top: toRem(60);
         margin-left: auto;
         margin-right: auto;
-        border-radius: toRem(4);
+        border-radius: 1px;
         overflow: hidden;
         display: flex;
         align-items: end;
@@ -414,7 +414,7 @@
             max-width: none;
             min-height: toRem(285);
             padding: toRem(40) toRem(30);
-            border-radius: toRem(8);
+            border-radius: 1px;
         }
 
         @media (min-width: $lg) {
@@ -501,7 +501,7 @@
         margin-top: toRem(80);
         width: 100%;
         background-color: var(--fill-grey-color);
-        border-radius: toRem(8);
+        border-radius: 1px;
         padding: toRem(30);
 
         @media (max-width: 1260px) {

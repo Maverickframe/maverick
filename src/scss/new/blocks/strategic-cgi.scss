@@ -68,7 +68,7 @@
         object-fit: cover;
         object-position: center;
 
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {
@@ -77,7 +77,7 @@
         aspect-ratio: auto;
 
         overflow: hidden;
-        border-radius: toRem(2);
+        border-radius: 1px;
 
         img,
         video {
@@ -89,7 +89,7 @@
         width: toRem(845);
         height: toRem(501);
 
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 }
 

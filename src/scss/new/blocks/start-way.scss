@@ -125,7 +125,7 @@
 
 .start-way-item {
     padding: toRem(20);
-    border-radius: toRem(4);
+    border-radius: 1px;
     background-color: var(--fill-grey-color);
 
     display: flex;
@@ -178,7 +178,7 @@
     padding: toRem(24);
     padding-top: toRem(165);
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     position: relative;
     overflow: hidden;
 
@@ -209,7 +209,7 @@
         height: 100%;
 
         object-fit: cover;
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {

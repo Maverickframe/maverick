@@ -99,12 +99,12 @@
     width: toRem(168);
 
     background-color: var(--fill-grey-color);
-    border-radius: toRem(2);
+    border-radius: 1px;
     overflow: hidden;
 
     @media (min-width: $md) {
         width: toRem(287);
-        border-radius: toRem(4);
+        border-radius: 1px;
 
         &:hover {
             .team-item__img img:last-child,

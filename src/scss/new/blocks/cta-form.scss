@@ -11,7 +11,7 @@
     flex-direction: column;
     gap: toRem(60);
 
-    border-radius: toRem(2);
+    border-radius: 1px;
     overflow: hidden;
 
     &::after {
@@ -42,7 +42,7 @@
         flex-direction: row;
         gap: toRem(55);
 
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     @media (min-width: $lg) {
@@ -51,7 +51,7 @@
 
         gap: toRem(180);
 
-        border-radius: toRem(8);
+        border-radius: 1px;
     }
 }
 
@@ -183,7 +183,7 @@
     gap: toRem(20);
 
     background-color: var(--white-color);
-    border-radius: toRem(4);
+    border-radius: 1px;
 
     @media (min-width: $md) {
         padding: toRem(30);
@@ -193,7 +193,7 @@
 
         gap: toRem(30);
 
-        border-radius: toRem(8);
+        border-radius: 1px;
     }
 
     @media (min-width: $lg) {
@@ -281,7 +281,7 @@
 
         background-color: var(--white-color);
         border: toRem(1) solid var(--stroke-light-grey-color);
-        border-radius: toRem(4);
+        border-radius: 1px;
         transition:
             border-color 0.3s ease,
             color 0.3s ease;

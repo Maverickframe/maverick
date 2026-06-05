@@ -48,7 +48,7 @@ ul.project-objectives__items {
     li {
         min-height: toRem(355);
         padding: toRem(20);
-        border-radius: toRem(2);
+        border-radius: 1px;
 
         position: relative;
 
@@ -130,7 +130,7 @@ ul.project-objectives__items {
         @media (min-width: $lg) {
             min-height: toRem(501);
             font-size: toRem(24);
-            border-radius: toRem(4);
+            border-radius: 1px;
 
             &::before {
                 font-size: toRem(100);

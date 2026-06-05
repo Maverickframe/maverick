@@ -238,7 +238,7 @@
     padding: toRem(10);
 
     border: 1px solid var(--stroke-light-grey-color);
-    border-radius: toRem(4);
+    border-radius: 1px;
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(2px);
 
@@ -253,7 +253,7 @@
 
         object-fit: cover;
         display: block;
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     .btn-main {

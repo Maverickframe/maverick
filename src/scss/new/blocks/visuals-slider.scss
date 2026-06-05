@@ -123,7 +123,7 @@
         align-items: center;
         justify-content: center;
 
-        border-radius: toRem(2);
+        border-radius: 1px;
         transition: background-color 0.3s ease;
 
         svg {
@@ -152,7 +152,7 @@
 .visuals-slider-item {
     height: 100%;
     padding: toRem(20);
-    border-radius: toRem(4);
+    border-radius: 1px;
     background-color: var(--fill-grey-color);
 
     picture {
@@ -161,7 +161,7 @@
         display: block;
         height: toRem(200);
         overflow: hidden;
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     img {

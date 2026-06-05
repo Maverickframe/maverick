@@ -64,7 +64,7 @@
         object-fit: cover;
         object-position: center;
 
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {
@@ -81,7 +81,7 @@
         }
 
         & > picture {
-            border-radius: toRem(4);
+            border-radius: 1px;
             overflow: hidden;
             height: toRem(355);
             width: toRem(288);

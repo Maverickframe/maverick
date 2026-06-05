@@ -65,7 +65,7 @@
         background: #151515;
 
         border: 1px solid var(--text-grey-color);
-        border-radius: 2px;
+        border-radius: 1px;
         
         &::before {
             content: '';
@@ -182,11 +182,11 @@
         border-radius: toRem(1);
 
         @media (min-width: $md) {
-            border-radius: toRem(2);
+            border-radius: 1px;
         }
 
         @media (min-width: $lg) {
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
     }
 

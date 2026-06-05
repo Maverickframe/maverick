@@ -120,7 +120,7 @@
         align-items: center;
         justify-content: center;
 
-        border-radius: toRem(2);
+        border-radius: 1px;
         transition: background-color 0.3s ease;
 
         svg {
@@ -147,7 +147,7 @@
 }
 
 .selective-works-item {
-    border-radius: toRem(4);
+    border-radius: 1px;
     overflow: hidden;
 
     &.expanded {
@@ -229,7 +229,7 @@
     flex-direction: column;
     gap: toRem(40);
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     background-color: var(--fill-grey-color);
 
     h3 {

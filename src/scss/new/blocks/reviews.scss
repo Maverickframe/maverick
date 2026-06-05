@@ -3,7 +3,7 @@
 .reviews-section {
     margin: toRem(100) 0;
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     background-color: var(--fill-grey-color);
     padding: toRem(20);
 
@@ -282,7 +282,7 @@
         flex: 0 0 auto;
         position: relative;
 
-        border-radius: toRem(4);
+        border-radius: 1px;
         overflow: hidden;
 
         img {
@@ -293,7 +293,7 @@
             left: 0;
             top: 0;
 
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
 
         &::after {
@@ -405,7 +405,7 @@
 
         object-fit: cover;
         object-position: center;
-        border-radius: toRem(4);
+        border-radius: 1px;
 
         @media (min-width: $lg) {
             height: toRem(230);

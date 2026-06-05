@@ -125,7 +125,7 @@
 }
 
 .key-visuals-item {
-    border-radius: toRem(4);
+    border-radius: 1px;
     border: toRem(1) solid var(--stroke-light-grey-color);
 
     padding: toRem(20);
@@ -142,7 +142,7 @@
         }
 
         .key-visuals-item__img {
-            border-radius: toRem(2);
+            border-radius: 1px;
             margin-bottom: 0;
 
             height: toRem(400);
@@ -161,7 +161,7 @@
             }
 
             .key-visuals-item__img {
-                border-radius: toRem(4);
+                border-radius: 1px;
                 height: toRem(451);
             }
         }

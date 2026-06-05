@@ -101,7 +101,7 @@
 
 .completeness-visual-item {
     height: toRem(350);
-    border-radius: toRem(4);
+    border-radius: 1px;
 
     overflow: hidden;
     position: relative;
@@ -225,7 +225,7 @@
     gap: toRem(20);
     padding: toRem(15);
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     background: var(--fill-grey-color);
 
     color: var(--black-color);

@@ -36,10 +36,10 @@
         height: 100%;
         display: block;
         object-fit: cover;
-        border-radius: toRem(2);
+        border-radius: 1px;
 
         @media (min-width: $md) {
-            border-radius: toRem(4);
+            border-radius: 1px;
         }
     }
 }

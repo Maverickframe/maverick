@@ -19,7 +19,7 @@
         flex-direction: row;
         gap: toRem(35);
 
-        border-radius: toRem(4);
+        border-radius: 1px;
     }
 
     @media (min-width: $lg) {
@@ -111,7 +111,7 @@
         object-fit: cover;
         object-position: center;
         background: var(--black-color);
-        border-radius: toRem(2);
+        border-radius: 1px;
     }
 
     @media (min-width: $md) {
@@ -120,12 +120,12 @@
         flex: 0 0 auto;
         align-self: stretch;
 
-        border-radius: 0 toRem(4) toRem(4) 0;
+        border-radius: 0 1px 1px 0;
         overflow: hidden;
 
         img,
         video {
-            border-radius: 0 toRem(4) toRem(4) 0;
+            border-radius: 0 1px 1px 0;
         }
     }
 

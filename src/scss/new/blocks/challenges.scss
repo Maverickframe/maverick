@@ -113,7 +113,7 @@
         align-items: center;
         justify-content: center;
 
-        border-radius: toRem(2);
+        border-radius: 1px;
         transition: background-color 0.3s ease;
 
         svg {
@@ -142,7 +142,7 @@
 .challenges-item {
     height: 100%;
     padding: toRem(20);
-    border-radius: toRem(4);
+    border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
     display: flex;
@@ -237,7 +237,7 @@
 
     background: rgba(45, 64, 174, 0.05);
     border: 1px solid rgba(45, 64, 174, 0.7);
-    border-radius: toRem(2);
+    border-radius: 1px;
 
     color: var(--accent-color);
     font-size: toRem(14);
