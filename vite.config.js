@@ -45,6 +45,7 @@ export default defineConfig(({ mode }) => {
             rollupOptions: {
                 input: {
                     main: resolve(__dirname, env.VITE_ENTRY_POINT),
+                    particles: resolve(__dirname, "src/js/components/particlesAnimation.js"),
                     css: resolve(__dirname, env.VITE_STYLES),
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
                     front: resolve(__dirname, "src/scss/bundles/front.scss"),

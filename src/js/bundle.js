@@ -28,6 +28,6 @@ import './components/select';
 import './components/collapse';
 import './components/gallery';
 import './components/gsap';
-import './components/particlesAnimation';
+// particlesAnimation: separate Vite entry, enqueued in PHP only on worldwide-rendering block
 import './components/showMoreText';
 import './components/showSidebar';
