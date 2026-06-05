@@ -12,9 +12,9 @@ add_image_size('big', 1440, 9999, false);
 add_image_size('hero_full', 1920, 9999, false);
 
 // Don't generate unused oversized core sizes (replaces Perfect Images' disabling). Keep 'large' — used by templates.
-add_filter('intermediate_image_sizes_advanced', function (\$sizes) {
-    unset(\$sizes['1536x1536'], \$sizes['2048x2048'], \$sizes['medium']);
-    return \$sizes;
+add_filter('intermediate_image_sizes_advanced', function ($sizes) {
+    unset($sizes['1536x1536'], $sizes['2048x2048'], $sizes['medium']);
+    return $sizes;
 });
 
 // End Theme supports
