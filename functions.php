@@ -17,19 +17,6 @@ add_filter('intermediate_image_sizes_advanced', function ($sizes) {
     return $sizes;
 });
 
-// Particles (three.js) — heavy; enqueue its own bundle ONLY where the block exists.
-add_action('wp_enqueue_scripts', function () {
-    if (defined('IS_VITE_DEVELOPMENT') && IS_VITE_DEVELOPMENT) return;
-    if (!has_block('acf/worldwide-rendering')) return;
-    $mf = get_template_directory() . '/build/.vite/manifest.json';
-    if (!file_exists($mf)) return;
-    $m = json_decode(file_get_contents($mf), true);
-    $k = 'src/js/components/particlesAnimation.js';
-    if (!empty($m[$k]['file'])) {
-        wp_enqueue_script('mfs-particles', get_template_directory_uri() . '/build/' . $m[$k]['file'], array(), null, true);
-    }
-}, 20);
-
 // End Theme supports
 
 // New Design
