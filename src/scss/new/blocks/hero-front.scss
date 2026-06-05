@@ -84,9 +84,38 @@
     font-size: toRem(14);
     color: var(--stroke-light-grey-color);
 
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: toRem(12);
+    }
+
+    li {
+        position: relative;
+        padding-left: toRem(22);
+    }
+
+    li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: toRem(11);
+        width: toRem(7);
+        height: toRem(7);
+        background: var(--accent-color);
+        border-radius: 1px;
+    }
+
     @media (min-width: $lg) {
         max-width: toRem(549);
         font-size: toRem(18);
+
+        li::before {
+            top: toRem(13);
+        }
     }
 }
 
