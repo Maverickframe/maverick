@@ -5,6 +5,16 @@ $image = $item['image'];
 $title = $item['title'];
 $description = $item['description'] ?? null;
 $modal_title = $item['modal_title'];
+
+$case = $item['case'] ?? null;
+$service_url = '';
+if ($case instanceof WP_Post) {
+    $service_url = get_permalink($case->ID);
+} elseif (is_array($case) && !empty($case['ID'])) {
+    $service_url = get_permalink((int) $case['ID']);
+} elseif (is_numeric($case)) {
+    $service_url = get_permalink((int) $case);
+}
 ?>
 <div class="what-we-do-item">
     <?php if($image): ?>
@@ -21,9 +31,13 @@ $modal_title = $item['modal_title'];
     <div class="what-we-do-item__info">
         <div>
             <h3><?php echo $title; ?></h3>
-    
+
             <?php if ($description): ?>
                 <div class="what-we-do-item__desc"><?php echo $description; ?></div>
+            <?php endif; ?>
+
+            <?php if ($service_url): ?>
+                <a class="what-we-do-item__service" href="<?php echo esc_url($service_url); ?>">View service</a>
             <?php endif; ?>
         </div>
     </div>

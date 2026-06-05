@@ -490,3 +490,37 @@ ul.what-we-do__tabs {
         }
     }
 }
+
+.what-we-do-item__service {
+    width: fit-content;
+    margin-top: toRem(6);
+
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(6);
+
+    font-size: toRem(13);
+    font-weight: 500;
+    color: var(--white-color);
+
+    transition: opacity 0.3s ease;
+
+    &::after {
+        content: "";
+        width: toRem(14);
+        height: toRem(14);
+        flex: 0 0 auto;
+
+        background-color: currentColor;
+        -webkit-mask: url("/img/icons/arrow-open.svg") no-repeat center / contain;
+        mask: url("/img/icons/arrow-open.svg") no-repeat center / contain;
+
+        transition: transform 0.3s ease;
+    }
+
+    @media (min-width: $md) {
+        &:hover::after {
+            transform: translateX(3px);
+        }
+    }
+}
