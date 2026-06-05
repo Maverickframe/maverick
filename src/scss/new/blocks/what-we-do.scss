@@ -87,7 +87,9 @@ ul.what-we-do__tabs {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 
+    background: var(--white-color);
     border-bottom: 1px solid var(--line);
+    box-shadow: 0 6px 16px -10px rgba(16, 24, 40, 0.18);
 
     button {
         flex: 0 0 auto;
@@ -250,10 +252,11 @@ ul.what-we-do__tabs {
     left: 0;
     right: 0;
 
-    background: linear-gradient(to top, rgba(13, 17, 38, 0.72) 0%, rgba(13, 17, 38, 0.32) 100%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    backdrop-filter: blur(16px) saturate(180%);
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(to top, rgba(16, 20, 40, 0.55) 0%, rgba(16, 20, 40, 0.12) 100%);
+    -webkit-backdrop-filter: blur(24px) saturate(185%) brightness(0.95);
+    backdrop-filter: blur(24px) saturate(185%) brightness(0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
 
     color: var(--white-color);
 
@@ -268,6 +271,7 @@ ul.what-we-do__tabs {
     h3 {
         font-size: toRem(16);
         font-weight: 500;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
 
     @media (min-width: $lg) {
@@ -356,7 +360,7 @@ ul.what-we-do__tabs {
     gap: toRem(30);
     padding: toRem(20);
 
-    border-radius: toRem(4);
+    border-radius: 1px;
     background: var(--fill-grey-color);
 
     color: var(--black-color);
