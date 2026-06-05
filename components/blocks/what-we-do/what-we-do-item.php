@@ -30,7 +30,13 @@ if ($case instanceof WP_Post) {
 
     <div class="what-we-do-item__info">
         <div>
-            <h3><?php echo $title; ?></h3>
+            <h3>
+                <?php if ($service_url): ?>
+                    <a class="what-we-do-item__title-link" href="<?php echo esc_url($service_url); ?>"><?php echo $title; ?></a>
+                <?php else: ?>
+                    <?php echo $title; ?>
+                <?php endif; ?>
+            </h3>
 
             <?php if ($description): ?>
                 <div class="what-we-do-item__desc"><?php echo $description; ?></div>
