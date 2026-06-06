@@ -12,7 +12,7 @@
                 while( have_rows('portfolio_items')) : the_row();
                     $img = get_sub_field('img'); 
             ?>
-                <a href="<?php echo get_page_link( 8 ); ?>" class="portfolio-front-item js-dev-portfolio-item">
+                <a href="<?php echo home_url( '/gallery/' ); ?>" class="portfolio-front-item js-dev-portfolio-item">
                     <?php lazy_attachment($img, 'large'); ?>
                 </a>
             <?php
