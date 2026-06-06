@@ -1844,14 +1844,10 @@ html.single-blog .article-page__cta-button:hover {
 }
 
 /* ============================================================
-   ITERATION 5: hide footer CTA + bottom author block on single-blog
+   ITERATION 5: hide bottom author block on single-blog
+   (footer CTA un-hidden 2026-06-07 per Dima — keep site-wide
+   "Let's create visuals" CTA + Book a call on blog articles)
    ============================================================ */
-
-/* Hide global footer "Let's create visuals" CTA on blog articles */
-html.single-blog .footer__cta,
-html.single-blog .footer .footer__cta {
-    display: none !important;
-}
 
 /* Hide bottom author "View full profile" block — left sidebar already has author-mini */
 html.single-blog .article-page__author {
