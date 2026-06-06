@@ -28,7 +28,7 @@
                     </div>
 
                     <?php if ($review_link): ?>
-                        <a href="<?php echo $review_link; ?>" class="performance-scale-item__review-link" target="_blank"><?php lazy_attachment($icon, 'full'); ?></a>
+                        <a href="<?php echo $review_link; ?>" class="performance-scale-item__review-link" target="_blank" rel="noopener"><?php lazy_attachment($icon, 'full'); ?></a>
                     <?php else: ?>
                         <span class="performance-scale-item__review-link"><?php lazy_attachment($icon, 'full'); ?></span>
                     <?php endif; ?>
