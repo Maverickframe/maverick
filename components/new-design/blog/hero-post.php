@@ -1,10 +1,6 @@
 <?php
-if (get_field('author')) {
-    $author = get_field('author');
-    $authorLink = get_permalink($author->ID);
-    $authorName = get_the_title($author->ID);
-}
 $date = get_the_date('F j, Y');
+$updated = (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) ? get_the_modified_date('F j, Y') : '';
 $readTime = get_field('read_time');
 $categories = get_the_category();
 if ($categories) {
@@ -47,29 +43,16 @@ if (get_field('video')) {
 
     <div class="container">
         <div class="hero-block__main">
-            <?= get_template_part('components/new-design/breadcrumbs', null, [
-                'breadcrumbs' => [
-                    1 => [
-                        'name' => 'Home',
-                        'link' => home_url()
-                    ],
-                    2 => [
-                        'name' => 'Blog',
-                        'link' => home_url('/blog/')
-                    ]
-                ]
-            ]); ?>
-
             <div class="hero-block__metabox metabox js-reveal js-reveal-init" data-anim="up">
-                <?php if ($author): ?>
-                    <a href="<?= $authorLink; ?>" class="metabox__item metabox__item--link">by
-                        <?= $authorName; ?>
-                    </a>
-                    <div class="dot"></div>
-                <?php endif; ?>
                 <span class="metabox__item metabox__item--text">
-                    <?= $date; ?>
+                    Published: <?= $date; ?>
                 </span>
+                <?php if ($updated): ?>
+                    <div class="dot"></div>
+                    <span class="metabox__item metabox__item--text">
+                        Updated: <?= $updated; ?>
+                    </span>
+                <?php endif; ?>
                 <?php if ($readTime): ?>
                     <div class="dot"></div>
                     <span class="metabox__item metabox__item--text">
@@ -85,8 +68,6 @@ if (get_field('video')) {
             </div>
 
             <h1 class="hero-block__title js-reveal js-reveal-init" data-anim="up"><?= $heroTitle; ?></h1>
-
-            <?= get_template_part('components/new-design/share', null, ['class' => ' js-reveal js-reveal-init', 'props' => 'data-anim="up"']); ?>
         </div>
     </div>
 </section>
