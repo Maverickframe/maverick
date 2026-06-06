@@ -6,7 +6,7 @@
                 <?php the_field('portfolio_desc'); ?>
             </div>
 
-            <a href="<?php echo get_page_link( 8 ); ?>" class="btn hero-section__link">
+            <a href="<?php echo home_url( '/gallery/' ); ?>" class="btn hero-section__link">
                 <svg width="13.125rem" height="3rem" viewBox="0 0 210 48" class="border">
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="bg-line" />
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="hl-line" />

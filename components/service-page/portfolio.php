@@ -7,7 +7,7 @@
                     <?php the_field('portfolio_desc'); ?>
                 </p>
 
-                <a href="<?php echo get_page_link( 8 ); ?>" class="btn portfolio-service-section__link">
+                <a href="<?php echo home_url( '/gallery/' ); ?>" class="btn portfolio-service-section__link">
                     Show more
                 </a>
             </div>
