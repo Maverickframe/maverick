@@ -33,6 +33,7 @@
                     <div class="splide__track">
                         <ul class="splide__list">
                             <?php
+                                $i = 0;
                                 while( have_rows('cases_left')) : the_row();
                                     $link = get_sub_field('link');
                                     $image = get_sub_field('image');
@@ -44,8 +45,13 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php lazy_attachment($image, 'full'); ?>
+                                        <?php if ($i < 3) {
+                                            eager_attachment($image, 'full', '(max-width: 767px) 45vw, 288px', $i === 0);
+                                        } else {
+                                            lazy_attachment($image, 'full');
+                                        } ?>
                                         <?php lazy_attachment($hover_image, 'full'); ?>
+                                        <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
                                     <?php else: ?>
@@ -65,6 +71,7 @@
                     <div class="splide__track">
                         <ul class="splide__list">
                             <?php
+                                $i = 0;
                                 while( have_rows('cases_right')) : the_row();
                                     $link = get_sub_field('link');
                                     $image = get_sub_field('image');
@@ -76,8 +83,13 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php lazy_attachment($image, 'full'); ?>
+                                        <?php if ($i < 3) {
+                                            eager_attachment($image, 'full', '(max-width: 767px) 45vw, 288px', $i === 0);
+                                        } else {
+                                            lazy_attachment($image, 'full');
+                                        } ?>
                                         <?php lazy_attachment($hover_image, 'full'); ?>
+                                        <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
                                     <?php else: ?>

@@ -91,6 +91,14 @@ function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '
     ]);
 }
 
+function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority = false)
+{
+    $attrs = ['loading' => 'eager'];
+    if ($sizes) $attrs['sizes'] = $sizes;
+    if ($fetchpriority) $attrs['fetchpriority'] = 'high';
+    echo wp_get_attachment_image($attachment_id, $size, false, $attrs);
+}
+
 // End Lazy load
 
 
