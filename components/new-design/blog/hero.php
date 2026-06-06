@@ -17,6 +17,7 @@ $heroPosts = get_field('hero_posts');
 					echo get_template_part('components/new-design/blog/articles-item', null, [
 						'id' => $heroPost->ID,
 						'class' => $i == 0 ? ' --hero-blog --featured' : ' --hero-blog',
+						'title_tag' => 'p', // hero cards sit above the first H2 — keep heading order sequential
 					]);
 				} ?>
 			</div>

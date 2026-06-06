@@ -5,6 +5,7 @@ $articleDate = $args['date'] ?? get_the_date('F j, Y', $args['id']);
 $articleTitle = $args['title'] ?? get_the_title($args['id']);
 $articleExcerpt = $args['excerpt'] ?? get_the_excerpt($args['id']);
 $articleAuthor = $args['author'] ?? get_field('author', $args['id']);
+$articleTitleTag = $args['title_tag'] ?? 'h3'; // 'p' for cards rendered above the first H2 (heading order)
 ?>
 
 <article class="case-item<?= $args['class'] ?? null; ?>">
@@ -26,9 +27,9 @@ $articleAuthor = $args['author'] ?? get_field('author', $args['id']);
 
             <time datetime="<?= get_the_date('Y-m-d'); ?>" class="case-item__date"><?= $articleDate; ?></time>
 
-            <h3 class="case-item__title<?= $args['class_title'] ?? null; ?>">
+            <<?= $articleTitleTag; ?> class="case-item__title<?= $args['class_title'] ?? null; ?>">
                 <span><?= $articleTitle; ?></span>
-            </h3>
+            </<?= $articleTitleTag; ?>>
 
             <?php if ($articleExcerpt): ?>
                 <p class="case-item__excerpt">
