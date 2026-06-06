@@ -142,7 +142,7 @@
                 eyebrow: 'NEW HERE?',
                 head: 'See how green-architecture concepts look as photoreal renders.',
                 label: 'Browse our portfolio',
-                url: '/portfolio/'
+                url: '/gallery/'
             },
             {
                 variant: 'v2',
@@ -156,7 +156,7 @@
                 eyebrow: 'CASE STUDY',
                 head: 'How one developer cut their approval cycle by 40% with green-architecture CGI.',
                 label: 'Read the case',
-                url: '/portfolio/'
+                url: '/gallery/'
             },
             {
                 variant: 'v4',
