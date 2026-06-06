@@ -1,6 +1,6 @@
 <section class="trusted">
     <div class="container container_small trusted__container">
-        <h2>Trusted by leading teams worldwide</h2>
+        <h2><?php echo ( is_front_page() || ! is_singular() ) ? 'Trusted by leading teams worldwide' : 'Trusted by Leading Teams: ' . esc_html( get_the_title() ); ?></h2>
         
         <div class="trusted__slider one js-reveal">
             <div class="js-presentation-trusted-slider-one splide" role="group" aria-label="Trusted by leading teams">

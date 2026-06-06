@@ -22,10 +22,6 @@ $classes = trim($classes);
         ?>
         <meta name="robots" content="noindex">
     <?php endif; ?>
-    <?php if (get_field('meta_description')): ?>
-        <meta name="description" content="<?php the_field('meta_description'); ?>">
-    <?php endif; ?>
-
     <link rel="manifest" href="<?= get_template_directory_uri(); ?>/site.webmanifest">
     <link rel="icon" href="<?= get_template_directory_uri_vite(); ?>/img/favicon.ico" type="image/x-icon" sizes="any">
     <link rel="icon" href="<?= get_template_directory_uri_vite(); ?>/img/favicon.svg" type="image/svg+xml">
