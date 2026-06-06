@@ -1,0 +1,63 @@
+name: Deploy theme to PRODUCTION (manual only)
+
+# НИКОГДА не запускается автоматически. Только вручную:
+# GitHub -> Actions -> "Deploy theme to PRODUCTION (manual only)" -> Run workflow
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    name: Build assets & deploy to PROD via FTPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets via Vite
+        env:
+          VITE_ENTRY_POINT: /src/js/bundle.js
+          VITE_STYLES: /src/scss/main.scss
+          VITE_STYLES_NEW: /src/scss/new.scss
+          VITE_STYLES_BLOCKS: /src/scss/blocks.scss
+        run: npm run build
+
+      - name: Deploy theme to PRODUCTION
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.PROD_FTP_HOST }}
+          username: ${{ secrets.PROD_FTP_USER }}
+          password: ${{ secrets.PROD_FTP_PASSWORD }}
+          server-dir: /wp-content/themes/maverickframe/
+          protocol: ftps
+          port: 21
+          state-name: .ftp-deploy-state.json
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/.env*
+            .ftp-deploy-state.json
+            .github/**
+            CLAUDE.md
+            README.md
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "::notice title=Deployed::Theme deployed to PRODUCTION - https://maverickframe.com/"
