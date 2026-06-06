@@ -22,7 +22,7 @@ $stages = [
         'head'    => get_field('sidebar_stage1_head')    ?: 'See our green-architecture renders',
         'sub'     => get_field('sidebar_stage1_sub')     ?: 'Look-book of recent projects — passive design, daylight, materials in context.',
         'label'   => get_field('sidebar_stage1_label')   ?: 'Browse portfolio',
-        'url'     => get_field('sidebar_stage1_url')     ?: home_url('/portfolio/'),
+        'url'     => get_field('sidebar_stage1_url')     ?: home_url('/gallery/'),
         'modal'   => false,
     ],
     2 => [
@@ -38,7 +38,7 @@ $stages = [
         'head'    => get_field('sidebar_stage3_head')    ?: '300+ teams trust Maverick Frame',
         'sub'     => get_field('sidebar_stage3_sub')     ?: 'Case study: how we cut a developer\'s approval cycle by 40% with green-CGI.',
         'label'   => get_field('sidebar_stage3_label')   ?: 'Read case study',
-        'url'     => get_field('sidebar_stage3_url')     ?: home_url('/portfolio/'),
+        'url'     => get_field('sidebar_stage3_url')     ?: home_url('/gallery/'),
         'modal'   => false,
     ],
     4 => [
@@ -55,7 +55,7 @@ $stages = [
 
     <div class="sidebar-cta__brand">
         <span class="sidebar-cta__monogram" aria-hidden="true">
-            <img src="<?php echo get_template_directory_uri_vite(); ?>/img/logo.svg" alt="" width="40" height="40">
+            <img src="<?php echo get_template_directory_uri_vite(); ?>/img/logo.svg" alt="Maverick Frame Studio logo" width="40" height="40">
         </span>
         <p class="sidebar-cta__brand-text">
             <span class="sidebar-cta__brand-eyebrow">From <?= esc_html($ctaBrand); ?></span>
