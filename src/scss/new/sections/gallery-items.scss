@@ -21,9 +21,15 @@
     }
 }
 
+.gallery-items__tabs-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+}
+
 .gallery-items__select-mob {
     position: sticky;
-    top: vzr(--header-height);
+    top: var(--header-height);
     padding: toRem(20) 0;
 
     display: flex;
