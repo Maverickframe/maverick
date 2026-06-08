@@ -26,7 +26,7 @@
     max-width: 100%;
     margin: 0 auto;
 
-    border-radius: toRem(8);
+    border-radius: toRem(1);
     overflow: hidden;
 
     position: relative;
@@ -167,7 +167,7 @@
 
         background-color: var(--white-color);
         border: toRem(1) solid var(--stroke-light-grey-color);
-        border-radius: toRem(4);
+        border-radius: toRem(1);
         transition:
             border-color 0.3s ease,
             color 0.3s ease;
@@ -232,7 +232,7 @@
             height: 100%;
             object-fit: cover;
 
-            border-radius: toRem(8) 0 0 toRem(8);
+            border-radius: toRem(1) 0 0 toRem(1);
         }
     }
 
@@ -252,7 +252,7 @@
     width: 100%;
 
     background: var(--white-color);
-    border-radius: toRem(8);
+    border-radius: toRem(1);
 
     @media (min-width: $md) {
         padding: toRem(40);
@@ -377,7 +377,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    border-radius: toRem(8);
+    border-radius: toRem(1);
     color: var(--white-color);
 
     padding: toRem(15);
