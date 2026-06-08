@@ -101,7 +101,7 @@
         ?>
     </ul>
 
-    <button class="menu__cta btn-main js-modal-open" data-modal="book" type="button">
+    <button class="menu__cta btn-main js-modal-open" data-modal="bookcall" type="button">
         Book a call
     </button>
 </nav>

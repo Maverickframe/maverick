@@ -711,6 +711,21 @@ function blog_v2_is_active() {
    Loads blog-v1-overrides.css on every single-blog post (no toggle).
    Real enqueued stylesheet (not inline <style>) so WP Rocket's
    Used-CSS / inline-cleanup optimizations don't strip it. */
+/* Book-a-call CALENDAR modal JS — header CTA, loaded site-wide. */
+add_action('wp_enqueue_scripts', function () {
+    $jsRel = '/book-calendar.js';
+    $jsAbs = get_template_directory() . $jsRel;
+    if (file_exists($jsAbs)) {
+        wp_enqueue_script(
+            'book-calendar',
+            get_template_directory_uri() . $jsRel,
+            array(),
+            filemtime($jsAbs),
+            true
+        );
+    }
+}, 200);
+
 add_action('wp_enqueue_scripts', function () {
     if (!is_singular('blog')) return;
 

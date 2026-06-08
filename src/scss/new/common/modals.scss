@@ -1048,3 +1048,317 @@
 }
 
 // End Modal What We Do
+
+// Modal Book a Call — CALENDAR (header CTA, data-modal="bookcall")
+
+.modal-book-calendar {
+    .modal__inner {
+        background-color: var(--white-color);
+        padding: toRem(20);
+        max-width: toRem(345);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: toRem(20);
+
+        @media (min-width: $md) {
+            max-width: toRem(900);
+            padding: toRem(40);
+            flex-direction: row;
+            gap: toRem(40);
+        }
+    }
+
+    .modal__close {
+        top: toRem(10);
+        right: toRem(10);
+
+        @media (min-width: $md) {
+            top: toRem(20);
+            right: toRem(20);
+        }
+    }
+}
+
+.bookcal__intro {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+
+    @media (min-width: $md) {
+        max-width: toRem(320);
+        flex: 0 0 auto;
+    }
+
+    .modal__title {
+        text-align: left;
+        font-size: toRem(18);
+        font-weight: 500;
+
+        @media (min-width: $md) {
+            font-size: toRem(28);
+        }
+    }
+
+    .modal__desc {
+        text-align: left;
+        font-size: toRem(13);
+        color: var(--text-grey-color);
+
+        ul {
+            list-style: disc;
+            padding-left: toRem(20);
+        }
+    }
+}
+
+.bookcal__panel {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    border-radius: toRem(1);
+    padding: toRem(16);
+    flex: 1;
+
+    @media (min-width: $md) {
+        padding: toRem(28);
+    }
+}
+
+.bookcal__heading {
+    font-size: toRem(16);
+    font-weight: 500;
+    margin-bottom: toRem(14);
+
+    @media (min-width: $md) {
+        font-size: toRem(20);
+    }
+}
+
+.bookcal__cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: toRem(10);
+}
+
+.bookcal__month {
+    font-size: toRem(14);
+    font-weight: 500;
+}
+
+.bookcal__nav {
+    width: toRem(28);
+    height: toRem(28);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: toRem(1);
+    color: var(--white-color);
+    font-size: toRem(16);
+    line-height: 1;
+    cursor: pointer;
+}
+
+.bookcal__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: toRem(3);
+    text-align: center;
+    font-size: toRem(11);
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: toRem(4);
+}
+
+.bookcal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: toRem(3);
+}
+
+.bookcal__day {
+    height: toRem(34);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: toRem(1);
+    background: transparent;
+    color: var(--white-color);
+    font-size: toRem(13);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    &.is-selected {
+        background: var(--white-color);
+        color: var(--accent-color);
+    }
+
+    &.is-disabled {
+        border-color: transparent;
+        color: rgba(255, 255, 255, 0.28);
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+.bookcal__slots-wrap {
+    margin-top: toRem(16);
+}
+
+.bookcal__slots-label {
+    font-size: toRem(12);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: toRem(8);
+}
+
+.bookcal__slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(6);
+}
+
+.bookcal__slot {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: toRem(1);
+    color: var(--white-color);
+    padding: toRem(8) toRem(12);
+    font-size: toRem(13);
+    cursor: pointer;
+
+    &.is-selected {
+        background: var(--white-color);
+        color: var(--accent-color);
+    }
+}
+
+.bookcal__tzrow {
+    display: flex;
+    align-items: center;
+    gap: toRem(6);
+    margin-top: toRem(16);
+}
+
+.bookcal__tz-ico {
+    font-style: normal;
+    font-size: toRem(14);
+    opacity: 0.8;
+}
+
+.bookcal__tz {
+    flex: 1;
+    height: toRem(34);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: toRem(1);
+    color: var(--white-color);
+    font-size: toRem(12);
+    padding: 0 toRem(8);
+
+    option {
+        color: var(--black-color);
+    }
+}
+
+.bookcal__actions {
+    margin-top: toRem(18);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bookcal__continue,
+.bookcal__confirm {
+    line-height: toRem(44);
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: default;
+    }
+}
+
+.bookcal__summary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: toRem(1);
+    padding: toRem(10) toRem(12);
+    font-size: toRem(13);
+    margin-bottom: toRem(14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(10);
+}
+
+.bookcal__change {
+    color: var(--white-color);
+    font-size: toRem(12);
+    text-decoration: underline;
+    flex: 0 0 auto;
+}
+
+.bookcal__form {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+}
+
+.bookcal__field input {
+    width: 100%;
+    height: toRem(44);
+    box-sizing: border-box;
+    padding: 0 toRem(14);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: toRem(1);
+    color: var(--white-color);
+    font-size: toRem(14);
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+.bookcal__confirm {
+    width: 100%;
+    margin-top: toRem(6);
+}
+
+.bookcal__privacy {
+    font-size: toRem(10);
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+    margin-top: toRem(8);
+
+    a {
+        color: var(--white-color);
+        text-decoration: underline;
+    }
+}
+
+.bookcal__step--done {
+    text-align: center;
+    padding-top: toRem(20);
+}
+
+.bookcal__check {
+    width: toRem(54);
+    height: toRem(54);
+    border-radius: 50%;
+    background: var(--white-color);
+    color: var(--accent-color);
+    font-size: toRem(28);
+    line-height: toRem(54);
+    margin: 0 auto toRem(16);
+}
+
+.bookcal__done-text {
+    font-size: toRem(14);
+    margin-bottom: toRem(6);
+}
+
+.bookcal__done-sub {
+    font-size: toRem(12);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+// End Modal Book a Call — CALENDAR

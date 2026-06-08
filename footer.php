@@ -13,6 +13,7 @@
          <?php endif; ?>
 
         <?php echo get_template_part('components/common/modals/modal-book'); ?>
+        <?php echo get_template_part('components/common/modals/modal-book-calendar'); ?>
         <?php echo get_template_part('components/common/modals/modal-download'); ?>
 
         <?php wp_footer(); ?>
