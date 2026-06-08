@@ -725,6 +725,25 @@ add_action('wp_enqueue_scripts', function () {
             filemtime($jsAbs),
             true  // in footer
         );
+
+        // In-article CTAs: per-post override → global (Site Options) → JS baked default.
+        $inCtas = get_field('in_article_ctas');
+        if (empty($inCtas)) {
+            $inCtas = get_field('in_article_ctas', 'options');
+        }
+        $payload = array();
+        if (!empty($inCtas) && is_array($inCtas)) {
+            foreach ($inCtas as $c) {
+                $payload[] = array(
+                    'eyebrow' => isset($c['eyebrow']) ? wp_strip_all_tags($c['eyebrow']) : '',
+                    'head'    => isset($c['head'])    ? wp_strip_all_tags($c['head'])    : '',
+                    'label'   => isset($c['label'])   ? wp_strip_all_tags($c['label'])   : '',
+                    'url'     => isset($c['url']) && $c['url'] ? $c['url'] : '#book',
+                    'modal'   => !empty($c['modal']),
+                );
+            }
+        }
+        wp_localize_script('blog-v1-enhancements', 'mfsBlogCtas', $payload);
     }
 }, 200);
 /* === /Blog v1 width override === */

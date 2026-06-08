@@ -1,55 +1,53 @@
 <?php
 /**
- * Right sidebar CTA — funnel rotator (4 stages).
- * JS in blog-v1-enhancements.js toggles .is-active by scroll progress.
+ * Right sidebar CTA — funnel rotator (up to 4 stages).
+ * JS in blog-v1-enhancements.js toggles .is-active by scroll quartile.
  *
- *   Stage 1 (0-25%)   — Browse portfolio       (soft entry)
- *   Stage 2 (25-50%)  — Download brief         (resource)
- *   Stage 3 (50-75%)  — Case study             (social proof)
- *   Stage 4 (75-100%) — Book a 15-min call     (conversion)
+ * Content source (first non-empty wins):
+ *   1. Per-post override  — ACF repeater `sidebar_stages` on the blog post
+ *   2. Global default     — ACF repeater `sidebar_stages` on Site Options
+ *   3. Baked fallback     — the $fallback array below
  *
- * Each stage is overridable via ACF; sensible defaults baked in.
- * Static trust footer stays visible across all stages.
+ * Brand / proof / rating: Site Options (Blog CTA) → baked default.
  */
 
-$ctaBrand = get_field('sidebar_cta_brand') ?: 'Maverick Frame Studio';
-$ctaProof = get_field('sidebar_cta_proof') ?: 'Trusted by 300+ teams worldwide';
-$ctaRating = get_field('sidebar_cta_rating') ?: '4.9';
+$ctaBrand  = get_field('sidebar_cta_brand', 'options')  ?: 'Maverick Frame Studio';
+$ctaProof  = get_field('sidebar_cta_proof', 'options')  ?: 'Trusted by 300+ teams worldwide';
+$ctaRating = get_field('sidebar_cta_rating', 'options') ?: '4.9';
 
-$stages = [
-    1 => [
-        'eyebrow' => get_field('sidebar_stage1_eyebrow') ?: 'NEW HERE?',
-        'head'    => get_field('sidebar_stage1_head')    ?: 'See our green-architecture renders',
-        'sub'     => get_field('sidebar_stage1_sub')     ?: 'Look-book of recent projects — passive design, daylight, materials in context.',
-        'label'   => get_field('sidebar_stage1_label')   ?: 'Browse portfolio',
-        'url'     => get_field('sidebar_stage1_url')     ?: home_url('/gallery/'),
-        'modal'   => false,
-    ],
-    2 => [
-        'eyebrow' => get_field('sidebar_stage2_eyebrow') ?: 'RESOURCE',
-        'head'    => get_field('sidebar_stage2_head')    ?: 'Get the project brief template we use',
-        'sub'     => get_field('sidebar_stage2_sub')     ?: 'One-pager for green-CGI projects — scope, deliverables, milestones.',
-        'label'   => get_field('sidebar_stage2_label')   ?: 'Download PDF',
-        'url'     => get_field('sidebar_stage2_url')     ?: home_url('/contacts/'),
-        'modal'   => false,
-    ],
-    3 => [
-        'eyebrow' => get_field('sidebar_stage3_eyebrow') ?: 'SOCIAL PROOF',
-        'head'    => get_field('sidebar_stage3_head')    ?: '300+ teams trust Maverick Frame',
-        'sub'     => get_field('sidebar_stage3_sub')     ?: 'Case study: how we cut a developer\'s approval cycle by 40% with green-CGI.',
-        'label'   => get_field('sidebar_stage3_label')   ?: 'Read case study',
-        'url'     => get_field('sidebar_stage3_url')     ?: home_url('/gallery/'),
-        'modal'   => false,
-    ],
-    4 => [
-        'eyebrow' => get_field('sidebar_stage4_eyebrow') ?: 'TALK TO US',
-        'head'    => get_field('sidebar_stage4_head')    ?: 'Working on a project like this?',
-        'sub'     => get_field('sidebar_stage4_sub')     ?: 'Free 15-min consultation. No commitment — just a quick chat about your project.',
-        'label'   => get_field('sidebar_stage4_label')   ?: 'Book a 15-min call',
-        'url'     => get_field('sidebar_stage4_url')     ?: '#book',
-        'modal'   => true,
-    ],
+// Repeater: post override → global options → baked fallback.
+$stages = get_field('sidebar_stages');
+if (empty($stages)) {
+    $stages = get_field('sidebar_stages', 'options');
+}
+
+$fallback = [
+    ['eyebrow' => 'NEW HERE?',    'head' => 'See our latest 3D rendering work',          'sub' => 'A look-book of recent architectural and product visualization projects.', 'label' => 'Browse portfolio',    'url' => home_url('/gallery/'),   'modal' => false],
+    ['eyebrow' => 'RESOURCE',     'head' => 'Get our project brief template',             'sub' => 'A one-pager we use to scope CGI projects — scope, deliverables, milestones.', 'label' => 'Download PDF',        'url' => home_url('/contacts/'),  'modal' => false],
+    ['eyebrow' => 'SOCIAL PROOF', 'head' => '300+ teams trust Maverick Frame',            'sub' => 'See how our visuals helped brands and developers sell faster.',               'label' => 'Read case studies',   'url' => home_url('/success-stories/'), 'modal' => false],
+    ['eyebrow' => 'TALK TO US',   'head' => 'Working on a project like this?',            'sub' => 'Free 15-min consultation. No commitment — just a quick chat about your project.', 'label' => 'Book a 15-min call', 'url' => '#book', 'modal' => true],
 ];
+
+if (empty($stages)) {
+    $stages = $fallback;
+}
+
+// Normalise to a clean 1-based list (max 4) with consistent keys.
+$rows = [];
+$i = 0;
+foreach ($stages as $s) {
+    if ($i >= 4) break;
+    $i++;
+    $rows[$i] = [
+        'eyebrow' => $s['eyebrow'] ?? '',
+        'head'    => $s['head']    ?? '',
+        'sub'     => $s['sub']     ?? '',
+        'label'   => $s['label']   ?? '',
+        'url'     => $s['url']     ?: '#book',
+        'modal'   => !empty($s['modal']),
+    ];
+}
+if (empty($rows)) return;
 ?>
 <aside class="sidebar-cta" data-cta-rotator>
 
@@ -63,7 +61,7 @@ $stages = [
     </div>
 
     <div class="sidebar-cta__stages">
-        <?php foreach ($stages as $i => $s): ?>
+        <?php foreach ($rows as $i => $s): ?>
             <div class="sidebar-cta__stage<?= $i === 1 ? ' is-active' : ''; ?>" data-stage="<?= $i; ?>">
                 <span class="sidebar-cta__eyebrow"><?= esc_html($s['eyebrow']); ?></span>
                 <h3 class="sidebar-cta__head"><?= esc_html($s['head']); ?></h3>

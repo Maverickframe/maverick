@@ -1,6 +1,6 @@
 <?php
 $ctaImageDefault = get_field('blog_cta_img_default', 2055); // From Blog Page
-$ctaImage = get_field('blog_cta_img') ? get_field('blog_cta_img') : $ctaImageDefault;
+$ctaImage = get_field('blog_cta_image') ? get_field('blog_cta_image') : $ctaImageDefault;
 $ctaTitle = get_field('blog_cta_title') ?? 'Turn Ideas Into Visual Stories';
 $ctaText = get_field('blog_cta_text') ?? 'Whether you’re planning a product launch, marketing campaign, or real estate project, high-quality CGI helps communicate ideas clearly and accelerate decision-making. Our team creates photorealistic visuals used in marketing, presentations, and pre-sales worldwide.';
 $ctaButton = get_field('blog_cta_btn');

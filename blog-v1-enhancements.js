@@ -136,37 +136,35 @@
         var h2s = Array.prototype.slice.call(content.querySelectorAll('h2'));
         if (h2s.length < 3) return;
 
-        var ctas = [
+        // Copy source: ACF-driven data (window.mfsBlogCtas, set via
+        // wp_localize_script from per-post override → global Site Options)
+        // falls back to the on-brand baked defaults below when empty.
+        var defaults = [
             {
-                variant: 'v1',
                 eyebrow: 'NEW HERE?',
-                head: 'See how green-architecture concepts look as photoreal renders.',
+                head: 'See our latest photoreal 3D rendering work.',
                 label: 'Browse our portfolio',
                 url: '/gallery/'
             },
             {
-                variant: 'v2',
                 eyebrow: 'RESOURCE',
-                head: 'The one-page brief template we use to scope green-CGI projects.',
+                head: 'The one-page brief template we use to scope CGI projects.',
                 label: 'Download the PDF',
                 url: '/contacts/'
             },
             {
-                variant: 'v3',
                 eyebrow: 'CASE STUDY',
-                head: 'How one developer cut their approval cycle by 40% with green-architecture CGI.',
+                head: 'How our visuals helped a brand sell faster — see the numbers.',
                 label: 'Read the case',
-                url: '/gallery/'
+                url: '/success-stories/'
             },
             {
-                variant: 'v4',
                 eyebrow: 'COMPARE',
-                head: 'Three visualization approaches side by side — cost, time, persuasion.',
+                head: 'CGI vs photography — cost, speed, and flexibility side by side.',
                 label: 'See the comparison',
                 url: '/blog/'
             },
             {
-                variant: 'v5',
                 eyebrow: 'TALK TO US',
                 head: 'Working on a project like this? Let\'s look at it together.',
                 label: 'Book a 15-min call',
@@ -174,6 +172,18 @@
                 modal: true
             }
         ];
+
+        var source = (window.mfsBlogCtas && window.mfsBlogCtas.length) ? window.mfsBlogCtas : defaults;
+        var ctas = source.map(function (c, i) {
+            return {
+                variant: 'v' + (i + 1),
+                eyebrow: c.eyebrow || '',
+                head: c.head || '',
+                label: c.label || '',
+                url: c.url || '#book',
+                modal: !!c.modal || c.url === '#book'
+            };
+        });
 
         var n = Math.min(ctas.length, Math.max(1, h2s.length - 1));
         var step = Math.max(1, Math.floor(h2s.length / (n + 1)));

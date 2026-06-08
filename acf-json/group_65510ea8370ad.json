@@ -181,181 +181,6 @@
             "allow_in_bindings": 0
         },
         {
-            "key": "field_6553a1a1bba3b",
-            "label": "Sidebar Banner",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_69985a4807eee",
-            "label": "Image",
-            "name": "sidebar_banner_img",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "url",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 0,
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_6553a1abbba3c",
-            "label": "Title",
-            "name": "sidebar_banner_title",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Professional 3D Rendering Services for Complex Visual Projects",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_6553a1c2bba3d",
-            "label": "Text",
-            "name": "sidebar_banner_text",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "<ul class=\"list\"><li>Work with Maverick Frame to outsource visualization and creative production to a team of experienced specialists.<\/li><li>From architectural renders to product visuals and animations, everything you need to present projects with impact.<\/li><\/ul>",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_6553a1e2bba3f",
-            "label": "Button",
-            "name": "sidebar_banner_btn",
-            "aria-label": "",
-            "type": "group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_6998590e8a8a2",
-                    "label": "Title",
-                    "name": "title",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "BOOK A CALL",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_699859638a8a3",
-                    "label": "Link",
-                    "name": "link",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "\/contacts\/",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_69b92656a2489",
-                    "label": "Color",
-                    "name": "color",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "btn-main": "Blue",
-                        "btn-cta": "White"
-                    },
-                    "default_value": "btn-cta",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "allow_in_bindings": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "create_options": 0,
-                    "save_options": 0
-                }
-            ]
-        },
-        {
             "key": "field_6998555c9f6c7",
             "label": "CTA",
             "name": "",
@@ -492,7 +317,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "\/contacts\/",
+                    "default_value": "/contacts/",
                     "maxlength": "",
                     "allow_in_bindings": 0,
                     "placeholder": "",
@@ -636,6 +461,314 @@
                     "parent_repeater": "field_699851ecabd30"
                 }
             ]
+        },
+        {
+            "key": "field_mfsbco_tab",
+            "label": "CTA Override",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "Leave these empty to use the global blog CTA settings (Site Options → Blog CTA). Fill a repeater here only to override this single post.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_mfsbco_stages",
+            "label": "Sidebar stages override (max 4)",
+            "name": "sidebar_stages",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Empty = use global sidebar rotator.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 4,
+            "collapsed": "field_mfsbco_s_hd",
+            "button_label": "Add stage",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_mfsbco_s_eb",
+                    "label": "Eyebrow",
+                    "name": "eyebrow",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                },
+                {
+                    "key": "field_mfsbco_s_hd",
+                    "label": "Heading",
+                    "name": "head",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                },
+                {
+                    "key": "field_mfsbco_s_sb",
+                    "label": "Subtext",
+                    "name": "sub",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                },
+                {
+                    "key": "field_mfsbco_s_lb",
+                    "label": "Button label",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                },
+                {
+                    "key": "field_mfsbco_s_ur",
+                    "label": "Button URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                },
+                {
+                    "key": "field_mfsbco_s_md",
+                    "label": "Use Book-a-call modal",
+                    "name": "modal",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "Open Book-a-call modal instead of a link",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_mfsbco_stages"
+                }
+            ]
+        },
+        {
+            "key": "field_mfsbco_incta",
+            "label": "In-article CTAs override (max 5)",
+            "name": "in_article_ctas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Empty = use global in-article CTAs.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 5,
+            "collapsed": "field_mfsbco_i_hd",
+            "button_label": "Add CTA",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_mfsbco_i_eb",
+                    "label": "Eyebrow",
+                    "name": "eyebrow",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_incta"
+                },
+                {
+                    "key": "field_mfsbco_i_hd",
+                    "label": "Heading",
+                    "name": "head",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_incta"
+                },
+                {
+                    "key": "field_mfsbco_i_lb",
+                    "label": "Button label",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_incta"
+                },
+                {
+                    "key": "field_mfsbco_i_ur",
+                    "label": "Button URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_mfsbco_incta"
+                },
+                {
+                    "key": "field_mfsbco_i_md",
+                    "label": "Use Book-a-call modal",
+                    "name": "modal",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "Open Book-a-call modal instead of a link",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_mfsbco_incta"
+                }
+            ]
         }
     ],
     "location": [
@@ -657,5 +790,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1776937746
+    "modified": 1780911640
 }
