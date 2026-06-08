@@ -217,7 +217,16 @@
         var off = tzOffsetMs(STUDIO_TZ, new Date(guess));
         return new Date(guess - off);
     }
+    // US (and other AM/PM) timezones get 12-hour format with AM/PM; the rest 24h.
+    function uses12h(tz) {
+        return /^America\//.test(tz) || tz === 'Pacific/Honolulu';
+    }
     function fmtTime(instant, tz) {
+        if (uses12h(tz)) {
+            return new Intl.DateTimeFormat('en-US', {
+                timeZone: tz, hour: 'numeric', minute: '2-digit', hour12: true
+            }).format(instant);
+        }
         return new Intl.DateTimeFormat('en-GB', {
             timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
         }).format(instant);
