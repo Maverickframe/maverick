@@ -40,6 +40,7 @@ function isNewDesign()
 // Enqueue Scripts and Styles
 
 include "inc.vite.php";
+require_once __DIR__ . '/forms/book-call-handler.php';
 
 // End Enqueue Scripts and Styles
 
@@ -723,6 +724,10 @@ add_action('wp_enqueue_scripts', function () {
             filemtime($jsAbs),
             true
         );
+        wp_localize_script('book-calendar', 'mfsBookCfg', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('pld-ajax-nonce'),
+        ));
     }
 }, 200);
 

@@ -81,6 +81,7 @@ $desc  = get_field('book_a_call_desc', 'options');
                         <input type="text" name="WhatsApp" placeholder="WhatsApp">
                     </label>
                     <button type="submit" class="btn-cta bookcal__confirm">Confirm booking</button>
+                    <p class="bookcal__error" data-bookcal-error role="alert"></p>
                     <p class="bookcal__privacy">By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our <a href="<?php echo get_permalink(6397); ?>">Privacy Policy</a>.</p>
                 </form>
             </div>

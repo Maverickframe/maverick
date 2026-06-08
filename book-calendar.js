@@ -150,12 +150,43 @@
         root.querySelector('[data-back-step1]').addEventListener('click', function (e) {
             e.preventDefault(); go(1);
         });
-        root.querySelector('[data-bookcal-form]').addEventListener('submit', function (e) {
+        var form = root.querySelector('[data-bookcal-form]');
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
-            root.querySelector('[data-done-text]').textContent =
-                fmtDayLabel(state.day) + ' at ' + fmtTime(state.instant, state.tz)
-                + ' (' + tzShort(state.tz) + ')';
-            go(3);
+            if (!state.instant) { go(1); return; }
+
+            var btn = form.querySelector('[type="submit"]');
+            var errEl = form.querySelector('[data-bookcal-error]');
+            if (errEl) errEl.textContent = '';
+            btn.setAttribute('disabled', 'disabled');
+
+            var fd = new FormData(form);
+            fd.append('action', 'mfs_book_call');
+            fd.append('nonce', (window.mfsBookCfg && mfsBookCfg.nonce) || '');
+            fd.append('tz', state.tz);
+            fd.append('duration', String(CALL_MIN));
+            fd.append('slot_iso', state.instant.toISOString());
+            fd.append('slot_studio', fmtDayLabel(state.day) + ' ' + fmtTime(state.instant, STUDIO_TZ) + ' (' + tzShort(STUDIO_TZ) + ')');
+            fd.append('slot_client', fmtDayLabel(state.day) + ' ' + fmtTime(state.instant, state.tz) + ' (' + tzShort(state.tz) + ')');
+
+            var url = (window.mfsBookCfg && mfsBookCfg.ajaxurl) || '/wp-admin/admin-ajax.php';
+            fetch(url, { method: 'POST', body: fd })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    btn.removeAttribute('disabled');
+                    if (res && res.success) {
+                        if (window.dataLayer) window.dataLayer.push({ event: 'generate_lead', form_name: 'book_call_calendar', form_type: 'consultation' });
+                        root.querySelector('[data-done-text]').textContent =
+                            fmtDayLabel(state.day) + ' at ' + fmtTime(state.instant, state.tz) + ' (' + tzShort(state.tz) + ')';
+                        go(3);
+                    } else {
+                        if (errEl) errEl.textContent = (res && res.data && res.data.message) || 'Something went wrong. Please try again.';
+                    }
+                })
+                .catch(function () {
+                    btn.removeAttribute('disabled');
+                    if (errEl) errEl.textContent = 'Network error. Please try again.';
+                });
         });
     }
 

@@ -1323,6 +1323,14 @@
     margin-top: toRem(6);
 }
 
+.bookcal__error {
+    font-size: toRem(12);
+    color: #ffd2d2;
+    text-align: center;
+    margin-top: toRem(8);
+    min-height: toRem(14);
+}
+
 .bookcal__privacy {
     font-size: toRem(10);
     color: rgba(255, 255, 255, 0.55);
