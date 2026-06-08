@@ -15,7 +15,7 @@
             <?php echo inline_svg('icons/close.svg'); ?>
         </button>
 
-        <div class="bookcal__intro">
+        <div class="bookcal__intro" data-intro-sell>
             <h2 class="modal__title">Book your free intro call</h2>
             <p class="bookcal__intro-lead">Pick a time that suits you. It's a quick, no-pressure chat about your project — we'll confirm by email.</p>
             <ul class="bookcal__intro-list">
@@ -24,6 +24,12 @@
                 <li>Honest advice, even if we're not the fit</li>
             </ul>
             <p class="bookcal__intro-note">Free &middot; 30 minutes &middot; No commitment</p>
+        </div>
+
+        <div class="bookcal__intro bookcal__intro--thanks" data-intro-thanks hidden>
+            <h2 class="modal__title">Thank you — you're all set</h2>
+            <p class="bookcal__intro-lead">Your call is saved and a calendar invite is on its way to your inbox. We'll send a meeting link before the call.</p>
+            <p class="bookcal__intro-note">Talk soon — Maverick Frame Studio</p>
         </div>
 
         <div class="bookcal__panel" data-bookcal>

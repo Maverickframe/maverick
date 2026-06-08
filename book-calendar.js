@@ -133,10 +133,16 @@
 
     function wireSteps(root, state) {
         var steps = root.querySelectorAll('.bookcal__step');
+        var modal = root.closest('.modal-book-calendar') || document;
+        var introSell = modal.querySelector('[data-intro-sell]');
+        var introThanks = modal.querySelector('[data-intro-thanks]');
         function go(n) {
             Array.prototype.forEach.call(steps, function (s) {
                 s.hidden = String(s.getAttribute('data-step')) !== String(n);
             });
+            var done = (String(n) === '3');
+            if (introSell) introSell.hidden = done;
+            if (introThanks) introThanks.hidden = !done;
         }
         root.querySelector('[data-to-step2]').addEventListener('click', function () {
             if (this.disabled) return;
