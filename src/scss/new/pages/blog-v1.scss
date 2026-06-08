@@ -678,6 +678,10 @@ html.single-blog .hero-block__metabox {
 html.single-blog .hero-block__metabox .metabox__item {
     color: inherit !important;
     font-size: inherit !important;
+    /* kill the light-hero pill bg/padding that turned into white blocks on mobile */
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
 }
 html.single-blog .hero-block__metabox .dot {
     width: 3px !important;
@@ -2526,4 +2530,63 @@ html.single-blog .article-page__content table tbody tr:first-child td {
 }
 html.single-blog .article-page__content table tbody tr:last-child td {
     border-bottom: 0 none transparent !important;
+}
+
+
+/* =========================================================
+   MOBILE FIX (2026-06-08): redesign broke the < 1024px layout.
+   - TOC sidebar must be a fixed bottom drawer, not a full-height
+     inline block (base .article-page__sticky{position:sticky} was
+     winning over the mobile .js-sidebar{position:fixed} by cascade
+     order, so the TOC dumped to the bottom of the page).
+   - The "Contents" toggle must stay visible + fixed + clickable.
+   - Bottom breadcrumbs must keep side padding (were clipping left).
+   ========================================================= */
+@media (max-width: 1023px) {
+    html.single-blog .article-page__aside--left .article-page__sticky.js-sidebar,
+    html.single-blog div.article-page__sticky.js-sidebar {
+        position: fixed !important;
+        top: auto !important;
+        right: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        bottom: -60px !important;
+        width: min(92vw, 440px) !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        background: #fff !important;
+        border-radius: 1px !important;
+        z-index: 1200 !important;
+        box-sizing: border-box !important;
+        transition: max-height 0.35s ease, bottom 0.35s ease, padding 0.35s ease !important;
+    }
+
+    html.single-blog .article-page__aside--left .article-page__sticky.js-sidebar.opened,
+    html.single-blog div.article-page__sticky.js-sidebar.opened {
+        bottom: 70px !important;
+        max-height: 70vh !important;
+        overflow-y: auto !important;
+        padding: 16px !important;
+    }
+
+    html.single-blog .article-page__toggle.js-sidebar-toggle {
+        display: inline-flex !important;
+        position: fixed !important;
+        bottom: 15px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 1201 !important;
+        border-radius: 1px !important;
+        cursor: pointer !important;
+    }
+
+    /* Bottom breadcrumbs: keep them inside the viewport with side padding */
+    html.single-blog .article-page__breadcrumbs-bottom .container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
