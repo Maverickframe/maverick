@@ -2582,11 +2582,30 @@ html.single-blog .article-page__content table tbody tr:last-child td {
         cursor: pointer !important;
     }
 
-    /* Bottom breadcrumbs: keep them inside the viewport with side padding */
+    /* Bottom breadcrumbs: keep them inside the viewport with side padding,
+       clip any horizontal overflow, and kill the js-reveal transform that
+       made them slide left/right on scroll. */
+    html.single-blog .article-page__breadcrumbs-bottom {
+        overflow-x: hidden !important;
+    }
     html.single-blog .article-page__breadcrumbs-bottom .container {
         padding-left: 20px !important;
         padding-right: 20px !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    html.single-blog .article-page__breadcrumbs-bottom #breadcrumb,
+    html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs,
+    html.single-blog .article-page__breadcrumbs-wrap > * {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+        will-change: auto !important;
+        flex-wrap: wrap !important;
+        max-width: 100% !important;
     }
 }
