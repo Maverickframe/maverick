@@ -1085,6 +1085,10 @@
     flex-direction: column;
     gap: toRem(16);
 
+    &[hidden] {
+        display: none;
+    }
+
     @media (min-width: $md) {
         max-width: toRem(320);
         flex: 0 0 auto;
