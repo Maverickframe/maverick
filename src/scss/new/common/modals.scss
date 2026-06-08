@@ -1096,20 +1096,46 @@
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(28);
+            font-size: toRem(26);
         }
     }
+}
 
-    .modal__desc {
-        text-align: left;
-        font-size: toRem(13);
-        color: var(--text-grey-color);
+.bookcal__intro-lead {
+    font-size: toRem(13);
+    line-height: 1.5;
+    color: var(--text-grey-color);
+}
 
-        ul {
-            list-style: disc;
-            padding-left: toRem(20);
+.bookcal__intro-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+    font-size: toRem(13);
+    color: var(--black-color);
+
+    li {
+        position: relative;
+        padding-left: toRem(22);
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: toRem(6);
+            width: toRem(6);
+            height: toRem(6);
+            background: var(--accent-color);
         }
     }
+}
+
+.bookcal__intro-note {
+    font-size: toRem(12);
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-top: toRem(4);
 }
 
 .bookcal__panel {

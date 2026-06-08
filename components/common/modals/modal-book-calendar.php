@@ -5,8 +5,6 @@
  * Markup shell only; the day grid, time slots, timezone select and step
  * transitions are built by book-calendar.js.
  */
-$title = get_field('book_a_call_title', 'options');
-$desc  = get_field('book_a_call_desc', 'options');
 ?>
 
 <div class="js-modal modal modal-book-calendar" data-modal="bookcall">
@@ -18,8 +16,14 @@ $desc  = get_field('book_a_call_desc', 'options');
         </button>
 
         <div class="bookcal__intro">
-            <h2 class="modal__title"><?php echo $title ?: "Let's schedule a quick online call"; ?></h2>
-            <div class="modal__desc"><?php echo $desc; ?></div>
+            <h2 class="modal__title">Book your free intro call</h2>
+            <p class="bookcal__intro-lead">Pick a time that suits you. It's a quick, no-pressure chat about your project — we'll confirm by email.</p>
+            <ul class="bookcal__intro-list">
+                <li>A clear plan and next steps</li>
+                <li>Realistic timeline and budget range</li>
+                <li>Honest advice, even if we're not the fit</li>
+            </ul>
+            <p class="bookcal__intro-note">Free &middot; 30 minutes &middot; No commitment</p>
         </div>
 
         <div class="bookcal__panel" data-bookcal>
