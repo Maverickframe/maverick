@@ -257,9 +257,22 @@
         return WD[(dt.getDay() + 6) % 7] + ', ' + MONTHS[dt.getMonth()] + ' ' + dt.getDate();
     }
 
+    // Restore calendar-funnel measurement: push "book_call_click" when the
+    // scheduler modal is opened (header CTA). The booking completion is tracked
+    // separately as generate_lead (form_name: book_call_calendar) on submit.
+    function trackOpen() {
+        document.addEventListener('click', function (e) {
+            var trigger = e.target && e.target.closest && e.target.closest('[data-modal="bookcall"]');
+            if (!trigger) return;
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'book_call_click', form_name: 'book_call_calendar' });
+        });
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
+    trackOpen();
 })();
