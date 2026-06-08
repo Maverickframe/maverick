@@ -174,6 +174,7 @@
             fd.append('slot_iso', state.instant.toISOString());
             fd.append('slot_studio', fmtDayLabel(state.day) + ' ' + fmtTime(state.instant, STUDIO_TZ) + ' (' + tzShort(STUDIO_TZ) + ')');
             fd.append('slot_client', fmtDayLabel(state.day) + ' ' + fmtTime(state.instant, state.tz) + ' (' + tzShort(state.tz) + ')');
+            fd.append('page_url', window.location.href);
 
             var url = (window.mfsBookCfg && mfsBookCfg.ajaxurl) || '/wp-admin/admin-ajax.php';
             fetch(url, { method: 'POST', body: fd })

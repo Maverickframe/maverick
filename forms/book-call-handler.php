@@ -22,6 +22,7 @@ function mfs_book_call_handler() {
     $slotIso   = sanitize_text_field($_POST['slot_iso'] ?? '');     // UTC ISO
     $studioStr = sanitize_text_field($_POST['slot_studio'] ?? '');
     $clientStr = sanitize_text_field($_POST['slot_client'] ?? '');
+    $pageUrl   = esc_url_raw($_POST['page_url'] ?? '');
 
     if (!$email || !is_email($email)) {
         wp_send_json_error(['message' => 'A valid email is required.']);
@@ -52,6 +53,7 @@ function mfs_book_call_handler() {
             'whenClient'=> $whenClient,
             'whenStudio'=> $studioStr,
             'tz'        => $tz,
+            'page'      => $pageUrl,
             'ics'       => $ics,
         ]);
     }
@@ -60,7 +62,8 @@ function mfs_book_call_handler() {
     $crmText = "Requested call: {$slotSummary}";
     if ($studioStr) $crmText .= " | studio time: {$studioStr}";
     $crmText .= " | duration: {$duration} min";
-    mfs_amo_create_booking($name, $email, $whatsapp, $crmText);
+    if ($pageUrl) $crmText .= " | page: {$pageUrl}";
+    mfs_amo_create_booking($name, $email, $whatsapp, $crmText, $pageUrl);
 
     // 2) email the visitor an invite
     $icsPath = trailingslashit(get_temp_dir()) . 'mfs-invite-' . wp_generate_password(8, false) . '.ics';
@@ -89,7 +92,8 @@ function mfs_book_call_handler() {
         'Name: ' . esc_html($name) . '<br>' .
         'Email: ' . esc_html($email) . '<br>' .
         'WhatsApp: ' . esc_html($whatsapp) . '<br>' .
-        'Duration: ' . $duration . ' min</p>';
+        'Duration: ' . $duration . ' min<br>' .
+        ($pageUrl ? 'Page: <a href="' . esc_url($pageUrl) . '">' . esc_html($pageUrl) . '</a>' : '') . '</p>';
     wp_mail($studioEmail, 'New call booking — ' . ($name ?: $email), $studioBody, $headers);
 
     if (file_exists($icsPath)) @unlink($icsPath);
@@ -128,7 +132,7 @@ function mfs_build_ics($start, $end, $summary, $description, $organizer, $attend
 /**
  * Create an amoCRM lead (mirrors forms/amo.php, with the slot in the note).
  */
-function mfs_amo_create_booking($name, $email, $whatsapp, $noteText) {
+function mfs_amo_create_booking($name, $email, $whatsapp, $noteText, $pageUrl = '') {
     $creds = require __DIR__ . '/amo-credentials.php';
 
     $contactFields = [];
@@ -152,9 +156,9 @@ function mfs_amo_create_booking($name, $email, $whatsapp, $noteText) {
                 'category'     => 'forms',
                 'form_id'      => 2,
                 'form_name'    => 'Book a Call (Calendar)',
-                'form_page'    => 'Book a Call (Calendar)',
+                'form_page'    => $pageUrl ?: 'Book a Call (Calendar)',
                 'form_sent_at' => time(),
-                'referer'      => 'maverickframe.com',
+                'referer'      => $pageUrl ?: 'maverickframe.com',
             ],
             'contacts' => [[
                 'first_name'           => $name,
