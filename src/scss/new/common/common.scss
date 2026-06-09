@@ -924,3 +924,10 @@ html.single-success-stories .wp-block-paragraph {
         }
     }
 }
+
+/* Contain the trailing "Want a similar result" CTA paragraph on success-stories (was full-bleed, flush-left) */
+html.single-success-stories main > .wp-block-paragraph {
+    max-width: 1750px;
+    margin-inline: auto;
+    padding: 24px 15px 48px;
+}
