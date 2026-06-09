@@ -52,6 +52,7 @@ export default defineConfig(({ mode }) => {
                     presentation: resolve(__dirname, "src/scss/bundles/presentation.scss"),
                     cases: resolve(__dirname, "src/scss/bundles/cases.scss"),
                     blog: resolve(__dirname, "src/scss/bundles/blog.scss"),
+                    blogSingle: resolve(__dirname, "src/scss/bundles/blog-single.scss"),
                     gallery: resolve(__dirname, "src/scss/bundles/gallery.scss"),
                     team: resolve(__dirname, "src/scss/bundles/team.scss"),
                 },

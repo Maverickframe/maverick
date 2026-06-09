@@ -1,0 +1,45 @@
+@import "../common/_vars";
+
+ul.hero-block__breadcrumbs {
+    margin-bottom: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: toRem(4);
+
+    font-size: toRem(16);
+    color: var(--text-light-grey-color);
+
+    a {
+        color: inherit;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: toRem(4);
+
+        &:not(:last-child) {
+            &::after {
+                content: "";
+                background-image: url("/img/icons/arrow-right-breadcrumbs.svg");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
+
+                width: toRem(24);
+                height: toRem(24);
+                flex: 0 0 auto;
+            }
+        }
+    }
+
+    @media (min-width: $md) {
+        margin-bottom: toRem(40);
+    }
+
+    @media (min-width: $lg) {
+        margin-bottom: toRem(70);
+    }
+}
