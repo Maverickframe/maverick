@@ -788,6 +788,10 @@ if (heroHoverSliderLeft) {
   });
 
   splide.mount({ AutoScroll });
+
+  // Recompute ttb loop geometry after images/layout settle
+  // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
+  window.addEventListener('load', () => splide.refresh());
 }
 
 const heroHoverSliderRight = document.querySelector('.js-hero-hover-slider-right');
@@ -817,6 +821,10 @@ if (heroHoverSliderRight) {
   });
 
   splide.mount({ AutoScroll });
+
+  // Recompute ttb loop geometry after images/layout settle
+  // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
+  window.addEventListener('load', () => splide.refresh());
 }
 
 const whatWeDoItems = document.querySelectorAll('.js-what-we-do-slider');
