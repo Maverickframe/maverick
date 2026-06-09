@@ -902,3 +902,25 @@ button {
         background-size: 100% 100%;
     }
 }
+
+/* Visible inline links inside success-story body blocks + FAQ answers (added 2026-06-09) */
+.client-context__info,
+.business-challenge__info,
+.strategic-cgi__info,
+.marketing-sales__info,
+.production-process-item__desc,
+.key-visuals-item__desc,
+.faq-item__answer-inner,
+html.single-success-stories .wp-block-paragraph {
+    a {
+        color: var(--accent-color);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: opacity .2s ease;
+
+        &:hover {
+            text-decoration: none;
+            opacity: .8;
+        }
+    }
+}
