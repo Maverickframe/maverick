@@ -32,6 +32,7 @@ function isNewDesign()
         || is_singular('blog')
         || is_page_template('templates/template-gallery.php')
         || is_page_template('templates/template-services.php')
+        || is_page_template('templates/template-services-hub.php')
         || is_front_page();
 }
 
