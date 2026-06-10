@@ -2,15 +2,16 @@
  * book-calendar.js — Book-a-call CALENDAR modal (header CTA).
  * Front-end stage: visual + interaction only. No submit / real availability yet.
  *
- * Studio working hours live in STUDIO_TZ; slots are converted to the
- * visitor's timezone for display (auto-detected, switchable).
+ * Slots span the full day (00:00–23:30) in the visitor's timezone
+ * (auto-detected, switchable). Slots already in the past are disabled.
+ * STUDIO_TZ is kept only to show the studio-local time on submit.
  */
 (function () {
     'use strict';
 
-    var STUDIO_TZ = 'Europe/London';            // studio reference timezone
-    var WORK_START = 9 * 60;                     // 09:00 (studio local, minutes)
-    var WORK_END = 18 * 60;                      // 18:00
+    var STUDIO_TZ = 'Europe/London';            // studio reference tz (studio-time on submit)
+    var DAY_START = 0;                           // 00:00 — full-day slots in visitor tz
+    var DAY_END = 24 * 60;                       // 24:00
     var SLOT_STEP = 30;                          // minutes
     var CALL_MIN = 30;                           // call length shown to user
     var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -110,24 +111,30 @@
         toStep2.disabled = true;
         var d = state.day;
         slotsLabel.textContent = fmtDayLabel(d) + ' — pick a ' + CALL_MIN + '-min slot';
-        for (var mins = WORK_START; mins < WORK_END; mins += SLOT_STEP) {
-            var instant = studioWallToInstant(d.getFullYear(), d.getMonth(), d.getDate(),
+        var now = Date.now();
+        for (var mins = DAY_START; mins < DAY_END; mins += SLOT_STEP) {
+            var instant = wallToInstant(state.tz, d.getFullYear(), d.getMonth(), d.getDate(),
                 Math.floor(mins / 60), mins % 60);
+            var past = instant.getTime() <= now;
             var label = fmtTime(instant, state.tz);
-            (function (instant, label) {
+            (function (instant, label, past) {
                 var b = document.createElement('button');
                 b.type = 'button';
-                b.className = 'bookcal__slot';
+                b.className = 'bookcal__slot' + (past ? ' is-disabled' : '');
                 b.textContent = label;
-                b.addEventListener('click', function () {
-                    state.instant = instant;
-                    Array.prototype.forEach.call(slotsEl.querySelectorAll('.bookcal__slot'),
-                        function (c) { c.classList.remove('is-selected'); });
-                    b.classList.add('is-selected');
-                    toStep2.disabled = false;
-                });
+                if (past) {
+                    b.disabled = true;
+                } else {
+                    b.addEventListener('click', function () {
+                        state.instant = instant;
+                        Array.prototype.forEach.call(slotsEl.querySelectorAll('.bookcal__slot'),
+                            function (c) { c.classList.remove('is-selected'); });
+                        b.classList.add('is-selected');
+                        toStep2.disabled = false;
+                    });
+                }
                 slotsEl.appendChild(b);
-            })(instant, label);
+            })(instant, label, past);
         }
     }
 
@@ -212,10 +219,13 @@
         var asUTC = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
         return asUTC - date.getTime();
     }
-    function studioWallToInstant(y, m, d, hh, mm) {
+    function wallToInstant(tz, y, m, d, hh, mm) {
         var guess = Date.UTC(y, m, d, hh, mm, 0);
-        var off = tzOffsetMs(STUDIO_TZ, new Date(guess));
+        var off = tzOffsetMs(tz, new Date(guess));
         return new Date(guess - off);
+    }
+    function studioWallToInstant(y, m, d, hh, mm) {
+        return wallToInstant(STUDIO_TZ, y, m, d, hh, mm);
     }
     // US (and other AM/PM) timezones get 12-hour format with AM/PM; the rest 24h.
     function uses12h(tz) {

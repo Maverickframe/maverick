@@ -1260,6 +1260,16 @@
         background: var(--white-color);
         color: var(--accent-color);
     }
+
+    &.is-disabled,
+    &:disabled {
+        background: transparent;
+        border-color: transparent;
+        color: rgba(255, 255, 255, 0.28);
+        cursor: default;
+        pointer-events: none;
+        text-decoration: line-through;
+    }
 }
 
 .bookcal__tzrow {
