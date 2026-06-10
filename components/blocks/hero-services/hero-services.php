@@ -82,8 +82,8 @@
             </div>
 
             <div class="hero__btns">
-                <button class="btn-main fill js-modal-open" data-modal="book" type="button">Book a call</button>
-                <button class="btn-secondary fill js-modal-open" data-modal="download" type="button">Download Catalog</button>
+                <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada'); ?></button>
+                <button class="btn-secondary fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Download Catalog', 'Descargar catálogo'); ?></button>
             </div>
         </div>
 

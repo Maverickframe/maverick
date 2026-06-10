@@ -64,7 +64,7 @@
 
             <div class="services-page__form sp-form">
                 <div class="sp-form__img">
-                    <h2 class="sp-form__title">Contact us</h2>
+                    <h2 class="sp-form__title"><?php echo mfs_t('Contact us', 'Contáctanos'); ?></h2>
                     <img src="<?php echo get_template_directory_uri_vite(); ?>/img/services-contacts.jpg" alt="Contact us" width="437" height="238" class="lazyload">
                 </div>
                 

@@ -767,7 +767,8 @@
     @media (min-width: $md) {
         display: block;
 
-        width: toRem(126);
+        width: auto;
+        min-width: toRem(126);
     }
 }
 

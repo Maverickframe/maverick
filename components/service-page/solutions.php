@@ -62,7 +62,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                Discover More
+                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
                                             </button>
                                         <?php elseif ($link): ?>
                                             <a href="<?php echo $link; ?>" class="service-page-solution__link">
@@ -70,7 +70,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                Discover More
+                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
                                             </a>
                                         <?php else: ?>
                                             <span class="service-page-solution__link">
@@ -78,7 +78,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                Discover More
+                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
                                             </span>
                                         <?php endif; ?>
                                     </div>

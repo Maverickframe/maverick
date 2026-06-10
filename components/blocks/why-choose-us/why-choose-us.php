@@ -64,7 +64,7 @@
             <?php endif; ?>
 
             <button class="btn-main js-modal-open" data-modal="book" type="button">
-                Book a call
+                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
                 <?php echo inline_svg('icons/arrow-open.svg'); ?>
             </button>
         </div>

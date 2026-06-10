@@ -11,7 +11,9 @@
                 </div>
             <?php endif; ?>
 
-            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="btn-main"><?php echo $link['title']; ?></a>
+            <?php if ( is_array($link) && ! empty($link['url']) ) : ?>
+                <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target'] ?: '_self'; ?>" class="btn-main"><?php echo $link['title']; ?></a>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -62,7 +64,7 @@
                                     </ul>
 
                                     <a href="<?php echo get_permalink($case->ID); ?>" class="cases-accordion-item__link btn-main fill" target="_blank">
-                                        Read the story
+                                        <?php echo mfs_t('Read the story', 'Ver el caso'); ?>
                                     </a>
                                 </div>
                             </div>

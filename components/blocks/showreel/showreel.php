@@ -12,7 +12,7 @@ $video = get_field('video');
 
             <div class="showreel__desc"><?php echo $description; ?></div>
 
-            <button class="btn-main fill js-modal-open" data-modal="book" type="button">Book a call</button>
+            <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada'); ?></button>
         </div>
 
         <?php if($video): ?>

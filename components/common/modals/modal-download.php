@@ -53,7 +53,7 @@
                 </label>
 
                 <button class="btn-main fill" type="submit">
-                    Download
+                    <?php echo mfs_t('Download', 'Descargar'); ?>
                 </button>
             </form>
 
