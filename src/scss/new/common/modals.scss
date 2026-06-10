@@ -1418,3 +1418,8 @@
     line-height: 1.4;
     color: var(--text-grey-color);
 }
+
+// Book-a-call form sits on a blue panel — use light text like its privacy note
+.modal-book .modal-form__reassure {
+    color: #dcdcdc;
+}
