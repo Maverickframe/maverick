@@ -55,6 +55,8 @@
                 <button class="btn-main fill" type="submit">
                     <?php echo mfs_t('Download', 'Descargar'); ?>
                 </button>
+
+                <p class="modal-form__reassure"><?php echo mfs_t('Instant download · No spam — we only email about your request.', 'Descarga inmediata · Sin spam — solo te escribimos sobre tu solicitud.'); ?></p>
             </form>
 
             <div class="modal__success">

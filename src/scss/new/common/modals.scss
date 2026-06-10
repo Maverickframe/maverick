@@ -1410,3 +1410,11 @@
 }
 
 // End Modal Book a Call — CALENDAR
+
+// Reassurance microcopy under modal form CTAs (added 2026-06-10)
+.modal-form__reassure {
+    margin-top: toRem(10);
+    font-size: toRem(13);
+    line-height: 1.4;
+    color: var(--text-grey-color);
+}
