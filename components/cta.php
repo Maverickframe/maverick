@@ -61,7 +61,7 @@
                 <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                 <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
             </svg>
-            Send
+            <?php echo mfs_t('Send', 'Enviar'); ?>
         </button>
     
         <div class="contacts-form__success">

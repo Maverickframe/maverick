@@ -40,7 +40,7 @@
                             </div>
 
                             <a class="blog-item__link" href="<?php echo $articlePermalink; ?>">
-                                Read more
+                                <?php echo mfs_t('Read more', 'Leer más'); ?>
 
                                 <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                             </a>
@@ -51,6 +51,8 @@
             </div>
         <?php endif; ?>
 
-        <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="btn-main fill blog-items__link"><?php echo $link['title']; ?></a>
+        <?php if ( is_array($link) && ! empty($link['url']) ) : ?>
+            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target'] ?: '_self'; ?>" class="btn-main fill blog-items__link"><?php echo $link['title']; ?></a>
+        <?php endif; ?>
     </div>
 </section>

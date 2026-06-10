@@ -1,7 +1,13 @@
 <nav class="js-menu menu">
     <ul class="menu__list">
         <?php
-            while( have_rows('menu_items', 'options')) : the_row();
+            // Multilingual: on /es/ pages use the Spanish menu (menu_items_es) when it has
+            // been filled in; otherwise fall back to the default English menu (menu_items).
+            $menu_field = 'menu_items';
+            if ( function_exists('pll_current_language') && pll_current_language() === 'es' && get_field('menu_items_es', 'options') ) {
+                $menu_field = 'menu_items_es';
+            }
+            while( have_rows($menu_field, 'options')) : the_row();
                 $keyname = get_sub_field('keyname');
                 $label = get_sub_field('label');
                 $desktop_label = get_sub_field('desktop_label');
@@ -102,6 +108,6 @@
     </ul>
 
     <button class="menu__cta btn-main js-modal-open" data-modal="bookcall" type="button">
-        Book a call
+        <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
     </button>
 </nav>

@@ -53,7 +53,7 @@
             <p class="hero-block__desc"><?php the_field('description'); ?></p>
 
             <button class="btn-main fill hero-block__cta js-modal-open" data-modal="book" type="button">
-                Book a call
+                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
             </button>
 
             <?php if (have_rows('tags')): ?>

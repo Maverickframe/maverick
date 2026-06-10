@@ -1,4 +1,13 @@
 <?php
+
+// Multilingual: return the Spanish string on Polylang /es/ pages, else the English string.
+// Used for hardcoded UI labels (buttons, etc.) across templates.
+if ( ! function_exists('mfs_t') ) {
+    function mfs_t( $en, $es ) {
+        return ( function_exists('pll_current_language') && pll_current_language() === 'es' ) ? $es : $en;
+    }
+}
+
 // Theme supports
 
 add_theme_support('title-tag');

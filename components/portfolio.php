@@ -11,7 +11,7 @@
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="bg-line" />
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="hl-line" />
                 </svg>
-                Discover more
+                <?php echo mfs_t('Discover more', 'Descubre más'); ?>
             </a>
         </div>
 
@@ -54,7 +54,7 @@
                 <polyline points="209,1 209,47 1,47 1,1 209,1" class="bg-line" />
                 <polyline points="209,1 209,47 1,47 1,1 209,1" class="hl-line" />
             </svg>
-            Show more
+            <?php echo mfs_t('Show more', 'Ver más'); ?>
         </button>
     </div>
 </section>

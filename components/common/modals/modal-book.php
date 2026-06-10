@@ -54,7 +54,7 @@
                 </label>
 
                 <button class="btn-cta fill" type="submit">
-                    Book a call
+                    <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
                 </button>
             </form>
 

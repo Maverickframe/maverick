@@ -64,7 +64,7 @@
                         </p>
 
                         <a href="<?php echo get_permalink($case->ID); ?>" class="performance-scale-case__link" target="_blank">
-                            <span>Read the story</span>
+                            <span><?php echo mfs_t('Read the story', 'Ver el caso'); ?></span>
                             <?php echo inline_svg('icons/arrow-right-menu-white.svg'); ?>
                         </a>
                     </div>

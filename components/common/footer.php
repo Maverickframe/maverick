@@ -1,19 +1,36 @@
+<?php
+// Multilingual helpers: on /es/ prefer the `_es` variant of an ACF Options field (fallback to base),
+// and translate hardcoded UI strings inline.
+$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+$opt = function ($name) use ($is_es) {
+    if ( $is_es ) {
+        $es = get_field($name . '_es', 'options');
+        if ( $es !== '' && $es !== null && $es !== false ) {
+            return $es;
+        }
+    }
+    return get_field($name, 'options');
+};
+$t = function ($en, $es) use ($is_es) {
+    return $is_es ? $es : $en;
+};
+?>
 <footer class="footer">
     <div class="container">
         <div class="footer__top">
             <div class="footer__cta js-reveal">
-                <h2><?php echo $args['footer_title'] ?? get_field('footer_title', 'options'); ?></h2>
-                <p><?php echo $args['footer_description'] ?? get_field('footer_description', 'options'); ?></p>
+                <h2><?php echo $args['footer_title'] ?? $opt('footer_title'); ?></h2>
+                <p><?php echo $args['footer_description'] ?? $opt('footer_description'); ?></p>
 
                 <button class="btn-main js-modal-open" data-modal="book" type="button">
-                    Book a call
+                    <?php echo $t('Book a call', 'Reservar una llamada'); ?>
                 </button>
             </div>
         </div>
 
         <div class="footer__links js-footer-acc">
             <?php
-            $footer_menu = get_field('footer_menu', 'options');
+            $footer_menu = $opt('footer_menu');
             if ($footer_menu):
                 foreach ($footer_menu as $footer_menu_item):
                     $footer_title = $footer_menu_item['title'] ?? '';
@@ -71,7 +88,7 @@
         <div class="footer__contacts">
             <div class="footer__contacts-info">
                 <p class="footer__subtitle">
-                    Contact us
+                    <?php echo $t('Contact us', 'Contáctanos'); ?>
                 </p>
 
                 <ul>
@@ -91,7 +108,7 @@
 
             <div class="footer__reviews">
                 <p class="footer__subtitle">
-                    Review Us
+                    <?php echo $t('Review Us', 'Déjanos tu reseña'); ?>
                 </p>
 
                 <div class="footer__reviews-info">
@@ -110,18 +127,18 @@
         <div class="footer__bottom">
             <div class="footer__copy">
                 <?= inline_svg('icons/copy.svg'); ?>
-                <span>MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED</span>
+                <span><?php echo $t('MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED', 'MAVERICK FRAME STUDIO. TODOS LOS DERECHOS RESERVADOS'); ?></span>
             </div>
 
             <ul class="footer__bottom-links">
                 <li>
-                    <a href="<?php the_field('service_agreement_file', 'options'); ?>" target="_blank">Service Agreement</a>
+                    <a href="<?php the_field('service_agreement_file', 'options'); ?>" target="_blank"><?php echo $t('Service Agreement', 'Contrato de servicio'); ?></a>
                 </li>
                 <li>
-                    <a href="<?= get_permalink(2092) ?>" target="_blank">Editorial Policy</a>
+                    <a href="<?= get_permalink(2092) ?>" target="_blank"><?php echo $t('Editorial Policy', 'Política editorial'); ?></a>
                 </li>
                 <li>
-                    <a href="<?= get_permalink(6397) ?>" target="_blank">Privacy Policy</a>
+                    <a href="<?= get_permalink(6397) ?>" target="_blank"><?php echo $t('Privacy Policy', 'Política de privacidad'); ?></a>
                 </li>
             </ul>
 

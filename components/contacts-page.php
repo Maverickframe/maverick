@@ -68,7 +68,7 @@
                 <div class="contacts-page__img">
                     <img src="<?php echo get_template_directory_uri_vite(); ?>/img/contacts-1.webp" alt="Get in touch" loading="lazy" width="343" height="168">
                     
-                    <h2 class="contacts-page__img-title">Get in touch</h2>
+                    <h2 class="contacts-page__img-title"><?php echo mfs_t('Get in touch', 'Ponte en contacto'); ?></h2>
                 </div>
 
                 <div class="contacts-page__mob-desc">
