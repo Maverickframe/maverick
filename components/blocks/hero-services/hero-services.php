@@ -94,6 +94,7 @@
                 $git_media = $get_in_touch['media'] ?? null;
         ?>
             <?php if ($git_media || $git_title) : ?>
+            <?php $GLOBALS['mfs_hero_cta_rendered'] = true; // suppress the global sticky-cta on this page ?>
             <div class="hero__cta">
                 <?php if ($git_media) : ?>
                     <?php

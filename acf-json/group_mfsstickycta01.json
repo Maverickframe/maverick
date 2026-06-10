@@ -1,0 +1,94 @@
+{
+    "key": "group_mfsstickycta01",
+    "title": "Sticky CTA (Global)",
+    "fields": [
+        {
+            "key": "field_mfssc_enabled",
+            "label": "Enable sticky CTA",
+            "name": "sticky_cta_enabled",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Show the floating video CTA card site-wide (desktop only). Service pages keep their own in-hero card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_mfssc_video",
+            "label": "Video embed (Bunny)",
+            "name": "sticky_cta_video",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Raw Bunny iframe embed for the card window (autoplay + muted + loop recommended).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_mfssc_label",
+            "label": "Button label",
+            "name": "sticky_cta_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Defaults to \"Get In Touch\" when empty.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "Get In Touch",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_mfssc_label_es",
+            "label": "Button label (ES)",
+            "name": "sticky_cta_label_es",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Spanish label for /es/ pages.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "Contáctanos",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "allow_in_bindings": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1781117000
+}

@@ -25,6 +25,11 @@
                 <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada'); ?></button>
                 <button class="btn-secondary fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Explore our work', 'Explora nuestro trabajo'); ?></button>
             </div>
+
+            <button class="hero-front__estimate js-modal-open" data-modal="book" type="button">
+                <span><?php echo mfs_t('Get a free estimate', 'Obtén un presupuesto gratis'); ?></span>
+                <?php echo inline_svg('icons/arrow-up.svg'); ?>
+            </button>
         </div>
 
         <div class="hero-front__sliders">
