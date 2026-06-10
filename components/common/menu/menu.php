@@ -65,17 +65,6 @@
                                                             </li>
                                                         <?php endforeach; ?>
 
-                                                        <?php
-                                                            if (
-                                                                isset($desktop_label) && 
-                                                                isset($permalink) &&
-                                                                $group === end($groups_links)
-                                                            ):
-                                                        ?>
-                                                        <li class="menu__desktop-container">
-                                                            <a href="<?php echo $permalink; ?>" class="menu__desktop-link"><?php echo $desktop_label; ?></a>
-                                                        </li>
-                                                        <?php endif; ?>
                                                     </ul>
                                                 <?php endif; ?>
                                             </li>
@@ -87,6 +76,12 @@
                                     <?php echo get_template_part('components/common/menu/menu-catalog'); ?>
                                 <?php endif;?>
                             </li>
+
+                            <?php if($has_group_links && $keyname != 'company' && $permalink && $desktop_label): ?>
+                                <li class="menu__submenu-footer">
+                                    <a href="<?php echo $permalink; ?>" class="menu__submenu-alllink"><?php echo $desktop_label; ?></a>
+                                </li>
+                            <?php endif; ?>
 
                             <?php if($keyname == 'our_works'): ?>
                                 <?php echo get_template_part('components/common/menu/menu-our-works'); ?>
