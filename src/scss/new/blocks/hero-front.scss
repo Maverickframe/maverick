@@ -116,50 +116,6 @@
     }
 }
 
-.hero-front__estimate {
-    margin-top: toRem(14);
-    padding: 0;
-
-    display: inline-flex;
-    align-items: center;
-    gap: toRem(8);
-
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-
-    font-size: toRem(14);
-    font-weight: 500;
-    color: var(--white-color);
-
-    span {
-        text-decoration: underline;
-        text-underline-offset: toRem(3);
-        text-decoration-color: rgba(255, 255, 255, 0.4);
-        transition:
-            text-decoration-color 0.3s ease,
-            color 0.3s ease;
-    }
-
-    svg {
-        width: toRem(14);
-        height: toRem(14);
-        transition: transform 0.3s ease;
-    }
-
-    &:hover {
-        color: var(--accent-light-color);
-
-        span {
-            text-decoration-color: currentColor;
-        }
-
-        svg {
-            transform: translate(toRem(2), toRem(-2));
-        }
-    }
-}
-
 .hero-front__sliders {
     display: flex;
     flex-direction: column;
