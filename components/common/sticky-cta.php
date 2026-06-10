@@ -37,6 +37,12 @@ if ( $sc_enabled === null ) {
 
 $sc_video = trim( (string) get_field( 'sticky_cta_video', 'options' ) );
 
+// Fallback to the homepage showreel reel when the Options field is empty.
+// Editors can override it via Options → "Sticky CTA (Global)".
+if ( $sc_video === '' ) {
+    $sc_video = '<iframe src="https://iframe.mediadelivery.net/embed/655216/e3ddaf1f-eb40-4f5f-8b7d-5c529bf12265?autoplay=true&loop=true&muted=true&preload=true" loading="lazy" allow="autoplay; fullscreen" title="Maverick Frame showreel"></iframe>';
+}
+
 if ( ! $sc_enabled || $sc_video === '' ) {
     return;
 }
