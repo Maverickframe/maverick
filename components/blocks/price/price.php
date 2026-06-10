@@ -1,4 +1,9 @@
 <section class="price">
+    <?php
+        $mfs_price_is_front = is_front_page();
+        $mfs_tariff_btn = $mfs_price_is_front ? mfs_t('Get a free estimate', 'Solicita un presupuesto gratis') : 'Get Started';
+        $mfs_cta_btn = $mfs_price_is_front ? mfs_t('Get a free estimate', 'Solicita un presupuesto gratis') : mfs_t('Book a call', 'Reservar una llamada');
+    ?>
     <div class="container container_small">
         <div class="price__info">
             <p class="section-subtitle"><?php the_field('subtitle'); ?></p>
@@ -43,7 +48,7 @@
                     </p>
 
                     <button class="btn-main fill js-modal-open" data-modal="book" type="button">
-                        Get Started
+                        <?php echo $mfs_tariff_btn; ?>
                     </button>
                 </div>
             <?php endwhile; ?>
@@ -70,7 +75,7 @@
             <?php endif; ?>
 
             <button class="btn-main js-modal-open" data-modal="book" type="button">
-                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                <?php echo $mfs_cta_btn; ?>
                 <?php echo inline_svg('icons/arrow-open.svg'); ?>
             </button>
         </div>
