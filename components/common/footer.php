@@ -18,6 +18,7 @@ $t = function ($en, $es) use ($is_es) {
 <footer class="footer">
     <div class="container">
         <div class="footer__top">
+            <?php if ( ! is_front_page() ) : // Home uses the Free Test Render section as its closing CTA instead. ?>
             <div class="footer__cta js-reveal">
                 <h2><?php echo $args['footer_title'] ?? $opt('footer_title'); ?></h2>
                 <p><?php echo $args['footer_description'] ?? $opt('footer_description'); ?></p>
@@ -26,6 +27,7 @@ $t = function ($en, $es) use ($is_es) {
                     <?php echo $t('Book a call', 'Reservar una llamada'); ?>
                 </button>
             </div>
+            <?php endif; ?>
         </div>
 
         <div class="footer__links js-footer-acc">
