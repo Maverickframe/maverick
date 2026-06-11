@@ -26,7 +26,7 @@
                                                     <?php echo $review; ?>
                                                 </div>
                         
-                                                <button class="js-desc-more reviews-item__more-btn" type="button">More</button>
+                                                <button class="js-desc-more reviews-item__more-btn" type="button"><?php echo mfs_t('More', 'Más'); ?></button>
                                             </div>
 
                                             <?php if($link): ?>
@@ -82,11 +82,11 @@
                     <ul class="splide__pagination"></ul>
                     <div class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev sr-only">
-                            Prev Review
+                            <?php echo mfs_t('Prev Review', 'Reseña anterior'); ?>
                         </button>
                         <button class="splide__arrow splide__arrow--next">
                             <span>
-                                Next Review
+                                <?php echo mfs_t('Next Review', 'Siguiente reseña'); ?>
                             </span>
                             <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                         </button>
@@ -131,7 +131,7 @@
                                     </div>
 
                                     <button class="reviews-item-thumb__arrow" type="button">
-                                        <span>Next review</span>
+                                        <span><?php echo mfs_t('Next review', 'Siguiente reseña'); ?></span>
                                         <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                                     </button>
                                 </div>
@@ -146,11 +146,11 @@
                     <ul class="splide__pagination"></ul>
                     <div class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev sr-only">
-                            Prev Review
+                            <?php echo mfs_t('Prev Review', 'Reseña anterior'); ?>
                         </button>
                         <button class="splide__arrow splide__arrow--next">
                             <span>
-                                Next Review
+                                <?php echo mfs_t('Next Review', 'Siguiente reseña'); ?>
                             </span>
                             <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                         </button>

@@ -41,10 +41,10 @@
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">
-                        Full Name
+                        <?php echo mfs_t('Full Name', 'Nombre completo'); ?>
                     </span>
 
-                    <input type="text" name="Name" placeholder="Full Name">
+                    <input type="text" name="Name" placeholder="<?php echo esc_attr(mfs_t('Full Name', 'Nombre completo')); ?>">
                 </label>
 
                 <label class="cta-form__input">
@@ -55,7 +55,7 @@
                     <input type="email" name="Email" placeholder="Email*">
 
                     <span class="cta-form__error">
-                        It is not email
+                        <?php echo mfs_t('It is not email', 'El correo no es válido'); ?>
                     </span>
                 </label>
 
@@ -69,16 +69,16 @@
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">
-                        Message
+                        <?php echo mfs_t('Message', 'Mensaje'); ?>
                     </span>
 
-                    <textarea name="Message" placeholder="Message" rows="1"></textarea>
+                    <textarea name="Message" placeholder="<?php echo esc_attr(mfs_t('Message', 'Mensaje')); ?>" rows="1"></textarea>
                 </label>
 
                 <?php // todo: Upload file; ?>
 
                 <button class="btn-main fill" type="submit">
-                    Book a meeting
+                    <?php echo mfs_t('Book a meeting', 'Reservar una reunión'); ?>
                 </button>
             </form>
 
@@ -87,8 +87,8 @@
             </div>
 
             <div class="cta-form__success">
-                <p><b>Thank you – your message has been sent.</b></p>
-                <p>Our team will review your request and get back to you shortly.</p>
+                <p><b><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.'); ?></b></p>
+                <p><?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.'); ?></p>
             </div>
         </div>
     </section>

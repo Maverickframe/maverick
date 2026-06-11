@@ -1,7 +1,7 @@
 <section class="production-process">
     <div class="container container_small">
         <div class="production-process__info">
-            <p class="section-subtitle"><?php echo get_field('subtitle') ?? 'Production Process'; ?></p>
+            <p class="section-subtitle"><?php echo mfs_eyebrow(get_field('subtitle'), 'Production Process'); ?></p>
             <h2><?php the_field('title'); ?></h2>
             <?php if(get_field('description')): ?>
                 <div class="production-process__desc"><?php the_field('description'); ?></div>

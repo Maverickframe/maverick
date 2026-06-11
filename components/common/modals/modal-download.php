@@ -21,7 +21,7 @@
 
                 <label class="modal-form__input">
                     <span class="modal-form__label">
-                        Full Name
+                        <?php echo mfs_t('Full Name', 'Nombre completo'); ?>
                     </span>
 
                     <input type="text" name="Name" placeholder="Alex Smith">
@@ -36,19 +36,19 @@
 
 
                     <span class="modal-form__error">
-                        It is not email
+                        <?php echo mfs_t('It is not email', 'El correo no es válido'); ?>
                     </span>
                 </label>
 
                 <label class="modal-form__input">
                     <span class="modal-form__label">
-                        Phone Number
+                        <?php echo mfs_t('Phone Number', 'Teléfono'); ?>
                     </span>
 
                     <input type="tel" name="Phone" placeholder="+1 (467) 287-1111">
 
                     <span class="modal-form__error">
-                        It is required
+                        <?php echo mfs_t('It is required', 'Campo obligatorio'); ?>
                     </span>
                 </label>
 
@@ -58,8 +58,8 @@
             </form>
 
             <div class="modal__success">
-                <b>Thank you!</b> 
-                The catalog will download automatically. If the catalog didn't load or if you need to get in touch with us, feel free to reach us at <?php echo get_field('footer_phone', 'options') ?> or email us at <a href="mailto:<?php echo get_field("footer_email", 'options'); ?>" target='_blank'><?php echo get_field('footer_email', 'options'); ?></a>
+                <b><?php echo mfs_t('Thank you!', '¡Gracias!'); ?></b>
+                <?php echo mfs_t('The catalog will download automatically. If the catalog didn\'t load or if you need to get in touch with us, feel free to reach us at', 'El catálogo se descargará automáticamente. Si no se descarga o necesitas contactarnos, llámanos al'); ?> <?php echo get_field('footer_phone', 'options') ?> <?php echo mfs_t('or email us at', 'o escríbenos a'); ?> <a href="mailto:<?php echo get_field("footer_email", 'options'); ?>" target='_blank'><?php echo get_field('footer_email', 'options'); ?></a>
             </div>
         </div>
     </div>

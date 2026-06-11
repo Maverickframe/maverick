@@ -1,7 +1,7 @@
 <section class="why-choose-us">
     <div class="container container_small">
         <div class="why-choose-us__info">
-            <p class="section-subtitle"><?php the_field('subtitle'); ?></p>
+            <p class="section-subtitle"><?php echo mfs_eyebrow(get_field('subtitle')); ?></p>
             <h2><?php the_field('title'); ?></h2>  
             <?php if(get_field('description')): ?>
                 <p class="p1"><?php the_field('description'); ?></p>

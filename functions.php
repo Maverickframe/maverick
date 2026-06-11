@@ -8,6 +8,40 @@ if ( ! function_exists('mfs_t') ) {
     }
 }
 
+// Multilingual section eyebrows: resolve the ACF value (or a hardcoded English default),
+// then on /es/ map known English eyebrow labels to Spanish. Handles both empty-field
+// (template default) and untranslated-English-content cases without per-page edits.
+if ( ! function_exists('mfs_eyebrow') ) {
+    function mfs_eyebrow( $value, $default_en = '' ) {
+        $v = ( $value !== '' && $value !== null ) ? $value : $default_en;
+        if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
+            $map = array(
+                'Production Process'  => 'Proceso de producción',
+                'Visual Results'      => 'Resultados visuales',
+                'Why Choose Us'       => 'Por qué elegirnos',
+                'What we do'          => 'Qué hacemos',
+                'Performance at scale' => 'Rendimiento a escala',
+                'Key Visuals'         => 'Visuales clave',
+                'Services Provided'   => 'Servicios prestados',
+                'Our Process'         => 'Nuestro proceso',
+            );
+            return isset( $map[$v] ) ? $map[$v] : $v;
+        }
+        return $v;
+    }
+}
+
+// Multilingual: expose UI strings rendered by JS (modals, sliders) so the bundle
+// can localize them. Read in src/js via window.MFS_I18N (falls back to English).
+add_action( 'wp_head', function () {
+    $i18n = array(
+        'exploreService' => mfs_t( 'Explore service', 'Ver servicio' ),
+        'bookACall'      => mfs_t( 'Book a call', 'Reservar una llamada' ),
+        'nextReview'     => mfs_t( 'Next review', 'Siguiente reseña' ),
+    );
+    echo '<script>window.MFS_I18N=' . wp_json_encode( $i18n ) . ';</script>' . "\n";
+}, 1 );
+
 // Theme supports
 
 add_theme_support('title-tag');

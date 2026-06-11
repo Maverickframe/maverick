@@ -21,7 +21,7 @@
                     <div class="price-item__header">
                         <?php echo inline_svg("icons/price-$index.svg"); ?>
 
-                        <?php if($index == 2): ?><span class="price-item__badge">Most Popular</span><?php endif; ?>
+                        <?php if($index == 2): ?><span class="price-item__badge"><?php echo mfs_t('Most Popular', 'Más popular'); ?></span><?php endif; ?>
                     </div>
 
                     <h3 class="price-item__title"><?php echo $title; ?></h3>
@@ -35,7 +35,7 @@
                     </p>
 
                     <p class="price-item__best-for-title">
-                        Best for
+                        <?php echo mfs_t('Best for', 'Ideal para'); ?>
                     </p>
 
                     <p class="price-item__best-for">
@@ -43,7 +43,7 @@
                     </p>
 
                     <button class="btn-main fill js-modal-open" data-modal="book" type="button">
-                        Get Started
+                        <?php echo mfs_t('Get Started', 'Empezar'); ?>
                     </button>
                 </div>
             <?php endwhile; ?>
