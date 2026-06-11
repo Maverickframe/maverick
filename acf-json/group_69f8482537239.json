@@ -79,10 +79,10 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
+            "layout": "block",
             "pagination": 0,
             "min": 0,
-            "max": 3,
+            "max": 30,
             "collapsed": "",
             "button_label": "Add Row",
             "rows_per_page": 20,
@@ -107,6 +107,36 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
+                    "parent_repeater": "field_69f848253a342"
+                },
+                {
+                    "key": "field_69f848type001",
+                    "label": "Type",
+                    "name": "type",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "Controls the filter tab and badge colour.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "award": "Award",
+                        "nominee": "Nominee",
+                        "featured": "Featured",
+                        "member": "Member"
+                    },
+                    "default_value": "award",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "allow_in_bindings": 0,
                     "parent_repeater": "field_69f848253a342"
                 },
                 {
@@ -224,5 +254,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1777879189
+    "modified": 1781203600
 }
