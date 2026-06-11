@@ -1,0 +1,16 @@
+{
+  "name": "acf/quiz",
+  "title": "Lead Quiz",
+  "description": "",
+  "category": "layout",
+  "icon": "forms",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "quiz.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

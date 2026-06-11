@@ -1,0 +1,326 @@
+@import "../common/_vars";
+
+/* Lead Quiz — dark brand section + white quiz card. Colors hardcoded so the
+   block renders correctly regardless of which CSS bundle a page loads. */
+
+.mfsq {
+    padding: toRem(64) 0;
+    background-color: #0d1126;
+    background-image:
+        radial-gradient(60% 80% at 85% 0%, rgba(64, 96, 235, 0.22), transparent 55%),
+        radial-gradient(55% 75% at 0% 100%, rgba(40, 64, 170, 0.16), transparent 60%);
+
+    @media (min-width: $md) {
+        padding: toRem(90) 0;
+    }
+}
+
+.mfsq__intro {
+    text-align: center;
+    color: #fff;
+    margin-bottom: toRem(28);
+
+    .section-subtitle {
+        color: #fff;
+        justify-content: center;
+    }
+
+    h2 {
+        color: #fff;
+        font-size: toRem(26);
+        font-weight: 400;
+        margin: toRem(10) 0;
+
+        @media (min-width: $md) {
+            font-size: toRem(40);
+        }
+    }
+}
+
+.mfsq__sub {
+    font-size: toRem(14);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: toRem(520);
+    margin: 0 auto;
+
+    @media (min-width: $md) {
+        font-size: toRem(16);
+    }
+}
+
+.mfsq__card {
+    max-width: toRem(720);
+    margin: 0 auto;
+    padding: toRem(22);
+
+    background: #fff;
+    border-radius: 1px;
+
+    @media (min-width: $md) {
+        padding: toRem(36) toRem(40);
+    }
+}
+
+.mfsq__head {
+    margin-bottom: toRem(24);
+}
+
+.mfsq__count {
+    font-size: toRem(13);
+    color: #5f5e5a;
+}
+
+.mfsq__bar {
+    display: flex;
+    gap: toRem(6);
+    margin-top: toRem(8);
+
+    span {
+        flex: 1;
+        height: toRem(4);
+        border-radius: 1px;
+        background: #e6e6ea;
+        transition: background 0.25s ease;
+
+        &.is-on {
+            background: #2d40ae;
+        }
+    }
+}
+
+.mfsq__step {
+    display: none;
+
+    &.is-on {
+        display: block;
+    }
+
+    h3 {
+        font-size: toRem(19);
+        font-weight: 500;
+        color: #0d1126;
+        margin: 0 0 toRem(16);
+
+        @media (min-width: $md) {
+            font-size: toRem(22);
+        }
+    }
+}
+
+.mfsq__opts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: toRem(10);
+
+    @media (min-width: $md) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.mfsq__opt {
+    width: 100%;
+    padding: toRem(15) toRem(18);
+
+    text-align: left;
+    background: #fff;
+    border: 1px solid #e6e6ea;
+    border-radius: 1px;
+
+    font-family: inherit;
+    font-size: toRem(15);
+    color: #0d1126;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+        border-color: #2d40ae;
+        background: #f6f7fe;
+    }
+}
+
+.mfsq__looks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: toRem(12);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.mfsq__look {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+
+    background: #fff;
+    border: 1px solid #e6e6ea;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        border-color: #2d40ae;
+        transform: translateY(-2px);
+    }
+
+    &-img {
+        display: block;
+        line-height: 0;
+
+        img {
+            width: 100%;
+            height: toRem(104);
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    &-cap {
+        padding: toRem(10) toRem(6);
+        font-size: toRem(13);
+        text-align: center;
+        color: #0d1126;
+    }
+}
+
+.mfsq__gate-sub {
+    font-size: toRem(14);
+    line-height: 1.6;
+    color: #5f5e5a;
+    margin: 0 0 toRem(16);
+}
+
+.mfsq__input {
+    width: 100%;
+    height: toRem(48);
+    padding: 0 toRem(16);
+    margin-bottom: toRem(10);
+
+    border: 1px solid #e6e6ea;
+    border-radius: 1px;
+    font-family: inherit;
+    font-size: toRem(15);
+    color: #0d1126;
+
+    &:focus {
+        outline: none;
+        border-color: #2d40ae;
+    }
+
+    &::placeholder {
+        color: #8a8a86;
+    }
+}
+
+.mfsq__submit {
+    width: 100%;
+    height: toRem(52);
+    margin-top: toRem(4);
+
+    background: #2d40ae;
+    color: #fff;
+    border: none;
+    border-radius: 1px;
+
+    font-family: inherit;
+    font-size: toRem(15);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: #24348a;
+    }
+}
+
+.mfsq__fine {
+    font-size: toRem(11);
+    color: #8a8a86;
+    margin: toRem(10) 0 0;
+}
+
+.mfsq__back {
+    display: none;
+    margin-top: toRem(18);
+    padding: 0;
+
+    background: none;
+    border: none;
+    color: #5f5e5a;
+    font-family: inherit;
+    font-size: toRem(13);
+    cursor: pointer;
+
+    &.is-on {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: #0d1126;
+    }
+}
+
+/* Result (injected by quiz.js) */
+.mfsq__result {
+    &-eyebrow {
+        font-size: toRem(13);
+        color: #5f5e5a;
+        margin: 0;
+    }
+
+    &-head {
+        font-size: toRem(22);
+        font-weight: 500;
+        color: #0d1126;
+        margin: toRem(6) 0 toRem(14);
+        line-height: 1.25;
+    }
+
+    &-row {
+        display: flex;
+        align-items: flex-start;
+        gap: toRem(8);
+        padding: toRem(9) 0;
+        border-top: 1px solid #ececed;
+        font-size: toRem(14);
+        color: #0d1126;
+
+        b {
+            font-weight: 500;
+        }
+
+        &::before {
+            content: "";
+            flex: 0 0 auto;
+            width: toRem(7);
+            height: toRem(7);
+            margin-top: toRem(6);
+            border-radius: 1px;
+            background: #2d40ae;
+        }
+    }
+
+    &-success {
+        text-align: center;
+        padding: toRem(24) toRem(8);
+
+        p {
+            margin: toRem(6) 0;
+        }
+
+        .h {
+            font-size: toRem(17);
+            font-weight: 500;
+            color: #0d1126;
+        }
+
+        .s {
+            font-size: toRem(14);
+            color: #5f5e5a;
+            line-height: 1.5;
+        }
+    }
+}

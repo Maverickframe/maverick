@@ -33,3 +33,4 @@ import './components/showMoreText';
 import './components/showSidebar';
 import './components/sticky-cta';
 import './components/modal-offer';
+import './components/quiz';
