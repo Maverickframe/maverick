@@ -10,16 +10,7 @@
 
     <main class="main inner-page success-stories-page">
         <div class="container">
-            <?php echo get_template_part('components/new-design/breadcrumbs', null, [
-                'breadcrumbs' => [
-                    1 => [
-                        'name' => 'Home',
-                        'link' => home_url()
-                    ]
-                ]
-            ]); ?>
-
-            <section class="hero__main">
+            <section class="hero__main" style="margin-top: 64px;">
                 <h1 class="hero__title"><?php echo esc_html(get_post_meta(get_the_ID(), 'hero_title', true)); ?></h1>
 
                 <?php $hub_hero_desc = get_post_meta(get_the_ID(), 'hero_description', true); ?>

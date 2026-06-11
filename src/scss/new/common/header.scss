@@ -1328,3 +1328,50 @@ a.menu__icons-link {
         }
     }
 }
+
+
+// Prominent "All Services" link at the bottom of the Services mega-menu dropdown
+.menu__submenu-footer {
+    display: none;
+
+    @media (min-width: $md) {
+        display: block;
+        flex: 0 0 100%;
+        width: 100%;
+        margin-top: toRem(24);
+        padding-top: toRem(20);
+        border-top: toRem(1) solid var(--stroke-light-grey-color);
+    }
+}
+
+.menu__submenu-alllink {
+    @media (min-width: $md) {
+        display: inline-flex;
+        align-items: center;
+        gap: toRem(10);
+
+        font-size: toRem(15);
+        font-weight: 600;
+        white-space: nowrap;
+
+        color: var(--accent-color);
+        transition: color 0.3s ease, gap 0.3s ease;
+
+        &::after {
+            content: "";
+            flex: 0 0 auto;
+            width: toRem(20);
+            height: toRem(20);
+
+            background-image: url("/img/icons/arrow-right-accent.svg");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        &:hover {
+            color: var(--accent-dark-color);
+            gap: toRem(16);
+        }
+    }
+}

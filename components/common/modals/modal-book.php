@@ -56,6 +56,8 @@
                 <button class="btn-cta fill" type="submit">
                     <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
                 </button>
+
+                <p class="modal-form__reassure"><?php echo mfs_t('Free 30-min call · No commitment · We reply within 1 business day.', 'Llamada gratis de 30 min · Sin compromiso · Respondemos en 1 día hábil.'); ?></p>
             </form>
 
             <div class="modal-book__form-privacy">

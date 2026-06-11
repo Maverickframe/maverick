@@ -1260,6 +1260,16 @@
         background: var(--white-color);
         color: var(--accent-color);
     }
+
+    &.is-disabled,
+    &:disabled {
+        background: transparent;
+        border-color: transparent;
+        color: rgba(255, 255, 255, 0.28);
+        cursor: default;
+        pointer-events: none;
+        text-decoration: line-through;
+    }
 }
 
 .bookcal__tzrow {
@@ -1400,3 +1410,16 @@
 }
 
 // End Modal Book a Call — CALENDAR
+
+// Reassurance microcopy under modal form CTAs (added 2026-06-10)
+.modal-form__reassure {
+    margin-top: toRem(10);
+    font-size: toRem(13);
+    line-height: 1.4;
+    color: var(--text-grey-color);
+}
+
+// Book-a-call form sits on a blue panel — use light text like its privacy note
+.modal-book .modal-form__reassure {
+    color: #dcdcdc;
+}

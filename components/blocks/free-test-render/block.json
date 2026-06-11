@@ -1,0 +1,16 @@
+{
+  "name": "acf/free-test-render",
+  "title": "Free Test Render",
+  "description": "",
+  "category": "layout",
+  "icon": "cover-image",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "free-test-render.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -1,0 +1,96 @@
+// Global sticky CTA card (desktop only).
+// Floating bottom-right video window + Book-a-call button, shown site-wide
+// (components/common/sticky-cta.php). Mirrors the service-page .hero__cta look.
+// Mobile is intentionally hidden here — handled separately in the mobile pass (A4).
+
+@import "_vars";
+
+.sticky-cta {
+    display: none;
+
+    @media (min-width: $md) {
+        position: fixed;
+        z-index: var(--z-index-sticky-cta);
+        right: calc(50% - var(--container-small) / 2);
+        bottom: toRem(80);
+
+        width: toRem(225);
+        padding: toRem(10);
+
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: toRem(8);
+
+        border: 1px solid var(--stroke-light-grey-color);
+        border-radius: 1px;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+
+        animation: mfs-sticky-cta-in 0.4s ease both;
+    }
+
+    @media (min-width: $lg) {
+        bottom: toRem(100);
+    }
+
+    &__media {
+        overflow: hidden;
+        border-radius: 1px;
+        line-height: 0;
+
+        // Bunny responsive wrapper (div with inline padding-top) keeps its own ratio.
+        > div {
+            position: relative;
+            width: 100%;
+        }
+
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        // Bare iframe / video / img fallback.
+        > iframe,
+        > video,
+        > img {
+            position: static;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+    }
+
+    &__btn.btn-main {
+        padding: toRem(8) toRem(15);
+        line-height: toRem(24);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: toRem(10);
+
+        text-align: left;
+
+        svg {
+            flex: 0 0 auto;
+            width: toRem(16);
+            height: toRem(16);
+        }
+    }
+}
+
+@keyframes mfs-sticky-cta-in {
+    from {
+        opacity: 0;
+        transform: translateY(toRem(10));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

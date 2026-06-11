@@ -16,6 +16,8 @@
         <?php echo get_template_part('components/common/modals/modal-book-calendar'); ?>
         <?php echo get_template_part('components/common/modals/modal-download'); ?>
 
+        <?php echo get_template_part('components/common/sticky-cta'); ?>
+
         <?php wp_footer(); ?>
     </body>
 </html>

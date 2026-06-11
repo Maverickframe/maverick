@@ -10,7 +10,24 @@ $name = htmlspecialchars($_POST['Name'] ?? '', ENT_NOQUOTES, 'UTF-8');
 $phone = htmlspecialchars($_POST['Phone'] ?? $_POST['WhatsApp'] ?? '', ENT_NOQUOTES, 'UTF-8');
 $email = htmlspecialchars($_POST['Email'] ?? '', ENT_NOQUOTES,'UTF-8');
 $target = htmlspecialchars($_POST['title'] ?? '', ENT_NOQUOTES,'UTF-8');
-$message = htmlspecialchars($_POST['Message'] ?? '', ENT_NOQUOTES,'UTF-8');
+$messageRaw = (string) ($_POST['Message'] ?? '');
+
+// Generic capture: append any extra form fields (Company, Role, Budget, Files link, etc.)
+// to the message so new lead magnets need NO per-form handler code — just pass extra fields.
+$knownKeys = ['Name','Phone','WhatsApp','Email','title','tag','Message','utm_source','utm_content','utm_medium','utm_campaign','utm_term','referrerLast','action','_wpnonce'];
+$extraLines = [];
+foreach ($_POST as $fieldKey => $fieldVal) {
+    if (in_array($fieldKey, $knownKeys, true)) { continue; }
+    if (is_array($fieldVal)) { $fieldVal = implode(', ', $fieldVal); }
+    $fieldVal = trim((string) $fieldVal);
+    if ($fieldVal === '') { continue; }
+    $extraLines[] = $fieldKey . ': ' . mb_substr($fieldVal, 0, 500);
+}
+if ($extraLines) {
+    $messageRaw = trim($messageRaw . "\n\n" . implode("\n", $extraLines));
+}
+
+$message = htmlspecialchars($messageRaw, ENT_NOQUOTES,'UTF-8');
 $dealName = 'maverickframe.com ' . $target . ' – ' . $name . ' '. $phone . ' '.  $email; //Название создаваемой сделки
 $dealTags = 'maverickframecom';  //Теги для сделки
 
