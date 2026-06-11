@@ -1,0 +1,63 @@
+@import "../common/_vars";
+
+/* Free Test Render — extends .cta-form-section; only the deltas (select, checkbox) live here. */
+
+.free-test-render__form {
+    select {
+        width: 100%;
+        height: toRem(44);
+        padding: 0 toRem(16);
+
+        background-color: var(--white-color);
+        border: toRem(1) solid var(--stroke-light-grey-color);
+        border-radius: 1px;
+        transition: border-color 0.3s ease, color 0.3s ease;
+
+        color: var(--black-color);
+        font-family: inherit;
+        font-size: toRem(12);
+        line-height: 1.4;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        /* grey, placeholder-like look while no real option is chosen */
+        &:invalid {
+            color: var(--text-grey-color);
+        }
+
+        @media (min-width: $md) {
+            height: auto;
+            padding: toRem(16);
+            font-size: toRem(16);
+        }
+    }
+}
+
+.free-test-render__agree {
+    display: flex;
+    align-items: flex-start;
+    gap: toRem(10);
+
+    font-size: toRem(12);
+    line-height: 1.4;
+    color: var(--text-grey-color);
+    cursor: pointer;
+
+    input[type="checkbox"] {
+        flex: 0 0 auto;
+        width: toRem(16);
+        height: toRem(16);
+        margin-top: toRem(2);
+        accent-color: var(--accent-color);
+        cursor: pointer;
+    }
+
+    @media (min-width: $md) {
+        font-size: toRem(14);
+    }
+}
