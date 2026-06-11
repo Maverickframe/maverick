@@ -14,22 +14,36 @@
     }
 
     @media (min-width: $md) {
-        padding: toRem(56);
-        gap: toRem(48);
+        padding: toRem(44);
+        gap: toRem(40);
     }
 
     @media (min-width: $lg) {
-        padding: toRem(64);
-        gap: toRem(72);
+        padding: toRem(48);
+        gap: toRem(56);
     }
 }
 
 /* ---- Left info column ---- */
 
 .free-test-render__info {
+    // Eyebrow: white (was unreadable blue on black) + closer to the heading.
+    .section-subtitle {
+        color: var(--white-color);
+        margin-bottom: toRem(-10);
+    }
+
     @media (min-width: $md) {
-        gap: toRem(22);
+        gap: toRem(20);
         max-width: toRem(520);
+    }
+}
+
+/* Shorter top on the white form card so it lines up tighter. */
+.free-test-render .cta-form-section__form {
+    @media (min-width: $md) {
+        padding-top: toRem(20);
+        gap: toRem(18);
     }
 }
 
