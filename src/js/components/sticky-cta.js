@@ -33,28 +33,23 @@ function initStickyCta() {
   }
 
   // 2) Suppress the card while the Free Test Render form is in view.
-  //    Scroll-based (reliable everywhere) rather than IntersectionObserver.
+  //    The theme uses a virtualised (transform-based) scroll, so native scroll
+  //    events and IntersectionObserver don't fire — poll the rect each frame
+  //    (getBoundingClientRect reflects the transformed position) and only
+  //    toggle the class when the state actually changes.
   const section = document.querySelector('.free-test-render');
   if (section) {
-    let ticking = false;
-
-    const update = () => {
-      ticking = false;
+    let last = null;
+    const tick = () => {
       const rect = section.getBoundingClientRect();
       const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      card.classList.toggle('is-suppressed', inView);
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
+      if (inView !== last) {
+        last = inView;
+        card.classList.toggle('is-suppressed', inView);
       }
+      window.requestAnimationFrame(tick);
     };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
+    window.requestAnimationFrame(tick);
   }
 }
 
