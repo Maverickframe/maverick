@@ -47,7 +47,7 @@
                         <?php echo $best_for; ?>
                     </p>
 
-                    <button class="btn-main fill js-modal-open" data-modal="book" type="button">
+                    <button class="btn-main fill js-modal-open" data-modal="book" data-offer="<?php echo esc_attr( $title ); ?>" type="button">
                         <?php echo $mfs_tariff_btn; ?>
                     </button>
                 </div>
@@ -74,7 +74,7 @@
                 </div>
             <?php endif; ?>
 
-            <button class="btn-main js-modal-open" data-modal="book" type="button">
+            <button class="btn-main js-modal-open" data-modal="book" data-offer="Undecided" type="button">
                 <?php echo $mfs_cta_btn; ?>
                 <?php echo inline_svg('icons/arrow-open.svg'); ?>
             </button>

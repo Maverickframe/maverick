@@ -32,3 +32,4 @@ import './components/particlesAnimation';
 import './components/showMoreText';
 import './components/showSidebar';
 import './components/sticky-cta';
+import './components/modal-offer';
