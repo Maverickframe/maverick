@@ -38,6 +38,62 @@
     }
 }
 
+/* Tighter section + 2-column form so it doesn't overrun shorter viewports. */
+.free-test-render.cta-form-section {
+    @media (min-width: $md) {
+        padding: toRem(50);
+        gap: toRem(40);
+    }
+
+    @media (min-width: $lg) {
+        padding: toRem(56);
+        gap: toRem(64);
+    }
+
+    .cta-form-section__info {
+        @media (min-width: $md) {
+            gap: toRem(18);
+        }
+    }
+
+    .cta-form-section__desc {
+        p {
+            margin-bottom: toRem(8);
+        }
+
+        ul {
+            margin-top: toRem(4);
+        }
+
+        li {
+            margin-bottom: toRem(4);
+        }
+    }
+}
+
+.free-test-render__list-title {
+    margin-top: toRem(4);
+}
+
+.cta-form.free-test-render__form {
+    @media (min-width: $md) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: toRem(12);
+        align-items: start;
+
+        > .free-test-render__full,
+        > .free-test-render__agree,
+        > button {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            margin-top: toRem(4);
+        }
+    }
+}
+
 .free-test-render__agree {
     display: flex;
     align-items: flex-start;

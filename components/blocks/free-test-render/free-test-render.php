@@ -22,32 +22,18 @@ $clients   = [14728, 14731, 14729, 14730];
             <h2>Start With a Free Test Render</h2>
 
             <div class="cta-form-section__desc">
-                <p>Before full production begins, we prove our quality on your own project. Once we&rsquo;ve scoped the work and agreed on terms, we create a free test render &mdash; so you can see exactly how your project looks in our hands, with zero risk.</p>
+                <p>We prove our quality on your own project before you commit. Once we&rsquo;ve scoped the work and agreed on terms, we deliver a free test render &mdash; so you see exactly how it looks in our hands, with zero risk.</p>
 
-                <p><strong>How it works</strong></p>
-                <ul>
-                    <li>Tell us about your project and book a short call.</li>
-                    <li>We scope the work and agree on the price.</li>
-                    <li>We deliver a free test render within 5 business days &mdash; you see the quality before you commit to production.</li>
-                </ul>
+                <p class="free-test-render__list-title"><strong>How it works:</strong> book a short call &rarr; we scope the work and agree on the price &rarr; we deliver a free test render within 5 business days.</p>
 
-                <p><strong>Conditions</strong></p>
+                <p class="free-test-render__list-title"><strong>Conditions</strong></p>
                 <ul>
                     <li>Available for projects from $3,000.</li>
                     <li>One test render &mdash; our team selects the most representative angle.</li>
-                    <li>Delivered within 5 business days of the agreed scope.</li>
-                    <li>Revisions aren&rsquo;t part of the test render.</li>
-                    <li>Reserved for clients with an active project who are ready to discuss it on a call.</li>
-                    <li>It&rsquo;s a quality guarantee for your own project &mdash; not a free sample to resell or pass on to a third party.</li>
+                    <li>Delivered within 5 business days of the agreed scope; revisions aren&rsquo;t included.</li>
+                    <li>For clients with an active project who are ready to discuss it on a call.</li>
+                    <li>A quality guarantee for your own project &mdash; not a free sample to resell or pass on to a third party.</li>
                 </ul>
-            </div>
-
-            <div class="cta-form-section__clients">
-                <?php foreach ($clients as $client_id) : ?>
-                    <div class="cta-form-section__client">
-                        <?php lazy_attachment($client_id, 'full'); ?>
-                    </div>
-                <?php endforeach; ?>
             </div>
         </div>
 
@@ -109,12 +95,12 @@ $clients   = [14728, 14731, 14729, 14730];
                     </select>
                 </label>
 
-                <label class="cta-form__input">
+                <label class="cta-form__input free-test-render__full">
                     <span class="cta-form__label sr-only">Link to files or references</span>
-                    <input type="url" name="Files link" placeholder="Link to files or references (Drive, Dropbox, WeTransfer)">
+                    <input type="url" name="Files link" placeholder="Link to files or references (optional)">
                 </label>
 
-                <label class="cta-form__input">
+                <label class="cta-form__input free-test-render__full">
                     <span class="cta-form__label sr-only">Tell us about your project</span>
                     <textarea name="Message" placeholder="Tell us about your project*" rows="2" required></textarea>
                 </label>
