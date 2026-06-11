@@ -61,6 +61,11 @@ if ( ! $sc_label ) {
 ?>
 <div class="sticky-cta js-sticky-cta">
     <div class="sticky-cta__media">
+        <button class="sticky-cta__close js-sticky-cta-close" type="button" aria-label="Hide video">
+            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false">
+                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
         <?php echo $sc_video; // phpcs:ignore — trusted admin-entered Bunny embed ?>
     </div>
     <button class="sticky-cta__btn btn-main fill js-modal-open" data-modal="book" type="button">

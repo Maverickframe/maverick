@@ -31,3 +31,4 @@ import './components/gsap';
 import './components/particlesAnimation';
 import './components/showMoreText';
 import './components/showSidebar';
+import './components/sticky-cta';
