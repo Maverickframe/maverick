@@ -28,10 +28,18 @@
         -webkit-backdrop-filter: blur(2px);
 
         animation: mfs-sticky-cta-in 0.4s ease both;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     @media (min-width: $lg) {
         bottom: toRem(100);
+    }
+
+    // Hidden while a full-width form section (Free Test Render) is on screen.
+    &.is-suppressed {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     &__media {
