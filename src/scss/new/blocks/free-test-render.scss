@@ -47,6 +47,11 @@
     }
 }
 
+/* Form title sits on the white card → keep it dark (section text is white). */
+.free-test-render .cta-form-section__form-title {
+    color: var(--black-color);
+}
+
 .free-test-render__intro {
     font-size: toRem(14);
     line-height: 1.55;
