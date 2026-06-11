@@ -4,7 +4,6 @@
  * Clones the cta-form layout/styles; adds a qualifying form + offer conditions.
  * Single-use section: copy + assets are intentionally baked in here.
  */
-$privacy   = get_field('book_a_call_privacy', 'options');
 $bg_id     = 14727; // exterior render (same asset family as service cta-form)
 $bg_mob_id = 14726;
 $clients   = [14728, 14731, 14729, 14730];
@@ -113,8 +112,8 @@ $clients   = [14728, 14731, 14729, 14730];
                 <button class="btn-main fill" type="submit">Request my free test render</button>
             </form>
 
-            <div class="cta-form__privacy">
-                <?php echo $privacy; ?>
+            <div class="cta-form__privacy free-test-render__privacy">
+                By submitting, you agree to our <a href="<?php echo esc_url( function_exists('get_privacy_policy_url') && get_privacy_policy_url() ? get_privacy_policy_url() : home_url('/privacy-policy/') ); ?>">Privacy Policy</a>.
             </div>
 
             <div class="cta-form__success">
