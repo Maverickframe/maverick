@@ -6,10 +6,7 @@
 .free-test-render.cta-form-section {
     color: var(--white-color);
 
-    background-color: #0d1126;
-    background-image:
-        radial-gradient(85% 120% at 88% -12%, rgba(64, 96, 235, 0.30), transparent 55%),
-        radial-gradient(70% 90% at -5% 112%, rgba(40, 64, 170, 0.20), transparent 60%);
+    background: var(--black-color);
 
     // Hide the brand corner "+" marks for this section.
     &::after {
