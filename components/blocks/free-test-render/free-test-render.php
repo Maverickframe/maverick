@@ -104,11 +104,6 @@ $clients   = [14728, 14731, 14729, 14730];
                     <textarea name="Message" placeholder="Tell us about your project*" rows="2" required></textarea>
                 </label>
 
-                <label class="free-test-render__agree">
-                    <input type="checkbox" name="Conditions accepted" value="Yes" required>
-                    <span>I have read and accept the conditions above.</span>
-                </label>
-
                 <button class="btn-main fill" type="submit">Request my free test render</button>
             </form>
 
