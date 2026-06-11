@@ -28,7 +28,6 @@
         -webkit-backdrop-filter: blur(2px);
 
         animation: mfs-sticky-cta-in 0.4s ease both;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     @media (min-width: $lg) {
@@ -36,10 +35,10 @@
     }
 
     // Hidden while a full-width form section (Free Test Render) is on screen.
+    // Use display:none — the entrance animation fills opacity/transform, so those
+    // can't be overridden by a regular declaration; display is safe.
     &.is-suppressed {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
+        display: none;
     }
 
     &__media {
