@@ -1,37 +1,36 @@
 <?php
 /**
  * Free Test Render — qualified lead-magnet section (homepage).
- * Clones the cta-form layout/styles; adds a qualifying form + offer conditions.
- * Single-use section: copy + assets are intentionally baked in here.
+ * Dark section (subtle glow) + white form card. Reuses cta-form layout/styles;
+ * adds a structured info column + qualifying form. Single-use: copy baked in.
  */
-$bg_id     = 14727; // exterior render (same asset family as service cta-form)
-$bg_mob_id = 14726;
-$clients   = [14728, 14731, 14729, 14730];
 ?>
 
 <div class="container">
     <section class="cta-form-section free-test-render">
-        <picture class="cta-form-section__bg">
-            <source media="(max-width: 768px)" srcset="<?php echo wp_get_attachment_image_url($bg_mob_id, 'full'); ?>">
-            <?php lazy_attachment($bg_id, 'full'); ?>
-        </picture>
-
-        <div class="cta-form-section__info">
+        <div class="cta-form-section__info free-test-render__info">
             <p class="section-subtitle">Free Test Render</p>
             <h2>Start With a Free Test Render</h2>
 
-            <div class="cta-form-section__desc">
-                <p>We prove our quality on your own project before you commit. Once we&rsquo;ve scoped the work and agreed on terms, we deliver a free test render &mdash; so you see exactly how it looks in our hands, with zero risk.</p>
+            <p class="free-test-render__intro">We prove our quality on your own project before you commit. Once we&rsquo;ve scoped the work and agreed on terms, we deliver a free test render &mdash; so you see exactly how it looks in our hands, with zero risk.</p>
 
-                <p class="free-test-render__list-title"><strong>How it works:</strong> book a short call &rarr; we scope the work and agree on the price &rarr; we deliver a free test render within 5 business days.</p>
+            <div class="free-test-render__group">
+                <p class="free-test-render__label">How it works</p>
+                <ol class="free-test-render__steps">
+                    <li>Tell us about your project and book a short call.</li>
+                    <li>We scope the work and agree on the price.</li>
+                    <li>We deliver a free test render within 5 business days.</li>
+                </ol>
+            </div>
 
-                <p class="free-test-render__list-title"><strong>Conditions</strong></p>
-                <ul>
+            <div class="free-test-render__group">
+                <p class="free-test-render__label">Conditions</p>
+                <ul class="free-test-render__checklist">
                     <li>Available for projects from $3,000.</li>
                     <li>One test render &mdash; our team selects the most representative angle.</li>
-                    <li>Delivered within 5 business days of the agreed scope; revisions aren&rsquo;t included.</li>
-                    <li>For clients with an active project who are ready to discuss it on a call.</li>
-                    <li>A quality guarantee for your own project &mdash; not a free sample to resell or pass on to a third party.</li>
+                    <li>Delivered within 5 business days; revisions aren&rsquo;t included.</li>
+                    <li>For clients with an active project, ready to discuss it on a call.</li>
+                    <li>A quality guarantee for your own project &mdash; not a free sample to resell.</li>
                 </ul>
             </div>
         </div>

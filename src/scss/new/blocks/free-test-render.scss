@@ -1,8 +1,154 @@
 @import "../common/_vars";
 
-/* Free Test Render — extends .cta-form-section; only the deltas (select, checkbox) live here. */
+/* Free Test Render — dark section (subtle glow) + white form card.
+   Extends .cta-form-section; this file holds all the block-specific look. */
 
-.free-test-render__form {
+.free-test-render.cta-form-section {
+    color: var(--white-color);
+
+    background-color: #0d1126;
+    background-image:
+        radial-gradient(85% 120% at 88% -12%, rgba(64, 96, 235, 0.30), transparent 55%),
+        radial-gradient(70% 90% at -5% 112%, rgba(40, 64, 170, 0.20), transparent 60%);
+
+    // Brand corner "+" marks → render them light on the dark background.
+    &::after {
+        filter: brightness(0) invert(1);
+        opacity: 0.3;
+    }
+
+    @media (min-width: $md) {
+        padding: toRem(56);
+        gap: toRem(48);
+    }
+
+    @media (min-width: $lg) {
+        padding: toRem(64);
+        gap: toRem(72);
+    }
+}
+
+/* ---- Left info column ---- */
+
+.free-test-render__info {
+    @media (min-width: $md) {
+        gap: toRem(22);
+        max-width: toRem(520);
+    }
+}
+
+.free-test-render__intro {
+    font-size: toRem(14);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.78);
+
+    @media (min-width: $md) {
+        font-size: toRem(16);
+    }
+}
+
+.free-test-render__group {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+}
+
+.free-test-render__label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: toRem(11);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.free-test-render__steps {
+    counter-reset: ftr-step;
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        counter-increment: ftr-step;
+        position: relative;
+        padding-left: toRem(36);
+
+        font-size: toRem(14);
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.92);
+
+        &::before {
+            content: counter(ftr-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: toRem(24);
+            height: toRem(24);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--accent-color);
+            border-radius: 1px;
+
+            color: #fff;
+            font-size: toRem(12);
+            font-weight: 600;
+        }
+    }
+}
+
+.free-test-render__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(9);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        position: relative;
+        padding-left: toRem(26);
+
+        font-size: toRem(13);
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.78);
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: toRem(3);
+
+            width: toRem(15);
+            height: toRem(15);
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%236e8bff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+        }
+    }
+}
+
+/* ---- Form column ---- */
+
+.cta-form.free-test-render__form {
+    @media (min-width: $md) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: toRem(12);
+        align-items: start;
+
+        > .free-test-render__full,
+        > button {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            margin-top: toRem(4);
+        }
+    }
+
     select {
         width: 100%;
         height: toRem(44);
@@ -25,7 +171,6 @@
             outline: none;
         }
 
-        /* grey, placeholder-like look while no real option is chosen */
         &:invalid {
             color: var(--text-grey-color);
         }
@@ -36,43 +181,6 @@
             font-size: toRem(16);
         }
     }
-}
-
-/* Tighter section + 2-column form so it doesn't overrun shorter viewports. */
-.free-test-render.cta-form-section {
-    @media (min-width: $md) {
-        padding: toRem(50);
-        gap: toRem(40);
-    }
-
-    @media (min-width: $lg) {
-        padding: toRem(56);
-        gap: toRem(64);
-    }
-
-    .cta-form-section__info {
-        @media (min-width: $md) {
-            gap: toRem(18);
-        }
-    }
-
-    .cta-form-section__desc {
-        p {
-            margin-bottom: toRem(8);
-        }
-
-        ul {
-            margin-top: toRem(4);
-        }
-
-        li {
-            margin-bottom: toRem(4);
-        }
-    }
-}
-
-.free-test-render__list-title {
-    margin-top: toRem(4);
 }
 
 .free-test-render__privacy {
@@ -88,22 +196,3 @@
         max-width: toRem(300);
     }
 }
-
-.cta-form.free-test-render__form {
-    @media (min-width: $md) {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: toRem(12);
-        align-items: start;
-
-        > .free-test-render__full,
-        > button {
-            grid-column: 1 / -1;
-        }
-
-        button {
-            margin-top: toRem(4);
-        }
-    }
-}
-
