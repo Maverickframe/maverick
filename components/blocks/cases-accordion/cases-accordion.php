@@ -24,10 +24,23 @@
                     <?php
                         while( have_rows('items')) : the_row();
                             $case = get_sub_field('case');
-                            $title = get_sub_field('title') ?: $case->post_title;
-                            $description = get_sub_field('description') ?: get_the_excerpt($case->ID);
-                            $image = get_sub_field('image') ?: get_post_thumbnail_id($case->ID);
+                            $case = ( $case instanceof WP_Post ) ? $case : null;
+                            $title = get_sub_field('title') ?: ( $case ? $case->post_title : '' );
+                            $description = get_sub_field('description') ?: ( $case ? get_the_excerpt($case->ID) : '' );
+                            $image = get_sub_field('image') ?: ( $case ? get_post_thumbnail_id($case->ID) : 0 );
                             $numbers = get_sub_field('numbers');
+                            $case_id = $case ? $case->ID : 0;
+                            if ( ! $case_id ) {
+                                // Polylang returns null for untranslated cases; fall back to the
+                                // raw stored post ID so the link points to the EN case.
+                                $raw_case = get_sub_field('case', false);
+                                if ( is_numeric($raw_case) ) {
+                                    $case_id = (int) $raw_case;
+                                } elseif ( is_array($raw_case) && ! empty($raw_case[0]) && is_numeric($raw_case[0]) ) {
+                                    $case_id = (int) $raw_case[0];
+                                }
+                            }
+                            $case_url = $case_id ? get_permalink($case_id) : '';
                     ?>
                         <li class="splide__slide">
                             <div class="cases-accordion-item">
@@ -63,9 +76,11 @@
                                         ?>
                                     </ul>
 
-                                    <a href="<?php echo get_permalink($case->ID); ?>" class="cases-accordion-item__link btn-main fill" target="_blank">
-                                        <?php echo mfs_t('Read the story', 'Ver el caso'); ?>
-                                    </a>
+                                    <?php if ( $case_url ) : ?>
+                                        <a href="<?php echo esc_url($case_url); ?>" class="cases-accordion-item__link btn-main fill" target="_blank">
+                                            <?php echo mfs_t('Read the story', 'Ver el caso'); ?>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </li>

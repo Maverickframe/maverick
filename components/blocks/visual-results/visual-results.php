@@ -1,7 +1,7 @@
 <section class="visual-results">
     <div class="container">
         <div class="visual-results__info">
-            <p class="section-subtitle"><?php echo get_field('subtitle') ?? 'Visual Results'; ?></p>
+            <p class="section-subtitle"><?php echo mfs_eyebrow(get_field('subtitle'), 'Visual Results'); ?></p>
             <h2><?php the_field('title'); ?></h2>
             <div class="p1"><?php the_field('description'); ?></div>
         </div>
@@ -116,7 +116,7 @@
                 </div>
 
                 <?php if($i > $showNum): ?>
-                    <button class="btn-secondary-black visual-results__btn js-show-more-visuals-btn" type="button">Show More</button>
+                    <button class="btn-secondary-black visual-results__btn js-show-more-visuals-btn" type="button"><?php echo mfs_t('Show More', 'Ver más'); ?></button>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

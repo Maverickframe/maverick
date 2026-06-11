@@ -688,6 +688,21 @@ if (reviewsSlider) {
   thumbnails.on('click', (slide) => {
     main.go(slide.index);
   });
+
+  // "Next review" buttons inside the thumbnails advance the main slider.
+  // Bound directly so they also work on desktop, where the thumbnails
+  // slider is destroyed (>=1270px) and its slide-click handler is gone.
+  document.querySelectorAll('.reviews-item-thumb__arrow').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Stop the click from also reaching Splide's slide-click handler
+      // (thumbnails.on('click') -> main.go(slide.index)), which would
+      // conflict with this advance and snap the slider back.
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      main.go('>');
+    }, true);
+  });
 }
 
 const visualResultsSlider = document.querySelector('.js-visual-results-slider');

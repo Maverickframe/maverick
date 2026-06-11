@@ -1,13 +1,13 @@
 <section class="price">
     <?php
         $mfs_price_is_front = is_front_page();
-        $mfs_tariff_btn = $mfs_price_is_front ? mfs_t('Get a free estimate', 'Solicita un presupuesto gratis') : 'Get Started';
+        $mfs_tariff_btn = $mfs_price_is_front ? mfs_t('Get a free estimate', 'Solicita un presupuesto gratis') : mfs_t('Get Started', 'Empezar');
         $mfs_cta_btn = $mfs_price_is_front ? mfs_t('Get a free estimate', 'Solicita un presupuesto gratis') : mfs_t('Book a call', 'Reservar una llamada');
     ?>
     <div class="container container_small">
         <div class="price__info">
             <p class="section-subtitle"><?php the_field('subtitle'); ?></p>
-            <h2><?php the_field('title'); ?></h2>  
+            <h2><?php the_field('title'); ?></h2>
             <?php if(get_field('description')): ?>
                 <p class="p1"><?php the_field('description'); ?></p>
             <?php endif; ?>
@@ -26,7 +26,7 @@
                     <div class="price-item__header">
                         <?php echo inline_svg("icons/price-$index.svg"); ?>
 
-                        <?php if($index == 2): ?><span class="price-item__badge">Most Popular</span><?php endif; ?>
+                        <?php if($index == 2): ?><span class="price-item__badge"><?php echo mfs_t('Most Popular', 'Más popular'); ?></span><?php endif; ?>
                     </div>
 
                     <h3 class="price-item__title"><?php echo $title; ?></h3>
@@ -40,7 +40,7 @@
                     </p>
 
                     <p class="price-item__best-for-title">
-                        Best for
+                        <?php echo mfs_t('Best for', 'Ideal para'); ?>
                     </p>
 
                     <p class="price-item__best-for">

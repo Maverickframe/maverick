@@ -176,12 +176,12 @@ function renderModal(data) {
       <div class="modal__btns">
         ${hasExploreLink ? `
           <a class="btn-main" href="${data.case_url}" target="_blank">
-            Explore service
+            ${(window.MFS_I18N && window.MFS_I18N.exploreService) || 'Explore service'}
           </a>
         ` : ''}
 
         <button class="${bookBtnClass} js-modal-open" data-modal="book" type="button">
-          Book a call
+          ${(window.MFS_I18N && window.MFS_I18N.bookACall) || 'Book a call'}
         </button>
       </div>
     </div>
