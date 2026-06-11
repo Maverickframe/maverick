@@ -4,11 +4,13 @@
  * Self-contained: copy + style-step images baked in. Lead + answers POST to
  * forms/amo.php via quiz.js (same handler as the site forms).
  */
+// Absolute prod URLs so the style images render in any environment (staging
+// has a separate media library). Swap these to recolour the "look" step.
 $look = array(
-    'daylight' => array('id' => 19394, 'label' => 'Bright &amp; photoreal'),
-    'warm'     => array('id' => 19635, 'label' => 'Warm &amp; inviting'),
-    'moody'    => array('id' => 19259, 'label' => 'Moody &amp; cinematic'),
-    'minimal'  => array('id' => 19256, 'label' => 'Clean &amp; minimal'),
+    'daylight' => array('url' => 'https://maverickframe.com/wp-content/uploads/2026/06/architectural-exterior-rendering-island-resort-768x487.webp', 'label' => 'Bright &amp; photoreal'),
+    'warm'     => array('url' => 'https://maverickframe.com/wp-content/uploads/2026/06/best-3d-interior-rendering-companies-hotel-lounge-rendering-768x871.webp', 'label' => 'Warm &amp; inviting'),
+    'moody'    => array('url' => 'https://maverickframe.com/wp-content/uploads/2026/06/luxury-villa-exterior-architectural-rendering-in-dubai-768x432.webp', 'label' => 'Moody &amp; cinematic'),
+    'minimal'  => array('url' => 'https://maverickframe.com/wp-content/uploads/2026/06/contemporary-house-exterior-rendering-in-dubai-768x922.webp', 'label' => 'Clean &amp; minimal'),
 );
 ?>
 
@@ -42,7 +44,7 @@ $look = array(
                     <div class="mfsq__looks">
                         <?php foreach ($look as $val => $l) : ?>
                             <button class="mfsq__look" data-v="<?php echo esc_attr($l['label']); ?>">
-                                <span class="mfsq__look-img"><?php echo wp_get_attachment_image($l['id'], 'medium_large', false, array('loading' => 'lazy', 'alt' => $l['label'])); ?></span>
+                                <span class="mfsq__look-img"><img src="<?php echo esc_url($l['url']); ?>" loading="lazy" alt="<?php echo esc_attr($l['label']); ?>"></span>
                                 <span class="mfsq__look-cap"><?php echo $l['label']; ?></span>
                             </button>
                         <?php endforeach; ?>
