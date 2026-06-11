@@ -44,18 +44,18 @@
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">Full Name</span>
-                    <input type="text" name="Name" placeholder="Full name*" required>
+                    <input type="text" name="Name" placeholder="Full name *" required>
                 </label>
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">Work Email</span>
-                    <input type="email" name="Email" placeholder="Work email*" required>
+                    <input type="email" name="Email" placeholder="Work email *" required>
                     <span class="cta-form__error">It is not email</span>
                 </label>
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">Company or website</span>
-                    <input type="text" name="Company" placeholder="Company or website*" required>
+                    <input type="text" name="Company" placeholder="Company or website *" required>
                 </label>
 
                 <label class="cta-form__input">
@@ -86,7 +86,7 @@
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">Estimated budget</span>
                     <select name="Budget" required>
-                        <option value="" disabled selected>Estimated budget*</option>
+                        <option value="" disabled selected>Estimated budget *</option>
                         <option>Under $3,000</option>
                         <option>$3,000 &ndash; $10,000</option>
                         <option>$10,000+</option>
@@ -100,7 +100,7 @@
 
                 <label class="cta-form__input free-test-render__full">
                     <span class="cta-form__label sr-only">Tell us about your project</span>
-                    <textarea name="Message" placeholder="Tell us about your project*" rows="2" required></textarea>
+                    <textarea name="Message" placeholder="Tell us about your project *" rows="2" required></textarea>
                 </label>
 
                 <button class="btn-main fill" type="submit">Request my free test render</button>
