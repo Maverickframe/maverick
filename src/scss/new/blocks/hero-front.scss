@@ -5,7 +5,10 @@
     height: 100dvh;
     min-height: toRem(900);
 
-    background: var(--black-color);
+    background-color: #0d1126;
+    background-image:
+        radial-gradient(52% 70% at 82% 2%, rgba(64, 96, 235, 0.30), transparent 55%),
+        radial-gradient(46% 66% at 0% 100%, rgba(40, 64, 170, 0.20), transparent 60%);
     color: var(--white-color);
 
     position: relative;
@@ -151,12 +154,12 @@
 
         &::before {
             top: 0;
-            background: linear-gradient(180deg, #000000 16.35%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(180deg, #0d1126 16.35%, rgba(13, 17, 38, 0) 100%);
         }
 
         &::after {
             bottom: 0;
-            background: linear-gradient(0deg, #000000 16.35%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(0deg, #0d1126 16.35%, rgba(13, 17, 38, 0) 100%);
         }
     }
 

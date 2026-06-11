@@ -11,10 +11,9 @@
         radial-gradient(85% 120% at 88% -12%, rgba(64, 96, 235, 0.30), transparent 55%),
         radial-gradient(70% 90% at -5% 112%, rgba(40, 64, 170, 0.20), transparent 60%);
 
-    // Brand corner "+" marks → render them light on the dark background.
+    // Hide the brand corner "+" marks for this section.
     &::after {
-        filter: brightness(0) invert(1);
-        opacity: 0.3;
+        display: none;
     }
 
     @media (min-width: $md) {
