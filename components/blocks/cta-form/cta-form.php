@@ -83,7 +83,7 @@
             </form>
 
             <div class="cta-form__privacy">
-                <?php echo $form_privacy; ?>
+                <?php echo mfs_consent($form_privacy); ?>
             </div>
 
             <div class="cta-form__success">

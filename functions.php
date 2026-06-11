@@ -31,6 +31,23 @@ if ( ! function_exists('mfs_eyebrow') ) {
     }
 }
 
+// Multilingual: translate the consent microcopy at render on /es/ pages.
+// The text comes from ACF field values/defaults (cta-form form_privacy,
+// modal book_a_call_privacy) that can't be reliably overridden per block,
+// so we swap the known English prefix to Spanish on output (EN untouched).
+if ( ! function_exists('mfs_consent') ) {
+    function mfs_consent( $html ) {
+        if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
+            $en = 'By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our';
+            $es = 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra';
+            // Match flexibly: the stored text uses non-breaking spaces (U+00A0) in places.
+            $pattern = '/' . str_replace( ' ', '[\s\x{00A0}]+', preg_quote( $en, '/' ) ) . '/u';
+            return preg_replace( $pattern, $es, $html );
+        }
+        return $html;
+    }
+}
+
 // Multilingual: expose UI strings rendered by JS (modals, sliders) so the bundle
 // can localize them. Read in src/js via window.MFS_I18N (falls back to English).
 add_action( 'wp_head', function () {

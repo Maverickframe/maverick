@@ -2,7 +2,18 @@
     $title = get_field('book_a_call_title', 'options');
     $desc = get_field('book_a_call_desc', 'options');
     $privacy = get_field('book_a_call_privacy', 'options');
-?> 
+
+    // ES: book-a-call title/desc are global Options fields (English defaults).
+    // Swap to Spanish on /es/ when the English default text is detected (EN untouched).
+    if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
+        if ( strpos( $title, "Let's schedule a quick online call" ) !== false ) {
+            $title = 'Programemos una llamada rápida para hablar de tus necesidades, plazos y cualquier duda que tengas';
+        }
+        if ( strpos( $desc, 'We can discuss' ) !== false ) {
+            $desc = '<p><strong>Podemos hablar de:</strong></p><ul><li>Recomendaciones personalizadas según tus objetivos</li><li>Ideas de marketing accionables para tu negocio</li><li>Alcance claro y plazos realistas</li><li>Presupuesto del proyecto transparente y opciones</li></ul>';
+        }
+    }
+?>
 
 <div class="js-contacts-form-container js-modal modal modal-book" data-modal="book">
     <div class="blur-overlay js-modal-close"></div>
@@ -61,7 +72,7 @@
             </form>
 
             <div class="modal-book__form-privacy">
-                <?php echo $privacy; ?>
+                <?php echo mfs_consent($privacy); ?>
             </div>
 
             <div class="modal__success">
