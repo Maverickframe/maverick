@@ -33,17 +33,28 @@ function initStickyCta() {
   }
 
   // 2) Suppress the card while the Free Test Render form is in view.
+  //    Scroll-based (reliable everywhere) rather than IntersectionObserver.
   const section = document.querySelector('.free-test-render');
-  if (section && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          card.classList.toggle('is-suppressed', entry.isIntersecting);
-        });
-      },
-      { threshold: 0 }
-    );
-    observer.observe(section);
+  if (section) {
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      card.classList.toggle('is-suppressed', inView);
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   }
 }
 
