@@ -11,9 +11,9 @@
         </div>
 
         <div class="modal-download__main">
-            <h2 class="modal__title"><?php echo get_field('download_title', 'options'); ?></h2>
+            <h2 class="modal__title"><?php echo mfs_t( get_field('download_title', 'options'), 'Descarga nuestro portafolio' ); ?></h2>
 
-            <p class="modal__desc"><?php echo get_field('download_desc', 'options'); ?></p>
+            <p class="modal__desc"><?php echo mfs_t( get_field('download_desc', 'options'), 'Hemos reunido nuestros mejores trabajos en un único PDF. Déjanos tus datos y te lo enviamos al instante.' ); ?></p>
 
             <form action="" method="POST" class="js-contacts-form modal-form" data-link="<?php echo get_field('download_link', 'options'); ?>">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Services">
