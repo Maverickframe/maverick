@@ -1,39 +1,37 @@
 <?php
 /**
  * Price Calculator — interior-rendering instant estimate (service page).
- * Light section, two-column card: config (left) + dark live-price panel (right).
- * Visitor picks views, add-ons and model; the range updates live in JS.
- * Email + selections POST to forms/amo.php via calculator.js. Prices are baked
- * here (single source) and passed to JS as data-* — swap to ACF later w/o JS edits.
+ * Compact single-column card, brand blue accent on a light section.
+ * Engine works in HOURS: first view ~8h, each extra ~4h; percent add-ons add
+ * hours; hours × rate ($39) = price. Animation is a flat deliverable price.
+ * Subscription takes -30% off. Email + selections POST to forms/amo.php.
+ * Prices/hours come from data-* (ACF-ready — swap later without JS edits).
  */
 
-// Pricing config (calibrated 12 Jun 2026). First interior view carries scene
-// setup (~8h @ $39); each extra view ~4h. Percent add-ons apply to the view
-// subtotal; animation is flat. Subscription takes -30% off everything.
 $cfg = array(
-    'first' => 300,  'extra' => 150, 'maxv' => 20,
-    'rush'  => 0.25, 'mkt'   => 0.20, 'pano' => 0.10,
-    'anim'  => 2500, 'sub'   => 0.70,
+    'firsth' => 8,   'extrah' => 4,   'maxv' => 20,
+    'rate'   => 39,  'sub'    => 0.70,
+    'rush'   => 0.25,'mkt'    => 0.20,'pano' => 0.10,
+    'anim'   => 2500,
 );
 $amo = esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') );
 ?>
 
 <section class="mfcalc">
     <div class="container container_small">
-        <div class="mfcalc__intro">
-            <p class="section-subtitle">Instant estimate</p>
-            <h2>Estimate your interior rendering in seconds</h2>
-            <p class="mfcalc__sub">Set the scope and see a live price range. Want it exact? We&rsquo;ll email a fixed quote based on your selections &mdash; no obligation.</p>
-        </div>
+        <div class="mfcalc__inner">
+            <div class="mfcalc__intro">
+                <p class="section-subtitle">Instant estimate</p>
+                <h2>Estimate your interior rendering</h2>
+                <p class="mfcalc__sub">Set the scope and see a live estimate. Want it exact? We&rsquo;ll email a fixed quote based on your selections.</p>
+            </div>
 
-        <div class="mfcalc__card js-mfcalc"
-             data-amo="<?php echo $amo; ?>"
-             data-first="<?php echo (int) $cfg['first']; ?>"
-             data-extra="<?php echo (int) $cfg['extra']; ?>"
-             data-anim="<?php echo (int) $cfg['anim']; ?>"
-             data-sub="<?php echo (float) $cfg['sub']; ?>">
-
-            <div class="mfcalc__config">
+            <div class="mfcalc__card js-mfcalc"
+                 data-amo="<?php echo $amo; ?>"
+                 data-firsth="<?php echo (int) $cfg['firsth']; ?>"
+                 data-extrah="<?php echo (int) $cfg['extrah']; ?>"
+                 data-rate="<?php echo (int) $cfg['rate']; ?>"
+                 data-sub="<?php echo (float) $cfg['sub']; ?>">
 
                 <div class="mfcalc__field">
                     <div class="mfcalc__field-head">
@@ -43,7 +41,7 @@ $amo = esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') );
                     <input id="mfcalc-views" class="mfcalc__range" type="range"
                            min="1" max="<?php echo (int) $cfg['maxv']; ?>" value="3" step="1"
                            data-views aria-label="Number of interior views">
-                    <p class="mfcalc__hint">First view <?php echo '$' . (int) $cfg['first']; ?>, each additional view <?php echo '$' . (int) $cfg['extra']; ?>.</p>
+                    <p class="mfcalc__hint">First view ~<?php echo (int) $cfg['firsth']; ?>&nbsp;h, each additional view ~<?php echo (int) $cfg['extrah']; ?>&nbsp;h.</p>
                 </div>
 
                 <div class="mfcalc__field">
@@ -80,20 +78,23 @@ $amo = esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') );
                     </div>
                 </div>
 
-            </div><!-- /.mfcalc__config -->
-
-            <div class="mfcalc__panel">
-                <p class="mfcalc__panel-label">Estimated project range</p>
-                <p class="mfcalc__range-out" data-range>$600</p>
-                <div class="mfcalc__breakdown" data-breakdown></div>
+                <div class="mfcalc__result">
+                    <div class="mfcalc__result-main">
+                        <p class="mfcalc__result-label">Estimated project</p>
+                        <p class="mfcalc__range-out" data-range>$600</p>
+                        <p class="mfcalc__result-hours" data-hours>≈ 16 h of work · $39/h</p>
+                    </div>
+                    <button type="button" class="mfcalc__toggle" data-toggle aria-expanded="false">How it&rsquo;s calculated</button>
+                    <div class="mfcalc__breakdown" data-breakdown hidden></div>
+                </div>
 
                 <div class="mfcalc__capture">
                     <input type="email" class="mfcalc__email" data-email placeholder="you@company.com" aria-label="Your work email">
                     <button type="button" class="mfcalc__submit" data-submit>Email me an exact quote</button>
                     <p class="mfcalc__note" data-note>We&rsquo;ll reply with a fixed quote based on your selections.</p>
                 </div>
-            </div><!-- /.mfcalc__panel -->
 
-        </div><!-- /.mfcalc__card -->
+            </div><!-- /.mfcalc__card -->
+        </div>
     </div>
 </section>

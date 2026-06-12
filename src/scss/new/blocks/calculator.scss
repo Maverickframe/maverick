@@ -1,65 +1,61 @@
 @import "../common/_vars";
 
-/* Price Calculator — light brand section + two-column card with a dark live
-   price panel. Colors hardcoded so it renders regardless of which CSS bundle a
-   page loads. Deliberately distinct from the (all-black, centered) Lead Quiz. */
+/* Price Calculator — compact, brand blue accent on a light section. Colors
+   hardcoded so it renders regardless of which CSS bundle a page loads.
+   Distinct from the (all-black, centered) Lead Quiz. */
+
+$mfc-blue: #2d40ae;
 
 .mfcalc {
-    padding: toRem(64) 0;
-    background: #f2f1ec;
+    padding: toRem(52) 0;
+    background: #f6f6f6;
 
     @media (min-width: $sm) {
-        padding: toRem(90) 0;
+        padding: toRem(72) 0;
     }
 }
 
+.mfcalc__inner {
+    max-width: toRem(640);
+    margin: 0 auto;
+}
+
 .mfcalc__intro {
-    max-width: toRem(620);
-    margin-bottom: toRem(32);
+    margin-bottom: toRem(22);
 
     h2 {
-        font-size: toRem(26);
-        font-weight: 400;
+        font-size: toRem(24);
+        font-weight: 500;
         color: #111;
-        margin: toRem(10) 0;
+        margin: toRem(8) 0 0;
 
         @media (min-width: $sm) {
-            font-size: toRem(38);
+            font-size: toRem(30);
         }
     }
 }
 
 .mfcalc__sub {
-    font-size: toRem(15);
-    line-height: 1.6;
+    font-size: toRem(14);
+    line-height: 1.55;
     color: #404040;
+    margin-top: toRem(8);
 }
 
 .mfcalc__card {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
     background: #fff;
-    border: 1px solid #e3e1d8;
+    border: 1px solid #e7e7e7;
     border-radius: 1px;
-    overflow: hidden;
+    padding: toRem(22) toRem(20);
 
     @media (min-width: $sm) {
-        grid-template-columns: 1fr toRem(330);
-    }
-}
-
-.mfcalc__config {
-    padding: toRem(26) toRem(24);
-
-    @media (min-width: $sm) {
-        padding: toRem(34) toRem(36);
+        padding: toRem(28) toRem(28);
     }
 }
 
 .mfcalc__field {
     & + & {
-        margin-top: toRem(26);
+        margin-top: toRem(20);
     }
 }
 
@@ -67,7 +63,7 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: toRem(12);
+    margin-bottom: toRem(10);
 
     label {
         font-size: toRem(14);
@@ -76,21 +72,21 @@
 }
 
 .mfcalc__views {
-    font-size: toRem(20);
+    font-size: toRem(18);
     font-weight: 500;
-    color: #111;
+    color: $mfc-blue;
 }
 
 .mfcalc__field-label {
     font-size: toRem(14);
     color: #404040;
-    margin-bottom: toRem(12);
+    margin-bottom: toRem(10);
 }
 
 .mfcalc__hint {
     font-size: toRem(12);
-    color: #8a8880;
-    margin-top: toRem(8);
+    color: #8a8a8a;
+    margin-top: toRem(7);
 }
 
 .mfcalc__range {
@@ -98,71 +94,73 @@
     appearance: none;
     width: 100%;
     height: 4px;
-    background: #e3e1d8;
+    background: #e3e3e3;
     border-radius: 1px;
     outline: none;
 
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 18px;
-        height: 18px;
+        width: 17px;
+        height: 17px;
         border-radius: 50%;
-        background: #111;
+        background: $mfc-blue;
         cursor: pointer;
-        border: none;
     }
 
     &::-moz-range-thumb {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #111;
-        cursor: pointer;
+        width: 17px;
+        height: 17px;
         border: none;
+        border-radius: 50%;
+        background: $mfc-blue;
+        cursor: pointer;
     }
 }
 
 .mfcalc__addons {
     display: grid;
+    grid-template-columns: 1fr;
     gap: toRem(8);
+
+    @media (min-width: $sm) {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .mfcalc__addon {
     display: flex;
     align-items: center;
-    gap: toRem(10);
-    padding: toRem(11) toRem(13);
-    border: 1px solid #e3e1d8;
+    gap: toRem(9);
+    padding: toRem(9) toRem(11);
+    border: 1px solid #e7e7e7;
     border-radius: 1px;
     cursor: pointer;
     transition: border-color .15s, background .15s;
 
-    &:hover {
-        border-color: #b9b6ab;
-    }
+    &:hover { border-color: #bdbdbd; }
 
     &:has(input:checked) {
-        border-color: #111;
-        background: #faf9f5;
+        border-color: $mfc-blue;
+        background: #eef0fb;
     }
 
     input {
-        width: 16px;
-        height: 16px;
-        accent-color: #111;
+        width: 15px;
+        height: 15px;
+        accent-color: $mfc-blue;
         flex: none;
     }
 }
 
 .mfcalc__addon-name {
     flex: 1;
-    font-size: toRem(14);
+    font-size: toRem(13);
     color: #1a1a1a;
 }
 
 .mfcalc__addon-price {
-    font-size: toRem(13);
+    font-size: toRem(12);
     color: #6f6d66;
 }
 
@@ -173,147 +171,147 @@
 
 .mfcalc__model-btn {
     flex: 1;
-    padding: toRem(11) toRem(12);
+    padding: toRem(10) toRem(12);
     font-family: inherit;
-    font-size: toRem(14);
+    font-size: toRem(13);
     color: #1a1a1a;
     background: #fff;
-    border: 1px solid #e3e1d8;
+    border: 1px solid #e7e7e7;
     border-radius: 1px;
     cursor: pointer;
     transition: border-color .15s, background .15s, color .15s;
 
-    span {
-        opacity: .7;
-        font-size: toRem(12);
-    }
+    span { opacity: .7; font-size: toRem(12); }
 
-    &:hover {
-        border-color: #b9b6ab;
-    }
+    &:hover { border-color: #bdbdbd; }
 
     &.is-on {
-        background: #111;
-        border-color: #111;
+        background: $mfc-blue;
+        border-color: $mfc-blue;
         color: #fff;
     }
 }
 
-.mfcalc__panel {
-    background: #000;
+.mfcalc__result {
+    margin-top: toRem(22);
+    padding: toRem(16) toRem(18);
+    background: $mfc-blue;
+    border-radius: 1px;
     color: #fff;
-    padding: toRem(26) toRem(24);
-    display: flex;
-    flex-direction: column;
-
-    @media (min-width: $sm) {
-        padding: toRem(34) toRem(30);
-    }
 }
 
-.mfcalc__panel-label {
-    font-size: toRem(13);
-    color: rgba(255, 255, 255, .6);
-    margin-bottom: toRem(6);
+.mfcalc__result-label {
+    font-size: toRem(12);
+    color: rgba(255, 255, 255, .72);
 }
 
 .mfcalc__range-out {
-    font-size: toRem(30);
+    font-size: toRem(26);
     font-weight: 500;
     line-height: 1.1;
-    margin-bottom: toRem(18);
+    margin: toRem(3) 0 toRem(2);
 
     @media (min-width: $sm) {
-        font-size: toRem(34);
+        font-size: toRem(30);
     }
 }
 
+.mfcalc__result-hours {
+    font-size: toRem(12);
+    color: rgba(255, 255, 255, .82);
+}
+
+.mfcalc__toggle {
+    margin-top: toRem(12);
+    padding: 0;
+    font-family: inherit;
+    font-size: toRem(12);
+    color: rgba(255, 255, 255, .85);
+    background: none;
+    border: none;
+    border-bottom: 1px dashed rgba(255, 255, 255, .5);
+    cursor: pointer;
+
+    &:hover { color: #fff; }
+}
+
 .mfcalc__breakdown {
+    margin-top: toRem(12);
+    padding-top: toRem(12);
+    border-top: 1px solid rgba(255, 255, 255, .2);
     font-size: toRem(13);
-    color: rgba(255, 255, 255, .7);
-    margin-bottom: toRem(20);
+    color: rgba(255, 255, 255, .78);
 }
 
 .mfcalc__row {
     display: flex;
     justify-content: space-between;
     gap: toRem(12);
-    padding: toRem(4) 0;
+    padding: toRem(3) 0;
 
-    span:last-child {
-        color: #fff;
-        white-space: nowrap;
-    }
+    span:last-child { color: #fff; white-space: nowrap; }
 }
 
 .mfcalc__row--total {
-    margin-top: toRem(8);
-    padding-top: toRem(10);
-    border-top: 1px solid rgba(255, 255, 255, .18);
+    margin-top: toRem(7);
+    padding-top: toRem(9);
+    border-top: 1px solid rgba(255, 255, 255, .2);
     font-weight: 500;
 
-    span {
-        color: #fff;
-    }
+    span { color: #fff; }
 }
 
 .mfcalc__capture {
-    margin-top: auto;
+    margin-top: toRem(16);
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(8);
 }
 
 .mfcalc__email {
-    width: 100%;
+    flex: 1 1 toRem(200);
     height: toRem(42);
     padding: 0 toRem(13);
     font-family: inherit;
     font-size: toRem(14);
     color: #111;
     background: #fff;
-    border: 1px solid transparent;
+    border: 1px solid #d8d8d8;
     border-radius: 1px;
-    margin-bottom: toRem(8);
 
-    &.is-error {
-        border-color: #e24b4a;
-    }
+    &.is-error { border-color: #d8453c; }
 }
 
 .mfcalc__submit {
-    width: 100%;
-    height: toRem(44);
+    flex: 1 1 toRem(200);
+    height: toRem(42);
     font-family: inherit;
     font-size: toRem(14);
     font-weight: 500;
-    color: #000;
-    background: #fff;
-    border: 1px solid #fff;
+    color: #fff;
+    background: #000;
+    border: 1px solid #000;
     border-radius: 1px;
     cursor: pointer;
     transition: opacity .15s;
 
-    &:hover {
-        opacity: .85;
-    }
+    &:hover { opacity: .85; }
 
     &:disabled {
-        background: transparent;
-        color: rgba(255, 255, 255, .7);
-        border-color: rgba(255, 255, 255, .3);
+        background: #fff;
+        color: #6f6f6f;
+        border-color: #d8d8d8;
         cursor: default;
     }
 }
 
 .mfcalc__note {
+    flex: 1 1 100%;
     font-size: toRem(12);
     line-height: 1.5;
-    color: rgba(255, 255, 255, .55);
-    margin-top: toRem(10);
+    color: #8a8a8a;
+    margin: 0;
 
-    &.is-error {
-        color: #f0997b;
-    }
-
-    &.is-ok {
-        color: #9fe1cb;
-    }
+    &.is-error { color: #d8453c; }
+    &.is-ok { color: #1d9e75; }
 }
