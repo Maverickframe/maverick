@@ -34,3 +34,4 @@ import './components/showSidebar';
 import './components/sticky-cta';
 import './components/modal-offer';
 import './components/quiz';
+import './components/calculator';

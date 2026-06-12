@@ -1,0 +1,319 @@
+@import "../common/_vars";
+
+/* Price Calculator — light brand section + two-column card with a dark live
+   price panel. Colors hardcoded so it renders regardless of which CSS bundle a
+   page loads. Deliberately distinct from the (all-black, centered) Lead Quiz. */
+
+.mfcalc {
+    padding: toRem(64) 0;
+    background: #f2f1ec;
+
+    @media (min-width: $sm) {
+        padding: toRem(90) 0;
+    }
+}
+
+.mfcalc__intro {
+    max-width: toRem(620);
+    margin-bottom: toRem(32);
+
+    h2 {
+        font-size: toRem(26);
+        font-weight: 400;
+        color: #111;
+        margin: toRem(10) 0;
+
+        @media (min-width: $sm) {
+            font-size: toRem(38);
+        }
+    }
+}
+
+.mfcalc__sub {
+    font-size: toRem(15);
+    line-height: 1.6;
+    color: #404040;
+}
+
+.mfcalc__card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: #fff;
+    border: 1px solid #e3e1d8;
+    border-radius: 1px;
+    overflow: hidden;
+
+    @media (min-width: $sm) {
+        grid-template-columns: 1fr toRem(330);
+    }
+}
+
+.mfcalc__config {
+    padding: toRem(26) toRem(24);
+
+    @media (min-width: $sm) {
+        padding: toRem(34) toRem(36);
+    }
+}
+
+.mfcalc__field {
+    & + & {
+        margin-top: toRem(26);
+    }
+}
+
+.mfcalc__field-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: toRem(12);
+
+    label {
+        font-size: toRem(14);
+        color: #404040;
+    }
+}
+
+.mfcalc__views {
+    font-size: toRem(20);
+    font-weight: 500;
+    color: #111;
+}
+
+.mfcalc__field-label {
+    font-size: toRem(14);
+    color: #404040;
+    margin-bottom: toRem(12);
+}
+
+.mfcalc__hint {
+    font-size: toRem(12);
+    color: #8a8880;
+    margin-top: toRem(8);
+}
+
+.mfcalc__range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #e3e1d8;
+    border-radius: 1px;
+    outline: none;
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #111;
+        cursor: pointer;
+        border: none;
+    }
+
+    &::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #111;
+        cursor: pointer;
+        border: none;
+    }
+}
+
+.mfcalc__addons {
+    display: grid;
+    gap: toRem(8);
+}
+
+.mfcalc__addon {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+    padding: toRem(11) toRem(13);
+    border: 1px solid #e3e1d8;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+
+    &:hover {
+        border-color: #b9b6ab;
+    }
+
+    &:has(input:checked) {
+        border-color: #111;
+        background: #faf9f5;
+    }
+
+    input {
+        width: 16px;
+        height: 16px;
+        accent-color: #111;
+        flex: none;
+    }
+}
+
+.mfcalc__addon-name {
+    flex: 1;
+    font-size: toRem(14);
+    color: #1a1a1a;
+}
+
+.mfcalc__addon-price {
+    font-size: toRem(13);
+    color: #6f6d66;
+}
+
+.mfcalc__model {
+    display: flex;
+    gap: toRem(8);
+}
+
+.mfcalc__model-btn {
+    flex: 1;
+    padding: toRem(11) toRem(12);
+    font-family: inherit;
+    font-size: toRem(14);
+    color: #1a1a1a;
+    background: #fff;
+    border: 1px solid #e3e1d8;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, color .15s;
+
+    span {
+        opacity: .7;
+        font-size: toRem(12);
+    }
+
+    &:hover {
+        border-color: #b9b6ab;
+    }
+
+    &.is-on {
+        background: #111;
+        border-color: #111;
+        color: #fff;
+    }
+}
+
+.mfcalc__panel {
+    background: #000;
+    color: #fff;
+    padding: toRem(26) toRem(24);
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $sm) {
+        padding: toRem(34) toRem(30);
+    }
+}
+
+.mfcalc__panel-label {
+    font-size: toRem(13);
+    color: rgba(255, 255, 255, .6);
+    margin-bottom: toRem(6);
+}
+
+.mfcalc__range-out {
+    font-size: toRem(30);
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: toRem(18);
+
+    @media (min-width: $sm) {
+        font-size: toRem(34);
+    }
+}
+
+.mfcalc__breakdown {
+    font-size: toRem(13);
+    color: rgba(255, 255, 255, .7);
+    margin-bottom: toRem(20);
+}
+
+.mfcalc__row {
+    display: flex;
+    justify-content: space-between;
+    gap: toRem(12);
+    padding: toRem(4) 0;
+
+    span:last-child {
+        color: #fff;
+        white-space: nowrap;
+    }
+}
+
+.mfcalc__row--total {
+    margin-top: toRem(8);
+    padding-top: toRem(10);
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    font-weight: 500;
+
+    span {
+        color: #fff;
+    }
+}
+
+.mfcalc__capture {
+    margin-top: auto;
+}
+
+.mfcalc__email {
+    width: 100%;
+    height: toRem(42);
+    padding: 0 toRem(13);
+    font-family: inherit;
+    font-size: toRem(14);
+    color: #111;
+    background: #fff;
+    border: 1px solid transparent;
+    border-radius: 1px;
+    margin-bottom: toRem(8);
+
+    &.is-error {
+        border-color: #e24b4a;
+    }
+}
+
+.mfcalc__submit {
+    width: 100%;
+    height: toRem(44);
+    font-family: inherit;
+    font-size: toRem(14);
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: opacity .15s;
+
+    &:hover {
+        opacity: .85;
+    }
+
+    &:disabled {
+        background: transparent;
+        color: rgba(255, 255, 255, .7);
+        border-color: rgba(255, 255, 255, .3);
+        cursor: default;
+    }
+}
+
+.mfcalc__note {
+    font-size: toRem(12);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, .55);
+    margin-top: toRem(10);
+
+    &.is-error {
+        color: #f0997b;
+    }
+
+    &.is-ok {
+        color: #9fe1cb;
+    }
+}

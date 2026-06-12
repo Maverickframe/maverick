@@ -1,0 +1,16 @@
+{
+  "name": "acf/calculator",
+  "title": "Price Calculator",
+  "description": "Instant interior-rendering price estimate with email capture.",
+  "category": "layout",
+  "icon": "calculator",
+  "keywords": ["calculator", "price", "quote", "estimate"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "calculator.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}
