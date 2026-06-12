@@ -8,6 +8,13 @@
 
     background: var(--black-color);
 
+    // Full-bleed: keep the card content at container_small width, but stretch the
+    // black background to the full screen width. The side box-shadow paints black
+    // left/right; clip-path trims it top/bottom so it doesn't bleed into neighbours.
+    // (.page has overflow-x:hidden, so 100vw can't cause horizontal scroll.)
+    box-shadow: 0 0 0 100vw var(--black-color);
+    clip-path: inset(0 -100vw);
+
     // Hide the brand corner "+" marks for this section.
     &::after {
         display: none;
