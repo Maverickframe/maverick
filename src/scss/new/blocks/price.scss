@@ -308,11 +308,14 @@
         @media (min-width: $md) {
             margin-left: auto;
             padding: toRem(18) toRem(40);
-            width: toRem(200);
+            gap: toRem(16);
+            min-width: toRem(200);
+            width: fit-content;
         }
 
         @media (min-width: $lg) {
-            width: toRem(300);
+            min-width: toRem(300);
+            width: fit-content;
         }
     }
 }
