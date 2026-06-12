@@ -20,7 +20,12 @@
 
     @media (min-width: $lg) {
         padding: toRem(48);
-        gap: toRem(56);
+        gap: toRem(72);
+
+        // Ultra-wide: the container is 1720px here. Keep the text column + form
+        // card as one centered cluster instead of leaving a black void on the
+        // right (info caps at 600 + form 562 doesn't fill the band on its own).
+        justify-content: center;
     }
 }
 
@@ -36,6 +41,10 @@
     @media (min-width: $md) {
         gap: toRem(20);
         max-width: toRem(520);
+    }
+
+    @media (min-width: $lg) {
+        max-width: toRem(600);
     }
 }
 
