@@ -66,7 +66,7 @@
                         <?php if ( $r['image'] ): ?>
                             <?php echo lazy_attachment($r['image'], 'full'); ?>
                         <?php elseif ( $r['title'] ): ?>
-                            <span class="team-award__wordmark"><?php echo esc_html($r['title']); ?></span>
+                            <span class="team-award__mono" aria-hidden="true"><?php echo esc_html( mb_strtoupper( mb_substr( preg_replace('/[^A-Za-z]/', '', (string) $r['title']), 0, 1 ) ) ); ?></span>
                         <?php endif; ?>
                     </div>
 
