@@ -6,7 +6,7 @@
  */
 ?>
 
-<div class="container">
+<div class="container container_small">
     <section class="cta-form-section free-test-render">
         <div class="cta-form-section__info free-test-render__info">
             <p class="section-subtitle">Free Test Render</p>
