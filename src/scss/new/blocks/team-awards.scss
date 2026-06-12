@@ -196,17 +196,17 @@
     }
 }
 
-.team-award__mono {
-    width: toRem(56);
-    height: toRem(56);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-color);
-    color: var(--white-color);
-    border-radius: 1px;
-    font-size: toRem(26);
+.team-award__wordmark {
+    display: block;
     font-weight: 500;
+    font-size: toRem(24);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--black-color);
+
+    @media (min-width: $lg) {
+        font-size: toRem(26);
+    }
 }
 
 .team-award__title {
