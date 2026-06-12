@@ -55,10 +55,11 @@ function initCalculator() {
       : 'Interior views: ' + mfcalcMoney(FIRST) + ' + ' + (views - 1) + ' × ' + mfcalcMoney(EXTRA);
     html += row(vlabel, subtotal);
     addonEls.forEach(function (el) {
-      if (!el.querySelector('input').checked) return;
-      var val = parseFloat(el.getAttribute('data-val'));
+      var input = el.querySelector('input');
+      if (!input.checked) return;
+      var val = parseFloat(input.getAttribute('data-val'));
       var name = el.querySelector('.mfcalc__addon-name').textContent;
-      if (el.getAttribute('data-kind') === 'pct') {
+      if (input.getAttribute('data-kind') === 'pct') {
         pct += val;
         html += row(name + ' (+' + Math.round(val * 100) + '%)', subtotal * val);
       } else {
