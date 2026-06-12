@@ -32,17 +32,20 @@ function initStickyCta() {
     });
   }
 
-  // 2) Suppress the card while the Free Test Render form is in view.
-  //    The theme uses a virtualised (transform-based) scroll, so native scroll
-  //    events and IntersectionObserver don't fire — poll the rect each frame
-  //    (getBoundingClientRect reflects the transformed position) and only
-  //    toggle the class when the state actually changes.
-  const section = document.querySelector('.free-test-render');
-  if (section) {
+  // 2) Suppress the card while the Free Test Render form OR the lead quiz is in
+  //    view, so it never overlaps either. The theme uses a virtualised
+  //    (transform-based) scroll, so native scroll events and IntersectionObserver
+  //    don't fire — poll the rects each frame (getBoundingClientRect reflects the
+  //    transformed position) and only toggle the class when the state changes.
+  const sections = document.querySelectorAll('.free-test-render, .mfsq');
+  if (sections.length) {
     let last = null;
     const tick = () => {
-      const rect = section.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      let inView = false;
+      sections.forEach((s) => {
+        const rect = s.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) inView = true;
+      });
       if (inView !== last) {
         last = inView;
         card.classList.toggle('is-suppressed', inView);
