@@ -10,7 +10,7 @@ import { AutorotatePlugin } from '@photo-sphere-viewer/autorotate-plugin';
 import { GyroscopePlugin } from '@photo-sphere-viewer/gyroscope-plugin';
 import { StereoPlugin } from '@photo-sphere-viewer/stereo-plugin';
 import { CompassPlugin } from '@photo-sphere-viewer/compass-plugin';
-import { createEngine } from './engine.js';
+import { createEngine } from 'mfs-tour-engine';
 
 const TB = window.MFS_TOUR || {};
 const $ = s => document.querySelector(s);

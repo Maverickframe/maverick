@@ -164,6 +164,7 @@ function mfs_tour_print_importmap() {
     $done = true;
     $v = MFS_TOUR_PSV; $t = MFS_TOUR_THREE;
     $map = array('imports' => array(
+        'mfs-tour-engine' => mfs_tour_uri() . '/engine.js?ver=' . mfs_tour_ver('engine.js'),
         'three' => "https://cdn.jsdelivr.net/npm/three@{$t}/build/three.module.js",
         '@photo-sphere-viewer/core'             => "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@{$v}/index.module.js",
         '@photo-sphere-viewer/markers-plugin'   => "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/markers-plugin@{$v}/index.module.js",
