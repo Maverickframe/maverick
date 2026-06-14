@@ -158,7 +158,12 @@ export function createEngine(deps, container, config, opts){
   async function showScene(id, transition){
     const node = byId(id); if (!node) return;
     cur = id;
-    await viewer.setPanorama(panoOf(node), { transition: transition !== false, showLoader: true, caption: node.name });
+    try {
+      await viewer.setPanorama(panoOf(node), { transition: transition !== false, showLoader: true, caption: node.name });
+    } catch (e) {
+      // A non-equirectangular or oversized image can't be used as a 360° panorama.
+      console.warn('[mfs-tour] panorama could not be loaded for scene', id, e && e.message ? e.message : e);
+    }
     applyMarkers(node); buildStrip(); buildCompass(node); updateDayNight(node);
     if (opts.onNodeChange) opts.onNodeChange(id);
   }
@@ -168,7 +173,11 @@ export function createEngine(deps, container, config, opts){
     const node = byId(cur); if (!node || !node.night) return;
     mode = (mode === 'night') ? 'day' : 'night';
     dnTrack.classList.toggle('is-night', mode === 'night');
-    await viewer.setPanorama(panoOf(node), { transition: { effect:'fade', rotation:false }, showLoader:false });
+    try {
+      await viewer.setPanorama(panoOf(node), { transition: { effect:'fade', rotation:false }, showLoader:false });
+    } catch (e) {
+      console.warn('[mfs-tour] night panorama could not be loaded', e && e.message ? e.message : e);
+    }
     applyMarkers(node);  // re-add markers after panorama swap
   }
 
