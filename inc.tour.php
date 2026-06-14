@@ -208,6 +208,23 @@ add_filter('rocket_excluded_inline_js_content', function ($e) { $e[] = 'importma
 add_filter('rocket_delay_js_exclusions', function ($e) { $e[] = 'photo-sphere'; $e[] = 'jsdelivr'; $e[] = '/tour/'; return $e; });
 add_filter('rocket_minify_excluded_external_js', function ($e) { $e[] = 'jsdelivr.net'; return $e; });
 
+/* Content-Security-Policy fix. The site CSP has no explicit img-src, so it
+   inherits default-src (no `blob:`). Photo Sphere Viewer fetches the panorama
+   and loads it through a blob: URL <img>, which CSP then blocks — the cause of
+   "panorama cannot be loaded". Re-send a CSP that allows blob: for img/worker,
+   only on the builder page and on pages embedding the [pano_tour] shortcode.
+   NOTE: if the base CSP is set at the edge (Cloudflare/Nginx) rather than PHP,
+   this override won't win — then add `blob:` to img-src at the host level. */
+add_action('send_headers', function () {
+    $needs = is_page_template(MFS_TOUR_TEMPLATE);
+    if (!$needs && is_singular()) {
+        $p = get_queried_object();
+        if ($p && !empty($p->post_content) && has_shortcode($p->post_content, 'pano_tour')) $needs = true;
+    }
+    if (!$needs) return;
+    header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; img-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https: blob:;");
+}, 99);
+
 /* ------------------------------------------------------ BUILDER (gated) */
 add_action('wp_enqueue_scripts', function () {
     if (!is_page_template(MFS_TOUR_TEMPLATE)) return;
