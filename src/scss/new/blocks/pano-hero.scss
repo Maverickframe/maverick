@@ -32,8 +32,8 @@
     }
 
     &__btn {
-        display: inline-flex;
-        width: auto;
+        display: inline-flex !important;
+        width: auto !important;
         align-self: flex-start;
         cursor: pointer;
     }
