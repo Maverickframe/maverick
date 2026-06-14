@@ -5,6 +5,46 @@
    It must NOT reference anything from outer scope — only its params and
    browser globals. Keep dependency-free (deps are passed in).
    ========================================================================= */
+
+/* --- CSP workaround. This site's CSP (set at the Cloudflare/Rocket edge) has
+   no `blob:` in img-src, but Photo Sphere Viewer loads panoramas through blob:
+   URLs, which CSP then blocks ("panorama cannot be loaded"). Transparently
+   convert image blobs to data: URLs (allowed by `default-src ... data:`).
+   Module-level so it runs before any PSV load; kept OUTSIDE createEngine so the
+   exported standalone tours (which run off-site, no such CSP) stay clean.
+   Proper long-term fix: add `blob:` to img-src at the host/CDN level. --- */
+(function mfsPatchBlobImagesForCSP(){
+  if (typeof window === 'undefined' || window.__mfsBlobImgPatched) return;
+  window.__mfsBlobImgPatched = true;
+  try {
+    const realCreate = URL.createObjectURL.bind(URL);
+    const blobs = new Map();
+    URL.createObjectURL = function(obj){
+      const url = realCreate(obj);
+      if (obj instanceof Blob && obj.type && obj.type.indexOf('image/') === 0) blobs.set(url, obj);
+      return url;
+    };
+    const realRevoke = URL.revokeObjectURL.bind(URL);
+    URL.revokeObjectURL = function(url){ blobs.delete(url); return realRevoke(url); };
+    const desc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      configurable: true,
+      enumerable: desc.enumerable,
+      get(){ return desc.get.call(this); },
+      set(v){
+        if (typeof v === 'string' && v.indexOf('blob:') === 0 && blobs.has(v)){
+          const fr = new FileReader();
+          fr.onload = () => desc.set.call(this, fr.result);
+          fr.onerror = () => desc.set.call(this, v);
+          fr.readAsDataURL(blobs.get(v));
+          return;
+        }
+        desc.set.call(this, v);
+      },
+    });
+  } catch (e) { /* non-fatal: fall back to native behaviour */ }
+})();
+
 export function createEngine(deps, container, config, opts){
   const { Viewer, MarkersPlugin, AutorotatePlugin, GyroscopePlugin, StereoPlugin, CompassPlugin } = deps;
   opts = opts || {};
