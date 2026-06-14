@@ -19,13 +19,26 @@
   try {
     const realCreate = URL.createObjectURL.bind(URL);
     const blobs = new Map();
+    // Track every blob URL — PSV builds its panorama blob from an XHR response
+    // with an EMPTY mime type, so we can't filter by type here.
     URL.createObjectURL = function(obj){
       const url = realCreate(obj);
-      if (obj instanceof Blob && obj.type && obj.type.indexOf('image/') === 0) blobs.set(url, obj);
+      if (obj instanceof Blob) blobs.set(url, obj);
       return url;
     };
     const realRevoke = URL.revokeObjectURL.bind(URL);
     URL.revokeObjectURL = function(url){ blobs.delete(url); return realRevoke(url); };
+    // Untyped blobs become data:application/octet-stream which <img> won't
+    // decode — sniff the real image type from the base64 magic bytes.
+    const fixMime = (dataUrl) => {
+      const m = /^data:([^;,]*)(;base64)?,(.*)$/s.exec(dataUrl);
+      if (!m || /^image\//i.test(m[1])) return dataUrl;
+      const b64 = m[3]; let mime = 'image/jpeg';
+      if (b64.indexOf('iVBOR') === 0) mime = 'image/png';
+      else if (b64.indexOf('UklGR') === 0) mime = 'image/webp';
+      else if (b64.indexOf('R0lGOD') === 0) mime = 'image/gif';
+      return 'data:' + mime + ';base64,' + b64;
+    };
     const desc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
     Object.defineProperty(HTMLImageElement.prototype, 'src', {
       configurable: true,
@@ -34,7 +47,7 @@
       set(v){
         if (typeof v === 'string' && v.indexOf('blob:') === 0 && blobs.has(v)){
           const fr = new FileReader();
-          fr.onload = () => desc.set.call(this, fr.result);
+          fr.onload = () => desc.set.call(this, fixMime(fr.result));
           fr.onerror = () => desc.set.call(this, v);
           fr.readAsDataURL(blobs.get(v));
           return;
