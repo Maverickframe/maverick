@@ -106,6 +106,21 @@ function mfs_tour_rest_save($req) {
     return array('id' => $id, 'title' => $title);
 }
 
+// Authoritative server-side resolution of the panorama URL from an attachment
+// ID. The media-JS `sizes` map doesn't reliably expose custom sizes, so we pick
+// the first real generated derivative here; the full original (often ~20MB) is
+// only a last resort. `is_intermediate` (index 3) is true for resized files.
+function mfs_tour_pano_url($id, $sizes = array('tour_pano', 'hero_full', 'big')) {
+    $id = (int) $id;
+    if (!$id) return '';
+    foreach ($sizes as $sz) {
+        $img = wp_get_attachment_image_src($id, $sz);
+        if ($img && !empty($img[0]) && !empty($img[3])) return $img[0];
+    }
+    $full = wp_get_attachment_image_src($id, 'full');
+    return $full ? $full[0] : '';
+}
+
 function mfs_tour_sanitize_config($c) {
     $out = array('startId' => null, 'nodes' => array());
     if (!is_array($c)) return $out;
@@ -114,13 +129,15 @@ function mfs_tour_sanitize_config($c) {
 
     foreach ($c['nodes'] as $n) {
         if (!is_array($n)) continue;
+        $dayId   = isset($n['dayId']) ? (int) $n['dayId'] : 0;
+        $nightId = isset($n['nightId']) ? (int) $n['nightId'] : 0;
         $node = array(
             'id'      => sanitize_text_field($n['id'] ?? ''),
             'name'    => sanitize_text_field($n['name'] ?? 'Scene'),
-            'day'     => esc_url_raw($n['day'] ?? ''),
-            'dayId'   => isset($n['dayId']) ? (int) $n['dayId'] : null,
-            'night'   => !empty($n['night']) ? esc_url_raw($n['night']) : null,
-            'nightId' => isset($n['nightId']) ? (int) $n['nightId'] : null,
+            'day'     => $dayId ? mfs_tour_pano_url($dayId) : esc_url_raw($n['day'] ?? ''),
+            'dayId'   => $dayId ?: null,
+            'night'   => $nightId ? mfs_tour_pano_url($nightId) : (!empty($n['night']) ? esc_url_raw($n['night']) : null),
+            'nightId' => $nightId ?: null,
             'hotspots'=> array(),
         );
         if (!empty($n['hotspots']) && is_array($n['hotspots'])) {
@@ -137,10 +154,11 @@ function mfs_tour_sanitize_config($c) {
                 if ($hs['type'] === 'nav') {
                     $hs['target'] = sanitize_text_field($h['target'] ?? '');
                 } else {
+                    $imgId         = isset($h['imageId']) ? (int) $h['imageId'] : 0;
                     $hs['title']   = sanitize_text_field($h['title'] ?? '');
                     $hs['text']    = sanitize_textarea_field($h['text'] ?? '');
-                    $hs['image']   = !empty($h['image']) ? esc_url_raw($h['image']) : null;
-                    $hs['imageId'] = isset($h['imageId']) ? (int) $h['imageId'] : null;
+                    $hs['image']   = $imgId ? mfs_tour_pano_url($imgId, array('large', 'case_content', 'big')) : (!empty($h['image']) ? esc_url_raw($h['image']) : null);
+                    $hs['imageId'] = $imgId ?: null;
                 }
                 $node['hotspots'][] = $hs;
             }
