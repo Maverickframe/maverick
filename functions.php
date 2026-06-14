@@ -102,6 +102,7 @@ function isNewDesign()
 
 include "inc.vite.php";
 require_once __DIR__ . '/forms/book-call-handler.php';
+require_once __DIR__ . '/inc.tour.php';
 
 // End Enqueue Scripts and Styles
 
