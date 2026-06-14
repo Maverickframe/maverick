@@ -32,6 +32,9 @@
     }
 
     &__btn {
+        display: inline-flex;
+        width: auto;
+        align-self: flex-start;
         cursor: pointer;
     }
 
