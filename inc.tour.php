@@ -219,7 +219,7 @@ add_action('send_headers', function () {
     $needs = is_page_template(MFS_TOUR_TEMPLATE);
     if (!$needs && is_singular()) {
         $p = get_queried_object();
-        if ($p && !empty($p->post_content) && has_shortcode($p->post_content, 'pano_tour')) $needs = true;
+        if ($p && !empty($p->post_content) && (has_shortcode($p->post_content, 'pano_tour') || has_block('acf/pano-hero', $p))) $needs = true;
     }
     if (!$needs) return;
     header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; img-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https: blob:;");
@@ -277,9 +277,11 @@ function mfs_tour_need_viewer($set = false) {
     return $need;
 }
 
-function mfs_tour_shortcode($atts) {
-    $atts = shortcode_atts(array('id' => 0, 'height' => ''), $atts, 'pano_tour');
-    $id   = (int) $atts['id'];
+// Shared renderer — used by both the [pano_tour] shortcode and the
+// acf/pano-hero block. Returns the .mfs-tour container and flags the viewer
+// assets for footer enqueue.
+function mfs_tour_render($id, $height = '') {
+    $id = (int) $id;
     if (!$id || get_post_type($id) !== 'pano_tour') {
         return '<div class="mfs-tour"><div class="mfs-tour-empty">Tour not found.</div></div>';
     }
@@ -291,12 +293,17 @@ function mfs_tour_shortcode($atts) {
     mfs_tour_need_viewer(true);
 
     $hattr = ''; $style = '';
-    if (!empty($atts['height'])) {
-        $h = preg_replace('/[^0-9a-z%.]/i', '', $atts['height']);
+    if ($height !== '' && $height !== null) {
+        $h = preg_replace('/[^0-9a-z%.]/i', '', (string) $height);
         if (is_numeric($h)) $h .= 'px';
         $hattr = ' data-height="1"'; $style = ' style="height:' . esc_attr($h) . '"';
     }
     return '<div class="mfs-tour"' . $hattr . $style . ' data-tour="' . esc_attr(wp_json_encode($cfg)) . '"></div>';
+}
+
+function mfs_tour_shortcode($atts) {
+    $atts = shortcode_atts(array('id' => 0, 'height' => ''), $atts, 'pano_tour');
+    return mfs_tour_render((int) $atts['id'], $atts['height']);
 }
 add_shortcode('pano_tour', 'mfs_tour_shortcode');
 

@@ -31,3 +31,16 @@ function boot(host){
 function init(){ document.querySelectorAll('.mfs-tour').forEach(boot); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
+
+/* "Expand fullscreen" buttons (e.g. acf/pano-hero block). Delegated so it works
+   regardless of when the viewer finished booting. Fullscreens the .mfs-tour
+   container; PSV's ResizeObserver refits the sphere to the new size. */
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('[data-pano-expand]');
+  if (!btn) return;
+  var scope = btn.closest('.pano-hero') || btn.parentElement || document;
+  var t = scope.querySelector('.mfs-tour') || document.querySelector('.mfs-tour');
+  if (!t) return;
+  var req = t.requestFullscreen || t.webkitRequestFullscreen || t.msRequestFullscreen;
+  if (req) req.call(t);
+});

@@ -1,0 +1,132 @@
+/* Block: acf/pano-hero — copy left, interactive 360° tour right.
+   Reuses site components (.section-subtitle eyebrow, .btn-main, .text-highlight).
+   Panorama controls are re-skinned to the site language: 1px radius, brand
+   accent (var(--accent-color)) instead of the engine's default #2f6bff. */
+
+.pano-hero {
+    padding: clamp(48px, 7vw, 110px) 0;
+
+    &__main {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+        gap: clamp(32px, 5vw, 72px);
+        align-items: center;
+    }
+
+    &__info {
+        .section-subtitle {
+            margin-bottom: 22px;
+        }
+    }
+
+    &__title {
+        margin: 0 0 24px;
+        font-size: clamp(30px, 3vw, 46px);
+        line-height: 1.1;
+    }
+
+    &__desc {
+        margin: 0 0 34px;
+        max-width: 46ch;
+        color: var(--text-grey-color);
+    }
+
+    &__btn {
+        cursor: pointer;
+    }
+
+    &__media {
+        position: relative;
+        border-radius: 1px;
+        overflow: hidden;
+        background: #0c0c0c;
+        box-shadow: 0 30px 60px -28px rgba(20, 28, 80, 0.45);
+
+        .mfs-tour {
+            border-radius: 1px;
+        }
+    }
+
+    &__placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 320px;
+        color: #9aa0aa;
+        font-size: 14px;
+    }
+
+    /* ---- re-skin the tour controls to match the site (1px radius, brand) ---- */
+    .psv-navbar {
+        background: rgba(17, 19, 26, 0.78);
+        backdrop-filter: blur(6px);
+    }
+
+    .psv-button {
+        border-radius: 1px;
+        transition: background 0.18s;
+
+        &:hover {
+            background: var(--accent-color) !important;
+        }
+    }
+
+    /* nav arrows / info dots — keep their shape, just brand the colour */
+    .mfp-nav {
+        background: rgba(45, 64, 174, 0.28);
+        box-shadow:
+            0 0 0 6px rgba(45, 64, 174, 0.14),
+            0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    .mfp-info {
+        border-color: var(--accent-color);
+    }
+
+    .mfp-strip-btn,
+    .mfp-strip {
+        border-radius: 1px;
+    }
+
+    .mfp-strip img {
+        border-radius: 1px;
+
+        &.on {
+            border-color: var(--accent-color);
+        }
+    }
+
+    .mfp-card,
+    .mfp-card img {
+        border-radius: 1px;
+    }
+
+    .mfp-card .close {
+        background: var(--accent-color);
+        border-radius: 1px;
+    }
+
+    /* day/night toggle — square it to the site radius, brand the night state */
+    .mfp-dn-track {
+        border-radius: 2px;
+
+        &.is-night {
+            background: linear-gradient(90deg, #1b2746, #2d40ae);
+        }
+    }
+
+    .mfp-dn-knob {
+        border-radius: 1px;
+    }
+}
+
+@media (max-width: 900px) {
+    .pano-hero__main {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .pano-hero__desc {
+        max-width: none;
+    }
+}

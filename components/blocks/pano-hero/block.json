@@ -1,0 +1,17 @@
+{
+  "name": "acf/pano-hero",
+  "title": "Pano Hero (3D Tour)",
+  "description": "Двухколоночный блок: текст слева + интерактивная 360° панорама (3D Tour) справа",
+  "category": "layout",
+  "icon": "panorama",
+  "keywords": ["pano", "tour", "360", "panorama", "acf"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "pano-hero.php"
+  },
+  "supports": {
+    "align": false,
+    "anchor": true,
+    "jsx": true
+  }
+}
