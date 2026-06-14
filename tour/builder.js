@@ -30,13 +30,28 @@ const deps = { Viewer, MarkersPlugin, AutorotatePlugin, GyroscopePlugin, StereoP
 const byId = id => config.nodes.find(n => n.id === id);
 
 /* ---------- WordPress Media Library pickers ---------- */
+// Full-res studio renders are too heavy to texture (timeout). Prefer the
+// web-optimised 4096-wide derivative, falling back to progressively smaller
+// generated sizes, then the original only as a last resort.
+function bestPanoUrl(a){
+  const s = a.sizes || {};
+  const pick = ['tour_pano', 'hero_full', '1536x1536', 'big', 'large'];
+  for (const k of pick){ if (s[k] && s[k].url) return s[k].url; }
+  return a.url;
+}
+function bestImgUrl(a){
+  const s = a.sizes || {};
+  const pick = ['large', 'case_content', 'big', 'medium_large'];
+  for (const k of pick){ if (s[k] && s[k].url) return s[k].url; }
+  return a.url;
+}
 function pickPanoramas(){
   if (!window.wp || !wp.media){ toast('Media Library unavailable'); return; }
   const frame = wp.media({ title: 'Select 360° panoramas', button: { text: 'Add to tour' }, multiple: true, library: { type: 'image' } });
   frame.on('select', () => {
     frame.state().get('selection').forEach(att => {
       const a = att.toJSON();
-      addNode(a.title || a.filename || 'Scene', a.url, a.id);
+      addNode(a.title || a.filename || 'Scene', bestPanoUrl(a), a.id);
     });
   });
   frame.open();
@@ -128,7 +143,7 @@ function renderScenes(){
     const row2 = el('div','row2');
     const bNight = el('button','minibtn'+(n.night?' on':'')); bNight.textContent = n.night ? '🌙 Replace night' : '🌙 + night panorama';
     bNight.onclick = e => { e.stopPropagation(); nightTargetId = n.id; pickSingle('Select night panorama', a => {
-      const t = byId(nightTargetId); if (t){ t.night = a.url; t.nightId = a.id; save(); engine && engine.refreshScene(); renderScenes(); toast('Night panorama added'); } nightTargetId = null;
+      const t = byId(nightTargetId); if (t){ t.night = bestPanoUrl(a); t.nightId = a.id; save(); engine && engine.refreshScene(); renderScenes(); toast('Night panorama added'); } nightTargetId = null;
     }); };
     row2.appendChild(bNight);
     if (n.night){
@@ -187,7 +202,7 @@ function hideBanner(){ $('#banner').classList.remove('show'); }
 
 /* ---------- info modal ---------- */
 function openInfoModal(){ $('#infoTitle').value=''; $('#infoText').value=''; infoImg=null; $('#infoImgName').textContent='none'; $('#infoModal').classList.add('show'); }
-$('#infoImgBtn').onclick = () => pickSingle('Select info image', a => { infoImg = { url:a.url, id:a.id }; $('#infoImgName').textContent = a.title || a.filename || 'selected'; });
+$('#infoImgBtn').onclick = () => pickSingle('Select info image', a => { infoImg = { url:bestImgUrl(a), id:a.id }; $('#infoImgName').textContent = a.title || a.filename || 'selected'; });
 $('#infoCancel').onclick = $('#infoClose').onclick = () => { $('#infoModal').classList.remove('show'); pendingInfoPos = null; };
 $('#infoSave').onclick = () => {
   if (!pendingInfoPos) { $('#infoModal').classList.remove('show'); return; }

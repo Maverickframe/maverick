@@ -13,6 +13,15 @@ define('MFS_TOUR_TEMPLATE', 'templates/template-tour-builder.php');
 define('MFS_TOUR_PSV', '5.14.1');
 define('MFS_TOUR_THREE', '0.169.0');
 
+/* Web-optimised panorama size. Full-res studio renders (6500px / ~19MB) are
+   too heavy to texture reliably in WebGL (Cloudflare serves them uncached and
+   the cross-origin texture fetch times out). 4096-wide derivative ≈ 2-4MB:
+   crisp enough for fullscreen 360°, loads fast. New uploads get it
+   automatically; regenerate old ones (`wp media regenerate <id>`). */
+add_action('after_setup_theme', function () {
+    add_image_size('tour_pano', 4096, 2048, false);
+});
+
 /* ---------------------------------------------------------------- CPT */
 add_action('init', function () {
     register_post_type('pano_tour', array(
