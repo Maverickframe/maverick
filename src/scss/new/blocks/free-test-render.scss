@@ -8,6 +8,11 @@
 
     background: var(--black-color);
 
+    // Last homepage block: sit flush above the (black) footer. Kill the
+    // .cta-form-section bottom margin that otherwise shows as a WHITE band —
+    // the full-bleed black is clip-path'd to the box and never paints the margin.
+    margin-bottom: 0;
+
     // Full-bleed: keep the card content at container_small width, but stretch the
     // black background to the full screen width. The side box-shadow paints black
     // left/right; clip-path trims it top/bottom so it doesn't bleed into neighbours.

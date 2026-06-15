@@ -18,8 +18,14 @@
     flex-direction: column;
     gap: toRem(20);
 
-    .single-gallery-hero__breadcrumbs {
+    .hero-block__breadcrumbs {
         margin: 0;
+        color: var(--text-grey-color);
+
+        // White hero → use the dark arrow separator (default asset is for dark heroes)
+        li:not(:last-child)::after {
+            background-image: url("/img/icons/arrow-right-breadcrumbs-black.svg");
+        }
     }
 
     @media (min-width: $md) {

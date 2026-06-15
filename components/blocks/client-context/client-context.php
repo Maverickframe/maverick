@@ -1,7 +1,7 @@
 <section class="client-context js-reveal">
     <div class="container">
         <div class="client-context__info">
-            <p class="section-subtitle">Client & Market Context</p>
+            <p class="section-subtitle"><?php echo mfs_t('Client & Market Context', 'Contexto del cliente y del mercado'); ?></p>
             <h2><?php the_field('title'); ?></h2>
             <div class="p1">
                 <?php the_field('description'); ?>

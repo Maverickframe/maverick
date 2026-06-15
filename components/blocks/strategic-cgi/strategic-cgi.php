@@ -2,7 +2,7 @@
     <div class="container">
         <div class="strategic-cgi__main js-reveal">
             <div class="strategic-cgi__info">
-                <p class="section-subtitle">Strategic CGI Approach</p>
+                <p class="section-subtitle"><?php echo mfs_t('Strategic CGI Approach', 'Enfoque estratégico de CGI'); ?></p>
                 <h2><?php the_field('title'); ?></h2>
                 <div class="p1"><?php the_field('description'); ?></div>
             </div>
