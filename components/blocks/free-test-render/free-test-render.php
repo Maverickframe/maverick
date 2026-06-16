@@ -1,42 +1,80 @@
 <?php
 /**
- * Free Test Render — qualified lead-magnet section (homepage).
+ * Free Test Render — qualified lead-magnet section.
  * Dark section (subtle glow) + white form card. Reuses cta-form layout/styles;
- * adds a structured info column + qualifying form. Single-use: copy baked in.
+ * adds a structured info column + qualifying form.
+ *
+ * Copy is editable per-block via ACF (group_freetestrender01). Every field
+ * falls back to the original homepage copy when left empty, so existing
+ * placements render unchanged. The form structure / field name attributes /
+ * select options stay in code (tied to the CRM/form handler).
  */
+
+$ftr_eyebrow      = get_field('ftr_eyebrow')      ?: 'Free Test Render';
+$ftr_heading      = get_field('ftr_heading')      ?: 'Start With a Free Test Render';
+$ftr_intro        = get_field('ftr_intro')        ?: 'We prove our quality on your own project before you commit. Once we’ve scoped the work and agreed on terms, we deliver a free test render — so you see exactly how it looks in our hands, with zero risk.';
+$ftr_hiw_label    = get_field('ftr_hiw_label')    ?: 'How it works';
+$ftr_cond_label   = get_field('ftr_cond_label')   ?: 'Conditions';
+$ftr_form_title   = get_field('ftr_form_title')   ?: 'Request your free test render';
+$ftr_submit_label = get_field('ftr_submit_label') ?: 'Request my free test render';
+$ftr_success_ttl  = get_field('ftr_success_title')?: 'Thank you – your request has been received.';
+$ftr_success_txt  = get_field('ftr_success_text') ?: 'Our team will review your project and get back to you shortly to arrange your free test render.';
+
+$ftr_hiw_default = [
+    'Tell us about your project and book a short call.',
+    'We scope the work and agree on the price.',
+    'We deliver a free test render within 5 business days.',
+];
+$ftr_cond_default = [
+    'Available for projects from $3,000.',
+    'One test render — our team selects the most representative angle.',
+    'Delivered within 5 business days; revisions aren’t included.',
+    'For clients with an active project, ready to discuss it on a call.',
+    'A quality guarantee for your own project — not a free sample to resell.',
+];
 ?>
 
 <div class="container container_small">
     <section class="cta-form-section free-test-render">
         <div class="cta-form-section__info free-test-render__info">
-            <p class="section-subtitle">Free Test Render</p>
-            <h2>Start With a Free Test Render</h2>
+            <p class="section-subtitle"><?php echo esc_html($ftr_eyebrow); ?></p>
+            <h2><?php echo esc_html($ftr_heading); ?></h2>
 
-            <p class="free-test-render__intro">We prove our quality on your own project before you commit. Once we&rsquo;ve scoped the work and agreed on terms, we deliver a free test render &mdash; so you see exactly how it looks in our hands, with zero risk.</p>
+            <p class="free-test-render__intro"><?php echo esc_html($ftr_intro); ?></p>
 
             <div class="free-test-render__group">
-                <p class="free-test-render__label">How it works</p>
+                <p class="free-test-render__label"><?php echo esc_html($ftr_hiw_label); ?></p>
                 <ol class="free-test-render__steps">
-                    <li>Tell us about your project and book a short call.</li>
-                    <li>We scope the work and agree on the price.</li>
-                    <li>We deliver a free test render within 5 business days.</li>
+                    <?php if ( have_rows('ftr_hiw_steps') ) : ?>
+                        <?php while ( have_rows('ftr_hiw_steps') ) : the_row(); ?>
+                            <li><?php echo esc_html( get_sub_field('text') ); ?></li>
+                        <?php endwhile; ?>
+                    <?php else : ?>
+                        <?php foreach ( $ftr_hiw_default as $step ) : ?>
+                            <li><?php echo esc_html($step); ?></li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ol>
             </div>
 
             <div class="free-test-render__group">
-                <p class="free-test-render__label">Conditions</p>
+                <p class="free-test-render__label"><?php echo esc_html($ftr_cond_label); ?></p>
                 <ul class="free-test-render__checklist">
-                    <li>Available for projects from $3,000.</li>
-                    <li>One test render &mdash; our team selects the most representative angle.</li>
-                    <li>Delivered within 5 business days; revisions aren&rsquo;t included.</li>
-                    <li>For clients with an active project, ready to discuss it on a call.</li>
-                    <li>A quality guarantee for your own project &mdash; not a free sample to resell.</li>
+                    <?php if ( have_rows('ftr_cond_items') ) : ?>
+                        <?php while ( have_rows('ftr_cond_items') ) : the_row(); ?>
+                            <li><?php echo esc_html( get_sub_field('text') ); ?></li>
+                        <?php endwhile; ?>
+                    <?php else : ?>
+                        <?php foreach ( $ftr_cond_default as $cond ) : ?>
+                            <li><?php echo esc_html($cond); ?></li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
 
         <div class="js-contacts-form-container cta-form-section__form">
-            <h3 class="cta-form-section__form-title">Request your free test render</h3>
+            <h3 class="cta-form-section__form-title"><?php echo esc_html($ftr_form_title); ?></h3>
 
             <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form">
                 <input type="hidden" name="tag" value="SEO, Free Test Render">
@@ -103,7 +141,7 @@
                     <textarea name="Message" placeholder="Tell us about your project *" rows="2" required></textarea>
                 </label>
 
-                <button class="btn-main fill" type="submit">Request my free test render</button>
+                <button class="btn-main fill" type="submit"><?php echo esc_html($ftr_submit_label); ?></button>
             </form>
 
             <div class="cta-form__privacy free-test-render__privacy">
@@ -111,8 +149,8 @@
             </div>
 
             <div class="cta-form__success">
-                <p><b>Thank you &ndash; your request has been received.</b></p>
-                <p>Our team will review your project and get back to you shortly to arrange your free test render.</p>
+                <p><b><?php echo esc_html($ftr_success_ttl); ?></b></p>
+                <p><?php echo esc_html($ftr_success_txt); ?></p>
             </div>
         </div>
     </section>
