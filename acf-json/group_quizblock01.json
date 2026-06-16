@@ -1,0 +1,262 @@
+{
+    "key": "group_quizblock01",
+    "title": "Block Lead Quiz",
+    "fields": [
+        {
+            "key": "field_quiz_mode",
+            "label": "Quiz mode",
+            "name": "quiz_mode",
+            "type": "select",
+            "instructions": "Router = the homepage quiz (3 service lines, branching). Service = a single linear path for one service/landing page (no Q1 router).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "choices": { "router": "Router (homepage — 3 service lines)", "service": "Service (single page — one path)" },
+            "default_value": "router",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_quiz_eyebrow",
+            "label": "Eyebrow",
+            "name": "quiz_eyebrow",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "30-second quiz",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quiz_heading",
+            "label": "Heading (H2)",
+            "name": "quiz_heading",
+            "type": "text",
+            "instructions": "Unique per page, ideally with the page keyword. Leave blank on the homepage to keep the default.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "Not sure where to start? Find your fit",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quiz_intro",
+            "label": "Intro",
+            "name": "quiz_intro",
+            "type": "textarea",
+            "instructions": "Short sentence under the heading. Leave blank to keep the default.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_quiz_lead_title",
+            "label": "Lead title (amoCRM)",
+            "name": "quiz_lead_title",
+            "type": "text",
+            "instructions": "Title used for the amoCRM lead. Leave blank to auto-use the page title + \" / Quiz\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quiz_steps",
+            "label": "Steps",
+            "name": "quiz_steps",
+            "type": "repeater",
+            "instructions": "Service mode only. Each step = one question with its answer options.",
+            "required": 0,
+            "conditional_logic": [
+                [ { "field": "field_quiz_mode", "operator": "==", "value": "service" } ]
+            ],
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "collapsed": "field_quiz_step_q",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add step",
+            "sub_fields": [
+                {
+                    "key": "field_quiz_step_q",
+                    "label": "Question",
+                    "name": "step_question",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_quiz_step_opts",
+                    "label": "Options",
+                    "name": "step_options",
+                    "type": "repeater",
+                    "instructions": "Add 2–5 answer options. Add an image to render an option as a visual tile.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "collapsed": "field_quiz_opt_label",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add option",
+                    "sub_fields": [
+                        {
+                            "key": "field_quiz_opt_label",
+                            "label": "Label",
+                            "name": "opt_label",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_quiz_opt_img",
+                            "label": "Image (optional)",
+                            "name": "opt_image",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "return_format": "id",
+                            "preview_size": "thumbnail",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_quiz_res_head",
+            "label": "Result headline",
+            "name": "quiz_result_head",
+            "type": "text",
+            "instructions": "Service mode. The big line on the result screen, e.g. \"Photoreal exterior rendering — built to sell\".",
+            "required": 0,
+            "conditional_logic": [
+                [ { "field": "field_quiz_mode", "operator": "==", "value": "service" } ]
+            ],
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quiz_res_service",
+            "label": "Recommended service",
+            "name": "quiz_result_service",
+            "type": "text",
+            "instructions": "Service mode. Shown as \"Recommended service: <b>…</b>\" and sent to amoCRM. E.g. \"3D exterior rendering\".",
+            "required": 0,
+            "conditional_logic": [
+                [ { "field": "field_quiz_mode", "operator": "==", "value": "service" } ]
+            ],
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_quiz_res_note",
+            "label": "Result note",
+            "name": "quiz_result_note",
+            "type": "textarea",
+            "instructions": "Service mode. Closing line under the result, e.g. \"We’ll email your tailored plan and a free test render shortly.\".",
+            "required": 0,
+            "conditional_logic": [
+                [ { "field": "field_quiz_mode", "operator": "==", "value": "service" } ]
+            ],
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_quiz_gate_sub",
+            "label": "Gate subtitle",
+            "name": "quiz_gate_sub",
+            "type": "text",
+            "instructions": "Service mode. Sentence on the name/email step. Leave blank for a sensible default.",
+            "required": 0,
+            "conditional_logic": [
+                [ { "field": "field_quiz_mode", "operator": "==", "value": "service" } ]
+            ],
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            { "param": "block", "operator": "==", "value": "acf\/quiz" }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1781610700
+}

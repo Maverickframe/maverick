@@ -4,7 +4,25 @@
  * Routes the visitor into one of three service lines (CGI / Web / Creative),
  * then runs a short tailored path. Self-contained: copy + style-step images
  * baked in. Lead + all answers POST to forms/amo.php via quiz.js.
+ *
+ * Per-page config via ACF (block acf/quiz): quiz_mode = 'router' (homepage,
+ * branching) | 'service' (single linear path for a service/landing page).
+ * Router mode keeps the hardcoded tree below; service mode renders its steps
+ * from the quiz_steps repeater and its result screen from the quiz_result_*
+ * fields, so content can be edited without touching code.
  */
+
+$mfsq_mode    = get_field('quiz_mode') ?: 'router';
+$mfsq_eyebrow = get_field('quiz_eyebrow');
+$mfsq_eyebrow = ( $mfsq_eyebrow !== '' && $mfsq_eyebrow !== null ) ? $mfsq_eyebrow : '30-second quiz';
+$mfsq_heading = get_field('quiz_heading');
+$mfsq_heading = ( $mfsq_heading !== '' && $mfsq_heading !== null ) ? $mfsq_heading : 'Not sure where to start? Find your fit';
+$mfsq_intro   = get_field('quiz_intro');
+$mfsq_intro   = ( $mfsq_intro !== '' && $mfsq_intro !== null ) ? $mfsq_intro : 'Answer a few quick questions and we’ll match you with the right service — plus a free, tailored next step for your project.';
+$mfsq_lead_title = get_field('quiz_lead_title');
+if ( ! $mfsq_lead_title ) {
+    $mfsq_lead_title = ( $mfsq_mode === 'service' ) ? ( get_the_title() . ' / Quiz' ) : 'Homepage / Quiz';
+}
 
 // CGI "look" step — 4 subject-matched renders per subject. Absolute prod URLs
 // so they render in any environment (staging has a separate media library).
@@ -47,13 +65,23 @@ $looks = array(
 <section class="mfsq">
     <div class="container container_small">
         <div class="mfsq__intro">
-            <p class="section-subtitle">30-second quiz</p>
-            <h2>Not sure where to start? Find your fit</h2>
-            <p class="mfsq__sub">Answer a few quick questions and we&rsquo;ll match you with the right service &mdash; plus a free, tailored next step for your project.</p>
+            <p class="section-subtitle"><?php echo esc_html( $mfsq_eyebrow ); ?></p>
+            <h2><?php echo esc_html( $mfsq_heading ); ?></h2>
+            <p class="mfsq__sub"><?php echo esc_html( $mfsq_intro ); ?></p>
         </div>
 
-        <div class="mfsq__card js-mfsq" data-amo="<?php echo esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') ); ?>">
+        <div class="mfsq__card js-mfsq" data-mode="<?php echo esc_attr( $mfsq_mode ); ?>" data-title="<?php echo esc_attr( $mfsq_lead_title ); ?>" data-amo="<?php echo esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') ); ?>">
+            <?php if ( $mfsq_mode === 'service' ) {
+                $mfsq_res = array(
+                    'head'    => get_field('quiz_result_head') ?: '',
+                    'service' => get_field('quiz_result_service') ?: '',
+                    'note'    => get_field('quiz_result_note') ?: '',
+                    'gateSub' => get_field('quiz_gate_sub') ?: '',
+                );
+                echo '<script type="application/json" data-mfsq-result>' . wp_json_encode( $mfsq_res ) . '</script>';
+            } else { ?>
             <script type="application/json" data-mfsq-looks><?php echo wp_json_encode( $looks ); ?></script>
+            <?php } ?>
 
             <div class="mfsq__head">
                 <span class="mfsq__count" data-count>Step 1</span>
@@ -61,6 +89,47 @@ $looks = array(
             </div>
 
             <div data-steps>
+
+                <?php if ( $mfsq_mode === 'service' ) :
+                    $mfsq_steps = get_field('quiz_steps');
+                    if ( ! is_array( $mfsq_steps ) ) { $mfsq_steps = array(); }
+                    $mfsq_i = 0;
+                    foreach ( $mfsq_steps as $mfsq_step ) :
+                        $mfsq_q = isset( $mfsq_step['step_question'] ) ? trim( $mfsq_step['step_question'] ) : '';
+                        $mfsq_opts = ( isset( $mfsq_step['step_options'] ) && is_array( $mfsq_step['step_options'] ) ) ? $mfsq_step['step_options'] : array();
+                        if ( $mfsq_q === '' || empty( $mfsq_opts ) ) { continue; }
+                        $mfsq_has_img = false;
+                        foreach ( $mfsq_opts as $mfsq_o ) { if ( ! empty( $mfsq_o['opt_image'] ) ) { $mfsq_has_img = true; break; } }
+                        ?>
+                        <div class="mfsq__step<?php echo $mfsq_i === 0 ? ' is-on' : ''; ?>" data-q="s<?php echo (int) $mfsq_i; ?>" data-label="<?php echo esc_attr( $mfsq_q ); ?>">
+                            <h3><?php echo esc_html( $mfsq_q ); ?></h3>
+                            <?php if ( $mfsq_has_img ) : ?>
+                                <div class="mfsq__looks">
+                                    <?php foreach ( $mfsq_opts as $mfsq_o ) :
+                                        $mfsq_l = isset( $mfsq_o['opt_label'] ) ? trim( $mfsq_o['opt_label'] ) : '';
+                                        if ( $mfsq_l === '' ) { continue; }
+                                        $mfsq_img = ! empty( $mfsq_o['opt_image'] ) ? wp_get_attachment_image_url( $mfsq_o['opt_image'], 'medium' ) : '';
+                                        ?>
+                                        <button class="mfsq__look" data-v="<?php echo esc_attr( $mfsq_l ); ?>">
+                                            <?php if ( $mfsq_img ) : ?><span class="mfsq__look-img"><img src="<?php echo esc_url( $mfsq_img ); ?>" loading="lazy" alt="<?php echo esc_attr( $mfsq_l ); ?>"></span><?php endif; ?>
+                                            <span class="mfsq__look-cap"><?php echo esc_html( $mfsq_l ); ?></span>
+                                        </button>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php else : ?>
+                                <div class="mfsq__opts">
+                                    <?php foreach ( $mfsq_opts as $mfsq_o ) :
+                                        $mfsq_l = isset( $mfsq_o['opt_label'] ) ? trim( $mfsq_o['opt_label'] ) : '';
+                                        if ( $mfsq_l === '' ) { continue; }
+                                        ?>
+                                        <button class="mfsq__opt" data-v="<?php echo esc_attr( $mfsq_l ); ?>"><?php echo esc_html( $mfsq_l ); ?></button>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php $mfsq_i++;
+                    endforeach;
+                else : ?>
 
                 <!-- Q1 router (shared) -->
                 <div class="mfsq__step is-on" data-q="route">
@@ -175,6 +244,8 @@ $looks = array(
                         <button class="mfsq__opt" data-v="Rebranding existing">Rebranding existing</button>
                     </div>
                 </div>
+
+                <?php endif; ?>
 
                 <!-- ===== Shared gate + result ===== -->
                 <div class="mfsq__step" data-q="gate">
