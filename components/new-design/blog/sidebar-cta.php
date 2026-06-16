@@ -11,21 +11,25 @@
  * Brand / proof / rating: Site Options (Blog CTA) → baked default.
  */
 
+$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+
 $ctaBrand  = get_field('sidebar_cta_brand', 'options')  ?: 'Maverick Frame Studio';
-$ctaProof  = get_field('sidebar_cta_proof', 'options')  ?: 'Trusted by 300+ teams worldwide';
+$ctaProof  = ($is_es ? '' : get_field('sidebar_cta_proof', 'options'))  ?: mfs_t('Trusted by 300+ teams worldwide', 'Con la confianza de más de 300 equipos en todo el mundo');
 $ctaRating = get_field('sidebar_cta_rating', 'options') ?: '4.9';
 
 // Repeater: post override → global options → baked fallback.
 $stages = get_field('sidebar_stages');
-if (empty($stages)) {
+// On /es/ skip the English global-options stages and use the localized $fallback below
+// (until a Spanish `sidebar_stages` is provided per-post).
+if (empty($stages) && !$is_es) {
     $stages = get_field('sidebar_stages', 'options');
 }
 
 $fallback = [
-    ['eyebrow' => 'NEW HERE?',    'head' => 'See our latest 3D rendering work',          'sub' => 'A look-book of recent architectural and product visualization projects.', 'label' => 'Browse portfolio',    'url' => home_url('/gallery/'),   'modal' => false],
-    ['eyebrow' => 'RESOURCE',     'head' => 'Get our project brief template',             'sub' => 'A one-pager we use to scope CGI projects — scope, deliverables, milestones.', 'label' => 'Download PDF',        'url' => home_url('/contacts/'),  'modal' => false],
-    ['eyebrow' => 'SOCIAL PROOF', 'head' => '300+ teams trust Maverick Frame',            'sub' => 'See how our visuals helped brands and developers sell faster.',               'label' => 'Read case studies',   'url' => home_url('/success-stories/'), 'modal' => false],
-    ['eyebrow' => 'TALK TO US',   'head' => 'Working on a project like this?',            'sub' => 'Free 15-min consultation. No commitment — just a quick chat about your project.', 'label' => 'Book a 15-min call', 'url' => '#book', 'modal' => true],
+    ['eyebrow' => mfs_t('NEW HERE?', '¿NUEVO AQUÍ?'),    'head' => mfs_t('See our latest 3D rendering work', 'Mira nuestros últimos trabajos de renderizado 3D'),          'sub' => mfs_t('A look-book of recent architectural and product visualization projects.', 'Un look-book de proyectos recientes de visualización arquitectónica y de producto.'), 'label' => mfs_t('Browse portfolio', 'Ver portfolio'),    'url' => $is_es ? home_url('/es/galeria/') : home_url('/gallery/'),   'modal' => false],
+    ['eyebrow' => mfs_t('RESOURCE', 'RECURSO'),     'head' => mfs_t('Get our project brief template', 'Consigue nuestra plantilla de brief de proyecto'),             'sub' => mfs_t('A one-pager we use to scope CGI projects — scope, deliverables, milestones.', 'Una página que usamos para planificar proyectos CGI: alcance, entregables, hitos.'), 'label' => mfs_t('Download PDF', 'Descargar PDF'),        'url' => home_url('/contacts/'),  'modal' => false],
+    ['eyebrow' => mfs_t('SOCIAL PROOF', 'PRUEBA SOCIAL'), 'head' => mfs_t('300+ teams trust Maverick Frame', 'Más de 300 equipos confían en Maverick Frame'),            'sub' => mfs_t('See how our visuals helped brands and developers sell faster.', 'Mira cómo nuestros visuales ayudaron a marcas y promotores a vender más rápido.'),               'label' => mfs_t('Read case studies', 'Leer casos de éxito'),   'url' => $is_es ? home_url('/es/casos-de-exito/') : home_url('/success-stories/'), 'modal' => false],
+    ['eyebrow' => mfs_t('TALK TO US', 'HABLEMOS'),   'head' => mfs_t('Working on a project like this?', '¿Trabajas en un proyecto como este?'),            'sub' => mfs_t('Free 15-min consultation. No commitment — just a quick chat about your project.', 'Consulta gratuita de 15 min. Sin compromiso: solo una charla rápida sobre tu proyecto.'), 'label' => mfs_t('Book a 15-min call', 'Reserva una llamada de 15 min'), 'url' => '#book', 'modal' => true],
 ];
 
 if (empty($stages)) {
@@ -56,7 +60,7 @@ if (empty($rows)) return;
             <img src="<?php echo get_template_directory_uri_vite(); ?>/img/logo.svg" alt="Maverick Frame Studio logo" width="40" height="40">
         </span>
         <p class="sidebar-cta__brand-text">
-            <span class="sidebar-cta__brand-eyebrow">From <?= esc_html($ctaBrand); ?></span>
+            <span class="sidebar-cta__brand-eyebrow"><?= mfs_t('From', 'De'); ?> <?= esc_html($ctaBrand); ?></span>
         </p>
     </div>
 

@@ -14,6 +14,11 @@ if ($trendingCat) {
 	$trendingTopAuthor = get_field('author', $trendingTopPost->ID);
 	$trendingTopReadTime = get_field('read_time', $trendingTopPost->ID);
 }
+
+// No trending posts (e.g. empty ES blog hub before any ES posts exist) — skip the whole section.
+if (empty($trendingTopPost)) {
+	return;
+}
 ?>
 
 <section class="trending section">
@@ -42,7 +47,7 @@ if ($trendingCat) {
 
 		<div class="section__btn">
 			<a href="#blog" class="btn-main js-trigger-blog">
-				View all rankings
+				<?php echo mfs_t('View all rankings', 'Ver todos los artículos'); ?>
 			</a>
 		</div>
 	</div>

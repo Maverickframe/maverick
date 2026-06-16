@@ -809,8 +809,11 @@ add_action('wp_enqueue_scripts', function () {
         );
 
         // In-article CTAs: per-post override → global (Site Options) → JS baked default.
+        // On /es/ skip the English global-options CTAs so the JS uses its localized
+        // baked defaults (until a Spanish per-post override is provided).
+        $mfs_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
         $inCtas = get_field('in_article_ctas');
-        if (empty($inCtas)) {
+        if (empty($inCtas) && !$mfs_is_es) {
             $inCtas = get_field('in_article_ctas', 'options');
         }
         $payload = array();

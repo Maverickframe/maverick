@@ -1994,6 +1994,10 @@ html.single-blog .section-related .section__title::before {
     height: auto !important;
     margin: 0 !important;
 }
+/* ES: localize the "Read next" eyebrow above related articles (higher specificity via [lang]) */
+html.single-blog[lang^="es"] .section-related .section__title::before {
+    content: "LEER A CONTINUACIÓN" !important;
+}
 html.single-blog .section-related .cards--3 {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;

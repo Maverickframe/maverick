@@ -1,7 +1,15 @@
 <?php
 $articlePermalink = $args['link'] ?? get_permalink($args['id']);
 $articleTags = $args['tags'] ?? get_the_tags($args['id']);
-$articleDate = $args['date'] ?? get_the_date('F j, Y', $args['id']);
+if (isset($args['date'])) {
+	$articleDate = $args['date'];
+} elseif (function_exists('pll_current_language') && pll_current_language() === 'es') {
+	$mfs_ts = get_post_timestamp($args['id']);
+	$mfs_meses = ['1' => 'enero', '2' => 'febrero', '3' => 'marzo', '4' => 'abril', '5' => 'mayo', '6' => 'junio', '7' => 'julio', '8' => 'agosto', '9' => 'septiembre', '10' => 'octubre', '11' => 'noviembre', '12' => 'diciembre'];
+	$articleDate = (int) wp_date('j', $mfs_ts) . ' de ' . $mfs_meses[(string) (int) wp_date('n', $mfs_ts)] . ' de ' . wp_date('Y', $mfs_ts);
+} else {
+	$articleDate = get_the_date('F j, Y', $args['id']);
+}
 $articleTitle = $args['title'] ?? get_the_title($args['id']);
 $articleExcerpt = $args['excerpt'] ?? get_the_excerpt($args['id']);
 $articleAuthor = $args['author'] ?? get_field('author', $args['id']);
@@ -52,7 +60,7 @@ $articleTitleTag = $args['title_tag'] ?? 'h3'; // 'p' for cards rendered above t
                 <?php endif; ?>
 
                 <span class="case-item__arrow">
-                    <?= $args['read_more_text'] ?? 'Read more'; ?>
+                    <?= $args['read_more_text'] ?? mfs_t('Read more', 'Leer más'); ?>
 
                     <?= inline_svg($args['read_more_icon'] ?? 'icons/arrow-right-accent.svg'); ?>
                 </span>
