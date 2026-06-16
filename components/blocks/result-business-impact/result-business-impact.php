@@ -1,6 +1,6 @@
 <section class="result-business-impact">
     <div class="container">
-        <h2 class="section-subtitle">Results & Business Impact</h2>
+        <h2 class="section-subtitle"><?php echo mfs_t('Results & Business Impact', 'Resultados e impacto de negocio'); ?></h2>
 
         <?php if(have_rows('items')): ?>
         <?php $hasNumbers = get_field('items')[2]['number']; ?>

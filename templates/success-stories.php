@@ -10,11 +10,12 @@
 
 <main class="main inner-page success-stories-page">
     <div class="container">
+        <?php $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es'; ?>
         <?= get_template_part('components/new-design/breadcrumbs', null, [
             'breadcrumbs' => [
                 1 => [
-                    'name' => 'Home',
-                    'link' => home_url()
+                    'name' => mfs_t('Home', 'Inicio'),
+                    'link' => $bc_is_es ? home_url('/es/') : home_url()
                 ]
             ]
         ]); ?>

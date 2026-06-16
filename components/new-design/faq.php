@@ -6,7 +6,7 @@ $faqItems = get_field('faq_items');
     <section class="faq<?= $args['class'] ?? null; ?>">
         <div class="container container_small">
             <div class="faq__info">
-                <h2><?= get_field('faq_title') ?? 'Maverick Frame Blog FAQ'; ?></h2>
+                <h2><?= get_field('faq_title') ?? mfs_t('Maverick Frame Blog FAQ', 'Preguntas frecuentes del blog de Maverick Frame'); ?></h2>
                 <?php if(get_field('faq_description')): ?>
                     <div class="faq__description">
                         <?php the_field('faq_description'); ?>

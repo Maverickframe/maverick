@@ -1,11 +1,13 @@
 <?php
 $author = get_field('author');
-$authorAvatar = get_field('black_photo', $author->ID);
-$authorName = get_the_title($author->ID);
-$authorPosition = get_field('position', $author->ID);
-$authorText = get_field('text', $author->ID);
-$authorLinkedin = get_field('linkedin', $author->ID);
-$authorLink = get_permalink($author->ID);
+if ($author) {
+    $authorAvatar = get_field('black_photo', $author->ID);
+    $authorName = get_the_title($author->ID);
+    $authorPosition = get_field('position', $author->ID);
+    $authorText = get_field('text', $author->ID);
+    $authorLinkedin = get_field('linkedin', $author->ID);
+    $authorLink = get_permalink($author->ID);
+}
 ?>
 
 <?php if ($author): ?>
@@ -57,7 +59,7 @@ $authorLink = get_permalink($author->ID);
 
         <div class="article-page__author-footer">
             <a href="<?= $authorLink; ?>" class="article-page__author-profile-link">
-                View full profile
+                <?= mfs_t('View full profile', 'Ver perfil completo'); ?>
                 <span class="svg-icon">
                     <?= inline_svg("icons/arrow-right.svg"); ?>
                 </span>

@@ -12,6 +12,9 @@
 (function () {
     'use strict';
 
+    // Language flag: true on /es/ pages (html lang="es" / "es-ES").
+    var MFS_ES = document.documentElement.lang.toLowerCase().indexOf('es') === 0;
+
     function init() {
         initProgressBar();
         initTocSpy();
@@ -139,7 +142,39 @@
         // Copy source: ACF-driven data (window.mfsBlogCtas, set via
         // wp_localize_script from per-post override → global Site Options)
         // falls back to the on-brand baked defaults below when empty.
-        var defaults = [
+        var defaults = MFS_ES ? [
+            {
+                eyebrow: '¿NUEVO AQUÍ?',
+                head: 'Mira nuestros últimos trabajos de renderizado 3D fotorrealista.',
+                label: 'Ver nuestro portfolio',
+                url: '/es/galeria/'
+            },
+            {
+                eyebrow: 'RECURSO',
+                head: 'La plantilla de brief de una página que usamos para planificar proyectos CGI.',
+                label: 'Descargar el PDF',
+                url: '/contacts/'
+            },
+            {
+                eyebrow: 'CASO DE ÉXITO',
+                head: 'Cómo nuestros visuales ayudaron a una marca a vender más rápido: mira las cifras.',
+                label: 'Leer el caso',
+                url: '/es/casos-de-exito/'
+            },
+            {
+                eyebrow: 'COMPARAR',
+                head: 'CGI vs fotografía: coste, velocidad y flexibilidad lado a lado.',
+                label: 'Ver la comparación',
+                url: '/es/blog/'
+            },
+            {
+                eyebrow: 'HABLEMOS',
+                head: '¿Trabajas en un proyecto como este? Veámoslo juntos.',
+                label: 'Reserva una llamada de 15 min',
+                url: '#book',
+                modal: true
+            }
+        ] : [
             {
                 eyebrow: 'NEW HERE?',
                 head: 'See our latest photoreal 3D rendering work.',
@@ -327,7 +362,7 @@
             var overlay = document.createElement('div');
             overlay.className = 'blog-lightbox';
             overlay.innerHTML =
-                '<button type="button" class="blog-lightbox__close" aria-label="Close">×</button>' +
+                '<button type="button" class="blog-lightbox__close" aria-label="' + (MFS_ES ? 'Cerrar' : 'Close') + '">×</button>' +
                 '<img class="blog-lightbox__img" src="' + escapeHtml(src) + '" alt="">' +
                 (caption ? '<div class="blog-lightbox__caption">' + escapeHtml(caption) + '</div>' : '');
             document.body.appendChild(overlay);
@@ -378,9 +413,9 @@
             // Time remaining (round up so we never show "0 min")
             var remaining = Math.max(0, Math.ceil(totalMin * (1 - ratio)));
             if (remaining === 0) {
-                timeEl.textContent = 'Finished';
+                timeEl.textContent = MFS_ES ? 'Terminado' : 'Finished';
             } else {
-                timeEl.textContent = remaining + ' min remaining';
+                timeEl.textContent = remaining + (MFS_ES ? ' min restantes' : ' min remaining');
             }
 
             // Current section (which heading just crossed the trigger line)
@@ -395,9 +430,11 @@
                     }
                 }
                 if (idx === 0) {
-                    sectionEl.textContent = 'Start';
+                    sectionEl.textContent = MFS_ES ? 'Inicio' : 'Start';
                 } else {
-                    sectionEl.textContent = 'Section ' + idx + ' of ' + totalSections;
+                    sectionEl.textContent = MFS_ES
+                        ? ('Sección ' + idx + ' de ' + totalSections)
+                        : ('Section ' + idx + ' of ' + totalSections);
                 }
             }
         }

@@ -6,12 +6,16 @@ $categories = get_posts([
     'orderby' => 'menu_order',
 ]);
 
+$gal_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+$gal_map = ['Product'=>'Producto','Vehicles'=>'Vehículos','Furniture'=>'Mobiliario','Animations'=>'Animaciones','AI'=>'IA','Interiors'=>'Interiores','Exteriors'=>'Exteriores'];
+$gal_label = function($t) use ($gal_is_es, $gal_map){ return ($gal_is_es && isset($gal_map[$t])) ? $gal_map[$t] : $t; };
+
 if($categories): ?>
 <div class="container">
     <div class="gallery-items">
         <div class="gallery-items__select-mob">
-            <select class="gallery-items__select-mobile js-gallery-mobile" aria-label="Select Gallery Category">
-                <option value="all" selected>All</option>
+            <select class="gallery-items__select-mobile js-gallery-mobile" aria-label="<?php echo esc_attr(mfs_t('Select Gallery Category', 'Seleccionar categoría de galería')); ?>">
+                <option value="all" selected><?php echo mfs_t('All', 'Todas'); ?></option>
                 <?php foreach($categories as $cat):
                     $subcats = get_posts([
                         'post_type' => 'gallery',
@@ -22,12 +26,12 @@ if($categories): ?>
                     <?php if($subcats): ?>
                         <?php foreach($subcats as $sub): ?>
                             <option value="<?php echo sanitize_title($cat->post_title . '-' . $sub->post_title); ?>">
-                                <?php echo esc_html($sub->post_title . ' (' . $cat->post_title . ')'); ?>
+                                <?php echo esc_html($gal_label($sub->post_title) . ' (' . $gal_label($cat->post_title) . ')'); ?>
                             </option>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <option value="<?php echo sanitize_title($cat->post_title); ?>">
-                            <?php echo esc_html($cat->post_title); ?>
+                            <?php echo esc_html($gal_label($cat->post_title)); ?>
                         </option>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -37,7 +41,7 @@ if($categories): ?>
 
         <ul class="gallery-items__tabs">
             <li>
-                <button class="js-gallery-tab-btn" data-tab="all">All</button>
+                <button class="js-gallery-tab-btn" data-tab="all"><?php echo mfs_t('All', 'Todas'); ?></button>
             </li>
             <?php foreach($categories as $cat): ?>
                 <li class="js-category">
@@ -46,14 +50,14 @@ if($categories): ?>
                     $has_sub = !empty($subcats);
                     ?>
                     <button class="js-gallery-tab-btn js-category-btn <?php echo $has_sub?'has-sub':''; ?>" <?php echo $has_sub?'':'data-tab="'.sanitize_title($cat->post_title).'"'; ?>>
-                        <?php echo esc_html($cat->post_title); ?>
+                        <?php echo esc_html($gal_label($cat->post_title)); ?>
                     </button>
                     <?php if($has_sub): ?>
                         <ul>
                             <?php foreach($subcats as $sub): ?>
                                 <li>
                                     <button class="js-gallery-tab-btn" data-tab="<?php echo sanitize_title($cat->post_title . '-' . $sub->post_title); ?>">
-                                        <?php echo esc_html($sub->post_title); ?>
+                                        <?php echo esc_html($gal_label($sub->post_title)); ?>
                                     </button>
                                 </li>
                             <?php endforeach; ?>

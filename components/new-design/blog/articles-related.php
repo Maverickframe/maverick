@@ -1,6 +1,6 @@
 <section class="section-related js-reveal">
     <div class="container">
-        <h2 class="section__title">Related Articles</h2>
+        <h2 class="section__title"><?= mfs_t('Related Articles', 'Artículos relacionados'); ?></h2>
 
         <div class="cards cards--3">
             <?php

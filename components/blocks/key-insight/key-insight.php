@@ -1,7 +1,7 @@
 <section class="key-insight js-reveal">
     <div class="container">
         <div class="key-insight__info">
-            <h2 class="section-subtitle">Key Insight</h2>
+            <h2 class="section-subtitle"><?php echo mfs_t('Key Insight', 'Conclusión clave'); ?></h2>
 
             <div class="key-insight__main js-quote">
                 <?php the_field('title'); ?>
