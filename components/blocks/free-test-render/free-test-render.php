@@ -20,6 +20,23 @@ $ftr_submit_label = get_field('ftr_submit_label') ?: 'Request my free test rende
 $ftr_success_ttl  = get_field('ftr_success_title')?: 'Thank you – your request has been received.';
 $ftr_success_txt  = get_field('ftr_success_text') ?: 'Our team will review your project and get back to you shortly to arrange your free test render.';
 
+// Offer variant — styling hook + lead-attribution preset (does NOT swap copy; copy lives in the fields above).
+$ftr_variant = get_field('offer_variant') ?: 'render';
+
+// Lead tag → hidden "title" field = the lead source recorded in amoCRM (forms/amo.php maps title => form_page).
+// Must be unique per page so the 28 placements don't collapse into one source.
+// Empty + homepage  => keep the original "Homepage / Free Test Render" (homepage stays untouched).
+// Empty elsewhere   => auto-build a unique tag from the variant + page slug.
+$ftr_lead_tag = get_field('lead_tag');
+if ( ! $ftr_lead_tag ) {
+    if ( is_front_page() ) {
+        $ftr_lead_tag = 'Homepage / Free Test Render';
+    } else {
+        $ftr_slug = get_post_field( 'post_name', get_the_ID() );
+        $ftr_lead_tag = ucfirst( $ftr_variant ) . ' / Free Test Render – ' . $ftr_slug;
+    }
+}
+
 $ftr_hiw_default = [
     'Tell us about your project and book a short call.',
     'We scope the work and agree on the price.',
@@ -35,7 +52,7 @@ $ftr_cond_default = [
 ?>
 
 <div class="container container_small">
-    <section class="cta-form-section free-test-render">
+    <section class="cta-form-section free-test-render" data-variant="<?php echo esc_attr($ftr_variant); ?>">
         <div class="cta-form-section__info free-test-render__info">
             <p class="section-subtitle"><?php echo esc_html($ftr_eyebrow); ?></p>
             <h2><?php echo esc_html($ftr_heading); ?></h2>
@@ -78,7 +95,7 @@ $ftr_cond_default = [
 
             <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form">
                 <input type="hidden" name="tag" value="SEO, Free Test Render">
-                <input type="hidden" name="title" value="Homepage / Free Test Render">
+                <input type="hidden" name="title" value="<?php echo esc_attr($ftr_lead_tag); ?>">
 
                 <label class="cta-form__input">
                     <span class="cta-form__label sr-only">Full Name</span>

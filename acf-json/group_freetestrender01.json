@@ -3,6 +3,47 @@
     "title": "Block Free Test Render",
     "fields": [
         {
+            "key": "field_ftr_offer_variant",
+            "label": "Offer variant",
+            "name": "offer_variant",
+            "type": "select",
+            "instructions": "Styling hook (data-variant) + lead-attribution preset. The actual copy is set in the fields below — this does NOT swap copy.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "choices": {
+                "render": "Render",
+                "storyboard": "Storyboard",
+                "panorama": "Panorama",
+                "fooh": "FOOH",
+                "design": "Design",
+                "slide": "Slide"
+            },
+            "default_value": "render",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_ftr_lead_tag",
+            "label": "Lead tag (attribution)",
+            "name": "lead_tag",
+            "type": "text",
+            "instructions": "MUST be unique per page — sent to amoCRM as the lead source (form title). Leave blank to auto-generate from the variant + page slug. On the homepage leave blank to keep \"Homepage / Free Test Render\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "e.g. Panorama page / Free Test Render",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_ftr_eyebrow",
             "label": "Eyebrow",
             "name": "ftr_eyebrow",
@@ -238,5 +279,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1781620000
+    "modified": 1781638502
 }
