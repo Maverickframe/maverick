@@ -65,14 +65,31 @@ function initQuiz() {
   var back = card.querySelector('[data-back]');
   var gateSub = card.querySelector('[data-gate-sub]');
   var amoUrl = card.getAttribute('data-amo');
+  var mode = card.getAttribute('data-mode') || 'router';
+  var leadTitle = card.getAttribute('data-title') || 'Homepage / Quiz';
 
   var looks = {};
-  try { looks = JSON.parse(card.querySelector('[data-mfsq-looks]').textContent || '{}'); } catch (e) { looks = {}; }
+  var looksEl = card.querySelector('[data-mfsq-looks]');
+  if (looksEl) { try { looks = JSON.parse(looksEl.textContent || '{}'); } catch (e) { looks = {}; } }
+
+  // Service mode result config (ACF-driven), if present.
+  var resultCfg = {};
+  var resEl = card.querySelector('[data-mfsq-result]');
+  if (resEl) { try { resultCfg = JSON.parse(resEl.textContent || '{}'); } catch (e) { resultCfg = {}; } }
 
   var branch = null;
   var seq = ['route'];
   var ans = {};
   var cur = 0;
+
+  // Service mode: no Q1 router. The sequence is the DOM order of the rendered
+  // steps (s0…sN, then gate, result); the result screen is driven by resultCfg.
+  if (mode === 'service') {
+    branch = 'service';
+    seq = Array.prototype.map.call(card.querySelectorAll('.mfsq__step'), function (s) {
+      return s.getAttribute('data-q');
+    });
+  }
 
   function numbered() { return seq.slice(0, seq.indexOf('result')); }
 
@@ -95,7 +112,11 @@ function initQuiz() {
     else count.textContent = 'Step ' + (i + 1) + ' of ' + nums.length;
     back.classList.toggle('is-on', i > 0 && key !== 'result');
     if (key === 'look') renderLooks();
-    if (key === 'gate' && gateSub) gateSub.innerHTML = GATE_SUB[branch] || GATE_SUB.cgi;
+    if (key === 'gate' && gateSub) {
+      gateSub.innerHTML = mode === 'service'
+        ? (resultCfg.gateSub || 'Your tailored plan and a free next step for your project.')
+        : (GATE_SUB[branch] || GATE_SUB.cgi);
+    }
   }
 
   function renderLooks() {
@@ -113,14 +134,24 @@ function initQuiz() {
       var fd = new FormData();
       fd.append('Name', name);
       fd.append('Email', email);
-      fd.append('title', 'Homepage / Quiz');
+      fd.append('title', leadTitle);
       fd.append('tag', 'SEO, Quiz');
-      fd.append('Branch', ans.route || '');
-      fd.append('Service', (SVC[branch] && SVC[branch][branchType()]) || '');
-      seq.forEach(function (k) {
-        if (k === 'route' || k === 'gate' || k === 'result') return;
-        if (ans[k]) fd.append(LABELS[k] || k, ans[k]);
-      });
+      if (mode === 'service') {
+        fd.append('Service', resultCfg.service || '');
+        seq.forEach(function (k) {
+          if (k === 'gate' || k === 'result') return;
+          var stepEl = stepEls[k];
+          var label = (stepEl && stepEl.getAttribute('data-label')) || k;
+          if (ans[k]) fd.append(label, ans[k]);
+        });
+      } else {
+        fd.append('Branch', ans.route || '');
+        fd.append('Service', (SVC[branch] && SVC[branch][branchType()]) || '');
+        seq.forEach(function (k) {
+          if (k === 'route' || k === 'gate' || k === 'result') return;
+          if (ans[k]) fd.append(LABELS[k] || k, ans[k]);
+        });
+      }
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'generate_lead', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch });
@@ -134,6 +165,24 @@ function initQuiz() {
 
   function result(name) {
     var r = stepEls.result;
+    if (mode === 'service') {
+      var sHead = resultCfg.head || ('Custom ' + (resultCfg.service || 'project'));
+      var sRows = resultCfg.service
+        ? '<div class="mfsq__result-row">Recommended service:&nbsp;<b>' + escapeHtml(resultCfg.service) + '</b></div>'
+        : '';
+      var sNote = resultCfg.note
+        ? '<p style="font-size:13px;color:#5f5e5a;margin:16px 0 14px;line-height:1.55;">' + escapeHtml(resultCfg.note) + '</p>'
+        : '';
+      r.innerHTML =
+        '<div class="mfsq__result">'
+        + '<p class="mfsq__result-eyebrow">' + (name ? escapeHtml(name) + ', your' : 'Your') + ' recommended approach</p>'
+        + '<p class="mfsq__result-head">' + escapeHtml(sHead) + '</p>'
+        + sRows
+        + sNote
+        + '<button class="mfsq__submit js-modal-open" data-modal="book" type="button">Book a quick call</button>'
+        + '</div>';
+      return;
+    }
     var type = branchType();
     var svc = (SVC[branch] && SVC[branch][type]) || '3D rendering';
     var goalKey = ans.goal || ans.webgoal || ans.crgoal;
@@ -198,7 +247,7 @@ function initQuiz() {
 
   back.addEventListener('click', function () {
     if (cur <= 0) return;
-    if (cur === 1) { // back to router resets the branch choice
+    if (mode === 'router' && cur === 1) { // back to router resets the branch choice
       branch = null;
       seq = ['route'];
       renderDots();

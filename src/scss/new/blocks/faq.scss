@@ -12,6 +12,20 @@
     }
 }
 
+// Breathing room when the FAQ directly follows the dark "mfsq" block
+// (service pages) — otherwise the FAQ title glues to the black edge.
+.mfsq + .faq {
+    padding-top: toRem(60);
+
+    @media (min-width: $md) {
+        padding-top: toRem(100);
+    }
+
+    @media (min-width: $lg) {
+        padding-top: toRem(120);
+    }
+}
+
 .faq__info {
     margin-bottom: toRem(24);
     display: flex;
