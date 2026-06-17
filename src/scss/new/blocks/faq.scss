@@ -126,6 +126,10 @@
     overflow: hidden;
 }
 
+.faq-item.active .faq-item__answer {
+    max-height: 80vh;
+}
+
 .faq-item__answer-inner {
     width: 100%;
     padding-right: toRem(40);

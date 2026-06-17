@@ -664,6 +664,92 @@
             ]
         },
         {
+            "key": "field_6932faqtab01",
+            "label": "FAQ",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_6932faqitems",
+            "label": "FAQ Items",
+            "name": "faq_items",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Studio FAQ shown on the Team page. Leave empty to use the built-in defaults.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "row",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_6932faqq001",
+            "button_label": "Add Question",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6932faqq001",
+                    "label": "Question",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6932faqitems"
+                },
+                {
+                    "key": "field_6932faqa001",
+                    "label": "Answer",
+                    "name": "description",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_6932faqitems"
+                }
+            ]
+        },
+        {
             "key": "field_69a18733b217c",
             "label": "Footer",
             "name": "",
@@ -743,5 +829,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1772193601
+    "modified": 1781827200
 }
