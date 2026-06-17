@@ -37,7 +37,7 @@ function initStickyCta() {
   //    (transform-based) scroll, so native scroll events and IntersectionObserver
   //    don't fire — poll the rects each frame (getBoundingClientRect reflects the
   //    transformed position) and only toggle the class when the state changes.
-  const sections = document.querySelectorAll('.free-test-render, .mfsq');
+  const sections = document.querySelectorAll('.free-test-render, .mfsq, .footer');
   if (sections.length) {
     let last = null;
     const tick = () => {

@@ -5,12 +5,23 @@
 <li>                                
     <div class="menu__post-items">
         <?php
+            // Curated list (ACF `cases`) → show exactly those.
+            // If empty, do NOT dump every case (an empty post__in is ignored by
+            // WP_Query and returns ALL success-stories — 85+ links in the header
+            // of every page). Fall back to the 6 most recent instead.
+            $ow_cases = !empty($our_works['cases']) ? $our_works['cases'] : [];
             $args = [
-                'post_type' => 'success-stories',
-                'post__in' => $our_works['cases'], 
-                'orderby' => 'post__in',
-                'posts_per_page' => -1,
+                'post_type'      => 'success-stories',
+                'post_status'    => 'publish',
+                'posts_per_page' => !empty($ow_cases) ? -1 : 6,
             ];
+            if (!empty($ow_cases)) {
+                $args['post__in'] = $ow_cases;
+                $args['orderby']  = 'post__in';
+            } else {
+                $args['orderby'] = 'date';
+                $args['order']   = 'DESC';
+            }
 
             $query = new WP_Query($args);
 

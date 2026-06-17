@@ -16,6 +16,7 @@
     <?php echo get_template_part('components/new-design/team/team-awards'); ?>
     <?php echo get_template_part('components/common/reviews'); ?>
     <?php echo get_template_part('components/new-design/team/team-performance'); ?>
+    <?php echo get_template_part('components/new-design/team/team-faq'); ?>
 </main>
 
 <?php echo get_template_part('components/common/footer', null, [
