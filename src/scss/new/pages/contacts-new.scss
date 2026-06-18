@@ -1,0 +1,679 @@
+@import "../common/_vars";
+
+/* ---------- Top section: hero + form (2 columns) ---------- */
+.contacts-top {
+    padding: toRem(110) 0 toRem(40);
+
+    @media (min-width: $md) {
+        padding: toRem(150) 0 toRem(48);
+    }
+
+    @media (min-width: $lg) {
+        padding: toRem(170) 0 toRem(56);
+    }
+}
+
+// The reused homepage "trusted" block carries a large margin-top meant for the
+// home layout; remove it here so the gap to "Confían en nosotros" matches Figma.
+.contacts-new-page .trusted {
+    margin-top: 0;
+}
+
+.contacts-top__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: toRem(36);
+
+    @media (min-width: $md) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: toRem(60);
+        align-items: start;
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(80);
+    }
+}
+
+.contacts-hero {
+    min-width: 0;
+}
+
+// Standard breadcrumbs are styled for dark heroes (light-grey text + reveal fade).
+// The contacts hero is on white, so match the design: black parent, grey current.
+.contacts-hero .hero-block__breadcrumbs {
+    margin-bottom: toRem(24);
+    opacity: 1 !important;
+    color: var(--text-grey-color);
+
+    a {
+        color: var(--black-color);
+    }
+
+    li:not(:last-child)::after {
+        background-image: url("/img/icons/arrow-right-breadcrumbs-black.svg");
+    }
+}
+
+.contacts-hero__title {
+    font-weight: 400; // matches site H1 token (Inter Tight Regular 60/1.2)
+    line-height: 1.2;
+
+    font-size: toRem(36);
+
+    @media (min-width: $md) {
+        font-size: toRem(48);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(60);
+    }
+
+    em {
+        font-style: normal;
+        background: var(--accent-color);
+        color: var(--white-color);
+    }
+}
+
+.contacts-hero__subtitle {
+    margin-top: toRem(24);
+    max-width: toRem(620);
+
+    font-size: toRem(16);
+    color: var(--text-grey-color);
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}
+
+/* ---------- Lead form ---------- */
+.contacts-form-card {
+    background: var(--bg-light-color, #f6f6f6);
+    border-radius: toRem(2);
+    padding: toRem(24);
+
+    @media (min-width: $md) {
+        padding: toRem(40);
+    }
+
+    @media (min-width: $lg) {
+        padding: toRem(48);
+    }
+
+    &.is-success {
+        .cform__success { display: flex; }
+    }
+}
+
+.cform {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+}
+
+.cform__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: toRem(16);
+
+    @media (min-width: $md) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+}
+
+.cform__input {
+    display: block;
+    position: relative;
+
+    input,
+    textarea {
+        width: 100%;
+        min-width: 0;
+        padding: toRem(16) toRem(18);
+
+        background: var(--white-color);
+        border: 1px solid var(--stroke-grey-color);
+        border-radius: toRem(2);
+
+        font-family: inherit;
+        font-size: toRem(15);
+        color: var(--black-color);
+
+        &::placeholder { color: var(--text-grey-color); }
+
+        &:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: toRem(120);
+    }
+
+    &.error input {
+        border-color: #d23b3b;
+    }
+}
+
+.cform__error {
+    display: none;
+    margin-top: toRem(6);
+    font-size: toRem(13);
+    color: #d23b3b;
+}
+
+.cform__input.error .cform__error { display: block; }
+.cform__phone-field.error .cform__error { display: block; }
+.cform__phone-field.error .cform__phone-num { border-color: #d23b3b; }
+.cform__check.error .cform__error { display: block; }
+.cform__upload-row.error .cform__error { display: block; }
+
+.cform__file-name {
+    display: block;
+    margin-top: toRem(6);
+    font-size: toRem(13);
+    color: var(--text-grey-color);
+    word-break: break-all;
+
+    &:empty { display: none; }
+}
+
+.cform__count {
+    display: block;
+    margin-top: toRem(6);
+    text-align: right;
+    font-size: toRem(12);
+    color: var(--text-grey-color);
+
+    &.is-max { color: #d23b3b; }
+}
+
+.cform__phone {
+    display: flex;
+    gap: toRem(12);
+
+    .cform__phone-field { flex: 1 1 auto; min-width: 0; display: block; }
+    .cform__phone-num { width: 100%; min-width: 0; }
+}
+
+.cform__country {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.cform__country-toggle {
+    appearance: none;
+    display: flex;
+    align-items: center;
+    gap: toRem(8);
+    height: 100%;
+    padding: toRem(16) toRem(14);
+
+    background: var(--white-color);
+    border: 1px solid var(--stroke-grey-color);
+    border-radius: toRem(2);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: toRem(15);
+    color: var(--black-color);
+    white-space: nowrap;
+    transition: border-color 0.2s ease;
+
+    &:hover { border-color: var(--text-grey-color); }
+}
+
+.cform__country.is-open .cform__country-toggle { border-color: var(--accent-color); }
+
+.cform__country-flag {
+    font-size: toRem(18);
+    line-height: 1;
+}
+
+.cform__country-code { font-weight: 500; }
+
+.cform__country-caret {
+    flex: 0 0 auto;
+    color: var(--text-grey-color);
+    transition: transform 0.2s ease;
+}
+
+.cform__country.is-open .cform__country-caret { transform: rotate(180deg); }
+
+.cform__country-pop {
+    position: absolute;
+    top: calc(100% + #{toRem(6)});
+    left: 0;
+    z-index: 20;
+
+    width: toRem(300);
+    max-width: 80vw;
+
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+
+    background: var(--white-color);
+    border: 1px solid var(--stroke-grey-color);
+    border-radius: toRem(2);
+    box-shadow: 0 toRem(12) toRem(32) rgba(0, 0, 0, 0.12);
+}
+
+.cform__country.is-open .cform__country-pop { display: flex; }
+
+.cform__country-search {
+    flex: 0 0 auto;
+    padding: toRem(12) toRem(14);
+    border: 0;
+    border-bottom: 1px solid var(--stroke-light-grey-color);
+
+    font-family: inherit;
+    font-size: toRem(14);
+    color: var(--black-color);
+    outline: none;
+
+    &::placeholder { color: var(--text-grey-color); }
+}
+
+.cform__country-list {
+    margin: 0;
+    padding: toRem(6);
+    list-style: none;
+    overflow-y: auto;
+    max-height: toRem(240);
+}
+
+.cform__country-opt {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+    padding: toRem(9) toRem(10);
+    border-radius: toRem(2);
+    cursor: pointer;
+
+    font-size: toRem(14);
+    color: var(--black-color);
+
+    &:hover { background: #f6f6f6; }
+
+    &[hidden] { display: none; }
+}
+
+.cform__country-opt-flag {
+    font-size: toRem(18);
+    line-height: 1;
+    flex: 0 0 auto;
+}
+
+.cform__country-opt-name { flex: 1 1 auto; }
+
+.cform__country-opt-code {
+    flex: 0 0 auto;
+    color: var(--text-grey-color);
+}
+
+.cform__upload-row {
+    display: flex;
+    align-items: center;
+    gap: toRem(8);
+}
+
+.cform__upload {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(8);
+    width: fit-content;
+    cursor: pointer;
+
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: toRem(15);
+
+    svg { flex: 0 0 auto; }
+
+    &:hover { opacity: 0.85; }
+}
+
+.cform__upload-info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-grey-color);
+    cursor: help;
+    outline: none;
+
+    svg { display: block; }
+
+    &:hover { color: var(--black-color); }
+}
+
+.cform__upload-tip {
+    position: absolute;
+    bottom: calc(100% + #{toRem(10)});
+    left: 50%;
+    transform: translateX(-50%) translateY(toRem(4));
+
+    width: max-content;
+    max-width: toRem(240);
+    padding: toRem(10) toRem(12);
+
+    background: var(--black-color);
+    color: var(--white-color);
+    font-size: toRem(13);
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: center;
+    border-radius: toRem(2);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 10;
+
+    // little arrow
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: toRem(5) solid transparent;
+        border-top-color: var(--black-color);
+    }
+}
+
+.cform__upload-info:hover .cform__upload-tip,
+.cform__upload-info:focus .cform__upload-tip,
+.cform__upload-info:focus-visible .cform__upload-tip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.cform__check {
+    display: flex;
+    align-items: flex-start;
+    gap: toRem(12);
+    cursor: pointer;
+
+    font-size: toRem(14);
+    color: var(--text-grey-color);
+    line-height: 1.45;
+
+    input[type="checkbox"] {
+        flex: 0 0 auto;
+        width: toRem(20);
+        height: toRem(20);
+        margin-top: toRem(1);
+        accent-color: var(--accent-color);
+        cursor: pointer;
+    }
+
+    a {
+        color: var(--accent-color);
+        text-decoration: underline;
+    }
+}
+
+.cform__btn {
+    margin-top: toRem(8);
+    width: 100%;
+    justify-content: center;
+}
+
+.cform__success {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: toRem(20);
+
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.cform__success-card {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: toRem(722);
+    padding: toRem(40) toRem(28);
+
+    background: var(--accent-color);
+    color: var(--white-color);
+    border-radius: toRem(8);
+    box-shadow: 0 0 toRem(30) rgba(255, 255, 255, 0.4);
+    text-align: center;
+
+    @media (min-width: $md) {
+        padding: toRem(60);
+    }
+}
+
+// Faint decorative grid (144px square cells, light-blue lines) — matches the
+// Figma modal. Two accent dots (Ellipse) sit on specific grid crossings.
+.cform__success-deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+
+    --grid: #{toRem(144)};
+
+    background-image:
+        linear-gradient(rgba(201, 215, 251, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 215, 251, 0.35) 1px, transparent 1px);
+    background-size: var(--grid) var(--grid);
+    background-position: 0 0;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: toRem(8);
+        height: toRem(8);
+        border-radius: 50%;
+        background: #c9d7fb;
+        transform: translate(-50%, -50%);
+    }
+
+    // dot 1 — upper, right of centre (≈ 4th column / 1st row crossing)
+    &::before {
+        left: toRem(576);
+        top: toRem(144);
+    }
+
+    // dot 2 — lower, left of centre (≈ 2nd column / 2nd row crossing)
+    &::after {
+        left: toRem(288);
+        top: toRem(288);
+    }
+}
+
+.cform__success-text {
+    position: relative;
+    z-index: 1;
+
+    font-weight: 500;
+    line-height: 1.3;
+    font-size: toRem(24);
+
+    @media (min-width: $md) {
+        font-size: toRem(32);
+        line-height: 1.2;
+    }
+}
+
+.cform__success-hl {
+    background: var(--white-color);
+    color: var(--accent-color);
+    padding: 0 toRem(6);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+.cform__success-close {
+    @include btn;
+    position: absolute;
+    z-index: 2;
+    top: toRem(20);
+    right: toRem(20);
+
+    width: toRem(28);
+    height: toRem(28);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--white-color);
+    font-size: toRem(24);
+    line-height: 1;
+
+    svg { width: toRem(20); height: toRem(20); }
+    svg path { stroke: var(--white-color); }
+}
+
+/* ---------- Connect with us ---------- */
+.connect {
+    padding-bottom: toRem(60);
+
+    @media (min-width: $md) {
+        padding-bottom: toRem(100);
+    }
+
+    @media (min-width: $lg) {
+        padding-bottom: toRem(120);
+    }
+}
+
+.connect__title {
+    margin-bottom: toRem(28);
+    font-weight: 500;
+    font-size: toRem(28);
+
+    @media (min-width: $md) {
+        font-size: toRem(40);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(48);
+        margin-bottom: toRem(36);
+    }
+}
+
+.connect__items {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+    margin-bottom: toRem(28);
+
+    @media (min-width: $md) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: toRem(16) toRem(32);
+        align-items: center;
+    }
+
+    @media (min-width: $lg) {
+        gap: toRem(20) toRem(40);
+        flex-wrap: nowrap;
+    }
+}
+
+.connect__item {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+
+    font-size: toRem(16);
+    font-weight: 500;
+    color: var(--black-color);
+    transition: color 0.3s ease;
+
+    svg {
+        flex: 0 0 auto;
+        width: toRem(24);
+        height: toRem(24);
+        color: var(--accent-color);
+    }
+
+    &:hover {
+        color: var(--accent-color);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}
+
+.connect__map {
+    position: relative;
+    width: 100%;
+    height: toRem(340);
+    overflow: hidden;
+    border-radius: toRem(2);
+    border: 1px solid var(--stroke-grey-color);
+    margin-bottom: toRem(24);
+
+    @media (min-width: $md) {
+        height: toRem(440);
+    }
+
+    @media (min-width: $lg) {
+        height: toRem(500);
+    }
+
+    iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.connect__socials {
+    display: flex;
+    align-items: center;
+    gap: toRem(12);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.connect__social-link {
+    width: toRem(42);
+    height: toRem(42);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--white-color);
+    background: var(--accent-color);
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+
+    svg {
+        width: toRem(24);
+        height: toRem(24);
+    }
+
+    // Force white glyphs on the accent circle (footer icons default to dark).
+    svg,
+    svg path,
+    svg circle,
+    svg rect {
+        fill: var(--white-color);
+    }
+
+    &:hover {
+        opacity: 0.85;
+    }
+}

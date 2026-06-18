@@ -7,6 +7,7 @@ import './components/svg-sprite';
 import './components/accordeon';
 import './components/blogFilter';
 import './components/contacts';
+import './components/contacts-phone';
 import './components/counters';
 import './components/filters';
 import './components/header';
