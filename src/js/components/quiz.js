@@ -154,7 +154,7 @@ function initQuiz() {
       }
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'generate_lead', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch });
+      window.dataLayer.push({ event: 'lead_form', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch });
     } catch (e) { /* ignore */ }
   }
 

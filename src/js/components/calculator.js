@@ -113,7 +113,7 @@ function initCalculator() {
       fd.append('Estimate', mfcMoney(r.low) + ' - ' + mfcMoney(r.high));
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'generate_lead', form_name: 'calculator', form_type: 'calculator' });
+      window.dataLayer.push({ event: 'lead_form', form_name: 'calculator', form_type: 'calculator' });
     } catch (e) { /* ignore */ }
     sent = true;
     noteEl.textContent = 'Thanks — we’ll email your fixed quote shortly.';

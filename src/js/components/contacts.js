@@ -29,7 +29,7 @@ async function sendForm(contactsForm) {
 
     if (contactsForm.getAttribute('data-link')) {
       window.dataLayer.push({
-        event: 'generate_lead',
+        event: 'download_catalog',
         form_name: 'download_catalog',
         form_type: 'lead_magnet'
       });
@@ -42,7 +42,7 @@ async function sendForm(contactsForm) {
       link.click();
     } else {
       window.dataLayer.push({
-        event: 'generate_lead',
+        event: 'book_call',
         form_name: 'book_call',
         form_type: 'consultation'
       });
