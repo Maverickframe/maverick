@@ -9,7 +9,7 @@
 <?= get_template_part('components/common/header', null, ['class' => 'header_white']); ?>
 
 <main class="main inner-page success-stories-page">
-    <div class="container">
+    <div class="container container_small">
         <?php $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es'; ?>
         <?= get_template_part('components/new-design/breadcrumbs', null, [
             'breadcrumbs' => [
