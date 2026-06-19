@@ -6,7 +6,9 @@
 ?>
 
 <?php get_header(); ?>
-    <?php echo get_template_part('components/common/header'); ?>
+    <?php echo get_template_part('components/common/header', null, [
+        'class' => 'header_white'
+    ]); ?>
 
     <main class="main inner-page success-stories-page">
         <div class="container">

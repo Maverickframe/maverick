@@ -93,6 +93,7 @@ function isNewDesign()
         || is_page_template('templates/template-gallery.php')
         || is_page_template('templates/template-services.php')
         || is_page_template('templates/template-services-hub.php')
+        || is_page_template('templates/template-contacts.php')
         || is_front_page();
 }
 
@@ -112,7 +113,10 @@ function assets()
 {
     // global $wp_query;
     wp_localize_script('main', 'contacts', array(
-        'home_url' => home_url()
+        // Use the unfiltered site root (get_option('home')) so the form endpoint
+        // resolves to /wp-content/.../amo.php even on Polylang /es/ pages
+        // (home_url() is rewritten to /es/ there, which 404s the handler).
+        'home_url' => get_option('home')
     ));
     $ajax_nonce = wp_create_nonce('pld-ajax-nonce');
 

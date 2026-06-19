@@ -32,4 +32,11 @@
     .review-item {
         color: var(--black-color);
     }
+
+    // The services-hub template reuses this page class but adds a dark
+    // hero-front block. Keep its rating numbers light so they stay visible
+    // on the black background (the rule above is for the light hero on top).
+    .hero-front .review-item {
+        color: var(--white-color);
+    }
 }
