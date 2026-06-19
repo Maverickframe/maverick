@@ -35,7 +35,7 @@
 
         <div class="js-contacts-form-container cta-form-section__form">
             <h3 class="cta-form-section__form-title"><?php echo $form_title; ?></h3>
-            <form action="" method="POST" class="js-contacts-form cta-form">
+            <form action="" method="POST" class="js-contacts-form cta-form" data-ga-event="book_call" data-ga-form="book_call" data-ga-type="consultation">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Book a Call">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / Book a Call">
 

@@ -27,25 +27,24 @@ async function sendForm(contactsForm) {
     phoneInput?.closest('label').classList.remove('error');
     emailInput.closest('label').classList.remove('error');
 
-    if (contactsForm.getAttribute('data-link')) {
-      window.dataLayer.push({
-        event: 'download_catalog',
-        form_name: 'download_catalog',
-        form_type: 'lead_magnet'
-      });
+    // GA4 conversion event is driven by per-form data attributes so each form
+    // reports the correct event/temperature. Defaults: a form with data-link is
+    // a file download (download_catalog); any other form is a lead_form. Call
+    // forms (Book a Call) set data-ga-event="book_call" explicitly.
+    const isDownload = !!contactsForm.getAttribute('data-link');
+    const gaEvent = contactsForm.getAttribute('data-ga-event') || (isDownload ? 'download_catalog' : 'lead_form');
+    const gaForm = contactsForm.getAttribute('data-ga-form') || (isDownload ? 'download_catalog' : 'contact');
+    const gaType = contactsForm.getAttribute('data-ga-type') || (isDownload ? 'lead_magnet' : 'contact');
 
+    window.dataLayer.push({ event: gaEvent, form_name: gaForm, form_type: gaType });
+
+    if (isDownload) {
       const link = document.createElement('a');
 
       link.setAttribute('href', contactsForm.getAttribute('data-link'));
       link.setAttribute('target', '_blank');
       link.setAttribute('download', 'download');
       link.click();
-    } else {
-      window.dataLayer.push({
-        event: 'book_call',
-        form_name: 'book_call',
-        form_type: 'consultation'
-      });
     }
 
     const formContainer = contactsForm.closest('.js-contacts-form-container');

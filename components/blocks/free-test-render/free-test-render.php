@@ -93,7 +93,7 @@ $ftr_cond_default = [
         <div class="js-contacts-form-container cta-form-section__form">
             <h3 class="cta-form-section__form-title"><?php echo esc_html($ftr_form_title); ?></h3>
 
-            <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form">
+            <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form" data-ga-event="lead_form" data-ga-form="freetest" data-ga-type="free_test">
                 <input type="hidden" name="tag" value="SEO, Free Test Render">
                 <input type="hidden" name="title" value="<?php echo esc_attr($ftr_lead_tag); ?>">
 

@@ -31,7 +31,7 @@
 
         <div class="modal-book__form">
             <h3 class="modal-book__form-title"><?php echo mfs_t('Book a call with us', 'Reserva una llamada con nosotros'); ?></h3>
-            <form action="" method="POST" class="js-contacts-form modal-form">
+            <form action="" method="POST" class="js-contacts-form modal-form" data-ga-event="book_call" data-ga-form="book_call" data-ga-type="consultation">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Book a Call">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / Book a Call">
 
