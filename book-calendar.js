@@ -269,7 +269,7 @@
 
     // Restore calendar-funnel measurement: push "book_call_click" when the
     // scheduler modal is opened (header CTA). The booking completion is tracked
-    // separately as generate_lead (form_name: book_call_calendar) on submit.
+    // separately as the direct "book_call" event (form_name: book_call) on submit.
     function trackOpen() {
         document.addEventListener('click', function (e) {
             var trigger = e.target && e.target.closest && e.target.closest('[data-modal="bookcall"]');
