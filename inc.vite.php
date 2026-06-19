@@ -32,6 +32,7 @@ function mfs_page_bundle_key() {
     if (is_singular('blog')) return 'src/scss/bundles/blog-single.scss';
     if (is_page_template('templates/template-blog.php')) return 'src/scss/bundles/blog.scss';
     if (is_singular('success-stories') || is_page_template('templates/success-stories.php')) return 'src/scss/bundles/cases.scss';
+    if (is_page_template('templates/template-services-hub.php')) return 'src/scss/bundles/cases.scss';
     if (is_page_template('templates/template-services.php')) return 'src/scss/bundles/services.scss';
     if (is_page_template('templates/template-gallery.php')) return 'src/scss/bundles/gallery.scss';
     if (is_page_template('templates/team-page.php') || is_singular('team')) return 'src/scss/bundles/team.scss';
