@@ -1,3 +1,18 @@
+<?php
+    // Per-page reviews: use this block's own repeater if filled,
+    // otherwise fall back to the global set from Theme Settings (options).
+    $reviews_block_items = get_field('reviews_items');
+    if ( ! empty($reviews_block_items) ) {
+        $reviews_src = false;            // current block context
+        $reviews_rows = $reviews_block_items;
+    } else {
+        $reviews_src = 'options';        // global Theme Settings set
+        $reviews_rows = get_field('reviews_items', 'options');
+    }
+    if ( empty($reviews_rows) ) {
+        return; // nothing to show — skip the section entirely
+    }
+?>
 <div class="container container_small">
     <div class="reviews-section js-reveal">
         <div class="reviews-section__main-slider">
@@ -5,7 +20,7 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                         <?php
-                            while( have_rows('reviews_items', 'options')) : the_row();
+                            while( have_rows('reviews_items', $reviews_src)) : the_row();
                                 $date = get_sub_field('date');
                                 $name = get_sub_field('name');
                                 $position = get_sub_field('position');
@@ -100,10 +115,10 @@
                 <div class="splide__track">
                     <ul class="splide__list">
                         <?php
-                            while( have_rows('reviews_items', 'options')) : the_row();
+                            while( have_rows('reviews_items', $reviews_src)) : the_row();
                                 $date = get_sub_field('date');
-                                $date = DateTime::createFromFormat('d/m/Y', $date);
-                                $date = $date->format('d/m/y');
+                                $date_obj = DateTime::createFromFormat('d/m/Y', (string) $date);
+                                $date = $date_obj ? $date_obj->format('d/m/y') : $date;
                                 $name = get_sub_field('name');
                                 $position = get_sub_field('position');
                                 $review = get_sub_field('review');
