@@ -15,7 +15,7 @@
 
             <p class="modal__desc"><?php echo mfs_t( get_field('download_desc', 'options'), 'Hemos reunido nuestros mejores trabajos en un único PDF. Déjanos tus datos y te lo enviamos al instante.', 'Wir haben unsere besten Arbeiten in einem einzigen PDF zusammengestellt. Hinterlasse deine Daten und wir senden es dir sofort.' ); ?></p>
 
-            <form action="" method="POST" class="js-contacts-form modal-form" data-link="<?php echo get_field('download_link', 'options'); ?>">
+            <form action="" method="POST" class="js-contacts-form modal-form" data-link="<?php echo get_field('download_link', 'options'); ?>" data-ga-event="download_catalog" data-ga-form="download_catalog" data-ga-type="lead_magnet">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Services">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / Catalog">
 
