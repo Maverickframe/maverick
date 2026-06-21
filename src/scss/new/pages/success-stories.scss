@@ -39,4 +39,31 @@
     .hero-front .review-item {
         color: var(--white-color);
     }
+
+    // Title highlight (<em class="mark">) is white text revealed by an accent
+    // fill animation. If that reveal doesn't run, the phrase is white-on-white
+    // and disappears. Guarantee the accent fill is present so the highlighted
+    // words are always readable (the fill animation still plays over it).
+    .hero__title em.mark {
+        background-size: 100% 100% !important;
+    }
+
+    // Standard breadcrumbs are styled for dark heroes (faint light-grey text +
+    // reveal fade). This hero is on white, so make them visible: dark links,
+    // grey current, dark chevron — same treatment as gallery/contacts.
+    .hero-block__breadcrumbs {
+        // sat too tight under the fixed header (~8px); match the standard
+        // inner-page top gap (~110px from top, like the team page).
+        margin-top: toRem(36);
+        opacity: 1 !important;
+        color: var(--text-grey-color);
+
+        a {
+            color: var(--black-color);
+        }
+
+        li:not(:last-child)::after {
+            background-image: url("/img/icons/arrow-right-breadcrumbs-black.svg");
+        }
+    }
 }
