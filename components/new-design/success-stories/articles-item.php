@@ -14,10 +14,14 @@ $articleImgHoverText = $args['hover_text'] ?? get_field('hover_text', $args['id'
 $articleTags = $args['tags'] ?? get_the_tags($args['id']);
 if (isset($args['date'])) {
 	$articleDate = $args['date'];
-} elseif (function_exists('pll_current_language') && pll_current_language() === 'es') {
+} elseif (mfs_is('es')) {
 	$mfs_ts = get_post_timestamp($args['id']);
 	$mfs_meses = ['1' => 'enero', '2' => 'febrero', '3' => 'marzo', '4' => 'abril', '5' => 'mayo', '6' => 'junio', '7' => 'julio', '8' => 'agosto', '9' => 'septiembre', '10' => 'octubre', '11' => 'noviembre', '12' => 'diciembre'];
 	$articleDate = (int) wp_date('j', $mfs_ts) . ' de ' . $mfs_meses[(string) (int) wp_date('n', $mfs_ts)] . ' de ' . wp_date('Y', $mfs_ts);
+} elseif (mfs_is('de')) {
+	$mfs_ts = get_post_timestamp($args['id']);
+	$mfs_monate = ['1' => 'Januar', '2' => 'Februar', '3' => 'März', '4' => 'April', '5' => 'Mai', '6' => 'Juni', '7' => 'Juli', '8' => 'August', '9' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Dezember'];
+	$articleDate = (int) wp_date('j', $mfs_ts) . '. ' . $mfs_monate[(string) (int) wp_date('n', $mfs_ts)] . ' ' . wp_date('Y', $mfs_ts);
 } else {
 	$articleDate = get_the_date('F j, Y', $args['id']);
 }

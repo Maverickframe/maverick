@@ -4,8 +4,9 @@
  * highlighted heading (js-highlight / text-highlight with <em>) + subtext.
  * Rendered inside the 2-column .contacts-top grid by the template.
  */
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-$home  = $is_es && function_exists('pll_home_url') ? pll_home_url('es') : home_url('/');
+$is_es = mfs_is('es');
+$mfs_hero_lang = mfs_lang();
+$home  = ( $mfs_hero_lang !== 'en' && function_exists('pll_home_url') ) ? pll_home_url($mfs_hero_lang) : home_url('/');
 
 $title_html = get_post_meta(get_the_ID(), 'hero_title_html', true);
 if (!$title_html) {

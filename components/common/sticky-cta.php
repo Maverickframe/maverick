@@ -47,16 +47,16 @@ if ( ! $sc_enabled || $sc_video === '' ) {
     return;
 }
 
-$sc_is_es = function_exists( 'pll_current_language' ) && pll_current_language() === 'es';
+$sc_lang  = mfs_lang();
 $sc_label = get_field( 'sticky_cta_label', 'options' );
-if ( $sc_is_es ) {
-    $sc_label_es = get_field( 'sticky_cta_label_es', 'options' );
-    if ( $sc_label_es ) {
-        $sc_label = $sc_label_es;
+if ( $sc_lang !== 'en' ) {
+    $sc_label_loc = get_field( 'sticky_cta_label_' . $sc_lang, 'options' );
+    if ( $sc_label_loc ) {
+        $sc_label = $sc_label_loc;
     }
 }
 if ( ! $sc_label ) {
-    $sc_label = mfs_t( 'Get In Touch', 'Contáctanos' );
+    $sc_label = mfs_t( 'Get In Touch', 'Contáctanos', 'Kontakt aufnehmen' );
 }
 ?>
 <div class="sticky-cta js-sticky-cta">

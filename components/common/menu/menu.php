@@ -1,11 +1,13 @@
 <nav class="js-menu menu">
     <ul class="menu__list">
         <?php
-            // Multilingual: on /es/ pages use the Spanish menu (menu_items_es) when it has
-            // been filled in; otherwise fall back to the default English menu (menu_items).
+            // Multilingual: on non-English pages use the language menu (menu_items_es /
+            // menu_items_de) when it has been filled in; otherwise fall back to the
+            // default English menu (menu_items).
             $menu_field = 'menu_items';
-            if ( function_exists('pll_current_language') && pll_current_language() === 'es' && get_field('menu_items_es', 'options') ) {
-                $menu_field = 'menu_items_es';
+            $mfs_menu_lang = mfs_lang();
+            if ( $mfs_menu_lang !== 'en' && get_field('menu_items_' . $mfs_menu_lang, 'options') ) {
+                $menu_field = 'menu_items_' . $mfs_menu_lang;
             }
             while( have_rows($menu_field, 'options')) : the_row();
                 $keyname = get_sub_field('keyname');

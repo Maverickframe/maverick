@@ -1,7 +1,8 @@
 <?php
     $desktop_label = $args['desktop_label'] ?? '';
     $permalink = $args['permalink'] ?? '';
-    $res_field = ( function_exists('pll_current_language') && pll_current_language() === 'es' && get_field('menu_resources_es', 'options') ) ? 'menu_resources_es' : 'menu_resources';
+    $mfs_res_lang = mfs_lang();
+    $res_field = ( $mfs_res_lang !== 'en' && get_field('menu_resources_' . $mfs_res_lang, 'options') ) ? 'menu_resources_' . $mfs_res_lang : 'menu_resources';
     $resources = get_field($res_field, 'options');
 ?>
 <li class="menu__icons">

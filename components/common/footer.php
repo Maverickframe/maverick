@@ -1,18 +1,18 @@
 <?php
-// Multilingual helpers: on /es/ prefer the `_es` variant of an ACF Options field (fallback to base),
-// and translate hardcoded UI strings inline.
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-$opt = function ($name) use ($is_es) {
-    if ( $is_es ) {
-        $es = get_field($name . '_es', 'options');
-        if ( $es !== '' && $es !== null && $es !== false ) {
-            return $es;
+// Multilingual helpers: on non-English pages prefer the language variant of an ACF
+// Options field (`_es` / `_de`, fallback to base), and translate hardcoded UI strings inline.
+$mfs_footer_lang = mfs_lang();
+$opt = function ($name) use ($mfs_footer_lang) {
+    if ( $mfs_footer_lang !== 'en' ) {
+        $v = get_field($name . '_' . $mfs_footer_lang, 'options');
+        if ( $v !== '' && $v !== null && $v !== false ) {
+            return $v;
         }
     }
     return get_field($name, 'options');
 };
-$t = function ($en, $es) use ($is_es) {
-    return $is_es ? $es : $en;
+$t = function ($en, $es = null, $de = null) {
+    return mfs_t($en, $es, $de);
 };
 ?>
 <footer class="footer">
@@ -151,14 +151,19 @@ $t = function ($en, $es) use ($is_es) {
                 $pll_langs = pll_the_languages( array( 'raw' => 1, 'hide_if_no_translation' => 0 ) );
                 if ( ! empty($pll_langs) ) :
                     $lang_meta = array(
-                        'en' => array( 'region' => 'Worldwide', 'flag' => 'globe' ),
-                        'es' => array( 'region' => 'España',    'flag' => 'es' ),
+                        'en' => array( 'region' => 'Worldwide',   'flag' => 'globe' ),
+                        'es' => array( 'region' => 'España',      'flag' => 'es' ),
+                        'de' => array( 'region' => 'Deutschland', 'flag' => 'de' ),
                     );
                     $globe_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>';
                     $es_flag_svg = '<svg viewBox="0 0 30 20" preserveAspectRatio="none" aria-hidden="true"><rect width="30" height="20" fill="#c60b1e"/><rect y="5" width="30" height="10" fill="#ffc400"/><g transform="translate(9,10)"><rect x="-4.4" y="-2.6" width="0.95" height="6.2" fill="#9a7b13"/><rect x="3.45" y="-2.6" width="0.95" height="6.2" fill="#9a7b13"/><path d="M-3,-3 h6 v2.6 a3,4 0 0 1 -3,4 a3,4 0 0 1 -3,-4 z" fill="#ad1519" stroke="#9a7b13" stroke-width="0.4"/><path d="M-3,-1 h6" stroke="#ffc400" stroke-width="0.5"/><rect x="-2.4" y="-4.4" width="4.8" height="1.4" rx="0.3" fill="#c8961e"/></g></svg>';
-                    $render_flag = function( $flag ) use ( $globe_svg, $es_flag_svg ) {
+                    $de_flag_svg = '<svg viewBox="0 0 30 20" preserveAspectRatio="none" aria-hidden="true"><rect width="30" height="6.667" y="0" fill="#000000"/><rect width="30" height="6.667" y="6.667" fill="#dd0000"/><rect width="30" height="6.666" y="13.333" fill="#ffce00"/></svg>';
+                    $render_flag = function( $flag ) use ( $globe_svg, $es_flag_svg, $de_flag_svg ) {
                         if ( $flag === 'es' ) {
                             return '<span class="footer-lang__flag footer-lang__flag--es">' . $es_flag_svg . '</span>';
+                        }
+                        if ( $flag === 'de' ) {
+                            return '<span class="footer-lang__flag footer-lang__flag--de">' . $de_flag_svg . '</span>';
                         }
                         return '<span class="footer-lang__flag footer-lang__flag--globe">' . $globe_svg . '</span>';
                     };
