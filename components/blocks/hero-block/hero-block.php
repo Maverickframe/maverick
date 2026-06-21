@@ -53,8 +53,8 @@
                 }
             ?>
             <ul class="hero-block__breadcrumbs">
-                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio'); ?></a></li>
-                <li><a href="<?php echo esc_url($bc_ss); ?>"><?php echo mfs_t('Success stories', 'Casos de éxito'); ?></a></li>
+                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio', 'Startseite'); ?></a></li>
+                <li><a href="<?php echo esc_url($bc_ss); ?>"><?php echo mfs_t('Success stories', 'Casos de éxito', 'Referenzen'); ?></a></li>
                 <li><span><?php the_title(); ?></span></li>
             </ul>
 
@@ -62,7 +62,7 @@
             <p class="hero-block__desc"><?php the_field('description'); ?></p>
 
             <button class="btn-main fill hero-block__cta js-modal-open" data-modal="book" type="button">
-                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
             </button>
 
             <?php if (have_rows('tags')): ?>

@@ -1,7 +1,7 @@
 <section class="project-objectives">
     <div class="container">
         <div class="project-objectives__info">
-            <p class="section-subtitle"><?php echo mfs_t('Project Objectives', 'Objetivos del proyecto'); ?></p>
+            <p class="section-subtitle"><?php echo mfs_t('Project Objectives', 'Objetivos del proyecto', 'Projektziele'); ?></p>
             <h2><?php the_field('title'); ?></h2>
         </div>
 

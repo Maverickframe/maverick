@@ -83,7 +83,7 @@ $currentCat = array_key_exists('cat', $_GET) ? $_GET['cat'] : 'all';
     
             <?php if (  $query->max_num_pages > 1 ): ?>
                 <button class="btn portfolio-page__btn js-portfolio-more" type="button">
-                    <?php echo mfs_t('Show more', 'Ver más'); ?>
+                    <?php echo mfs_t('Show more', 'Ver más', 'Mehr anzeigen'); ?>
                 </button>
             <?php endif; ?>
         </div>

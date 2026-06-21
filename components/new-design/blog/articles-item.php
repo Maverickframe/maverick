@@ -64,7 +64,7 @@ $articleTitleTag = $args['title_tag'] ?? 'h3'; // 'p' for cards rendered above t
                 <?php endif; ?>
 
                 <span class="case-item__arrow">
-                    <?= $args['read_more_text'] ?? mfs_t('Read more', 'Leer más'); ?>
+                    <?= $args['read_more_text'] ?? mfs_t('Read more', 'Leer más', 'Mehr lesen'); ?>
 
                     <?= inline_svg($args['read_more_icon'] ?? 'icons/arrow-right-accent.svg'); ?>
                 </span>

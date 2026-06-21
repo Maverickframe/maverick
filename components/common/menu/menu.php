@@ -105,6 +105,6 @@
     </ul>
 
     <button class="menu__cta btn-main js-modal-open" data-modal="bookcall" type="button">
-        <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+        <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
     </button>
 </nav>

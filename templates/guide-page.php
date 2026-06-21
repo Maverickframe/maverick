@@ -26,7 +26,7 @@
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="bg-line" />
                     <polyline points="209,1 209,47 1,47 1,1 209,1" class="hl-line" />
                 </svg>
-                ' . mfs_t('Download', 'Descargar') . '
+                ' . mfs_t('Download', 'Descargar', 'Herunterladen') . '
             </button>',
         )
     ); ?>

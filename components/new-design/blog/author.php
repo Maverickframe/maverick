@@ -59,7 +59,7 @@ if ($author) {
 
         <div class="article-page__author-footer">
             <a href="<?= $authorLink; ?>" class="article-page__author-profile-link">
-                <?= mfs_t('View full profile', 'Ver perfil completo'); ?>
+                <?= mfs_t('View full profile', 'Ver perfil completo', 'Vollständiges Profil ansehen'); ?>
                 <span class="svg-icon">
                     <?= inline_svg("icons/arrow-right.svg"); ?>
                 </span>

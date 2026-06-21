@@ -37,17 +37,17 @@
         </div>
 
         <div class="modal-book__form">
-            <h3 class="modal-book__form-title"><?php echo mfs_t('Book a call with us', 'Reserva una llamada con nosotros'); ?></h3>
+            <h3 class="modal-book__form-title"><?php echo mfs_t('Book a call with us', 'Reserva una llamada con nosotros', 'Buche ein Gespräch mit uns'); ?></h3>
             <form action="" method="POST" class="js-contacts-form modal-form" data-ga-event="book_call" data-ga-form="book_call" data-ga-type="consultation">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Book a Call">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / Book a Call">
 
                 <label class="modal-form__input">
                     <span class="modal-form__label sr-only">
-                        <?php echo mfs_t('Full Name', 'Nombre completo'); ?>
+                        <?php echo mfs_t('Full Name', 'Nombre completo', 'Vollständiger Name'); ?>
                     </span>
 
-                    <input type="text" name="Name" placeholder="<?php echo esc_attr(mfs_t('Full Name', 'Nombre completo')); ?>">
+                    <input type="text" name="Name" placeholder="<?php echo esc_attr(mfs_t('Full Name', 'Nombre completo', 'Vollständiger Name')); ?>">
                 </label>
 
                 <label class="modal-form__input">
@@ -59,7 +59,7 @@
 
 
                     <span class="modal-form__error">
-                        <?php echo mfs_t('It is not email', 'El correo no es válido'); ?>
+                        <?php echo mfs_t('It is not email', 'El correo no es válido', 'Keine gültige E-Mail-Adresse'); ?>
                     </span>
                 </label>
 
@@ -72,10 +72,10 @@
                 </label>
 
                 <button class="btn-cta fill" type="submit">
-                    <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                    <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
                 </button>
 
-                <p class="modal-form__reassure"><?php echo mfs_t('Free 30-min call · No commitment · We reply within 1 business day.', 'Llamada gratis de 30 min · Sin compromiso · Respondemos en 1 día hábil.'); ?></p>
+                <p class="modal-form__reassure"><?php echo mfs_t('Free 30-min call · No commitment · We reply within 1 business day.', 'Llamada gratis de 30 min · Sin compromiso · Respondemos en 1 día hábil.', 'Kostenloses 30-Min-Gespräch · Unverbindlich · Antwort innerhalb von 1 Werktag.'); ?></p>
             </form>
 
             <div class="modal-book__form-privacy">
@@ -83,8 +83,8 @@
             </div>
 
             <div class="modal__success">
-                <p><b><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.'); ?></b></p>
-                <p><?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.'); ?></p>
+                <p><b><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.', 'Danke – deine Nachricht wurde gesendet.'); ?></b></p>
+                <p><?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.', 'Unser Team prüft deine Anfrage und meldet sich in Kürze bei dir.'); ?></p>
             </div>
         </div>
     </div>

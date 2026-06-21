@@ -22,8 +22,8 @@
             </div>
 
             <div class="hero__btns">
-                <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada'); ?></button>
-                <button class="btn-secondary fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Explore our work', 'Explora nuestro trabajo'); ?></button>
+                <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?></button>
+                <button class="btn-secondary fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Explore our work', 'Explora nuestro trabajo', 'Unsere Arbeiten ansehen'); ?></button>
             </div>
         </div>
 

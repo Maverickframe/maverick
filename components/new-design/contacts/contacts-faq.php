@@ -48,7 +48,7 @@ $faqs = [
 <section class="faq">
     <div class="container container_small">
         <div class="faq__info">
-            <h2><?php echo mfs_t('Frequently asked questions', 'Preguntas frecuentes'); ?></h2>
+            <h2><?php echo mfs_t('Frequently asked questions', 'Preguntas frecuentes', 'Häufig gestellte Fragen'); ?></h2>
         </div>
 
         <div class="faq__items">

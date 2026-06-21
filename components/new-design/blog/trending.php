@@ -47,7 +47,7 @@ if (empty($trendingTopPost)) {
 
 		<div class="section__btn">
 			<a href="#blog" class="btn-main js-trigger-blog">
-				<?php echo mfs_t('View all rankings', 'Ver todos los artículos'); ?>
+				<?php echo mfs_t('View all rankings', 'Ver todos los artículos', 'Alle Artikel ansehen'); ?>
 			</a>
 		</div>
 	</div>

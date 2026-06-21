@@ -24,7 +24,7 @@ if ($case instanceof WP_Post) {
     <?php if ($modal_title && $service_index !== null): ?>
         <button class="what-we-do-item__btn js-modal-open" data-modal="what-we-do" data-services-source="what-we-do-json" data-service-index="<?php echo $service_index; ?>" type="button" aria-label="Open">
             <?php echo inline_svg('icons/expand.svg'); ?>
-            <span><?php echo mfs_t('Open', 'Abrir'); ?></span>
+            <span><?php echo mfs_t('Open', 'Abrir', 'Öffnen'); ?></span>
         </button>
     <?php endif; ?>
 
@@ -43,7 +43,7 @@ if ($case instanceof WP_Post) {
             <?php endif; ?>
 
             <?php if ($service_url): ?>
-                <a class="what-we-do-item__service" href="<?php echo esc_url($service_url); ?>"><?php echo mfs_t('View service', 'Ver servicio'); ?></a>
+                <a class="what-we-do-item__service" href="<?php echo esc_url($service_url); ?>"><?php echo mfs_t('View service', 'Ver servicio', 'Leistung ansehen'); ?></a>
             <?php endif; ?>
         </div>
     </div>

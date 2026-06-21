@@ -19,14 +19,14 @@ $subtitle = get_post_meta(get_the_ID(), 'hero_subtitle', true);
 if (!$subtitle) {
     $subtitle = mfs_t(
         'Tell us what you’re working on, and our team will get back to you with the right next step.',
-        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.'
+        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.', 'Erzähl uns, woran du arbeitest, und unser Team meldet sich mit dem passenden nächsten Schritt.'
     );
 }
 ?>
 <div class="contacts-hero">
     <?php echo get_template_part('components/new-design/breadcrumbs', null, [
         'breadcrumbs' => [
-            ['link' => esc_url($home), 'name' => mfs_t('Home', 'Inicio')],
+            ['link' => esc_url($home), 'name' => mfs_t('Home', 'Inicio', 'Startseite')],
         ],
     ]); ?>
 

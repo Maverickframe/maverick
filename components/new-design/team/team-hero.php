@@ -6,8 +6,8 @@
                 $bc_home = $bc_lang === 'es' ? home_url('/es/') : ( $bc_lang === 'de' ? home_url('/de/') : home_url('/') );
             ?>
             <ul class="single-team-hero__breadcrumbs">
-                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio'); ?></a></li>
-                <li><span><?php echo mfs_t('Team', 'Equipo'); ?></span></li>
+                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio', 'Startseite'); ?></a></li>
+                <li><span><?php echo mfs_t('Team', 'Equipo', 'Team'); ?></span></li>
             </ul>
             <h1 class="team-hero__title js-highlight text-highlight"><?php echo get_field('main_title'); ?></h1>
 
@@ -16,8 +16,8 @@
             </div>
 
             <div class="team-hero__btns">
-                <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada'); ?></button>
-                <button class="btn-secondary-black fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Download Catalog', 'Descargar catálogo'); ?></button>
+                <button class="btn-main fill js-modal-open" data-modal="book" type="button"><?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?></button>
+                <button class="btn-secondary-black fill js-modal-open" data-modal="download" type="button"><?php echo mfs_t('Download Catalog', 'Descargar catálogo', 'Katalog herunterladen'); ?></button>
             </div>
         </div>
 

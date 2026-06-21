@@ -40,7 +40,7 @@
                             </div>
 
                             <a class="blog-item__link" href="<?php echo $articlePermalink; ?>">
-                                <?php echo mfs_t('Read more', 'Leer más'); ?>
+                                <?php echo mfs_t('Read more', 'Leer más', 'Mehr lesen'); ?>
 
                                 <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                             </a>

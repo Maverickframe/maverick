@@ -26,12 +26,12 @@ if ( $mfs_lang === 'es' ) {
             <div class="article-page__columns article-page__columns--3">
                 <!-- Sidebar Left -->
                 <aside class="article-page__aside article-page__aside--left">
-                    <button class="article-page__toggle js-sidebar-toggle"><?= mfs_t('Contents', 'Contenido'); ?></button>
+                    <button class="article-page__toggle js-sidebar-toggle"><?= mfs_t('Contents', 'Contenido', 'Inhalt'); ?></button>
 
                     <div class="article-page__sticky js-sidebar">
                         <?= get_template_part('components/new-design/blog/author-mini'); ?>
                         <?= get_template_part('components/new-design/blog/reading-status'); ?>
-                        <?= get_template_part('components/new-design/toc', null, ['title' => mfs_t('Contents', 'Contenido'), 'toc' => $toc]); ?>
+                        <?= get_template_part('components/new-design/toc', null, ['title' => mfs_t('Contents', 'Contenido', 'Inhalt'), 'toc' => $toc]); ?>
                         <?= get_template_part('components/new-design/blog/feedback'); ?>
                     </div>
                 </aside>
@@ -59,11 +59,11 @@ if ( $mfs_lang === 'es' ) {
 
     <div class="article-page__breadcrumbs-bottom">
         <div class="container">
-            <span class="article-page__breadcrumbs-label"><?= mfs_t('You are here', 'Estás aquí'); ?></span>
+            <span class="article-page__breadcrumbs-label"><?= mfs_t('You are here', 'Estás aquí', 'Du bist hier'); ?></span>
             <div class="article-page__breadcrumbs-wrap">
                 <?= get_template_part('components/new-design/breadcrumbs', null, [
                     'breadcrumbs' => [
-                        1 => [ 'name' => mfs_t('Home', 'Inicio'), 'link' => $bc_home ],
+                        1 => [ 'name' => mfs_t('Home', 'Inicio', 'Startseite'), 'link' => $bc_home ],
                         2 => [ 'name' => 'Blog', 'link' => $bc_blog ]
                     ]
                 ]); ?>

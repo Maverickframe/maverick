@@ -2,7 +2,7 @@
     <div class="container contacts-section__container">
         <div class="contacts-section__main">
             <div>
-                <h2 class="section-title section-title_contacts"><?php echo mfs_t('Get in touch', 'Ponte en contacto'); ?></h2>
+                <h2 class="section-title section-title_contacts"><?php echo mfs_t('Get in touch', 'Ponte en contacto', 'Kontakt aufnehmen'); ?></h2>
     
                 <?php echo get_template_part( 'components/contacts-form' ); ?>
             </div>
@@ -58,7 +58,7 @@
         </div>
 
         <div class="contacts-section__img">
-            <h2 class="contacts-section__title"><?php echo mfs_t('Contact us', 'Contáctanos'); ?></h2>
+            <h2 class="contacts-section__title"><?php echo mfs_t('Contact us', 'Contáctanos', 'Kontaktiere uns'); ?></h2>
             <img src="<?php echo get_template_directory_uri_vite(); ?>/img/sp-contact.jpg" alt="Contact us" width="437" height="525" class="lazyload">
         </div>
     </div>

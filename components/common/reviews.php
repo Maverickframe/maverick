@@ -26,7 +26,7 @@
                                                     <?php echo $review; ?>
                                                 </div>
                         
-                                                <button class="js-desc-more reviews-item__more-btn" type="button"><?php echo mfs_t('More', 'Más'); ?></button>
+                                                <button class="js-desc-more reviews-item__more-btn" type="button"><?php echo mfs_t('More', 'Más', 'Mehr'); ?></button>
                                             </div>
 
                                             <?php if($link): ?>
@@ -82,11 +82,11 @@
                     <ul class="splide__pagination"></ul>
                     <div class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev sr-only">
-                            <?php echo mfs_t('Prev Review', 'Reseña anterior'); ?>
+                            <?php echo mfs_t('Prev Review', 'Reseña anterior', 'Vorherige Bewertung'); ?>
                         </button>
                         <button class="splide__arrow splide__arrow--next">
                             <span>
-                                <?php echo mfs_t('Next Review', 'Siguiente reseña'); ?>
+                                <?php echo mfs_t('Next Review', 'Siguiente reseña', 'Nächste Bewertung'); ?>
                             </span>
                             <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                         </button>
@@ -131,7 +131,7 @@
                                     </div>
 
                                     <button class="reviews-item-thumb__arrow" type="button">
-                                        <span><?php echo mfs_t('Next review', 'Siguiente reseña'); ?></span>
+                                        <span><?php echo mfs_t('Next review', 'Siguiente reseña', 'Nächste Bewertung'); ?></span>
                                         <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                                     </button>
                                 </div>
@@ -146,11 +146,11 @@
                     <ul class="splide__pagination"></ul>
                     <div class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev sr-only">
-                            <?php echo mfs_t('Prev Review', 'Reseña anterior'); ?>
+                            <?php echo mfs_t('Prev Review', 'Reseña anterior', 'Vorherige Bewertung'); ?>
                         </button>
                         <button class="splide__arrow splide__arrow--next">
                             <span>
-                                <?php echo mfs_t('Next Review', 'Siguiente reseña'); ?>
+                                <?php echo mfs_t('Next Review', 'Siguiente reseña', 'Nächste Bewertung'); ?>
                             </span>
                             <?php echo inline_svg('icons/arrow-right-accent.svg'); ?>
                         </button>

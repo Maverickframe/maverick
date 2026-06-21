@@ -50,7 +50,7 @@
     </label>
 
     <button class="btn contacts-form__btn" type="submit">
-        <?php echo mfs_t('Send', 'Enviar'); ?>
+        <?php echo mfs_t('Send', 'Enviar', 'Senden'); ?>
     </button>
 
     <div class="contacts-form__success">

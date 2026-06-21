@@ -5,7 +5,7 @@
         </div>
 
         <div class="marketing-sales__info">
-            <p class="section-subtitle"><?php echo mfs_t('Marketing & Sales Usage', 'Uso en marketing y ventas'); ?></p>
+            <p class="section-subtitle"><?php echo mfs_t('Marketing & Sales Usage', 'Uso en marketing y ventas', 'Einsatz in Marketing & Vertrieb'); ?></p>
             <h2><?php the_field('title'); ?></h2>
 
             <?php

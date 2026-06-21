@@ -1,6 +1,6 @@
 <section class="trusted">
     <div class="container container_small trusted__container">
-        <h2><?php echo ( is_front_page() || ! is_singular() ) ? mfs_t( 'Trusted by leading teams worldwide', 'Equipos y marcas líderes de todo el mundo confían en nosotros' ) : mfs_t( 'Trusted by Leading Teams: ', 'Confían en nosotros: ' ) . esc_html( get_the_title() ); ?></h2>
+        <h2><?php echo ( is_front_page() || ! is_singular() ) ? mfs_t( 'Trusted by leading teams worldwide', 'Equipos y marcas líderes de todo el mundo confían en nosotros', 'Führende Teams weltweit vertrauen uns' ) : mfs_t( 'Trusted by Leading Teams: ', 'Confían en nosotros: ', 'Vertrauen führender Teams: ' ) . esc_html( get_the_title() ); ?></h2>
         
         <div class="trusted__slider one js-reveal">
             <div class="js-presentation-trusted-slider-one splide" role="group" aria-label="Trusted by leading teams">

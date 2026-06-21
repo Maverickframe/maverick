@@ -70,18 +70,18 @@ if (get_field('video')) {
         <div class="hero-block__main">
             <div class="hero-block__metabox metabox js-reveal js-reveal-init" data-anim="up">
                 <span class="metabox__item metabox__item--text">
-                    <?= mfs_t('Published:', 'Publicado:'); ?> <?= $date; ?>
+                    <?= mfs_t('Published:', 'Publicado:', 'Veröffentlicht:'); ?> <?= $date; ?>
                 </span>
                 <?php if ($updated): ?>
                     <div class="dot"></div>
                     <span class="metabox__item metabox__item--text">
-                        <?= mfs_t('Updated:', 'Actualizado:'); ?> <?= $updated; ?>
+                        <?= mfs_t('Updated:', 'Actualizado:', 'Aktualisiert:'); ?> <?= $updated; ?>
                     </span>
                 <?php endif; ?>
                 <?php if ($readTime): ?>
                     <div class="dot"></div>
                     <span class="metabox__item metabox__item--text">
-                        <?= $readTime; ?><?= mfs_t(' read', ' de lectura'); ?>
+                        <?= $readTime; ?><?= mfs_t(' read', ' de lectura', ' Lesezeit'); ?>
                     </span>
                 <?php endif; ?>
                 <?php if ($categories): ?>

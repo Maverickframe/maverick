@@ -5,7 +5,7 @@
             <p class="p1"><?php the_field('description'); ?></p>
 
             <button class="btn-cta js-modal-open" data-modal="book" type="button">
-                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
             </button>
         </div>
     </section>

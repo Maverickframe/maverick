@@ -15,7 +15,7 @@ $mfs_lang   = mfs_lang();
 $mfs_not_en = ( $mfs_lang !== 'en' );
 
 $ctaBrand  = get_field('sidebar_cta_brand', 'options')  ?: 'Maverick Frame Studio';
-$ctaProof  = ($mfs_not_en ? '' : get_field('sidebar_cta_proof', 'options'))  ?: mfs_t('Trusted by 300+ teams worldwide', 'Con la confianza de más de 300 equipos en todo el mundo');
+$ctaProof  = ($mfs_not_en ? '' : get_field('sidebar_cta_proof', 'options'))  ?: mfs_t('Trusted by 300+ teams worldwide', 'Con la confianza de más de 300 equipos en todo el mundo', 'Über 300 Teams weltweit vertrauen uns');
 $ctaRating = get_field('sidebar_cta_rating', 'options') ?: '4.9';
 
 // Repeater: post override → global options → baked fallback.
@@ -27,10 +27,10 @@ if (empty($stages) && !$mfs_not_en) {
 }
 
 $fallback = [
-    ['eyebrow' => mfs_t('NEW HERE?', '¿NUEVO AQUÍ?'),    'head' => mfs_t('See our latest 3D rendering work', 'Mira nuestros últimos trabajos de renderizado 3D'),          'sub' => mfs_t('A look-book of recent architectural and product visualization projects.', 'Un look-book de proyectos recientes de visualización arquitectónica y de producto.'), 'label' => mfs_t('Browse portfolio', 'Ver portfolio'),    'url' => $mfs_lang === 'es' ? home_url('/es/galeria/') : ( $mfs_lang === 'de' ? home_url('/de/galerie/') : home_url('/gallery/') ),   'modal' => false],
-    ['eyebrow' => mfs_t('RESOURCE', 'RECURSO'),     'head' => mfs_t('Get our project brief template', 'Consigue nuestra plantilla de brief de proyecto'),             'sub' => mfs_t('A one-pager we use to scope CGI projects — scope, deliverables, milestones.', 'Una página que usamos para planificar proyectos CGI: alcance, entregables, hitos.'), 'label' => mfs_t('Download PDF', 'Descargar PDF'),        'url' => home_url('/contacts/'),  'modal' => false],
-    ['eyebrow' => mfs_t('SOCIAL PROOF', 'PRUEBA SOCIAL'), 'head' => mfs_t('300+ teams trust Maverick Frame', 'Más de 300 equipos confían en Maverick Frame'),            'sub' => mfs_t('See how our visuals helped brands and developers sell faster.', 'Mira cómo nuestros visuales ayudaron a marcas y promotores a vender más rápido.'),               'label' => mfs_t('Read case studies', 'Leer casos de éxito'),   'url' => $mfs_lang === 'es' ? home_url('/es/casos-de-exito/') : ( $mfs_lang === 'de' ? home_url('/de/referenzen/') : home_url('/success-stories/') ), 'modal' => false],
-    ['eyebrow' => mfs_t('TALK TO US', 'HABLEMOS'),   'head' => mfs_t('Working on a project like this?', '¿Trabajas en un proyecto como este?'),            'sub' => mfs_t('Free 15-min consultation. No commitment — just a quick chat about your project.', 'Consulta gratuita de 15 min. Sin compromiso: solo una charla rápida sobre tu proyecto.'), 'label' => mfs_t('Book a 15-min call', 'Reserva una llamada de 15 min'), 'url' => '#book', 'modal' => true],
+    ['eyebrow' => mfs_t('NEW HERE?', '¿NUEVO AQUÍ?', 'NEU HIER?'),    'head' => mfs_t('See our latest 3D rendering work', 'Mira nuestros últimos trabajos de renderizado 3D', 'Unsere neuesten 3D-Renderings ansehen'),          'sub' => mfs_t('A look-book of recent architectural and product visualization projects.', 'Un look-book de proyectos recientes de visualización arquitectónica y de producto.', 'Ein Look-book aktueller Architektur- und Produktvisualisierungen.'), 'label' => mfs_t('Browse portfolio', 'Ver portfolio', 'Portfolio ansehen'),    'url' => $mfs_lang === 'es' ? home_url('/es/galeria/') : ( $mfs_lang === 'de' ? home_url('/de/galerie/') : home_url('/gallery/') ),   'modal' => false],
+    ['eyebrow' => mfs_t('RESOURCE', 'RECURSO', 'RESSOURCE'),     'head' => mfs_t('Get our project brief template', 'Consigue nuestra plantilla de brief de proyecto', 'Hol dir unsere Projekt-Brief-Vorlage'),             'sub' => mfs_t('A one-pager we use to scope CGI projects — scope, deliverables, milestones.', 'Una página que usamos para planificar proyectos CGI: alcance, entregables, hitos.', 'Ein Onepager, mit dem wir CGI-Projekte planen — Umfang, Ergebnisse, Meilensteine.'), 'label' => mfs_t('Download PDF', 'Descargar PDF', 'PDF herunterladen'),        'url' => home_url('/contacts/'),  'modal' => false],
+    ['eyebrow' => mfs_t('SOCIAL PROOF', 'PRUEBA SOCIAL', 'SOCIAL PROOF'), 'head' => mfs_t('300+ teams trust Maverick Frame', 'Más de 300 equipos confían en Maverick Frame', 'Über 300 Teams vertrauen Maverick Frame'),            'sub' => mfs_t('See how our visuals helped brands and developers sell faster.', 'Mira cómo nuestros visuales ayudaron a marcas y promotores a vender más rápido.', 'Sieh, wie unsere Visuals Marken und Entwicklern geholfen haben, schneller zu verkaufen.'),               'label' => mfs_t('Read case studies', 'Leer casos de éxito', 'Fallstudien lesen'),   'url' => $mfs_lang === 'es' ? home_url('/es/casos-de-exito/') : ( $mfs_lang === 'de' ? home_url('/de/referenzen/') : home_url('/success-stories/') ), 'modal' => false],
+    ['eyebrow' => mfs_t('TALK TO US', 'HABLEMOS', 'SPRICH MIT UNS'),   'head' => mfs_t('Working on a project like this?', '¿Trabajas en un proyecto como este?', 'Arbeitest du an einem ähnlichen Projekt?'),            'sub' => mfs_t('Free 15-min consultation. No commitment — just a quick chat about your project.', 'Consulta gratuita de 15 min. Sin compromiso: solo una charla rápida sobre tu proyecto.', 'Kostenlose 15-minütige Beratung. Unverbindlich — einfach ein kurzes Gespräch über dein Projekt.'), 'label' => mfs_t('Book a 15-min call', 'Reserva una llamada de 15 min', '15-Min-Gespräch buchen'), 'url' => '#book', 'modal' => true],
 ];
 
 if (empty($stages)) {
@@ -61,7 +61,7 @@ if (empty($rows)) return;
             <img src="<?php echo get_template_directory_uri_vite(); ?>/img/logo.svg" alt="Maverick Frame Studio logo" width="40" height="40">
         </span>
         <p class="sidebar-cta__brand-text">
-            <span class="sidebar-cta__brand-eyebrow"><?= mfs_t('From', 'De'); ?> <?= esc_html($ctaBrand); ?></span>
+            <span class="sidebar-cta__brand-eyebrow"><?= mfs_t('From', 'De', 'Ab'); ?> <?= esc_html($ctaBrand); ?></span>
         </p>
     </div>
 
