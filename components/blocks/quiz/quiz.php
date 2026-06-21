@@ -14,11 +14,11 @@
 
 $mfsq_mode    = get_field('quiz_mode') ?: 'router';
 $mfsq_eyebrow = get_field('quiz_eyebrow');
-$mfsq_eyebrow = ( $mfsq_eyebrow !== '' && $mfsq_eyebrow !== null ) ? $mfsq_eyebrow : '30-second quiz';
+$mfsq_eyebrow = ( $mfsq_eyebrow !== '' && $mfsq_eyebrow !== null ) ? $mfsq_eyebrow : mfs_t('30-second quiz', 'Quiz de 30 segundos', 'Quiz in 30 Sekunden');
 $mfsq_heading = get_field('quiz_heading');
-$mfsq_heading = ( $mfsq_heading !== '' && $mfsq_heading !== null ) ? $mfsq_heading : 'Not sure where to start? Find your fit';
+$mfsq_heading = ( $mfsq_heading !== '' && $mfsq_heading !== null ) ? $mfsq_heading : mfs_t('Not sure where to start? Find your fit', '¿No sabes por dónde empezar? Encuentra tu opción', 'Nicht sicher, wo du anfangen sollst? Finde deine Lösung');
 $mfsq_intro   = get_field('quiz_intro');
-$mfsq_intro   = ( $mfsq_intro !== '' && $mfsq_intro !== null ) ? $mfsq_intro : 'Answer a few quick questions and we’ll match you with the right service — plus a free, tailored next step for your project.';
+$mfsq_intro   = ( $mfsq_intro !== '' && $mfsq_intro !== null ) ? $mfsq_intro : mfs_t('Answer a few quick questions and we’ll match you with the right service — plus a free, tailored next step for your project.', 'Responde unas preguntas rápidas y te emparejamos con el servicio adecuado — además de un siguiente paso gratuito y personalizado para tu proyecto.', 'Beantworte ein paar kurze Fragen und wir finden die passende Leistung für dich — plus einen kostenlosen, individuellen nächsten Schritt für dein Projekt.');
 $mfsq_lead_title = get_field('quiz_lead_title');
 if ( ! $mfsq_lead_title ) {
     $mfsq_lead_title = ( $mfsq_mode === 'service' ) ? ( get_the_title() . ' / Quiz' ) : 'Homepage / Quiz';
@@ -84,7 +84,7 @@ $looks = array(
             <?php } ?>
 
             <div class="mfsq__head">
-                <span class="mfsq__count" data-count>Step 1</span>
+                <span class="mfsq__count" data-count><?php echo esc_html( mfs_t('Step 1', 'Paso 1', 'Schritt 1') ); ?></span>
                 <div class="mfsq__bar" data-bar></div>
             </div>
 
@@ -249,18 +249,18 @@ $looks = array(
 
                 <!-- ===== Shared gate + result ===== -->
                 <div class="mfsq__step" data-q="gate">
-                    <h3>Almost there &mdash; where do we send it?</h3>
-                    <p class="mfsq__gate-sub" data-gate-sub>Your tailored plan and a free next step for your project.</p>
-                    <input type="text" data-name placeholder="Your name" class="mfsq__input">
-                    <input type="email" data-email placeholder="Work email*" class="mfsq__input">
-                    <button class="mfsq__submit" data-reveal type="button">Reveal my plan</button>
-                    <p class="mfsq__fine">No spam &mdash; we only email about your project.</p>
+                    <h3><?php echo esc_html( mfs_t('Almost there — where do we send it?', 'Casi listo — ¿a dónde te lo enviamos?', 'Fast geschafft — wohin sollen wir es schicken?') ); ?></h3>
+                    <p class="mfsq__gate-sub" data-gate-sub><?php echo esc_html( mfs_t('Your tailored plan and a free next step for your project.', 'Tu plan personalizado y un siguiente paso gratuito para tu proyecto.', 'Dein individueller Plan und ein kostenloser nächster Schritt für dein Projekt.') ); ?></p>
+                    <input type="text" data-name placeholder="<?php echo esc_attr( mfs_t('Your name', 'Tu nombre', 'Dein Name') ); ?>" class="mfsq__input">
+                    <input type="email" data-email placeholder="<?php echo esc_attr( mfs_t('Work email*', 'Correo de trabajo*', 'Geschäftliche E-Mail*') ); ?>" class="mfsq__input">
+                    <button class="mfsq__submit" data-reveal type="button"><?php echo esc_html( mfs_t('Reveal my plan', 'Ver mi plan', 'Meinen Plan anzeigen') ); ?></button>
+                    <p class="mfsq__fine"><?php echo esc_html( mfs_t('No spam — we only email about your project.', 'Sin spam — solo te escribimos sobre tu proyecto.', 'Kein Spam — wir schreiben dir nur zu deinem Projekt.') ); ?></p>
                 </div>
 
                 <div class="mfsq__step" data-q="result"></div>
             </div>
 
-            <button class="mfsq__back" data-back type="button">&larr; Back</button>
+            <button class="mfsq__back" data-back type="button"><?php echo esc_html( mfs_t('← Back', '← Volver', '← Zurück') ); ?></button>
         </div>
     </div>
 </section>

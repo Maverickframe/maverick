@@ -9,6 +9,27 @@ function escapeHtml(s) {
   });
 }
 
+// Current page language from <html lang> (Polylang sets de/de-DE, es/es-ES).
+var MFSQ_LANG = (function () {
+  var l = (document.documentElement.getAttribute('lang') || 'en').toLowerCase();
+  if (l.indexOf('de') === 0) return 'de';
+  if (l.indexOf('es') === 0) return 'es';
+  return 'en';
+})();
+// JS twin of PHP mfs_t(): pick the string for the current language, EN fallback.
+function qt(en, es, de) {
+  if (MFSQ_LANG === 'de') return de != null ? de : en;
+  if (MFSQ_LANG === 'es') return es != null ? es : en;
+  return en;
+}
+// Result-screen eyebrow ("<name>, your recommended approach"). Whole phrase is
+// translated (word order differs by language), name kept where natural.
+function resultEyebrow(name) {
+  return name
+    ? qt(escapeHtml(name) + ', your recommended approach', escapeHtml(name) + ', tu enfoque recomendado', escapeHtml(name) + ', dein empfohlener Ansatz')
+    : qt('Your recommended approach', 'Tu enfoque recomendado', 'Dein empfohlener Ansatz');
+}
+
 // Step order per branch (route + branch steps + gate + result).
 var SEQ = {
   cgi: ['route', 'subject', 'look', 'goal', 'stage', 'volume', 'gate', 'result'],
@@ -107,14 +128,14 @@ function initQuiz() {
     var nums = numbered();
     var dots = bar.querySelectorAll('span');
     dots.forEach(function (d, n) { d.classList.toggle('is-on', n <= i && i < nums.length); });
-    if (key === 'result') count.textContent = 'Your plan';
-    else if (key === 'gate') count.textContent = 'Last step';
-    else count.textContent = 'Step ' + (i + 1) + ' of ' + nums.length;
+    if (key === 'result') count.textContent = qt('Your plan', 'Tu plan', 'Dein Plan');
+    else if (key === 'gate') count.textContent = qt('Last step', 'Último paso', 'Letzter Schritt');
+    else count.textContent = qt('Step', 'Paso', 'Schritt') + ' ' + (i + 1) + ' ' + qt('of', 'de', 'von') + ' ' + nums.length;
     back.classList.toggle('is-on', i > 0 && key !== 'result');
     if (key === 'look') renderLooks();
     if (key === 'gate' && gateSub) {
       gateSub.innerHTML = mode === 'service'
-        ? (resultCfg.gateSub || 'Your tailored plan and a free next step for your project.')
+        ? (resultCfg.gateSub || qt('Your tailored plan and a free next step for your project.', 'Tu plan personalizado y un siguiente paso gratuito para tu proyecto.', 'Dein individueller Plan und ein kostenloser nächster Schritt für dein Projekt.'))
         : (GATE_SUB[branch] || GATE_SUB.cgi);
     }
   }
@@ -166,20 +187,22 @@ function initQuiz() {
   function result(name) {
     var r = stepEls.result;
     if (mode === 'service') {
-      var sHead = resultCfg.head || ('Custom ' + (resultCfg.service || 'project'));
+      var sHead = resultCfg.head || (resultCfg.service
+        ? qt('Custom ' + resultCfg.service, resultCfg.service + ' personalizado', 'Individuell: ' + resultCfg.service)
+        : qt('Custom project', 'Proyecto personalizado', 'Individuelles Projekt'));
       var sRows = resultCfg.service
-        ? '<div class="mfsq__result-row">Recommended service:&nbsp;<b>' + escapeHtml(resultCfg.service) + '</b></div>'
+        ? '<div class="mfsq__result-row">' + qt('Recommended service:', 'Servicio recomendado:', 'Empfohlene Leistung:') + '&nbsp;<b>' + escapeHtml(resultCfg.service) + '</b></div>'
         : '';
       var sNote = resultCfg.note
         ? '<p style="font-size:13px;color:#5f5e5a;margin:16px 0 14px;line-height:1.55;">' + escapeHtml(resultCfg.note) + '</p>'
         : '';
       r.innerHTML =
         '<div class="mfsq__result">'
-        + '<p class="mfsq__result-eyebrow">' + (name ? escapeHtml(name) + ', your' : 'Your') + ' recommended approach</p>'
+        + '<p class="mfsq__result-eyebrow">' + resultEyebrow(name) + '</p>'
         + '<p class="mfsq__result-head">' + escapeHtml(sHead) + '</p>'
         + sRows
         + sNote
-        + '<button class="mfsq__submit js-modal-open" data-modal="book" type="button">Book a quick call</button>'
+        + '<button class="mfsq__submit js-modal-open" data-modal="book" type="button">' + qt('Book a quick call', 'Reserva una llamada rápida', 'Kurzes Gespräch buchen') + '</button>'
         + '</div>';
       return;
     }
@@ -196,7 +219,7 @@ function initQuiz() {
     } else {
       head = 'Custom ' + svc + ' — ' + goalFrag;
     }
-    var rows = '<div class="mfsq__result-row">Recommended service:&nbsp;<b>' + escapeHtml(svc) + '</b></div>';
+    var rows = '<div class="mfsq__result-row">' + qt('Recommended service:', 'Servicio recomendado:', 'Empfohlene Leistung:') + '&nbsp;<b>' + escapeHtml(svc) + '</b></div>';
     if (stageLine) rows += '<div class="mfsq__result-row">' + escapeHtml(stageLine) + '</div>';
     if (branch === 'cgi' && ans.volume) rows += '<div class="mfsq__result-row">' + escapeHtml(VOLL[ans.volume] || '') + '</div>';
     var extra = branch === 'cgi'
@@ -204,12 +227,12 @@ function initQuiz() {
       : '';
     r.innerHTML =
       '<div class="mfsq__result">'
-      + '<p class="mfsq__result-eyebrow">' + (name ? escapeHtml(name) + ', your' : 'Your') + ' recommended approach</p>'
+      + '<p class="mfsq__result-eyebrow">' + resultEyebrow(name) + '</p>'
       + '<p class="mfsq__result-head">' + escapeHtml(head) + '</p>'
       + rows
       + extra
       + '<p style="font-size:13px;color:#5f5e5a;margin:16px 0 14px;line-height:1.55;">' + CLOSING[branch] + '</p>'
-      + '<button class="mfsq__submit js-modal-open" data-modal="book" type="button">Book a quick call</button>'
+      + '<button class="mfsq__submit js-modal-open" data-modal="book" type="button">' + qt('Book a quick call', 'Reserva una llamada rápida', 'Kurzes Gespräch buchen') + '</button>'
       + '</div>';
   }
 
