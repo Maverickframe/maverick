@@ -45,33 +45,89 @@ var LABELS = {
 };
 
 // Recommended-service maps + voice fragments per branch.
+// Keys are EN answer values (data-v) — never translate them; only the values
+// are localized via qt(), since they surface on the result screen.
 var SVC = {
-  cgi: { Exterior: '3D exterior rendering', Interior: '3D interior rendering', Product: 'product & furniture CGI', Vehicle: 'yacht, car & aircraft visualization', Development: 'masterplan & aerial CGI' },
-  web: { Website: 'web design', 'Landing page': 'landing page design', 'Mobile app': 'mobile app design', 'UI/UX redesign': 'UI/UX design' },
-  creative: { 'Brand identity': 'branding & identity', 'Social media content': 'social media design', 'Presentation / pitch deck': 'presentation design', 'FOOH / CGI ad': 'FOOH CGI advertising' }
+  cgi: {
+    Exterior: qt('3D exterior rendering', 'renderizado 3D de exteriores', '3D-Außenvisualisierung'),
+    Interior: qt('3D interior rendering', 'renderizado 3D de interiores', '3D-Innenvisualisierung'),
+    Product: qt('product & furniture CGI', 'CGI de producto y mobiliario', 'Produkt- & Möbel-CGI'),
+    Vehicle: qt('yacht, car & aircraft visualization', 'visualización de yates, coches y aviones', 'Yacht-, Auto- & Flugzeug-Visualisierung'),
+    Development: qt('masterplan & aerial CGI', 'CGI de masterplan y aéreo', 'Masterplan- & Luftbild-CGI')
+  },
+  web: {
+    Website: qt('web design', 'diseño web', 'Webdesign'),
+    'Landing page': qt('landing page design', 'diseño de landing page', 'Landingpage-Design'),
+    'Mobile app': qt('mobile app design', 'diseño de app móvil', 'Mobile-App-Design'),
+    'UI/UX redesign': qt('UI/UX design', 'diseño UI/UX', 'UI/UX-Design')
+  },
+  creative: {
+    'Brand identity': qt('branding & identity', 'branding e identidad', 'Branding & Identität'),
+    'Social media content': qt('social media design', 'diseño para redes sociales', 'Social-Media-Design'),
+    'Presentation / pitch deck': qt('presentation design', 'diseño de presentaciones', 'Präsentationsdesign'),
+    'FOOH / CGI ad': qt('FOOH CGI advertising', 'publicidad FOOH CGI', 'FOOH-CGI-Werbung')
+  }
 };
 var GOALT = {
-  cgi: { 'Sell faster': 'built to sell', 'Win approvals': 'tuned for approvals', 'Market & advertise': 'campaign-ready', 'Impress investors': 'made to win investors' },
-  web: { 'Launch something new': 'built to launch', 'Redesign & modernize': 'modern & refreshed', 'Increase conversions': 'conversion-focused', 'Impress investors': 'investor-ready' },
-  creative: { 'Launch a brand': 'built to launch', 'Refresh our look': 'a fresh, modern look', 'Drive engagement': 'made to engage', 'Win investors': 'investor-ready' }
+  cgi: {
+    'Sell faster': qt('built to sell', 'creado para vender', 'gemacht zum Verkaufen'),
+    'Win approvals': qt('tuned for approvals', 'optimizado para aprobaciones', 'auf Genehmigungen ausgelegt'),
+    'Market & advertise': qt('campaign-ready', 'listo para campañas', 'kampagnenbereit'),
+    'Impress investors': qt('made to win investors', 'hecho para conquistar inversores', 'gemacht, um Investoren zu überzeugen')
+  },
+  web: {
+    'Launch something new': qt('built to launch', 'creado para lanzar', 'gemacht für den Launch'),
+    'Redesign & modernize': qt('modern & refreshed', 'moderno y renovado', 'modern & frisch'),
+    'Increase conversions': qt('conversion-focused', 'enfocado en conversiones', 'conversion-orientiert'),
+    'Impress investors': qt('investor-ready', 'listo para inversores', 'investorenbereit')
+  },
+  creative: {
+    'Launch a brand': qt('built to launch', 'creado para lanzar', 'gemacht für den Launch'),
+    'Refresh our look': qt('a fresh, modern look', 'un look fresco y moderno', 'ein frischer, moderner Look'),
+    'Drive engagement': qt('made to engage', 'hecho para enganchar', 'gemacht, um zu begeistern'),
+    'Win investors': qt('investor-ready', 'listo para inversores', 'investorenbereit')
+  }
 };
 var STAGEL = {
-  cgi: { 'Just an idea': 'We start from your references and sketches.', 'In design': 'Send your CAD or design files and we begin.', 'Files ready': 'Your files are ready — we can start fast.' },
-  web: { 'Just an idea': 'We start from your goals and references.', 'Brand & content ready': 'Brand & content ready — we move straight to design.', 'Have a live site': 'We audit your current site and improve from there.' },
-  creative: { 'Starting from scratch': 'We start from a blank canvas and your vision.', 'Have some assets': 'We build on your existing assets.', 'Rebranding existing': 'We evolve your current brand.' }
+  cgi: {
+    'Just an idea': qt('We start from your references and sketches.', 'Empezamos con tus referencias y bocetos.', 'Wir starten mit deinen Referenzen und Skizzen.'),
+    'In design': qt('Send your CAD or design files and we begin.', 'Envíanos tus archivos CAD o de diseño y empezamos.', 'Schick uns deine CAD- oder Designdateien und wir legen los.'),
+    'Files ready': qt('Your files are ready — we can start fast.', 'Tus archivos están listos — podemos empezar rápido.', 'Deine Dateien sind bereit — wir können schnell starten.')
+  },
+  web: {
+    'Just an idea': qt('We start from your goals and references.', 'Empezamos con tus objetivos y referencias.', 'Wir starten mit deinen Zielen und Referenzen.'),
+    'Brand & content ready': qt('Brand & content ready — we move straight to design.', 'Marca y contenido listos — pasamos directo al diseño.', 'Marke & Inhalte bereit — wir gehen direkt ins Design.'),
+    'Have a live site': qt('We audit your current site and improve from there.', 'Auditamos tu sitio actual y mejoramos desde ahí.', 'Wir auditieren deine aktuelle Website und verbessern von dort.')
+  },
+  creative: {
+    'Starting from scratch': qt('We start from a blank canvas and your vision.', 'Empezamos desde cero con tu visión.', 'Wir starten mit einem leeren Blatt und deiner Vision.'),
+    'Have some assets': qt('We build on your existing assets.', 'Construimos sobre tus recursos existentes.', 'Wir bauen auf deinen vorhandenen Assets auf.'),
+    'Rebranding existing': qt('We evolve your current brand.', 'Evolucionamos tu marca actual.', 'Wir entwickeln deine aktuelle Marke weiter.')
+  }
 };
-var VOLL = { 'One project': 'One-off project pricing.', 'Ongoing stream': 'Subscription saves up to 30% on ongoing volume.' };
+var VOLL = {
+  'One project': qt('One-off project pricing.', 'Precio por proyecto único.', 'Preis für ein Einzelprojekt.'),
+  'Ongoing stream': qt('Subscription saves up to 30% on ongoing volume.', 'La suscripción ahorra hasta un 30% en volumen continuo.', 'Abo spart bis zu 30% bei laufendem Volumen.')
+};
 
 // Per-branch gate copy + result closing line.
 var GATE_SUB = {
-  cgi: 'Your tailored visual plan, a moodboard in your style, and one free test render of your project.',
-  web: 'A tailored plan for your project and a free design concept to get started.',
-  creative: 'A tailored creative plan and a free concept to get started.'
+  cgi: qt('Your tailored visual plan, a moodboard in your style, and one free test render of your project.', 'Tu plan visual personalizado, un moodboard en tu estilo y un test render gratuito de tu proyecto.', 'Dein individueller Visual-Plan, ein Moodboard in deinem Stil und ein kostenloser Testrender deines Projekts.'),
+  web: qt('A tailored plan for your project and a free design concept to get started.', 'Un plan personalizado para tu proyecto y un concepto de diseño gratuito para empezar.', 'Ein individueller Plan für dein Projekt und ein kostenloses Designkonzept zum Start.'),
+  creative: qt('A tailored creative plan and a free concept to get started.', 'Un plan creativo personalizado y un concepto gratuito para empezar.', 'Ein individueller Kreativplan und ein kostenloses Konzept zum Start.')
 };
 var CLOSING = {
-  cgi: 'We’ll email your moodboard and a free test render shortly.',
-  web: 'We’ll email your tailored plan and a free design concept shortly.',
-  creative: 'We’ll email your tailored plan and a free concept shortly.'
+  cgi: qt('We’ll email your moodboard and a free test render shortly.', 'Te enviaremos pronto tu moodboard y un test render gratuito por correo.', 'Wir senden dir in Kürze dein Moodboard und einen kostenlosen Testrender per E-Mail.'),
+  web: qt('We’ll email your tailored plan and a free design concept shortly.', 'Te enviaremos pronto tu plan personalizado y un concepto de diseño gratuito por correo.', 'Wir senden dir in Kürze deinen individuellen Plan und ein kostenloses Designkonzept per E-Mail.'),
+  creative: qt('We’ll email your tailored plan and a free concept shortly.', 'Te enviaremos pronto tu plan personalizado y un concepto gratuito por correo.', 'Wir senden dir in Kürze deinen individuellen Plan und ein kostenloses Konzept per E-Mail.')
+};
+// Look-tile adjective for the CGI result head. Keyed by EN data-v (kept EN);
+// value localized so the head reads naturally in each language.
+var LOOKADJ = {
+  'Bright & photoreal': qt('bright, photoreal', 'brillante, fotorrealista', 'hell, fotorealistisch'),
+  'Warm & inviting': qt('warm, inviting', 'cálido, acogedor', 'warm, einladend'),
+  'Moody & cinematic': qt('moody, cinematic', 'atmosférico, cinematográfico', 'stimmungsvoll, filmisch'),
+  'Clean & minimal': qt('clean, minimal', 'limpio, minimalista', 'klar, minimalistisch')
 };
 
 function initQuiz() {
@@ -147,9 +203,11 @@ function initQuiz() {
     var box = stepEls.look.querySelector('[data-looks]');
     var set = looks[ans.subject] || [];
     box.innerHTML = set.map(function (l) {
+      // l[0] = EN value for data-v (CRM), l[1] = image, l[2] = localized caption.
+      var cap = l[2] || l[0];
       return '<button class="mfsq__look" data-v="' + escapeHtml(l[0]) + '">'
-        + '<span class="mfsq__look-img"><img src="' + escapeHtml(l[1]) + '" loading="lazy" alt="' + escapeHtml(l[0]) + '"></span>'
-        + '<span class="mfsq__look-cap">' + l[0] + '</span></button>';
+        + '<span class="mfsq__look-img"><img src="' + escapeHtml(l[1]) + '" loading="lazy" alt="' + escapeHtml(cap) + '"></span>'
+        + '<span class="mfsq__look-cap">' + escapeHtml(cap) + '</span></button>';
     }).join('');
   }
 
@@ -210,23 +268,25 @@ function initQuiz() {
       return;
     }
     var type = branchType();
-    var svc = (SVC[branch] && SVC[branch][type]) || '3D rendering';
+    var svc = (SVC[branch] && SVC[branch][type]) || qt('3D rendering', 'renderizado 3D', '3D-Rendering');
     var goalKey = ans.goal || ans.webgoal || ans.crgoal;
-    var goalFrag = (GOALT[branch] && GOALT[branch][goalKey]) || 'built to perform';
+    var goalFrag = (GOALT[branch] && GOALT[branch][goalKey]) || qt('built to perform', 'creado para rendir', 'gemacht für Performance');
     var stageKey = ans.stage || ans.webstage || ans.crstage;
     var stageLine = (STAGEL[branch] && STAGEL[branch][stageKey]) || '';
     var head;
     if (branch === 'cgi') {
-      var lookAdj = (ans.look || 'photoreal').toLowerCase().replace(/ *& */, ', ');
+      // Adjective comes from the (EN) data-v answer; LOOKADJ localizes it, with a
+      // lowercased fallback for any unmapped value.
+      var lookAdj = LOOKADJ[ans.look] || (ans.look || qt('photoreal', 'fotorrealista', 'fotorealistisch')).toLowerCase().replace(/ *& */, ', ');
       head = lookAdj + ' ' + svc + ' — ' + goalFrag;
     } else {
-      head = 'Custom ' + svc + ' — ' + goalFrag;
+      head = qt('Custom ', 'Personalizado: ', 'Individuell: ') + svc + ' — ' + goalFrag;
     }
     var rows = '<div class="mfsq__result-row">' + qt('Recommended service:', 'Servicio recomendado:', 'Empfohlene Leistung:') + '&nbsp;<b>' + escapeHtml(svc) + '</b></div>';
     if (stageLine) rows += '<div class="mfsq__result-row">' + escapeHtml(stageLine) + '</div>';
     if (branch === 'cgi' && ans.volume) rows += '<div class="mfsq__result-row">' + escapeHtml(VOLL[ans.volume] || '') + '</div>';
     var extra = branch === 'cgi'
-      ? '<p style="font-size:13px;color:#5f5e5a;margin:14px 0 4px;line-height:1.55;">Need it as animation, a virtual tour or 360°? We do that too.</p>'
+      ? '<p style="font-size:13px;color:#5f5e5a;margin:14px 0 4px;line-height:1.55;">' + qt('Need it as animation, a virtual tour or 360°? We do that too.', '¿Lo necesitas como animación, tour virtual o 360°? También lo hacemos.', 'Brauchst du es als Animation, virtuelle Tour oder 360°? Machen wir auch.') + '</p>'
       : '';
     r.innerHTML =
       '<div class="mfsq__result">'

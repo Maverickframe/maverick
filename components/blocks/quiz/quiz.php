@@ -60,6 +60,21 @@ $looks = array(
         array('Clean & minimal',    $U . '2026/04/landscape-rendering-services-lakeside-cabins-aerial.webp'),
     ),
 );
+
+// Append a localized caption (3rd element) to each look tile. The first element
+// stays EN — it is the data-v that goes to the CRM; only the visible caption /
+// alt text is translated. quiz.js reads l[2] for the caption, l[0] for data-v.
+$look_caps = array(
+    'Bright & photoreal' => mfs_t('Bright & photoreal', 'Brillante y fotorrealista', 'Hell & fotorealistisch'),
+    'Warm & inviting'    => mfs_t('Warm & inviting', 'Cálido y acogedor', 'Warm & einladend'),
+    'Moody & cinematic'  => mfs_t('Moody & cinematic', 'Atmosférico y cinematográfico', 'Stimmungsvoll & filmisch'),
+    'Clean & minimal'    => mfs_t('Clean & minimal', 'Limpio y minimalista', 'Klar & minimalistisch'),
+);
+foreach ( $looks as $mfsq_subj => $mfsq_set ) {
+    foreach ( $mfsq_set as $mfsq_idx => $mfsq_entry ) {
+        $looks[ $mfsq_subj ][ $mfsq_idx ][] = isset( $look_caps[ $mfsq_entry[0] ] ) ? $look_caps[ $mfsq_entry[0] ] : $mfsq_entry[0];
+    }
+}
 ?>
 
 <section class="mfsq">
