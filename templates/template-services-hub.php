@@ -11,8 +11,18 @@
     ]); ?>
 
     <main class="main inner-page success-stories-page">
-        <div class="container">
-            <section class="hero__main" style="margin-top: 64px;">
+        <div class="container container_small">
+            <?php $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es'; ?>
+            <?= get_template_part('components/new-design/breadcrumbs', null, [
+                'breadcrumbs' => [
+                    1 => [
+                        'name' => mfs_t('Home', 'Inicio'),
+                        'link' => $bc_is_es ? home_url('/es/') : home_url()
+                    ]
+                ]
+            ]); ?>
+
+            <section class="hero__main">
                 <h1 class="hero__title"><?php echo esc_html(get_post_meta(get_the_ID(), 'hero_title', true)); ?></h1>
 
                 <?php $hub_hero_desc = get_post_meta(get_the_ID(), 'hero_description', true); ?>
