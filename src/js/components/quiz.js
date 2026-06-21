@@ -130,6 +130,9 @@ function initQuiz() {
     dots.forEach(function (d, n) { d.classList.toggle('is-on', n <= i && i < nums.length); });
     if (key === 'result') count.textContent = qt('Your plan', 'Tu plan', 'Dein Plan');
     else if (key === 'gate') count.textContent = qt('Last step', 'Último paso', 'Letzter Schritt');
+    // Router mode before a branch is picked: seq is just ['route'] (no 'result'),
+    // so nums.length is 0 — show "Step 1" without the bogus "of 0".
+    else if (nums.length === 0) count.textContent = qt('Step', 'Paso', 'Schritt') + ' ' + (i + 1);
     else count.textContent = qt('Step', 'Paso', 'Schritt') + ' ' + (i + 1) + ' ' + qt('of', 'de', 'von') + ' ' + nums.length;
     back.classList.toggle('is-on', i > 0 && key !== 'result');
     if (key === 'look') renderLooks();
