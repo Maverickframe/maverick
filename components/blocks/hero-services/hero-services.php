@@ -90,7 +90,7 @@
         <?php
             $get_in_touch = get_field('get_in_touch');
             if ($get_in_touch) :
-                $git_title = !empty($get_in_touch['title']) ? $get_in_touch['title'] : 'Get In Touch';
+                $git_title = !empty($get_in_touch['title']) ? $get_in_touch['title'] : mfs_t('Get In Touch', 'Contáctanos', 'Kontakt aufnehmen');
                 $git_media = $get_in_touch['media'] ?? null;
         ?>
             <?php if ($git_media || $git_title) : ?>

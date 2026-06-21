@@ -4,15 +4,16 @@
  * highlighted heading (js-highlight / text-highlight with <em>) + subtext.
  * Rendered inside the 2-column .contacts-top grid by the template.
  */
-$is_es = mfs_is('es');
 $mfs_hero_lang = mfs_lang();
 $home  = ( $mfs_hero_lang !== 'en' && function_exists('pll_home_url') ) ? pll_home_url($mfs_hero_lang) : home_url('/');
 
 $title_html = get_post_meta(get_the_ID(), 'hero_title_html', true);
 if (!$title_html) {
-    $title_html = $is_es
-        ? 'Trabaja con un equipo de visualización que <em>entiende lo que tu proyecto necesita</em>'
-        : 'Work with a visualization team that <em>understands what your project needs</em>';
+    $title_html = mfs_t(
+        'Work with a visualization team that <em>understands what your project needs</em>',
+        'Trabaja con un equipo de visualización que <em>entiende lo que tu proyecto necesita</em>',
+        'Arbeite mit einem Visualisierungsteam, das <em>versteht, was dein Projekt braucht</em>'
+    );
 }
 
 $subtitle = get_post_meta(get_the_ID(), 'hero_subtitle', true);
