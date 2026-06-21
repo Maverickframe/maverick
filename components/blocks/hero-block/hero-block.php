@@ -43,9 +43,14 @@
     <div class="container">
         <div class="hero-block__main">
             <?php // todo: common
-                $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-                $bc_home  = $bc_is_es ? home_url('/es/') : home_url('/');
-                $bc_ss    = $bc_is_es ? home_url('/es/casos-de-exito/') : home_url('/success-stories/');
+                $bc_lang = mfs_lang();
+                if ( $bc_lang === 'es' ) {
+                    $bc_home = home_url('/es/'); $bc_ss = home_url('/es/casos-de-exito/');
+                } elseif ( $bc_lang === 'de' ) {
+                    $bc_home = home_url('/de/'); $bc_ss = home_url('/de/referenzen/');
+                } else {
+                    $bc_home = home_url('/'); $bc_ss = home_url('/success-stories/');
+                }
             ?>
             <ul class="hero-block__breadcrumbs">
                 <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio'); ?></a></li>

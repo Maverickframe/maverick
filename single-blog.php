@@ -6,7 +6,14 @@ $index = generateToC($content, get_the_title());
 $content = $index['content'];
 $toc = $index['toc'];
 
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+$mfs_lang = mfs_lang();
+if ( $mfs_lang === 'es' ) {
+    $bc_home = home_url('/es/'); $bc_blog = home_url('/es/blog/');
+} elseif ( $mfs_lang === 'de' ) {
+    $bc_home = home_url('/de/'); $bc_blog = home_url('/de/blog/');
+} else {
+    $bc_home = home_url(); $bc_blog = home_url('/blog/');
+}
 ?>
 
 <?= get_template_part('components/common/header'); ?>
@@ -56,8 +63,8 @@ $is_es = function_exists('pll_current_language') && pll_current_language() === '
             <div class="article-page__breadcrumbs-wrap">
                 <?= get_template_part('components/new-design/breadcrumbs', null, [
                     'breadcrumbs' => [
-                        1 => [ 'name' => mfs_t('Home', 'Inicio'), 'link' => $is_es ? home_url('/es/') : home_url() ],
-                        2 => [ 'name' => 'Blog', 'link' => $is_es ? home_url('/es/blog/') : home_url('/blog/') ]
+                        1 => [ 'name' => mfs_t('Home', 'Inicio'), 'link' => $bc_home ],
+                        2 => [ 'name' => 'Blog', 'link' => $bc_blog ]
                     ]
                 ]); ?>
             </div>

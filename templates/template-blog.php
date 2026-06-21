@@ -10,12 +10,12 @@
 
 <main class="main inner-page">
     <div class="container">
-        <?php $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es'; ?>
+        <?php $bc_lang = mfs_lang(); $bc_home = $bc_lang === 'es' ? home_url('/es/') : ( $bc_lang === 'de' ? home_url('/de/') : home_url() ); ?>
         <?= get_template_part('components/new-design/breadcrumbs', null, [
             'breadcrumbs' => [
                 1 => [
                     'name' => mfs_t('Home', 'Inicio'),
-                    'link' => $bc_is_es ? home_url('/es/') : home_url()
+                    'link' => $bc_home
                 ]
             ]
         ]); ?>

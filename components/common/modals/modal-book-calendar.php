@@ -46,9 +46,11 @@
 
                 <div class="bookcal__weekdays">
                     <?php
-                        $bookcal_wd = ( function_exists('pll_current_language') && pll_current_language() === 'es' )
+                        $bookcal_wd = mfs_is('es')
                             ? array('Lu','Ma','Mi','Ju','Vi','Sá','Do')
-                            : array('Mo','Tu','We','Th','Fr','Sa','Su');
+                            : ( mfs_is('de')
+                                ? array('Mo','Di','Mi','Do','Fr','Sa','So')
+                                : array('Mo','Tu','We','Th','Fr','Sa','Su') );
                         foreach ( $bookcal_wd as $bookcal_d ) { echo '<span>' . $bookcal_d . '</span>'; }
                     ?>
                 </div>

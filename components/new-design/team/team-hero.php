@@ -2,8 +2,8 @@
     <div class="container">
         <div class="team-hero__main js-reveal">
             <?php
-                $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-                $bc_home  = $bc_is_es ? home_url('/es/') : home_url('/');
+                $bc_lang = mfs_lang();
+                $bc_home = $bc_lang === 'es' ? home_url('/es/') : ( $bc_lang === 'de' ? home_url('/de/') : home_url('/') );
             ?>
             <ul class="single-team-hero__breadcrumbs">
                 <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio'); ?></a></li>

@@ -1,10 +1,33 @@
 <?php
 
-// Multilingual: return the Spanish string on Polylang /es/ pages, else the English string.
-// Used for hardcoded UI labels (buttons, etc.) across templates.
+// Current Polylang language slug, normalized to a string ('en'|'es'|'de'|…).
+// Falls back to 'en' when Polylang is inactive or reports no language.
+if ( ! function_exists('mfs_lang') ) {
+    function mfs_lang() {
+        $l = function_exists('pll_current_language') ? pll_current_language() : '';
+        return $l ? $l : 'en';
+    }
+}
+
+// Convenience predicate: mfs_is('de') === true on German pages.
+if ( ! function_exists('mfs_is') ) {
+    function mfs_is( $lang ) {
+        return mfs_lang() === $lang;
+    }
+}
+
+// Multilingual: return the localized string for the current Polylang language,
+// else the English string. Used for hardcoded UI labels (buttons, etc.) across
+// templates. Backward-compatible: existing two-arg mfs_t($en,$es) calls keep
+// working; $de is optional and falls back to English until a 3rd arg is supplied.
+// NOTE: positional — keep $de optional with EN fallback, do not reorder params.
 if ( ! function_exists('mfs_t') ) {
-    function mfs_t( $en, $es ) {
-        return ( function_exists('pll_current_language') && pll_current_language() === 'es' ) ? $es : $en;
+    function mfs_t( $en, $es = null, $de = null ) {
+        switch ( mfs_lang() ) {
+            case 'es': return $es !== null ? $es : $en;
+            case 'de': return $de !== null ? $de : $en;
+            default:   return $en;
+        }
     }
 }
 
@@ -14,7 +37,7 @@ if ( ! function_exists('mfs_t') ) {
 if ( ! function_exists('mfs_eyebrow') ) {
     function mfs_eyebrow( $value, $default_en = '' ) {
         $v = ( $value !== '' && $value !== null ) ? $value : $default_en;
-        if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
+        if ( mfs_is('es') ) {
             $map = array(
                 'Production Process'  => 'Proceso de producción',
                 'Visual Results'      => 'Resultados visuales',
@@ -24,6 +47,19 @@ if ( ! function_exists('mfs_eyebrow') ) {
                 'Key Visuals'         => 'Visuales clave',
                 'Services Provided'   => 'Servicios prestados',
                 'Our Process'         => 'Nuestro proceso',
+            );
+            return isset( $map[$v] ) ? $map[$v] : $v;
+        }
+        if ( mfs_is('de') ) {
+            $map = array(
+                'Production Process'   => 'Produktionsprozess',
+                'Visual Results'       => 'Visuelle Ergebnisse',
+                'Why Choose Us'        => 'Warum wir',
+                'What we do'           => 'Was wir tun',
+                'Performance at scale' => 'Leistung im großen Maßstab',
+                'Key Visuals'          => 'Zentrale Visuals',
+                'Services Provided'    => 'Unsere Leistungen',
+                'Our Process'          => 'Unser Prozess',
             );
             return isset( $map[$v] ) ? $map[$v] : $v;
         }
@@ -37,12 +73,17 @@ if ( ! function_exists('mfs_eyebrow') ) {
 // so we swap the known English prefix to Spanish on output (EN untouched).
 if ( ! function_exists('mfs_consent') ) {
     function mfs_consent( $html ) {
-        if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
-            $en = 'By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our';
-            $es = 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra';
+        $en = 'By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our';
+        $target = null;
+        if ( mfs_is('es') ) {
+            $target = 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra';
+        } elseif ( mfs_is('de') ) {
+            $target = 'Mit dem Klick erklärst du dich einverstanden, Mitteilungen von Maverick Frame Studio gemäß unserer';
+        }
+        if ( $target !== null ) {
             // Match flexibly: the stored text uses non-breaking spaces (U+00A0) in places.
             $pattern = '/' . str_replace( ' ', '[\s\x{00A0}]+', preg_quote( $en, '/' ) ) . '/u';
-            return preg_replace( $pattern, $es, $html );
+            return preg_replace( $pattern, $target, $html );
         }
         return $html;
     }
@@ -52,9 +93,9 @@ if ( ! function_exists('mfs_consent') ) {
 // can localize them. Read in src/js via window.MFS_I18N (falls back to English).
 add_action( 'wp_head', function () {
     $i18n = array(
-        'exploreService' => mfs_t( 'Explore service', 'Ver servicio' ),
-        'bookACall'      => mfs_t( 'Book a call', 'Reservar una llamada' ),
-        'nextReview'     => mfs_t( 'Next review', 'Siguiente reseña' ),
+        'exploreService' => mfs_t( 'Explore service', 'Ver servicio', 'Leistung ansehen' ),
+        'bookACall'      => mfs_t( 'Book a call', 'Reservar una llamada', 'Beratung buchen' ),
+        'nextReview'     => mfs_t( 'Next review', 'Siguiente reseña', 'Nächste Bewertung' ),
     );
     echo '<script>window.MFS_I18N=' . wp_json_encode( $i18n ) . ';</script>' . "\n";
 }, 1 );
@@ -813,11 +854,11 @@ add_action('wp_enqueue_scripts', function () {
         );
 
         // In-article CTAs: per-post override → global (Site Options) → JS baked default.
-        // On /es/ skip the English global-options CTAs so the JS uses its localized
-        // baked defaults (until a Spanish per-post override is provided).
-        $mfs_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+        // On non-English pages (/es/, /de/) skip the English global-options CTAs so the
+        // JS uses its localized baked defaults (until a per-post override is provided).
+        $mfs_is_en = ( mfs_lang() === 'en' );
         $inCtas = get_field('in_article_ctas');
-        if (empty($inCtas) && !$mfs_is_es) {
+        if (empty($inCtas) && $mfs_is_en) {
             $inCtas = get_field('in_article_ctas', 'options');
         }
         $payload = array();
