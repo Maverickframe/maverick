@@ -20,11 +20,23 @@ $t = function ($en, $es = null, $de = null) {
         <div class="footer__top">
             <?php if ( ! is_front_page() ) : // Home uses the Free Test Render section as its closing CTA instead. ?>
             <div class="footer__cta js-reveal">
-                <h2><?php echo $args['footer_title'] ?? $opt('footer_title'); ?></h2>
-                <p><?php echo $args['footer_description'] ?? $opt('footer_description'); ?></p>
+                <h2><?php
+                    $mfs_ftitle = $args['footer_title'] ?? $opt('footer_title');
+                    if ( $mfs_footer_lang === 'de' && ! get_field('footer_title_de', 'options') ) {
+                        $mfs_ftitle = mfs_t('Let\'s create visuals that sell', null, 'Lassen Sie uns Visuals schaffen, die verkaufen');
+                    }
+                    echo $mfs_ftitle;
+                ?></h2>
+                <p><?php
+                    $mfs_fdesc = $args['footer_description'] ?? $opt('footer_description');
+                    if ( $mfs_footer_lang === 'de' && ! get_field('footer_description_de', 'options') ) {
+                        $mfs_fdesc = mfs_t('Book a call with our manager today to discuss the details of your 3D visualization project and start working with our professional studio at the earliest opportunity', null, 'Vereinbaren Sie noch heute ein Gespräch mit unserem Manager, um die Details Ihres 3D-Visualisierungsprojekts zu besprechen und zeitnah mit unserem professionellen Studio zu starten.');
+                    }
+                    echo $mfs_fdesc;
+                ?></p>
 
                 <button class="btn-main js-modal-open" data-modal="book" type="button">
-                    <?php echo $t('Book a call', 'Reservar una llamada'); ?>
+                    <?php echo $t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
                 </button>
             </div>
             <?php endif; ?>
@@ -90,7 +102,7 @@ $t = function ($en, $es = null, $de = null) {
         <div class="footer__contacts">
             <div class="footer__contacts-info">
                 <p class="footer__subtitle">
-                    <?php echo $t('Contact us', 'Contáctanos'); ?>
+                    <?php echo $t('Contact us', 'Contáctanos', 'Kontaktieren Sie uns'); ?>
                 </p>
 
                 <ul>
@@ -110,7 +122,7 @@ $t = function ($en, $es = null, $de = null) {
 
             <div class="footer__reviews">
                 <p class="footer__subtitle">
-                    <?php echo $t('Review Us', 'Déjanos tu reseña'); ?>
+                    <?php echo $t('Review Us', 'Déjanos tu reseña', 'Bewerten Sie uns'); ?>
                 </p>
 
                 <div class="footer__reviews-info">
@@ -129,10 +141,18 @@ $t = function ($en, $es = null, $de = null) {
         <div class="footer__bottom">
             <div class="footer__copy">
                 <?= inline_svg('icons/copy.svg'); ?>
-                <span><?php echo $t('MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED', 'MAVERICK FRAME STUDIO. TODOS LOS DERECHOS RESERVADOS'); ?></span>
+                <span><?php echo $t('MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED', 'MAVERICK FRAME STUDIO. TODOS LOS DERECHOS RESERVADOS', 'MAVERICK FRAME STUDIO. ALLE RECHTE VORBEHALTEN'); ?></span>
             </div>
 
             <ul class="footer__bottom-links">
+                <?php if ( $mfs_footer_lang === 'de' ) : // German legal footer: Impressum + Datenschutzerklärung (DE legal pages). ?>
+                <li>
+                    <a href="<?= get_permalink(20456) ?>">Impressum</a>
+                </li>
+                <li>
+                    <a href="<?= get_permalink(20457) ?>">Datenschutzerklärung</a>
+                </li>
+                <?php else : ?>
                 <li>
                     <a href="<?php the_field('service_agreement_file', 'options'); ?>" target="_blank"><?php echo $t('Service Agreement', 'Contrato de servicio'); ?></a>
                 </li>
@@ -142,6 +162,7 @@ $t = function ($en, $es = null, $de = null) {
                 <li>
                     <a href="<?= get_permalink(6397) ?>" target="_blank"><?php echo $t('Privacy Policy', 'Política de privacidad'); ?></a>
                 </li>
+                <?php endif; ?>
             </ul>
 
             <?php
