@@ -8,7 +8,7 @@
                 </p>
 
                 <a href="<?php echo home_url( '/gallery/' ); ?>" class="btn portfolio-service-section__link">
-                    <?php echo mfs_t('Show more', 'Ver más'); ?>
+                    <?php echo mfs_t('Show more', 'Ver más', 'Mehr anzeigen'); ?>
                 </a>
             </div>
             

@@ -1,10 +1,18 @@
 
 <?php
+    // Keys (award/nominee/featured/member) are filter logic — never translate them.
+    // Plural labels drive the filter tabs; singular labels drive the per-card badge.
     $type_labels = array(
-        'award'    => 'Awards',
-        'nominee'  => 'Nominations',
-        'featured' => 'Featured',
-        'member'   => 'Memberships',
+        'award'    => mfs_t('Awards', 'Premios', 'Auszeichnungen'),
+        'nominee'  => mfs_t('Nominations', 'Nominaciones', 'Nominierungen'),
+        'featured' => mfs_t('Featured', 'Destacados', 'Vorgestellt'),
+        'member'   => mfs_t('Memberships', 'Membresías', 'Mitgliedschaften'),
+    );
+    $badge_labels = array(
+        'award'    => mfs_t('Award', 'Premio', 'Auszeichnung'),
+        'nominee'  => mfs_t('Nominee', 'Nominado', 'Nominierung'),
+        'featured' => mfs_t('Featured', 'Destacado', 'Vorgestellt'),
+        'member'   => mfs_t('Membership', 'Membresía', 'Mitgliedschaft'),
     );
 
     $rows = array();
@@ -42,7 +50,7 @@
 
         <?php if ( $show_filter ): ?>
             <div class="team-awards__filter" role="tablist" aria-label="Filter recognitions by type">
-                <button type="button" class="team-awards__tab is-active" data-filter="all" aria-selected="true">All</button>
+                <button type="button" class="team-awards__tab is-active" data-filter="all" aria-selected="true"><?php echo esc_html( mfs_t('All', 'Todos', 'Alle') ); ?></button>
                 <?php foreach ( $tabs as $key => $label ): ?>
                     <button type="button" class="team-awards__tab" data-filter="<?php echo esc_attr($key); ?>" aria-selected="false"><?php echo esc_html($label); ?></button>
                 <?php endforeach; ?>
@@ -52,9 +60,7 @@
         <div class="team-awards__items">
             <?php foreach ( $rows as $r ):
                 $type = $r['type'];
-                $badge = $type_labels[$type];
-                $badge = rtrim($badge, 's');
-                if ( $type === 'nominee' ) { $badge = 'Nominee'; }
+                $badge = $badge_labels[$type];
             ?>
                 <div class="team-award js-reveal team-award--<?php echo esc_attr($type); ?>" data-type="<?php echo esc_attr($type); ?>">
                     <div class="team-award__top">

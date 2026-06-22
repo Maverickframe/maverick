@@ -1,7 +1,7 @@
 <div class="container">
     <section class="services-provided js-reveal">
         <div class="services-provided__info">
-            <p class="section-subtitle white"><?php echo mfs_t('Services Provided', 'Servicios prestados'); ?></p>
+            <p class="section-subtitle white"><?php echo mfs_t('Services Provided', 'Servicios prestados', 'Unsere Leistungen'); ?></p>
             <h2><?php the_field('title'); ?></h2>
 
             <?php if(get_field('description')): ?>

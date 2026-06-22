@@ -10,15 +10,15 @@
  * select options stay in code (tied to the CRM/form handler).
  */
 
-$ftr_eyebrow      = get_field('ftr_eyebrow')      ?: 'Free Test Render';
-$ftr_heading      = get_field('ftr_heading')      ?: 'Start With a Free Test Render';
-$ftr_intro        = get_field('ftr_intro')        ?: 'We prove our quality on your own project before you commit. Once we’ve scoped the work and agreed on terms, we deliver a free test render — so you see exactly how it looks in our hands, with zero risk.';
-$ftr_hiw_label    = get_field('ftr_hiw_label')    ?: 'How it works';
-$ftr_cond_label   = get_field('ftr_cond_label')   ?: 'Conditions';
-$ftr_form_title   = get_field('ftr_form_title')   ?: 'Request your free test render';
-$ftr_submit_label = get_field('ftr_submit_label') ?: 'Request my free test render';
-$ftr_success_ttl  = get_field('ftr_success_title')?: 'Thank you – your request has been received.';
-$ftr_success_txt  = get_field('ftr_success_text') ?: 'Our team will review your project and get back to you shortly to arrange your free test render.';
+$ftr_eyebrow      = get_field('ftr_eyebrow')      ?: mfs_t('Free Test Render', 'Render de prueba gratis', 'Kostenloser Testrender');
+$ftr_heading      = get_field('ftr_heading')      ?: mfs_t('Start With a Free Test Render', 'Empieza con un render de prueba gratis', 'Starte mit einem kostenlosen Testrender');
+$ftr_intro        = get_field('ftr_intro')        ?: mfs_t('We prove our quality on your own project before you commit. Once we’ve scoped the work and agreed on terms, we deliver a free test render — so you see exactly how it looks in our hands, with zero risk.', 'Demostramos nuestra calidad en tu propio proyecto antes de que te comprometas. Una vez definido el alcance y acordadas las condiciones, entregamos un render de prueba gratuito — para que veas exactamente cómo queda en nuestras manos, sin ningún riesgo.', 'Wir beweisen unsere Qualität an deinem eigenen Projekt, bevor du dich festlegst. Sobald der Umfang geklärt und die Konditionen vereinbart sind, liefern wir einen kostenlosen Testrender — so siehst du genau, wie es in unseren Händen aussieht, ganz ohne Risiko.');
+$ftr_hiw_label    = get_field('ftr_hiw_label')    ?: mfs_t('How it works', 'Cómo funciona', 'So funktioniert’s');
+$ftr_cond_label   = get_field('ftr_cond_label')   ?: mfs_t('Conditions', 'Condiciones', 'Bedingungen');
+$ftr_form_title   = get_field('ftr_form_title')   ?: mfs_t('Request your free test render', 'Solicita tu render de prueba gratis', 'Fordere deinen kostenlosen Testrender an');
+$ftr_submit_label = get_field('ftr_submit_label') ?: mfs_t('Request my free test render', 'Solicitar mi render de prueba gratis', 'Meinen kostenlosen Testrender anfordern');
+$ftr_success_ttl  = get_field('ftr_success_title')?: mfs_t('Thank you – your request has been received.', 'Gracias – hemos recibido tu solicitud.', 'Danke – deine Anfrage ist eingegangen.');
+$ftr_success_txt  = get_field('ftr_success_text') ?: mfs_t('Our team will review your project and get back to you shortly to arrange your free test render.', 'Nuestro equipo revisará tu proyecto y te responderá en breve para organizar tu render de prueba gratuito.', 'Unser Team prüft dein Projekt und meldet sich in Kürze bei dir, um deinen kostenlosen Testrender abzustimmen.');
 
 // Offer variant — styling hook + lead-attribution preset (does NOT swap copy; copy lives in the fields above).
 $ftr_variant = get_field('offer_variant') ?: 'render';
@@ -38,16 +38,16 @@ if ( ! $ftr_lead_tag ) {
 }
 
 $ftr_hiw_default = [
-    'Tell us about your project and book a short call.',
-    'We scope the work and agree on the price.',
-    'We deliver a free test render within 5 business days.',
+    mfs_t('Tell us about your project and book a short call.', 'Cuéntanos sobre tu proyecto y reserva una llamada corta.', 'Erzähl uns von deinem Projekt und buche ein kurzes Gespräch.'),
+    mfs_t('We scope the work and agree on the price.', 'Definimos el alcance y acordamos el precio.', 'Wir klären den Umfang und vereinbaren den Preis.'),
+    mfs_t('We deliver a free test render within 5 business days.', 'Entregamos un render de prueba gratuito en un plazo de 5 días hábiles.', 'Wir liefern einen kostenlosen Testrender innerhalb von 5 Werktagen.'),
 ];
 $ftr_cond_default = [
-    'Available for projects from $3,000.',
-    'One test render — our team selects the most representative angle.',
-    'Delivered within 5 business days; revisions aren’t included.',
-    'For clients with an active project, ready to discuss it on a call.',
-    'A quality guarantee for your own project — not a free sample to resell.',
+    mfs_t('Available for projects from $3,000.', 'Disponible para proyectos a partir de 3.000 €.', 'Verfügbar für Projekte ab 3.000 €.'),
+    mfs_t('One test render — our team selects the most representative angle.', 'Un render de prueba — nuestro equipo elige el ángulo más representativo.', 'Ein Testrender — unser Team wählt die aussagekräftigste Ansicht.'),
+    mfs_t('Delivered within 5 business days; revisions aren’t included.', 'Entregado en 5 días hábiles; las revisiones no están incluidas.', 'Lieferung innerhalb von 5 Werktagen; Korrekturen sind nicht enthalten.'),
+    mfs_t('For clients with an active project, ready to discuss it on a call.', 'Para clientes con un proyecto activo, listos para hablarlo en una llamada.', 'Für Kunden mit einem aktiven Projekt, die bereit sind, es in einem Gespräch zu besprechen.'),
+    mfs_t('A quality guarantee for your own project — not a free sample to resell.', 'Una garantía de calidad para tu propio proyecto — no una muestra gratuita para revender.', 'Eine Qualitätsgarantie für dein eigenes Projekt — kein kostenloses Muster zum Weiterverkauf.'),
 ];
 ?>
 
@@ -93,30 +93,30 @@ $ftr_cond_default = [
         <div class="js-contacts-form-container cta-form-section__form">
             <h3 class="cta-form-section__form-title"><?php echo esc_html($ftr_form_title); ?></h3>
 
-            <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form">
+            <form action="" method="POST" class="js-contacts-form cta-form free-test-render__form" data-ga-event="lead_form" data-ga-form="freetest" data-ga-type="free_test">
                 <input type="hidden" name="tag" value="SEO, Free Test Render">
                 <input type="hidden" name="title" value="<?php echo esc_attr($ftr_lead_tag); ?>">
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">Full Name</span>
-                    <input type="text" name="Name" placeholder="Full name *" required>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Full Name', 'Nombre completo', 'Vollständiger Name') ); ?></span>
+                    <input type="text" name="Name" placeholder="<?php echo esc_attr( mfs_t('Full name *', 'Nombre completo *', 'Vollständiger Name *') ); ?>" required>
                 </label>
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">Work Email</span>
-                    <input type="email" name="Email" placeholder="Work email *" required>
-                    <span class="cta-form__error">It is not email</span>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Work Email', 'Correo de trabajo', 'Geschäftliche E-Mail') ); ?></span>
+                    <input type="email" name="Email" placeholder="<?php echo esc_attr( mfs_t('Work email *', 'Correo de trabajo *', 'Geschäftliche E-Mail *') ); ?>" required>
+                    <span class="cta-form__error"><?php echo esc_html( mfs_t('It is not email', 'El correo no es válido', 'Keine gültige E-Mail-Adresse') ); ?></span>
                 </label>
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">Company or website</span>
-                    <input type="text" name="Company" placeholder="Company or website *" required>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Company or website', 'Empresa o sitio web', 'Unternehmen oder Website') ); ?></span>
+                    <input type="text" name="Company" placeholder="<?php echo esc_attr( mfs_t('Company or website *', 'Empresa o sitio web *', 'Unternehmen oder Website *') ); ?>" required>
                 </label>
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">I am a</span>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('I am a', 'Soy', 'Ich bin') ); ?></span>
                     <select name="Role">
-                        <option value="" disabled selected>I am a&hellip;</option>
+                        <option value="" disabled selected><?php echo esc_html( mfs_t('I am a…', 'Soy…', 'Ich bin…') ); ?></option>
                         <option>Architect / design studio</option>
                         <option>Real estate developer</option>
                         <option>Product or e-commerce brand</option>
@@ -126,9 +126,9 @@ $ftr_cond_default = [
                 </label>
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">Project type</span>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Project type', 'Tipo de proyecto', 'Projektart') ); ?></span>
                     <select name="Project type">
-                        <option value="" disabled selected>Project type</option>
+                        <option value="" disabled selected><?php echo esc_html( mfs_t('Project type', 'Tipo de proyecto', 'Projektart') ); ?></option>
                         <option>Exterior</option>
                         <option>Interior</option>
                         <option>Product</option>
@@ -139,9 +139,9 @@ $ftr_cond_default = [
                 </label>
 
                 <label class="cta-form__input">
-                    <span class="cta-form__label sr-only">Estimated budget</span>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Estimated budget', 'Presupuesto estimado', 'Geschätztes Budget') ); ?></span>
                     <select name="Budget" required>
-                        <option value="" disabled selected>Estimated budget *</option>
+                        <option value="" disabled selected><?php echo esc_html( mfs_t('Estimated budget *', 'Presupuesto estimado *', 'Geschätztes Budget *') ); ?></option>
                         <option>Under $3,000</option>
                         <option>$3,000 &ndash; $10,000</option>
                         <option>$10,000+</option>
@@ -149,20 +149,26 @@ $ftr_cond_default = [
                 </label>
 
                 <label class="cta-form__input free-test-render__full">
-                    <span class="cta-form__label sr-only">Link to files or references</span>
-                    <input type="url" name="Files link" placeholder="Link to files or references (optional)">
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Link to files or references', 'Enlace a archivos o referencias', 'Link zu Dateien oder Referenzen') ); ?></span>
+                    <input type="url" name="Files link" placeholder="<?php echo esc_attr( mfs_t('Link to files or references (optional)', 'Enlace a archivos o referencias (opcional)', 'Link zu Dateien oder Referenzen (optional)') ); ?>">
                 </label>
 
                 <label class="cta-form__input free-test-render__full">
-                    <span class="cta-form__label sr-only">Tell us about your project</span>
-                    <textarea name="Message" placeholder="Tell us about your project *" rows="2" required></textarea>
+                    <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Tell us about your project', 'Cuéntanos sobre tu proyecto', 'Erzähl uns von deinem Projekt') ); ?></span>
+                    <textarea name="Message" placeholder="<?php echo esc_attr( mfs_t('Tell us about your project *', 'Cuéntanos sobre tu proyecto *', 'Erzähl uns von deinem Projekt *') ); ?>" rows="2" required></textarea>
                 </label>
 
                 <button class="btn-main fill" type="submit"><?php echo esc_html($ftr_submit_label); ?></button>
             </form>
 
             <div class="cta-form__privacy free-test-render__privacy">
-                By submitting, you agree to our <a href="<?php echo esc_url( function_exists('get_privacy_policy_url') && get_privacy_policy_url() ? get_privacy_policy_url() : home_url('/privacy-policy/') ); ?>">Privacy Policy</a>.
+                <?php
+                $ftr_pp_url = ( function_exists('get_privacy_policy_url') && get_privacy_policy_url() ) ? get_privacy_policy_url() : home_url('/privacy-policy/');
+                printf(
+                    esc_html( mfs_t('By submitting, you agree to our %s.', 'Al enviar, aceptas nuestra %s.', 'Mit dem Absenden stimmst du unserer %s zu.') ),
+                    '<a href="' . esc_url( $ftr_pp_url ) . '">' . esc_html( mfs_t('Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung') ) . '</a>'
+                );
+                ?>
             </div>
 
             <div class="cta-form__success">

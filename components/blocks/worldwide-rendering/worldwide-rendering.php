@@ -11,7 +11,7 @@
             </div>
 
             <button class="btn-main js-modal-open" data-modal="book" type="button">
-                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
             </button>
         </div>
 

@@ -9,10 +9,10 @@ if ($readTimeMin < 1) $readTimeMin = 5;
 ?>
 <div class="reading-status" data-read-time="<?= (int) $readTimeMin; ?>">
     <span class="reading-status__time" data-reading-remaining>
-        <?= (int) $readTimeMin; ?><?= mfs_t(' min read', ' min de lectura'); ?>
+        <?= (int) $readTimeMin; ?><?= mfs_t(' min read', ' min de lectura', ' Min. Lesezeit'); ?>
     </span>
     <span class="reading-status__sep" aria-hidden="true">·</span>
     <span class="reading-status__section" data-reading-section>
-        <?= mfs_t('Start', 'Inicio'); ?>
+        <?= mfs_t('Start', 'Inicio', 'Start'); ?>
     </span>
 </div>

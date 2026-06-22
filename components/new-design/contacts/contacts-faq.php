@@ -3,7 +3,8 @@
  * Contacts FAQ (new design) — contact/working-process oriented Q&A, bilingual.
  * Uses the shared .faq markup so faq.scss styling applies.
  */
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+$is_es = mfs_is('es');
+$mfs_faq_lang = mfs_lang();
 
 $faqs = [
     [
@@ -47,13 +48,13 @@ $faqs = [
 <section class="faq">
     <div class="container container_small">
         <div class="faq__info">
-            <h2><?php echo mfs_t('Frequently asked questions', 'Preguntas frecuentes'); ?></h2>
+            <h2><?php echo mfs_t('Frequently asked questions', 'Preguntas frecuentes', 'Häufig gestellte Fragen'); ?></h2>
         </div>
 
         <div class="faq__items">
             <?php foreach ($faqs as $item):
-                $q = $is_es ? $item['q_es'] : $item['q_en'];
-                $a = $is_es ? $item['a_es'] : $item['a_en']; ?>
+                $q = $item['q_' . $mfs_faq_lang] ?? $item['q_en'];
+                $a = $item['a_' . $mfs_faq_lang] ?? $item['a_en']; ?>
                 <div class="faq-item">
                     <button class="faq-item__btn js-faq-btn" type="button">
                         <span><?php echo esc_html($q); ?></span>

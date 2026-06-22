@@ -1,7 +1,7 @@
 <div class="container">
     <section class="business-challenge js-reveal">
         <div class="business-challenge__info">
-            <p class="section-subtitle"><?php echo mfs_t('Business Challenge', 'Reto de negocio'); ?></p>
+            <p class="section-subtitle"><?php echo mfs_t('Business Challenge', 'Reto de negocio', 'Geschäftliche Herausforderung'); ?></p>
             <h2><?php the_field('title'); ?></h2>
             <div class="p1">
                 <?php the_field('description'); ?>

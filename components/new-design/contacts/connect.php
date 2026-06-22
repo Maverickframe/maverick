@@ -29,7 +29,7 @@ $ico_pin   = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 ?>
 <section class="connect">
     <div class="container container_small">
-        <h2 class="connect__title"><?php echo mfs_t('Connect with us', 'Conecta con nosotros'); ?></h2>
+        <h2 class="connect__title"><?php echo mfs_t('Connect with us', 'Conecta con nosotros', 'Mit uns vernetzen'); ?></h2>
 
         <div class="connect__items">
             <?php if ($c_phone): ?>
@@ -65,7 +65,7 @@ $ico_pin   = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
             <div class="connect__map">
                 <iframe
                     src="<?php echo esc_url($map_src); ?>"
-                    title="<?php echo esc_attr(mfs_t('Maverick Frame Studio location', 'Ubicación de Maverick Frame Studio')); ?>"
+                    title="<?php echo esc_attr(mfs_t('Maverick Frame Studio location', 'Ubicación de Maverick Frame Studio', 'Standort von Maverick Frame Studio')); ?>"
                     width="100%" height="100%" style="border:0;"
                     loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
@@ -77,7 +77,7 @@ $ico_pin   = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                 if (!$url) continue; ?>
                 <li>
                     <a href="<?php echo esc_url($url); ?>" rel="nofollow noopener" target="_blank"
-                        aria-label="<?php echo esc_attr(mfs_t('Open', 'Abrir') . ' ' . $label); ?>" class="connect__social-link">
+                        aria-label="<?php echo esc_attr(mfs_t('Open', 'Abrir', 'Öffnen') . ' ' . $label); ?>" class="connect__social-link">
                         <?php echo inline_svg('icons/' . $key . '.svg'); ?>
                     </a>
                 </li>

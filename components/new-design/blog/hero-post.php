@@ -1,5 +1,6 @@
 <?php
-$mfs_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+$mfs_lang  = mfs_lang();
+$mfs_is_es = ( $mfs_lang === 'es' );
 
 if ($mfs_is_es) {
     $mfs_meses = ['1' => 'enero', '2' => 'febrero', '3' => 'marzo', '4' => 'abril', '5' => 'mayo', '6' => 'junio', '7' => 'julio', '8' => 'agosto', '9' => 'septiembre', '10' => 'octubre', '11' => 'noviembre', '12' => 'diciembre'];
@@ -8,6 +9,16 @@ if ($mfs_is_es) {
     if (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) {
         $mfs_ts_mod = get_post_modified_time('U');
         $updated = (int) wp_date('j', $mfs_ts_mod) . ' de ' . $mfs_meses[(string) (int) wp_date('n', $mfs_ts_mod)] . ' de ' . wp_date('Y', $mfs_ts_mod);
+    } else {
+        $updated = '';
+    }
+} elseif ($mfs_lang === 'de') {
+    $mfs_monate = ['1' => 'Januar', '2' => 'Februar', '3' => 'März', '4' => 'April', '5' => 'Mai', '6' => 'Juni', '7' => 'Juli', '8' => 'August', '9' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Dezember'];
+    $mfs_ts_pub = get_post_timestamp();
+    $date = (int) wp_date('j', $mfs_ts_pub) . '. ' . $mfs_monate[(string) (int) wp_date('n', $mfs_ts_pub)] . ' ' . wp_date('Y', $mfs_ts_pub);
+    if (get_the_modified_date('Y-m-d') > get_the_date('Y-m-d')) {
+        $mfs_ts_mod = get_post_modified_time('U');
+        $updated = (int) wp_date('j', $mfs_ts_mod) . '. ' . $mfs_monate[(string) (int) wp_date('n', $mfs_ts_mod)] . ' ' . wp_date('Y', $mfs_ts_mod);
     } else {
         $updated = '';
     }
@@ -59,18 +70,18 @@ if (get_field('video')) {
         <div class="hero-block__main">
             <div class="hero-block__metabox metabox js-reveal js-reveal-init" data-anim="up">
                 <span class="metabox__item metabox__item--text">
-                    <?= mfs_t('Published:', 'Publicado:'); ?> <?= $date; ?>
+                    <?= mfs_t('Published:', 'Publicado:', 'Veröffentlicht:'); ?> <?= $date; ?>
                 </span>
                 <?php if ($updated): ?>
                     <div class="dot"></div>
                     <span class="metabox__item metabox__item--text">
-                        <?= mfs_t('Updated:', 'Actualizado:'); ?> <?= $updated; ?>
+                        <?= mfs_t('Updated:', 'Actualizado:', 'Aktualisiert:'); ?> <?= $updated; ?>
                     </span>
                 <?php endif; ?>
                 <?php if ($readTime): ?>
                     <div class="dot"></div>
                     <span class="metabox__item metabox__item--text">
-                        <?= $readTime; ?><?= mfs_t(' read', ' de lectura'); ?>
+                        <?= $readTime; ?><?= mfs_t(' read', ' de lectura', ' Lesezeit'); ?>
                     </span>
                 <?php endif; ?>
                 <?php if ($categories): ?>

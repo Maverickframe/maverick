@@ -116,7 +116,7 @@
                 </div>
 
                 <?php if($i > $showNum): ?>
-                    <button class="btn-secondary-black visual-results__btn js-show-more-visuals-btn" type="button"><?php echo mfs_t('Show More', 'Ver más'); ?></button>
+                    <button class="btn-secondary-black visual-results__btn js-show-more-visuals-btn" type="button"><?php echo mfs_t('Show More', 'Ver más', 'Mehr anzeigen'); ?></button>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

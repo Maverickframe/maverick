@@ -13,7 +13,7 @@
         <?php if(get_field('price_quiz')): ?>
             <a href="<?php the_Field('price_quiz'); ?>" class="btn service-page-btn">Calculate your estimate</a>
         <?php else: ?>
-            <form action="" method="POST" class="js-contacts-form contacts-form" data-link="<?php the_field('price_file'); ?>">
+            <form action="" method="POST" class="js-contacts-form contacts-form" data-link="<?php the_field('price_file'); ?>" data-ga-event="<?php echo get_field('price_file') ? 'download_catalog' : 'lead_form'; ?>" data-ga-form="<?php echo get_field('price_file') ? 'pricelist' : 'service_quote'; ?>" data-ga-type="service">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / <?php the_field('price_title'); ?>">
 
                 <label class="contacts-form__input">

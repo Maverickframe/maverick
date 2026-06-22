@@ -1,18 +1,18 @@
 <?php
-// Multilingual helpers: on /es/ prefer the `_es` variant of an ACF Options field (fallback to base),
-// and translate hardcoded UI strings inline.
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-$opt = function ($name) use ($is_es) {
-    if ( $is_es ) {
-        $es = get_field($name . '_es', 'options');
-        if ( $es !== '' && $es !== null && $es !== false ) {
-            return $es;
+// Multilingual helpers: on non-English pages prefer the language variant of an ACF
+// Options field (`_es` / `_de`, fallback to base), and translate hardcoded UI strings inline.
+$mfs_footer_lang = mfs_lang();
+$opt = function ($name) use ($mfs_footer_lang) {
+    if ( $mfs_footer_lang !== 'en' ) {
+        $v = get_field($name . '_' . $mfs_footer_lang, 'options');
+        if ( $v !== '' && $v !== null && $v !== false ) {
+            return $v;
         }
     }
     return get_field($name, 'options');
 };
-$t = function ($en, $es) use ($is_es) {
-    return $is_es ? $es : $en;
+$t = function ($en, $es = null, $de = null) {
+    return mfs_t($en, $es, $de);
 };
 ?>
 <footer class="footer">
@@ -20,11 +20,23 @@ $t = function ($en, $es) use ($is_es) {
         <div class="footer__top">
             <?php if ( ! is_front_page() ) : // Home uses the Free Test Render section as its closing CTA instead. ?>
             <div class="footer__cta js-reveal">
-                <h2><?php echo $args['footer_title'] ?? $opt('footer_title'); ?></h2>
-                <p><?php echo $args['footer_description'] ?? $opt('footer_description'); ?></p>
+                <h2><?php
+                    $mfs_ftitle = $args['footer_title'] ?? $opt('footer_title');
+                    if ( $mfs_footer_lang === 'de' && ! get_field('footer_title_de', 'options') ) {
+                        $mfs_ftitle = mfs_t('Let\'s create visuals that sell', null, 'Lassen Sie uns Visuals schaffen, die verkaufen');
+                    }
+                    echo $mfs_ftitle;
+                ?></h2>
+                <p><?php
+                    $mfs_fdesc = $args['footer_description'] ?? $opt('footer_description');
+                    if ( $mfs_footer_lang === 'de' && ! get_field('footer_description_de', 'options') ) {
+                        $mfs_fdesc = mfs_t('Book a call with our manager today to discuss the details of your 3D visualization project and start working with our professional studio at the earliest opportunity', null, 'Vereinbaren Sie noch heute ein Gespräch mit unserem Manager, um die Details Ihres 3D-Visualisierungsprojekts zu besprechen und zeitnah mit unserem professionellen Studio zu starten.');
+                    }
+                    echo $mfs_fdesc;
+                ?></p>
 
                 <button class="btn-main js-modal-open" data-modal="book" type="button">
-                    <?php echo $t('Book a call', 'Reservar una llamada'); ?>
+                    <?php echo $t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
                 </button>
             </div>
             <?php endif; ?>
@@ -33,6 +45,28 @@ $t = function ($en, $es) use ($is_es) {
         <div class="footer__links js-footer-acc">
             <?php
             $footer_menu = $opt('footer_menu');
+            // Small real German footer until footer_menu_de (ACF) is filled in: one
+            // "Leistungen" column linking the published /de/ service pages only, so
+            // every footer target stays on German (no EN-page leakage). Grows as /de/
+            // grows. Mirrors the live German header menu (menu_items_de).
+            if ( $mfs_footer_lang === 'de' && ! get_field('footer_menu_de', 'options') ) {
+                $footer_menu = array(
+                    array(
+                        'title'  => 'Leistungen',
+                        'groups' => array(
+                            array(
+                                'title' => '',
+                                'link'  => 0,
+                                'links' => array(
+                                    array( 'title' => 'Immobilien-Visualisierung', 'link' => 20454 ),
+                                    array( 'title' => 'Innenraumvisualisierung',  'link' => 20448 ),
+                                    array( 'title' => 'Architekturvisualisierung', 'link' => 20450 ),
+                                ),
+                            ),
+                        ),
+                    ),
+                );
+            }
             if ($footer_menu):
                 foreach ($footer_menu as $footer_menu_item):
                     $footer_title = $footer_menu_item['title'] ?? '';
@@ -90,7 +124,7 @@ $t = function ($en, $es) use ($is_es) {
         <div class="footer__contacts">
             <div class="footer__contacts-info">
                 <p class="footer__subtitle">
-                    <?php echo $t('Contact us', 'Contáctanos'); ?>
+                    <?php echo $t('Contact us', 'Contáctanos', 'Kontaktieren Sie uns'); ?>
                 </p>
 
                 <ul>
@@ -110,7 +144,7 @@ $t = function ($en, $es) use ($is_es) {
 
             <div class="footer__reviews">
                 <p class="footer__subtitle">
-                    <?php echo $t('Review Us', 'Déjanos tu reseña'); ?>
+                    <?php echo $t('Review Us', 'Déjanos tu reseña', 'Bewerten Sie uns'); ?>
                 </p>
 
                 <div class="footer__reviews-info">
@@ -129,10 +163,18 @@ $t = function ($en, $es) use ($is_es) {
         <div class="footer__bottom">
             <div class="footer__copy">
                 <?= inline_svg('icons/copy.svg'); ?>
-                <span><?php echo $t('MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED', 'MAVERICK FRAME STUDIO. TODOS LOS DERECHOS RESERVADOS'); ?></span>
+                <span><?php echo $t('MAVERICK FRAME STUDIO. ALL RIGHTS RESERVED', 'MAVERICK FRAME STUDIO. TODOS LOS DERECHOS RESERVADOS', 'MAVERICK FRAME STUDIO. ALLE RECHTE VORBEHALTEN'); ?></span>
             </div>
 
             <ul class="footer__bottom-links">
+                <?php if ( $mfs_footer_lang === 'de' ) : // German legal footer: Impressum + Datenschutzerklärung (DE legal pages). ?>
+                <li>
+                    <a href="<?= get_permalink(20456) ?>">Impressum</a>
+                </li>
+                <li>
+                    <a href="<?= get_permalink(20457) ?>">Datenschutzerklärung</a>
+                </li>
+                <?php else : ?>
                 <li>
                     <a href="<?php the_field('service_agreement_file', 'options'); ?>" target="_blank"><?php echo $t('Service Agreement', 'Contrato de servicio'); ?></a>
                 </li>
@@ -142,6 +184,7 @@ $t = function ($en, $es) use ($is_es) {
                 <li>
                     <a href="<?= get_permalink(6397) ?>" target="_blank"><?php echo $t('Privacy Policy', 'Política de privacidad'); ?></a>
                 </li>
+                <?php endif; ?>
             </ul>
 
             <?php
@@ -151,14 +194,19 @@ $t = function ($en, $es) use ($is_es) {
                 $pll_langs = pll_the_languages( array( 'raw' => 1, 'hide_if_no_translation' => 0 ) );
                 if ( ! empty($pll_langs) ) :
                     $lang_meta = array(
-                        'en' => array( 'region' => 'Worldwide', 'flag' => 'globe' ),
-                        'es' => array( 'region' => 'España',    'flag' => 'es' ),
+                        'en' => array( 'region' => 'Worldwide',   'flag' => 'globe' ),
+                        'es' => array( 'region' => 'España',      'flag' => 'es' ),
+                        'de' => array( 'region' => 'Deutschland', 'flag' => 'de' ),
                     );
                     $globe_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>';
                     $es_flag_svg = '<svg viewBox="0 0 30 20" preserveAspectRatio="none" aria-hidden="true"><rect width="30" height="20" fill="#c60b1e"/><rect y="5" width="30" height="10" fill="#ffc400"/><g transform="translate(9,10)"><rect x="-4.4" y="-2.6" width="0.95" height="6.2" fill="#9a7b13"/><rect x="3.45" y="-2.6" width="0.95" height="6.2" fill="#9a7b13"/><path d="M-3,-3 h6 v2.6 a3,4 0 0 1 -3,4 a3,4 0 0 1 -3,-4 z" fill="#ad1519" stroke="#9a7b13" stroke-width="0.4"/><path d="M-3,-1 h6" stroke="#ffc400" stroke-width="0.5"/><rect x="-2.4" y="-4.4" width="4.8" height="1.4" rx="0.3" fill="#c8961e"/></g></svg>';
-                    $render_flag = function( $flag ) use ( $globe_svg, $es_flag_svg ) {
+                    $de_flag_svg = '<svg viewBox="0 0 30 20" preserveAspectRatio="none" aria-hidden="true"><rect width="30" height="6.667" y="0" fill="#000000"/><rect width="30" height="6.667" y="6.667" fill="#dd0000"/><rect width="30" height="6.666" y="13.333" fill="#ffce00"/></svg>';
+                    $render_flag = function( $flag ) use ( $globe_svg, $es_flag_svg, $de_flag_svg ) {
                         if ( $flag === 'es' ) {
                             return '<span class="footer-lang__flag footer-lang__flag--es">' . $es_flag_svg . '</span>';
+                        }
+                        if ( $flag === 'de' ) {
+                            return '<span class="footer-lang__flag footer-lang__flag--de">' . $de_flag_svg . '</span>';
                         }
                         return '<span class="footer-lang__flag footer-lang__flag--globe">' . $globe_svg . '</span>';
                     };

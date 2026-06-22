@@ -43,13 +43,18 @@
     <div class="container">
         <div class="hero-block__main">
             <?php // todo: common
-                $bc_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-                $bc_home  = $bc_is_es ? home_url('/es/') : home_url('/');
-                $bc_ss    = $bc_is_es ? home_url('/es/casos-de-exito/') : home_url('/success-stories/');
+                $bc_lang = mfs_lang();
+                if ( $bc_lang === 'es' ) {
+                    $bc_home = home_url('/es/'); $bc_ss = home_url('/es/casos-de-exito/');
+                } elseif ( $bc_lang === 'de' ) {
+                    $bc_home = home_url('/de/'); $bc_ss = home_url('/de/referenzen/');
+                } else {
+                    $bc_home = home_url('/'); $bc_ss = home_url('/success-stories/');
+                }
             ?>
             <ul class="hero-block__breadcrumbs">
-                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio'); ?></a></li>
-                <li><a href="<?php echo esc_url($bc_ss); ?>"><?php echo mfs_t('Success stories', 'Casos de éxito'); ?></a></li>
+                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio', 'Startseite'); ?></a></li>
+                <li><a href="<?php echo esc_url($bc_ss); ?>"><?php echo mfs_t('Success stories', 'Casos de éxito', 'Referenzen'); ?></a></li>
                 <li><span><?php the_title(); ?></span></li>
             </ul>
 
@@ -57,7 +62,7 @@
             <p class="hero-block__desc"><?php the_field('description'); ?></p>
 
             <button class="btn-main fill hero-block__cta js-modal-open" data-modal="book" type="button">
-                <?php echo mfs_t('Book a call', 'Reservar una llamada'); ?>
+                <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>
             </button>
 
             <?php if (have_rows('tags')): ?>

@@ -12,7 +12,7 @@
         <?php if(get_field('worldwide_btn_title')): ?>
             <?php the_field('worldwide_btn_title'); ?>
         <?php else: ?>
-            <?php echo mfs_t('Get started', 'Empezar'); ?>
+            <?php echo mfs_t('Get started', 'Empezar', 'Loslegen'); ?>
         <?php endif; ?>
     </button>
 </section>

@@ -78,7 +78,7 @@
 
                                     <?php if ( $case_url ) : ?>
                                         <a href="<?php echo esc_url($case_url); ?>" class="cases-accordion-item__link btn-main fill" target="_blank">
-                                            <?php echo mfs_t('Read the story', 'Ver el caso'); ?>
+                                            <?php echo mfs_t('Read the story', 'Ver el caso', 'Zur Fallstudie'); ?>
                                         </a>
                                     <?php endif; ?>
                                 </div>

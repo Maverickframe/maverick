@@ -1,10 +1,12 @@
 <?php
-// On /es/ pages prefer the `_es` variant of each catalog field, falling back to the base field.
+// On non-English pages prefer the language variant of each catalog field
+// (`_es` / `_de`), falling back to the base (English) field.
 $cat = function ($name) {
-    if ( function_exists('pll_current_language') && pll_current_language() === 'es' ) {
-        $es = get_field($name . '_es', 'options');
-        if ( $es !== '' && $es !== null && $es !== false ) {
-            return $es;
+    $lang = mfs_lang();
+    if ( $lang !== 'en' ) {
+        $v = get_field($name . '_' . $lang, 'options');
+        if ( $v !== '' && $v !== null && $v !== false ) {
+            return $v;
         }
     }
     return get_field($name, 'options');

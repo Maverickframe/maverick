@@ -2,7 +2,7 @@
 <section class="key-visuals">
     <div class="container">
         <div class="key-visuals__info">
-            <p class="section-subtitle"><?php echo mfs_t('Key Visual Decisions', 'Decisiones visuales clave'); ?></p>
+            <p class="section-subtitle"><?php echo mfs_t('Key Visual Decisions', 'Decisiones visuales clave', 'Zentrale visuelle Entscheidungen'); ?></p>
             <h2><?php the_field('title'); ?></h2>
         </div>
 

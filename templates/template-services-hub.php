@@ -16,7 +16,7 @@
             <?= get_template_part('components/new-design/breadcrumbs', null, [
                 'breadcrumbs' => [
                     1 => [
-                        'name' => mfs_t('Home', 'Inicio'),
+                        'name' => mfs_t('Home', 'Inicio', 'Startseite'),
                         'link' => $bc_is_es ? home_url('/es/') : home_url()
                     ]
                 ]

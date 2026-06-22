@@ -4,28 +4,30 @@
  * highlighted heading (js-highlight / text-highlight with <em>) + subtext.
  * Rendered inside the 2-column .contacts-top grid by the template.
  */
-$is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-$home  = $is_es && function_exists('pll_home_url') ? pll_home_url('es') : home_url('/');
+$mfs_hero_lang = mfs_lang();
+$home  = ( $mfs_hero_lang !== 'en' && function_exists('pll_home_url') ) ? pll_home_url($mfs_hero_lang) : home_url('/');
 
 $title_html = get_post_meta(get_the_ID(), 'hero_title_html', true);
 if (!$title_html) {
-    $title_html = $is_es
-        ? 'Trabaja con un equipo de visualización que <em>entiende lo que tu proyecto necesita</em>'
-        : 'Work with a visualization team that <em>understands what your project needs</em>';
+    $title_html = mfs_t(
+        'Work with a visualization team that <em>understands what your project needs</em>',
+        'Trabaja con un equipo de visualización que <em>entiende lo que tu proyecto necesita</em>',
+        'Arbeite mit einem Visualisierungsteam, das <em>versteht, was dein Projekt braucht</em>'
+    );
 }
 
 $subtitle = get_post_meta(get_the_ID(), 'hero_subtitle', true);
 if (!$subtitle) {
     $subtitle = mfs_t(
         'Tell us what you’re working on, and our team will get back to you with the right next step.',
-        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.'
+        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.', 'Erzähl uns, woran du arbeitest, und unser Team meldet sich mit dem passenden nächsten Schritt.'
     );
 }
 ?>
 <div class="contacts-hero">
     <?php echo get_template_part('components/new-design/breadcrumbs', null, [
         'breadcrumbs' => [
-            ['link' => esc_url($home), 'name' => mfs_t('Home', 'Inicio')],
+            ['link' => esc_url($home), 'name' => mfs_t('Home', 'Inicio', 'Startseite')],
         ],
     ]); ?>
 

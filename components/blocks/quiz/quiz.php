@@ -14,11 +14,11 @@
 
 $mfsq_mode    = get_field('quiz_mode') ?: 'router';
 $mfsq_eyebrow = get_field('quiz_eyebrow');
-$mfsq_eyebrow = ( $mfsq_eyebrow !== '' && $mfsq_eyebrow !== null ) ? $mfsq_eyebrow : '30-second quiz';
+$mfsq_eyebrow = ( $mfsq_eyebrow !== '' && $mfsq_eyebrow !== null ) ? $mfsq_eyebrow : mfs_t('30-second quiz', 'Quiz de 30 segundos', 'Quiz in 30 Sekunden');
 $mfsq_heading = get_field('quiz_heading');
-$mfsq_heading = ( $mfsq_heading !== '' && $mfsq_heading !== null ) ? $mfsq_heading : 'Not sure where to start? Find your fit';
+$mfsq_heading = ( $mfsq_heading !== '' && $mfsq_heading !== null ) ? $mfsq_heading : mfs_t('Not sure where to start? Find your fit', '¿No sabes por dónde empezar? Encuentra tu opción', 'Nicht sicher, wo du anfangen sollst? Finde deine Lösung');
 $mfsq_intro   = get_field('quiz_intro');
-$mfsq_intro   = ( $mfsq_intro !== '' && $mfsq_intro !== null ) ? $mfsq_intro : 'Answer a few quick questions and we’ll match you with the right service — plus a free, tailored next step for your project.';
+$mfsq_intro   = ( $mfsq_intro !== '' && $mfsq_intro !== null ) ? $mfsq_intro : mfs_t('Answer a few quick questions and we’ll match you with the right service — plus a free, tailored next step for your project.', 'Responde unas preguntas rápidas y te emparejamos con el servicio adecuado — además de un siguiente paso gratuito y personalizado para tu proyecto.', 'Beantworte ein paar kurze Fragen und wir finden die passende Leistung für dich — plus einen kostenlosen, individuellen nächsten Schritt für dein Projekt.');
 $mfsq_lead_title = get_field('quiz_lead_title');
 if ( ! $mfsq_lead_title ) {
     $mfsq_lead_title = ( $mfsq_mode === 'service' ) ? ( get_the_title() . ' / Quiz' ) : 'Homepage / Quiz';
@@ -60,6 +60,21 @@ $looks = array(
         array('Clean & minimal',    $U . '2026/04/landscape-rendering-services-lakeside-cabins-aerial.webp'),
     ),
 );
+
+// Append a localized caption (3rd element) to each look tile. The first element
+// stays EN — it is the data-v that goes to the CRM; only the visible caption /
+// alt text is translated. quiz.js reads l[2] for the caption, l[0] for data-v.
+$look_caps = array(
+    'Bright & photoreal' => mfs_t('Bright & photoreal', 'Brillante y fotorrealista', 'Hell & fotorealistisch'),
+    'Warm & inviting'    => mfs_t('Warm & inviting', 'Cálido y acogedor', 'Warm & einladend'),
+    'Moody & cinematic'  => mfs_t('Moody & cinematic', 'Atmosférico y cinematográfico', 'Stimmungsvoll & filmisch'),
+    'Clean & minimal'    => mfs_t('Clean & minimal', 'Limpio y minimalista', 'Klar & minimalistisch'),
+);
+foreach ( $looks as $mfsq_subj => $mfsq_set ) {
+    foreach ( $mfsq_set as $mfsq_idx => $mfsq_entry ) {
+        $looks[ $mfsq_subj ][ $mfsq_idx ][] = isset( $look_caps[ $mfsq_entry[0] ] ) ? $look_caps[ $mfsq_entry[0] ] : $mfsq_entry[0];
+    }
+}
 ?>
 
 <section class="mfsq">
@@ -84,7 +99,7 @@ $looks = array(
             <?php } ?>
 
             <div class="mfsq__head">
-                <span class="mfsq__count" data-count>Step 1</span>
+                <span class="mfsq__count" data-count><?php echo esc_html( mfs_t('Step 1', 'Paso 1', 'Schritt 1') ); ?></span>
                 <div class="mfsq__bar" data-bar></div>
             </div>
 
@@ -133,115 +148,115 @@ $looks = array(
 
                 <!-- Q1 router (shared) -->
                 <div class="mfsq__step is-on" data-q="route">
-                    <h3>What can we help you create?</h3>
+                    <h3><?php echo mfs_t('What can we help you create?', '¿Qué podemos ayudarte a crear?', 'Womit können wir dir helfen?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-branch="cgi" data-v="3D visuals &amp; CGI">3D visuals &amp; CGI</button>
-                        <button class="mfsq__opt" data-branch="web" data-v="Website or app">Website or app</button>
-                        <button class="mfsq__opt" data-branch="creative" data-v="Branding &amp; creative">Branding &amp; creative</button>
+                        <button class="mfsq__opt" data-branch="cgi" data-v="3D visuals &amp; CGI"><?php echo mfs_t('3D visuals &amp; CGI', 'Visuales 3D y CGI', '3D-Visualisierung &amp; CGI'); ?></button>
+                        <button class="mfsq__opt" data-branch="web" data-v="Website or app"><?php echo mfs_t('Website or app', 'Sitio web o app', 'Website oder App'); ?></button>
+                        <button class="mfsq__opt" data-branch="creative" data-v="Branding &amp; creative"><?php echo mfs_t('Branding &amp; creative', 'Branding y creatividad', 'Branding &amp; Kreativ'); ?></button>
                     </div>
                 </div>
 
                 <!-- ===== CGI branch ===== -->
                 <div class="mfsq__step" data-q="subject" data-branch="cgi">
-                    <h3>What are you visualizing?</h3>
+                    <h3><?php echo mfs_t('What are you visualizing?', '¿Qué estás visualizando?', 'Was möchtest du visualisieren?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Exterior">Building exterior</button>
-                        <button class="mfsq__opt" data-v="Interior">Interior space</button>
-                        <button class="mfsq__opt" data-v="Product">Product or furniture</button>
-                        <button class="mfsq__opt" data-v="Vehicle">Yacht, car or aircraft</button>
-                        <button class="mfsq__opt" data-v="Development">Development, site or aerial</button>
+                        <button class="mfsq__opt" data-v="Exterior"><?php echo mfs_t('Building exterior', 'Exterior de edificio', 'Gebäude-Außenansicht'); ?></button>
+                        <button class="mfsq__opt" data-v="Interior"><?php echo mfs_t('Interior space', 'Espacio interior', 'Innenraum'); ?></button>
+                        <button class="mfsq__opt" data-v="Product"><?php echo mfs_t('Product or furniture', 'Producto o mobiliario', 'Produkt oder Möbel'); ?></button>
+                        <button class="mfsq__opt" data-v="Vehicle"><?php echo mfs_t('Yacht, car or aircraft', 'Yate, coche o avión', 'Yacht, Auto oder Flugzeug'); ?></button>
+                        <button class="mfsq__opt" data-v="Development"><?php echo mfs_t('Development, site or aerial', 'Desarrollo, terreno o aéreo', 'Projekt, Gelände oder Luftaufnahme'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="look" data-branch="cgi">
-                    <h3>Pick the look you love</h3>
+                    <h3><?php echo mfs_t('Pick the look you love', 'Elige el estilo que te encanta', 'Wähle den Look, der dir gefällt'); ?></h3>
                     <div class="mfsq__looks" data-looks></div>
                 </div>
 
                 <div class="mfsq__step" data-q="goal" data-branch="cgi">
-                    <h3>What&rsquo;s the main goal?</h3>
+                    <h3><?php echo mfs_t('What&rsquo;s the main goal?', '¿Cuál es el objetivo principal?', 'Was ist das Hauptziel?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Sell faster">Sell faster</button>
-                        <button class="mfsq__opt" data-v="Win approvals">Win approvals</button>
-                        <button class="mfsq__opt" data-v="Market &amp; advertise">Market &amp; advertise</button>
-                        <button class="mfsq__opt" data-v="Impress investors">Impress investors</button>
+                        <button class="mfsq__opt" data-v="Sell faster"><?php echo mfs_t('Sell faster', 'Vender más rápido', 'Schneller verkaufen'); ?></button>
+                        <button class="mfsq__opt" data-v="Win approvals"><?php echo mfs_t('Win approvals', 'Conseguir aprobaciones', 'Genehmigungen erhalten'); ?></button>
+                        <button class="mfsq__opt" data-v="Market &amp; advertise"><?php echo mfs_t('Market &amp; advertise', 'Marketing y publicidad', 'Marketing &amp; Werbung'); ?></button>
+                        <button class="mfsq__opt" data-v="Impress investors"><?php echo mfs_t('Impress investors', 'Impresionar a inversores', 'Investoren überzeugen'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="stage" data-branch="cgi">
-                    <h3>Where&rsquo;s your project now?</h3>
+                    <h3><?php echo mfs_t('Where&rsquo;s your project now?', '¿En qué fase está tu proyecto?', 'Wo steht dein Projekt aktuell?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Just an idea">Just an idea</button>
-                        <button class="mfsq__opt" data-v="In design">In design</button>
-                        <button class="mfsq__opt" data-v="Files ready">Files are ready</button>
+                        <button class="mfsq__opt" data-v="Just an idea"><?php echo mfs_t('Just an idea', 'Solo una idea', 'Nur eine Idee'); ?></button>
+                        <button class="mfsq__opt" data-v="In design"><?php echo mfs_t('In design', 'En diseño', 'In der Gestaltung'); ?></button>
+                        <button class="mfsq__opt" data-v="Files ready"><?php echo mfs_t('Files are ready', 'Archivos listos', 'Dateien sind bereit'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="volume" data-branch="cgi">
-                    <h3>How much do you need?</h3>
+                    <h3><?php echo mfs_t('How much do you need?', '¿Cuánto necesitas?', 'Wie viel brauchst du?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="One project">One project</button>
-                        <button class="mfsq__opt" data-v="Ongoing stream">Ongoing stream</button>
+                        <button class="mfsq__opt" data-v="One project"><?php echo mfs_t('One project', 'Un proyecto', 'Ein Projekt'); ?></button>
+                        <button class="mfsq__opt" data-v="Ongoing stream"><?php echo mfs_t('Ongoing stream', 'Flujo continuo', 'Laufender Bedarf'); ?></button>
                     </div>
                 </div>
 
                 <!-- ===== Web &amp; app branch ===== -->
                 <div class="mfsq__step" data-q="webtype" data-branch="web">
-                    <h3>What do you need?</h3>
+                    <h3><?php echo mfs_t('What do you need?', '¿Qué necesitas?', 'Was brauchst du?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Website">A new website</button>
-                        <button class="mfsq__opt" data-v="Landing page">A landing page</button>
-                        <button class="mfsq__opt" data-v="Mobile app">A mobile app</button>
-                        <button class="mfsq__opt" data-v="UI/UX redesign">UI/UX redesign</button>
+                        <button class="mfsq__opt" data-v="Website"><?php echo mfs_t('A new website', 'Un nuevo sitio web', 'Eine neue Website'); ?></button>
+                        <button class="mfsq__opt" data-v="Landing page"><?php echo mfs_t('A landing page', 'Una landing page', 'Eine Landingpage'); ?></button>
+                        <button class="mfsq__opt" data-v="Mobile app"><?php echo mfs_t('A mobile app', 'Una app móvil', 'Eine mobile App'); ?></button>
+                        <button class="mfsq__opt" data-v="UI/UX redesign"><?php echo mfs_t('UI/UX redesign', 'Rediseño UI/UX', 'UI/UX-Redesign'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="webgoal" data-branch="web">
-                    <h3>What&rsquo;s the main goal?</h3>
+                    <h3><?php echo mfs_t('What&rsquo;s the main goal?', '¿Cuál es el objetivo principal?', 'Was ist das Hauptziel?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Launch something new">Launch something new</button>
-                        <button class="mfsq__opt" data-v="Redesign &amp; modernize">Redesign &amp; modernize</button>
-                        <button class="mfsq__opt" data-v="Increase conversions">Increase conversions</button>
-                        <button class="mfsq__opt" data-v="Impress investors">Impress investors</button>
+                        <button class="mfsq__opt" data-v="Launch something new"><?php echo mfs_t('Launch something new', 'Lanzar algo nuevo', 'Etwas Neues launchen'); ?></button>
+                        <button class="mfsq__opt" data-v="Redesign &amp; modernize"><?php echo mfs_t('Redesign &amp; modernize', 'Rediseñar y modernizar', 'Neugestalten &amp; modernisieren'); ?></button>
+                        <button class="mfsq__opt" data-v="Increase conversions"><?php echo mfs_t('Increase conversions', 'Aumentar conversiones', 'Conversions steigern'); ?></button>
+                        <button class="mfsq__opt" data-v="Impress investors"><?php echo mfs_t('Impress investors', 'Impresionar a inversores', 'Investoren überzeugen'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="webstage" data-branch="web">
-                    <h3>Where are you now?</h3>
+                    <h3><?php echo mfs_t('Where are you now?', '¿Dónde estás ahora?', 'Wo stehst du gerade?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Just an idea">Just an idea</button>
-                        <button class="mfsq__opt" data-v="Brand &amp; content ready">Brand &amp; content ready</button>
-                        <button class="mfsq__opt" data-v="Have a live site">Have a live site to improve</button>
+                        <button class="mfsq__opt" data-v="Just an idea"><?php echo mfs_t('Just an idea', 'Solo una idea', 'Nur eine Idee'); ?></button>
+                        <button class="mfsq__opt" data-v="Brand &amp; content ready"><?php echo mfs_t('Brand &amp; content ready', 'Marca y contenido listos', 'Marke &amp; Inhalte bereit'); ?></button>
+                        <button class="mfsq__opt" data-v="Have a live site"><?php echo mfs_t('Have a live site to improve', 'Tengo un sitio activo que mejorar', 'Habe eine Live-Website zum Verbessern'); ?></button>
                     </div>
                 </div>
 
                 <!-- ===== Branding &amp; creative branch ===== -->
                 <div class="mfsq__step" data-q="crtype" data-branch="creative">
-                    <h3>What do you need?</h3>
+                    <h3><?php echo mfs_t('What do you need?', '¿Qué necesitas?', 'Was brauchst du?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Brand identity">Brand identity</button>
-                        <button class="mfsq__opt" data-v="Social media content">Social media content</button>
-                        <button class="mfsq__opt" data-v="Presentation / pitch deck">Presentation / pitch deck</button>
-                        <button class="mfsq__opt" data-v="FOOH / CGI ad">FOOH / CGI ad</button>
+                        <button class="mfsq__opt" data-v="Brand identity"><?php echo mfs_t('Brand identity', 'Identidad de marca', 'Markenidentität'); ?></button>
+                        <button class="mfsq__opt" data-v="Social media content"><?php echo mfs_t('Social media content', 'Contenido para redes sociales', 'Social-Media-Content'); ?></button>
+                        <button class="mfsq__opt" data-v="Presentation / pitch deck"><?php echo mfs_t('Presentation / pitch deck', 'Presentación / pitch deck', 'Präsentation / Pitch-Deck'); ?></button>
+                        <button class="mfsq__opt" data-v="FOOH / CGI ad"><?php echo mfs_t('FOOH / CGI ad', 'Anuncio FOOH / CGI', 'FOOH- / CGI-Werbung'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="crgoal" data-branch="creative">
-                    <h3>What&rsquo;s the main goal?</h3>
+                    <h3><?php echo mfs_t('What&rsquo;s the main goal?', '¿Cuál es el objetivo principal?', 'Was ist das Hauptziel?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Launch a brand">Launch a brand</button>
-                        <button class="mfsq__opt" data-v="Refresh our look">Refresh our look</button>
-                        <button class="mfsq__opt" data-v="Drive engagement">Drive engagement</button>
-                        <button class="mfsq__opt" data-v="Win investors">Win investors</button>
+                        <button class="mfsq__opt" data-v="Launch a brand"><?php echo mfs_t('Launch a brand', 'Lanzar una marca', 'Eine Marke launchen'); ?></button>
+                        <button class="mfsq__opt" data-v="Refresh our look"><?php echo mfs_t('Refresh our look', 'Renovar nuestra imagen', 'Unseren Look auffrischen'); ?></button>
+                        <button class="mfsq__opt" data-v="Drive engagement"><?php echo mfs_t('Drive engagement', 'Impulsar el engagement', 'Engagement steigern'); ?></button>
+                        <button class="mfsq__opt" data-v="Win investors"><?php echo mfs_t('Win investors', 'Ganar inversores', 'Investoren gewinnen'); ?></button>
                     </div>
                 </div>
 
                 <div class="mfsq__step" data-q="crstage" data-branch="creative">
-                    <h3>Where are you now?</h3>
+                    <h3><?php echo mfs_t('Where are you now?', '¿Dónde estás ahora?', 'Wo stehst du gerade?'); ?></h3>
                     <div class="mfsq__opts">
-                        <button class="mfsq__opt" data-v="Starting from scratch">Starting from scratch</button>
-                        <button class="mfsq__opt" data-v="Have some assets">Have some assets</button>
-                        <button class="mfsq__opt" data-v="Rebranding existing">Rebranding existing</button>
+                        <button class="mfsq__opt" data-v="Starting from scratch"><?php echo mfs_t('Starting from scratch', 'Empezando desde cero', 'Von Grund auf neu'); ?></button>
+                        <button class="mfsq__opt" data-v="Have some assets"><?php echo mfs_t('Have some assets', 'Tengo algunos recursos', 'Habe einige Assets'); ?></button>
+                        <button class="mfsq__opt" data-v="Rebranding existing"><?php echo mfs_t('Rebranding existing', 'Rebranding de lo existente', 'Bestehendes Rebranding'); ?></button>
                     </div>
                 </div>
 
@@ -249,18 +264,18 @@ $looks = array(
 
                 <!-- ===== Shared gate + result ===== -->
                 <div class="mfsq__step" data-q="gate">
-                    <h3>Almost there &mdash; where do we send it?</h3>
-                    <p class="mfsq__gate-sub" data-gate-sub>Your tailored plan and a free next step for your project.</p>
-                    <input type="text" data-name placeholder="Your name" class="mfsq__input">
-                    <input type="email" data-email placeholder="Work email*" class="mfsq__input">
-                    <button class="mfsq__submit" data-reveal type="button">Reveal my plan</button>
-                    <p class="mfsq__fine">No spam &mdash; we only email about your project.</p>
+                    <h3><?php echo esc_html( mfs_t('Almost there — where do we send it?', 'Casi listo — ¿a dónde te lo enviamos?', 'Fast geschafft — wohin sollen wir es schicken?') ); ?></h3>
+                    <p class="mfsq__gate-sub" data-gate-sub><?php echo esc_html( mfs_t('Your tailored plan and a free next step for your project.', 'Tu plan personalizado y un siguiente paso gratuito para tu proyecto.', 'Dein individueller Plan und ein kostenloser nächster Schritt für dein Projekt.') ); ?></p>
+                    <input type="text" data-name placeholder="<?php echo esc_attr( mfs_t('Your name', 'Tu nombre', 'Dein Name') ); ?>" class="mfsq__input">
+                    <input type="email" data-email placeholder="<?php echo esc_attr( mfs_t('Work email*', 'Correo de trabajo*', 'Geschäftliche E-Mail*') ); ?>" class="mfsq__input">
+                    <button class="mfsq__submit" data-reveal type="button"><?php echo esc_html( mfs_t('Reveal my plan', 'Ver mi plan', 'Meinen Plan anzeigen') ); ?></button>
+                    <p class="mfsq__fine"><?php echo esc_html( mfs_t('No spam — we only email about your project.', 'Sin spam — solo te escribimos sobre tu proyecto.', 'Kein Spam — wir schreiben dir nur zu deinem Projekt.') ); ?></p>
                 </div>
 
                 <div class="mfsq__step" data-q="result"></div>
             </div>
 
-            <button class="mfsq__back" data-back type="button">&larr; Back</button>
+            <button class="mfsq__back" data-back type="button"><?php echo esc_html( mfs_t('← Back', '← Volver', '← Zurück') ); ?></button>
         </div>
     </div>
 </section>

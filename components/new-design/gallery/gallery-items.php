@@ -14,8 +14,8 @@ if($categories): ?>
 <div class="container">
     <div class="gallery-items">
         <div class="gallery-items__select-mob">
-            <select class="gallery-items__select-mobile js-gallery-mobile" aria-label="<?php echo esc_attr(mfs_t('Select Gallery Category', 'Seleccionar categoría de galería')); ?>">
-                <option value="all" selected><?php echo mfs_t('All', 'Todas'); ?></option>
+            <select class="gallery-items__select-mobile js-gallery-mobile" aria-label="<?php echo esc_attr(mfs_t('Select Gallery Category', 'Seleccionar categoría de galería', 'Galerie-Kategorie auswählen')); ?>">
+                <option value="all" selected><?php echo mfs_t('All', 'Todas', 'Alle'); ?></option>
                 <?php foreach($categories as $cat):
                     $subcats = get_posts([
                         'post_type' => 'gallery',
@@ -41,7 +41,7 @@ if($categories): ?>
 
         <ul class="gallery-items__tabs">
             <li>
-                <button class="js-gallery-tab-btn" data-tab="all"><?php echo mfs_t('All', 'Todas'); ?></button>
+                <button class="js-gallery-tab-btn" data-tab="all"><?php echo mfs_t('All', 'Todas', 'Alle'); ?></button>
             </li>
             <?php foreach($categories as $cat): ?>
                 <li class="js-category">

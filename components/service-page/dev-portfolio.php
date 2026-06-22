@@ -25,7 +25,7 @@
                 <polyline points="209,1 209,47 1,47 1,1 209,1" class="bg-line" />
                 <polyline points="209,1 209,47 1,47 1,1 209,1" class="hl-line" />
             </svg>
-            <?php echo mfs_t('Show more', 'Ver más'); ?>
+            <?php echo mfs_t('Show more', 'Ver más', 'Mehr anzeigen'); ?>
         </button>
     </div>
 </section>

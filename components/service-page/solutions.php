@@ -62,7 +62,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
+                                                <?php echo mfs_t('Discover More', 'Descubre más', 'Mehr entdecken'); ?>
                                             </button>
                                         <?php elseif ($link): ?>
                                             <a href="<?php echo $link; ?>" class="service-page-solution__link">
@@ -70,7 +70,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
+                                                <?php echo mfs_t('Discover More', 'Descubre más', 'Mehr entdecken'); ?>
                                             </a>
                                         <?php else: ?>
                                             <span class="service-page-solution__link">
@@ -78,7 +78,7 @@
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="bg-line" />
                                                     <polyline points="232,1 232,47 1,47 1,1 232,1" class="hl-line" />
                                                 </svg>
-                                                <?php echo mfs_t('Discover More', 'Descubre más'); ?>
+                                                <?php echo mfs_t('Discover More', 'Descubre más', 'Mehr entdecken'); ?>
                                             </span>
                                         <?php endif; ?>
                                     </div>

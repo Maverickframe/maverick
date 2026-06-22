@@ -58,7 +58,7 @@ wp_localize_script(
 					<?= inline_svg("icons/search.svg"); ?>
 				</button>
 
-				<input type="search" name="ajax-search" class="js-ajax-search" placeholder="<?php echo esc_attr(mfs_t('Search', 'Buscar')); ?>" aria-hidden="true">
+				<input type="search" name="ajax-search" class="js-ajax-search" placeholder="<?php echo esc_attr(mfs_t('Search', 'Buscar', 'Suchen')); ?>" aria-hidden="true">
 
 				<button type="button" class="js-articles-search-reset svg-icon" aria-label="Reset posts search"
 					aria-hidden="true">
@@ -84,12 +84,12 @@ wp_localize_script(
 			<?php endif; ?>
 
 			<div class="section__toggle section__toggle--sort">
-				<div class="--label"><?php echo mfs_t('Sort by:', 'Ordenar por:'); ?></div>
+				<div class="--label"><?php echo mfs_t('Sort by:', 'Ordenar por:', 'Sortieren nach:'); ?></div>
 
 				<div class="--options">
 					<select name="orderby" class="my-select js-articles-sort" aria-label="Sort by">
-						<option value="latest"><?php echo mfs_t('Latest', 'Más recientes'); ?></option>
-						<option value="popular"><?php echo mfs_t('Popular', 'Populares'); ?></option>
+						<option value="latest"><?php echo mfs_t('Latest', 'Más recientes', 'Neueste'); ?></option>
+						<option value="popular"><?php echo mfs_t('Popular', 'Populares', 'Beliebt'); ?></option>
 					</select>
 				</div>
 			</div>
@@ -135,9 +135,9 @@ wp_localize_script(
 		</div>
 
 		<div class="section__notfound not-found js-articles-notfound" aria-hidden="true" role="alert">
-			<div class="not-found__title h2"><?php echo mfs_t('Nothing Found', 'No se encontró nada'); ?></div>
-			<div class="not-found__text"><?php echo mfs_t("Oops! We couldn't find any results matching your search. Please try different keywords or check back later!", '¡Vaya! No encontramos resultados para tu búsqueda. Prueba con otras palabras o vuelve más tarde.'); ?></div>
-			<button class="btn-main js-articles-search-reset" type="button" aria-label="<?php echo esc_attr(mfs_t('Reset posts filters', 'Restablecer filtros')); ?>"><?php echo mfs_t('Reset filters', 'Restablecer filtros'); ?></button>
+			<div class="not-found__title h2"><?php echo mfs_t('Nothing Found', 'No se encontró nada', 'Nichts gefunden'); ?></div>
+			<div class="not-found__text"><?php echo mfs_t("Oops! We couldn't find any results matching your search. Please try different keywords or check back later!", '¡Vaya! No encontramos resultados para tu búsqueda. Prueba con otras palabras o vuelve más tarde.', 'Hoppla! Wir haben keine Ergebnisse für deine Suche gefunden. Versuche es mit anderen Suchbegriffen oder schau später wieder vorbei!'); ?></div>
+			<button class="btn-main js-articles-search-reset" type="button" aria-label="<?php echo esc_attr(mfs_t('Reset posts filters', 'Restablecer filtros', 'Filter zurücksetzen')); ?>"><?php echo mfs_t('Reset filters', 'Restablecer filtros', 'Filter zurücksetzen'); ?></button>
 		</div>
 
 		<div class="cards cards--3 js-articles-items">
@@ -158,8 +158,8 @@ wp_localize_script(
 		</div>
 
 		<div class="section__btn">
-			<button class="btn-secondary-black js-articles-more" type="button" aria-label="<?php echo esc_attr(mfs_t('Load more posts', 'Cargar más entradas')); ?>" <?php if ($query->max_num_pages == $paged): ?> disabled <?php endif; ?>>
-				<?php echo mfs_t('Load more', 'Cargar más'); ?>
+			<button class="btn-secondary-black js-articles-more" type="button" aria-label="<?php echo esc_attr(mfs_t('Load more posts', 'Cargar más entradas', 'Weitere Beiträge laden')); ?>" <?php if ($query->max_num_pages == $paged): ?> disabled <?php endif; ?>>
+				<?php echo mfs_t('Load more', 'Cargar más', 'Mehr laden'); ?>
 			</button>
 		</div>
 	</div>
