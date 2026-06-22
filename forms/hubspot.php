@@ -18,7 +18,7 @@
  */
 
 if (!defined('MFS_HS_PORTAL_ID')) define('MFS_HS_PORTAL_ID', '148670517');
-if (!defined('MFS_HS_FORM_GUID')) define('MFS_HS_FORM_GUID', ''); // TODO: from HubSpot UI
+if (!defined('MFS_HS_FORM_GUID')) define('MFS_HS_FORM_GUID', '20711051-4f6d-4bb9-a179-125689472af3'); // "Website Lead (amoCRM mirror)"
 if (!defined('MFS_HS_REGION'))    define('MFS_HS_REGION', 'eu1');  // EU portal
 
 /**
