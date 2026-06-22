@@ -1,0 +1,16 @@
+{
+  "name": "acf/solution-stats",
+  "title": "Solution Stats (metrics row)",
+  "description": "Solutions page — 3 metrics with vertical dividers",
+  "category": "layout",
+  "icon": "chart-bar",
+  "keywords": ["solution", "stats", "metrics", "impact"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "solution-stats.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

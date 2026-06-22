@@ -36,6 +36,26 @@
     }
 }
 
+// Breadcrumbs added on inner pages (e.g. Solutions). On mobile they sit in the
+// normal flow at the top of the hero (the container is a column there). Only on
+// desktop (flex row) are they pulled out as absolute so the hero content keeps
+// its left edge.
+.hero-front .hero-block__breadcrumbs {
+    margin: 0 0 toRem(16);
+
+    @media (min-width: $md) {
+        position: absolute;
+        top: calc(var(--header-height) + #{toRem(16)});
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: calc(var(--container-small) + var(--padding) * 2);
+        padding: 0 var(--padding);
+        margin: 0;
+        z-index: 3;
+    }
+}
+
 .hero__main.hero-front__main {
     margin: 0;
 

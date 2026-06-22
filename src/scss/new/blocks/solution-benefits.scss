@@ -1,0 +1,307 @@
+@import "../common/_vars";
+
+// Solutions page only. Keep the workflow at its default `.container` width (1720)
+// so the curve SVG and the per-step offsets match the proven yacht layout (forcing
+// container_small squished everything). Shift ONLY the heading to the container_small
+// left edge (margin, so it can't clash with the h2 max-width) and constrain the h2
+// so it wraps to two lines like Figma. Eyebrow is 16px per Figma.
+@media (min-width: $md) {
+    [class*="solutions"] .workflow > .container > .workflow__subtitle,
+    [class*="solutions"] .workflow > .container > h2 {
+        margin-left: calc((var(--container) - var(--container-small)) / 2);
+    }
+}
+
+// Mobile: nudge the trailing steps down so their text clears the curve and fits.
+@media (max-width: $md) {
+    [class*="solutions"] .workflow .workflow-item:nth-child(4) {
+        margin-top: toRem(40);
+    }
+
+    [class*="solutions"] .workflow .workflow-item:nth-child(5) {
+        margin-top: toRem(56);
+    }
+}
+
+[class*="solutions"] .workflow > .container > .workflow__subtitle {
+    // Match the "You won't miss" kicker: accent dot + 16px text.
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(8);
+    font-size: toRem(16);
+
+    &::before {
+        content: "";
+        flex: 0 0 auto;
+        width: toRem(10);
+        height: toRem(10);
+        border-radius: 50%;
+        background: var(--accent-color);
+    }
+}
+
+[class*="solutions"] .workflow > .container > h2 {
+    max-width: toRem(706);
+}
+
+.sol-ben {
+    padding: toRem(40) 0;
+
+    @media (min-width: $md) {
+        padding: toRem(100) 0;
+    }
+}
+
+.sol-ben__head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: toRem(20);
+    margin-bottom: toRem(40);
+
+    @media (min-width: $md) {
+        grid-template-columns: minmax(0, 710fr) minmax(0, 588fr);
+        gap: toRem(40);
+        align-items: end;
+        margin-bottom: toRem(60);
+    }
+}
+
+.sol-ben__head-main {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(15);
+}
+
+.sol-ben__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(8);
+    color: var(--accent-color);
+    font-size: toRem(16);
+    line-height: 1.4;
+}
+
+.sol-ben__dot {
+    flex: 0 0 auto;
+    width: toRem(10);
+    height: toRem(10);
+    border-radius: 50%;
+    background: var(--accent-color);
+}
+
+.sol-ben__title {
+    // Match the homepage showreel H2 (global h2 ramp: 22 → 40 → 48).
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--black-color);
+    font-size: toRem(22);
+
+    @media (min-width: $md) {
+        font-size: toRem(40);
+        line-height: 1.2;
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(48);
+    }
+}
+
+.sol-ben__desc {
+    color: var(--text-grey-color);
+    font-size: toRem(14);
+    line-height: 1.4;
+
+    @media (min-width: $md) {
+        padding-bottom: toRem(10);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.sol-ben__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: toRem(20);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: toRem(40);
+        align-items: center;
+        perspective: 1600px;
+    }
+}
+
+// ---- Flip cards: front shows colour only; on scroll-in the card flips
+// (rotateY) to its back face, revealing the text. ----
+.sol-ben__card {
+    position: relative;
+    height: toRem(300);
+    perspective: 1200px; // 3D flip on mobile too (grid perspective only kicks in at $md)
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    @media (min-width: $md) {
+        height: toRem(400);
+    }
+
+    // hover "lift" — keeps each card's resting tilt, adds rise + slight zoom
+    &--grey {
+        @media (min-width: $md) {
+            transform: rotate(-2deg);
+
+            &:hover {
+                transform: rotate(-2deg) translateY(toRem(-10)) scale(1.03);
+            }
+        }
+    }
+
+    &--accent {
+        @media (min-width: $md) {
+            transform: rotate(2deg);
+
+            &:hover {
+                transform: rotate(2deg) translateY(toRem(-10)) scale(1.03);
+            }
+        }
+    }
+
+    &--outline,
+    &--dark {
+        @media (min-width: $md) {
+            &:hover {
+                transform: translateY(toRem(-10)) scale(1.03);
+            }
+        }
+    }
+}
+
+.sol-ben__card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.sol-ben__card.animated .sol-ben__card-inner {
+    transform: rotateY(180deg);
+}
+
+// stagger the flip across the row
+.sol-ben__card:nth-child(2) .sol-ben__card-inner {
+    transition-delay: 0.1s;
+}
+.sol-ben__card:nth-child(3) .sol-ben__card-inner {
+    transition-delay: 0.2s;
+}
+.sol-ben__card:nth-child(4) .sol-ben__card-inner {
+    transition-delay: 0.3s;
+}
+
+.sol-ben__card-face {
+    position: absolute;
+    inset: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: toRem(4);
+    padding: toRem(30);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.sol-ben__card-back {
+    transform: rotateY(180deg);
+}
+
+// per-variant colours — applied to both faces so the colour stays through the flip
+.sol-ben__card--grey .sol-ben__card-face {
+    background: #f6f6f6;
+    color: var(--text-grey-color);
+}
+
+.sol-ben__card--outline .sol-ben__card-face {
+    background: var(--white-color);
+    border: 1px solid #dcdcdc;
+    border-radius: 0; // sharp corners so the border meets the corner "+" marks
+    color: var(--black-color);
+}
+
+.sol-ben__card--dark .sol-ben__card-face {
+    background: #393939;
+    color: #dcdcdc;
+}
+
+.sol-ben__card--accent .sol-ben__card-face {
+    background: var(--accent-color);
+    color: #dcdcdc;
+}
+
+.sol-ben__card-text {
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: toRem(18);
+
+    @media (min-width: $md) {
+        font-size: toRem(24);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sol-ben__card-inner {
+        transition: none;
+    }
+}
+
+.sol-ben__plus {
+    position: absolute;
+    width: toRem(24);
+    height: toRem(24);
+    z-index: 2;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        background: var(--accent-color);
+    }
+
+    &::before {
+        left: 50%;
+        top: 0;
+        width: toRem(2);
+        height: 100%;
+        transform: translateX(-50%);
+    }
+
+    &::after {
+        top: 50%;
+        left: 0;
+        height: toRem(2);
+        width: 100%;
+        transform: translateY(-50%);
+    }
+}
+
+.sol-ben__plus--tl {
+    top: toRem(-12);
+    left: toRem(-12);
+}
+
+.sol-ben__plus--tr {
+    top: toRem(-12);
+    right: toRem(-12);
+}
+
+.sol-ben__plus--bl {
+    bottom: toRem(-12);
+    left: toRem(-12);
+}
+
+.sol-ben__plus--br {
+    bottom: toRem(-12);
+    right: toRem(-12);
+}
