@@ -146,6 +146,32 @@ include "inc.vite.php";
 require_once __DIR__ . '/forms/book-call-handler.php';
 require_once __DIR__ . '/inc.tour.php';
 
+// HubSpot tracking code (async, site-wide) — sets the hubspotutk cookie used to
+// stitch form submissions to the visitor session. The tracking ID is the HubSpot
+// portal ID; EU portals load from js-eu1.hs-scripts.com.
+if (!defined('MFS_HS_TRACKING_ID'))     define('MFS_HS_TRACKING_ID', '148670517');
+if (!defined('MFS_HS_TRACKING_REGION')) define('MFS_HS_TRACKING_REGION', 'eu1');
+add_action('wp_footer', function () {
+    if (!MFS_HS_TRACKING_ID) { return; }
+    $sub = MFS_HS_TRACKING_REGION ? '-' . MFS_HS_TRACKING_REGION : '';
+    printf(
+        '<script type="text/javascript" id="hs-script-loader" async defer src="//js%s.hs-scripts.com/%s.js"></script>' . "\n",
+        esc_attr($sub),
+        esc_attr(MFS_HS_TRACKING_ID)
+    );
+}, 20);
+
+// Keep WP Rocket from delaying/deferring the HubSpot loader so hubspotutk is set
+// before a visitor can submit a form.
+add_filter('rocket_delay_js_exclusions', function ($e) {
+    $e[] = 'hs-scripts.com'; $e[] = 'hs-analytics.net'; $e[] = 'hsforms';
+    return $e;
+});
+add_filter('rocket_exclude_defer_js', function ($e) {
+    $e[] = 'hs-scripts.com';
+    return $e;
+});
+
 // End Enqueue Scripts and Styles
 
 //  Add assets

@@ -234,6 +234,19 @@ function initQuiz() {
           if (ans[k]) fd.append(LABELS[k] || k, ans[k]);
         });
       }
+      fd.append('lead_event', 'lead_form');
+      fd.append('form_name', 'quiz');
+      fd.append('form_type', 'quiz');
+      (function (f) {
+        try {
+          var ck = function (n) { return (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || ''; };
+          var m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
+          if (m) f.set('ga_client_id', m[1]);
+          var utk = ck('hubspotutk'); if (utk) f.set('hubspotutk', utk);
+          var gc = new URLSearchParams(location.search).get('gclid') || ((ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '');
+          if (gc) f.set('gclid', gc);
+        } catch (e) {}
+      })(fd);
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'lead_form', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch });
