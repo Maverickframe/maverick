@@ -7,3 +7,5 @@ packaged
 .env
 build
 old/
+# HubSpot CRM token — kept out of git (push protection); set via wp-config on server
+forms/hubspot-credentials.php
