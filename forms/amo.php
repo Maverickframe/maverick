@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/hubspot.php';
 $creds = require __DIR__ . '/amo-credentials.php';
 $subdomain     = $creds['subdomain'];
 $client_secret = $creds['client_secret'];
@@ -14,7 +15,7 @@ $messageRaw = (string) ($_POST['Message'] ?? '');
 
 // Generic capture: append any extra form fields (Company, Role, Budget, Files link, etc.)
 // to the message so new lead magnets need NO per-form handler code — just pass extra fields.
-$knownKeys = ['Name','Phone','WhatsApp','Email','title','tag','Message','utm_source','utm_content','utm_medium','utm_campaign','utm_term','referrerLast','action','_wpnonce'];
+$knownKeys = ['Name','Phone','WhatsApp','Email','title','tag','Message','utm_source','utm_content','utm_medium','utm_campaign','utm_term','referrerLast','action','_wpnonce','lead_event','form_name','form_type','hubspotutk','ga_client_id','gclid'];
 $extraLines = [];
 foreach ($_POST as $fieldKey => $fieldVal) {
     if (in_array($fieldKey, $knownKeys, true)) { continue; }
@@ -28,6 +29,19 @@ if ($extraLines) {
 }
 
 $message = htmlspecialchars($messageRaw, ENT_NOQUOTES,'UTF-8');
+
+// HubSpot (parallel to amoCRM, fire-and-forget). Uses RAW values, runs
+// independently so it fires even if the amo path below dies.
+mfs_hubspot_submit([
+    'email'      => trim((string) ($_POST['Email'] ?? '')),
+    'phone'      => trim((string) ($_POST['Phone'] ?? $_POST['WhatsApp'] ?? '')),
+    'firstname'  => trim((string) ($_POST['Name'] ?? '')),
+    'message'    => $messageRaw,
+    'form_name'  => trim((string) ($_POST['form_name'] ?? '')),
+    'lead_event' => trim((string) ($_POST['lead_event'] ?? '')),
+    'form_page'  => trim((string) ($_POST['title'] ?? '')),
+]);
+
 $dealName = 'maverickframe.com ' . $target . ' – ' . $name . ' '. $phone . ' '.  $email; //Название создаваемой сделки
 $dealTags = 'maverickframecom';  //Теги для сделки
 

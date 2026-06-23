@@ -147,6 +147,18 @@ include "inc.vite.php";
 require_once __DIR__ . '/forms/book-call-handler.php';
 require_once __DIR__ . '/inc.tour.php';
 
+// HubSpot tracking is installed via the official HubSpot WP plugin (leadin),
+// not the theme (EU region handled by the plugin). Keep WP Rocket from delaying/
+// deferring the HubSpot loader so hubspotutk is set before a visitor submits.
+add_filter('rocket_delay_js_exclusions', function ($e) {
+    $e[] = 'hs-scripts.com'; $e[] = 'hs-analytics.net'; $e[] = 'hsforms';
+    return $e;
+});
+add_filter('rocket_exclude_defer_js', function ($e) {
+    $e[] = 'hs-scripts.com';
+    return $e;
+});
+
 // End Enqueue Scripts and Styles
 
 //  Add assets

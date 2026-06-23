@@ -111,6 +111,19 @@ function initCalculator() {
       fd.append('Add-ons', selections().join(', ') || 'None');
       fd.append('Model', modelMult === 1 ? 'One-off' : 'Subscription');
       fd.append('Estimate', mfcMoney(r.low) + ' - ' + mfcMoney(r.high));
+      fd.append('lead_event', 'lead_form');
+      fd.append('form_name', 'calculator');
+      fd.append('form_type', 'calculator');
+      (function (f) {
+        try {
+          var ck = function (n) { return (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || ''; };
+          var m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
+          if (m) f.set('ga_client_id', m[1]);
+          var utk = ck('hubspotutk'); if (utk) f.set('hubspotutk', utk);
+          var gc = new URLSearchParams(location.search).get('gclid') || ((ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '');
+          if (gc) f.set('gclid', gc);
+        } catch (e) {}
+      })(fd);
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'lead_form', form_name: 'calculator', form_type: 'calculator' });

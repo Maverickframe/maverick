@@ -8,6 +8,8 @@
 
 if (!defined('ABSPATH')) exit;
 
+require_once __DIR__ . '/hubspot.php';
+
 add_action('wp_ajax_mfs_book_call', 'mfs_book_call_handler');
 add_action('wp_ajax_nopriv_mfs_book_call', 'mfs_book_call_handler');
 
@@ -64,6 +66,18 @@ function mfs_book_call_handler() {
     $crmText .= " | duration: {$duration} min";
     if ($pageUrl) $crmText .= " | page: {$pageUrl}";
     mfs_amo_create_booking($name, $email, $whatsapp, $crmText, $pageUrl);
+
+    // HubSpot (parallel to amoCRM, fire-and-forget).
+    mfs_hubspot_submit([
+        'email'      => $email,
+        'phone'      => $whatsapp,
+        'firstname'  => $name,
+        'message'    => $crmText,
+        'form_name'  => 'book_call',
+        'lead_event' => 'book_call',
+        'form_page'  => $pageUrl,
+        'page_uri'   => $pageUrl,
+    ]);
 
     // 2) email the visitor an invite
     $icsPath = trailingslashit(get_temp_dir()) . 'mfs-invite-' . wp_generate_password(8, false) . '.ics';
