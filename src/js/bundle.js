@@ -23,6 +23,7 @@ import './components/sliders';
 import './components/tabs';
 import './components/toc';
 import './components/videoPlay';
+import './components/workflow-dot-snap';
 import './components/visualResultsGallery';
 import './components/select';
 

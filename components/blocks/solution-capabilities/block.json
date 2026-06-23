@@ -1,0 +1,16 @@
+{
+  "name": "acf/solution-capabilities",
+  "title": "Solution Capabilities (carousel)",
+  "description": "Solutions page capabilities carousel of cards",
+  "category": "layout",
+  "icon": "images-alt2",
+  "keywords": ["solution", "capabilities", "carousel"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "solution-capabilities.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

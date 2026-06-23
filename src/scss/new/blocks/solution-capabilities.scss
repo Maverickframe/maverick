@@ -1,0 +1,227 @@
+@import "../common/_vars";
+
+.sol-cap {
+    padding: toRem(40) 0;
+    background: #f6f6f6;
+
+    @media (min-width: $md) {
+        padding: toRem(100) 0;
+    }
+}
+
+.sol-cap__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: toRem(20);
+    max-width: toRem(820);
+    margin: 0 0 toRem(40);
+
+    @media (min-width: $md) {
+        // centered on desktop, left-aligned on mobile (per Figma mobile)
+        align-items: center;
+        text-align: center;
+        margin: 0 auto toRem(60);
+    }
+}
+
+.sol-cap__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(8);
+    padding: toRem(8) toRem(16);
+    border: 1px solid rgba(45, 64, 174, 0.6);
+    background: rgba(45, 64, 174, 0.05);
+    border-radius: toRem(2);
+    font-size: toRem(12);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--accent-color);
+}
+
+.sol-cap__dot {
+    flex: 0 0 auto;
+    width: toRem(8);
+    height: toRem(8);
+    border-radius: 50%;
+    background: var(--accent-color);
+}
+
+.sol-cap__title {
+    // Match the homepage showreel H2 exactly (global h2 ramp: 22 → 40 → 48).
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--black-color);
+    font-size: toRem(22);
+
+    @media (min-width: $md) {
+        font-size: toRem(40);
+        line-height: 1.2;
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(48);
+    }
+}
+
+.sol-cap__subtext {
+    // Match the homepage showreel description (14 → 16 at $lg).
+    color: var(--text-grey-color);
+    font-size: toRem(14);
+    line-height: 1.4;
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.sol-cap__track-wrap {
+    overflow: hidden;
+}
+
+.sol-cap__card {
+    position: relative;
+    height: toRem(440);
+    display: flex;
+    flex-direction: column;
+    padding: toRem(24);
+    border-radius: toRem(4);
+    overflow: hidden;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+    color: var(--white-color);
+
+    @media (min-width: $md) {
+        height: toRem(600);
+        padding: toRem(30);
+    }
+}
+
+// Drag cursor for the infinite slider
+.sol-cap__slider {
+    cursor: grab;
+
+    &.is-dragging {
+        cursor: grabbing;
+    }
+}
+
+.sol-cap__card-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 75%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0) 100%);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    // Feather the blur edge so it doesn't cut sharply into the unblurred image —
+    // the mask fades the whole layer (gradient + backdrop blur) out toward the top.
+    -webkit-mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.sol-cap__chips {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(8);
+    margin-bottom: auto;
+    opacity: 0;
+    transform: translateY(toRem(-8));
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sol-cap__chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: toRem(8) toRem(16);
+    border-radius: toRem(100);
+    background: #c9d7fb;
+    color: #3c4059;
+    font-size: toRem(12);
+    line-height: 1.4;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.sol-cap__card-body {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    opacity: 0;
+    transform: translateY(toRem(12));
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sol-cap__card:hover,
+.sol-cap__card:focus-within {
+    .sol-cap__card-overlay,
+    .sol-cap__chips,
+    .sol-cap__card-body {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sol-cap__card-title {
+    // Match the global H3 ramp (18 → 24 → 32) like the rest of the page.
+    margin: 0 0 toRem(12);
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: toRem(18);
+
+    @media (min-width: $md) {
+        font-size: toRem(24);
+        margin-bottom: toRem(15);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(32);
+    }
+}
+
+.sol-cap__card-desc {
+    margin: 0;
+    font-size: toRem(14);
+    line-height: 1.4;
+
+    @media (min-width: $lg) {
+        font-size: toRem(16);
+    }
+}
+
+.sol-cap__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: toRem(40);
+
+    @media (min-width: $md) {
+        margin-top: toRem(60);
+    }
+}
+
+.sol-cap__all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: toRem(12) toRem(60);
+    border-radius: toRem(2);
+    background: var(--accent-color);
+    color: var(--white-color);
+    font-size: toRem(14);
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}

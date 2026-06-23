@@ -3,10 +3,13 @@
 ?>
 <section class="performance-scale">
     <div class="container container_small">
+<?php $ps_subtitle = get_field('subtitle'); $ps_title = get_field('title'); ?>
+        <?php if ($ps_subtitle || $ps_title) : ?>
         <div class="performance-scale__info">
-            <p class="section-subtitle"><?php the_field('subtitle'); ?></p>
-            <h2><?php the_field('title'); ?></h2>
+            <?php if ($ps_subtitle) : ?><p class="section-subtitle"><?php echo $ps_subtitle; ?></p><?php endif; ?>
+            <?php if ($ps_title) : ?><h2><?php echo $ps_title; ?></h2><?php endif; ?>
         </div>
+        <?php endif; ?>
 
         <div class="performance-scale__items">
             <?php

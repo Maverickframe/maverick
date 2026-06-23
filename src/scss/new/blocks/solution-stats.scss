@@ -1,0 +1,68 @@
+@import "../common/_vars";
+
+.sol-stats {
+    padding: toRem(40) 0;
+
+    @media (min-width: $md) {
+        padding: toRem(100) 0;
+    }
+}
+
+.sol-stats__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: toRem(40);
+
+    @media (min-width: $md) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+    }
+}
+
+.sol-stats__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: toRem(20);
+    padding: 0 toRem(30);
+    text-align: center;
+
+    @media (min-width: $md) {
+        &:not(:last-child) {
+            border-right: 1px solid #dcdcdc;
+        }
+    }
+}
+
+.sol-stats__num {
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--black-color);
+    font-size: toRem(56);
+
+    @media (min-width: $md) {
+        font-size: toRem(72);
+    }
+
+    @media (min-width: $lg) {
+        font-size: toRem(96);
+    }
+}
+
+.sol-stats__sym {
+    color: var(--accent-color);
+}
+
+.sol-stats__label {
+    margin: 0;
+    max-width: toRem(391);
+    color: var(--black-color);
+    font-size: toRem(16);
+    line-height: 1.4;
+
+    @media (min-width: $lg) {
+        font-size: toRem(18);
+    }
+}

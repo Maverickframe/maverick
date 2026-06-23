@@ -1,5 +1,18 @@
 <section class="hero-front">
     <div class="container container_small">
+        <?php if (!is_front_page()) :
+            $hf_crumbs = [1 => ['link' => esc_url(home_url('/')), 'name' => mfs_t('Home', 'Inicio', 'Startseite')]];
+            $hf_pos = 2;
+            // Solutions CPT singles have no page parent — add the section crumb manually.
+            if (is_singular('solutions')) {
+                $hf_crumbs[$hf_pos++] = ['link' => esc_url(home_url('/solutions/')), 'name' => mfs_t('Solutions', 'Soluciones', 'Lösungen')];
+            }
+            foreach (array_reverse(get_post_ancestors(get_the_ID())) as $hf_anc) {
+                $hf_crumbs[$hf_pos++] = ['link' => get_permalink($hf_anc), 'name' => get_the_title($hf_anc)];
+            }
+        ?>
+            <?php echo get_template_part('components/new-design/breadcrumbs', null, ['breadcrumbs' => $hf_crumbs]); ?>
+        <?php endif; ?>
         <div class="hero__main hero-front__main js-reveal">
             <div class="hero-front__titles">
                 <div class="hero-front__subtitle"><?php the_field('subtitle'); ?></div>

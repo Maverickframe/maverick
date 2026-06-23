@@ -555,6 +555,34 @@ if (heroPresentationSlider) {
   splide.mount({ AutoScroll });
 }
 
+const solCapSlider = document.querySelector('.js-sol-cap-slider');
+if (solCapSlider) {
+  const splide = new Splide(solCapSlider, {
+    type: 'loop',
+    drag: 'free',
+    arrows: false,
+    pagination: false,
+    gap: 20,
+    fixedWidth: 455,
+    fixedHeight: 600,
+    flickPower: 300,
+    autoScroll: {
+      speed: 0.6,
+      pauseOnHover: true,
+      pauseOnFocus: false
+    },
+    breakpoints: {
+      768: {
+        fixedWidth: 300,
+        fixedHeight: 440,
+        gap: 16
+      }
+    }
+  });
+
+  splide.mount({ AutoScroll });
+}
+
 const trustedOnePresentationSlider = document.querySelector('.js-presentation-trusted-slider-one');
 if (trustedOnePresentationSlider) {
   const splide = new Splide(trustedOnePresentationSlider, {

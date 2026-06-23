@@ -1,0 +1,16 @@
+{
+  "name": "acf/solution-intro",
+  "title": "Solution Intro (text + video)",
+  "description": "Solutions page intro: text column + video/media column",
+  "category": "layout",
+  "icon": "media-video",
+  "keywords": ["solution", "intro", "video"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "solution-intro.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

@@ -135,6 +135,7 @@ function isNewDesign()
         || is_page_template('templates/template-services.php')
         || is_page_template('templates/template-services-hub.php')
         || is_page_template('templates/template-contacts.php')
+        || is_singular('solutions')
         || is_front_page();
 }
 

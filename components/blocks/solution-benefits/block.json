@@ -1,0 +1,16 @@
+{
+  "name": "acf/solution-benefits",
+  "title": "Solution Benefits (4 cards)",
+  "description": "Solutions page — You won't miss / 4 benefit cards",
+  "category": "layout",
+  "icon": "grid-view",
+  "keywords": ["solution", "benefits", "cards"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "solution-benefits.php"
+  },
+  "supports": {
+    "align": true,
+    "anchor": true
+  }
+}

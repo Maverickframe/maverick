@@ -1,0 +1,67 @@
+<?php
+/**
+ * Block: Solution Capabilities (carousel)
+ * Full-width track. Resting state = image only; chips/title/description reveal on hover.
+ * (Video-on-hover playback comes later — poster image for now.)
+ */
+
+$eyebrow  = get_field('eyebrow') ?: mfs_t('Creative capabilities', 'Capacidades creativas');
+$title    = get_field('title') ?: mfs_t('Production-level support from a creative production studio', 'Soporte a nivel producción de un estudio de producción creativa');
+$subtext  = get_field('subtext') ?: mfs_t('Our creative production services are built for agencies delivering high-volume campaigns, launches, and digital marketing projects.', 'Nuestros servicios de producción creativa están pensados para agencias que ejecutan campañas de gran volumen, lanzamientos y proyectos de marketing digital.');
+$btn_text = get_field('btn_text') ?: mfs_t('All services', 'Todos los servicios');
+$btn_link = get_field('btn_link') ?: '/services/';
+
+// Layout-first hardcoded cards (mirror Figma hover frame 14574:42164). ACF repeater later.
+$cards = array(
+    array('img' => 16176, 'video' => true,  'chips' => array(mfs_t('Exterior rendering', 'Render exterior'), mfs_t('Interior rendering', 'Render interior')),                                            'title' => mfs_t('Exterior & Architectural Rendering', 'Render exterior y arquitectónico'),         'desc' => mfs_t('High-quality architectural rendering used in property marketing campaigns, real estate presentations, and development launches.', 'Render arquitectónico de alta calidad para campañas de marketing inmobiliario, presentaciones de proyectos y lanzamientos de promociones.')),
+    array('img' => 16187, 'video' => false, 'chips' => array(mfs_t('Product showcase', 'Showcase de producto'), mfs_t('Featured products', 'Productos destacados')),                                                'title' => mfs_t('Product Rendering', 'Render de producto'),                          'desc' => mfs_t('High-end product rendering for marketing visuals, product launches, and e-commerce campaigns.', 'Render de producto de alta gama para visuales de marketing, lanzamientos de producto y campañas de ecommerce.')),
+    array('img' => 16712, 'video' => false, 'chips' => array(mfs_t('Pitch deck', 'Pitch deck'), mfs_t('Investor deck', 'Investor deck'), mfs_t('Sales deck', 'Sales deck'), mfs_t('Events & keynotes', 'Eventos y keynotes'), mfs_t('Business presentation', 'Presentación de empresa')), 'title' => mfs_t('Presentation Design', 'Diseño de presentaciones'),                        'desc' => mfs_t('Professional presentation design for client pitches, investor decks, and campaign presentations.', 'Diseño de presentaciones profesional para pitches de clientes, investor decks y presentaciones de campaña.')),
+    array('img' => 17136, 'video' => true,  'chips' => array(mfs_t('Architectural animation', 'Animación arquitectónica'), mfs_t('Animated video', 'Vídeo animado')),                                            'title' => mfs_t('Architectural Animation & Motion Graphics', 'Animación arquitectónica y motion graphics'),  'desc' => mfs_t('Advanced 3D animation and motion graphics used for digital campaigns, landing pages, and promotional videos.', 'Animación 3D y motion graphics avanzados para campañas digitales, landing pages y vídeos promocionales.')),
+    array('img' => 16177, 'video' => false, 'chips' => array(mfs_t('Organic', 'Orgánico'), mfs_t('Concept design', 'Diseño de concepto'), mfs_t('Video', 'Vídeo')),                                                    'title' => mfs_t('Social Media Creative', 'Creatividades para redes sociales'),                      'desc' => mfs_t('High-performing social media creative assets designed for modern campaign distribution across digital platforms.', 'Creatividades para redes sociales de alto rendimiento, diseñadas para la distribución de campañas en plataformas digitales.')),
+    array('img' => 15238, 'video' => false, 'chips' => array(mfs_t('UI/UX design', 'Diseño UI/UX'), mfs_t('Web design', 'Diseño web'), mfs_t('Landing page', 'Landing page'), mfs_t('Design system', 'Design system')),                           'title' => mfs_t('Web & Landing Page Design', 'Diseño web y de landing pages'),                  'desc' => mfs_t('Conversion-driven landing page design built around campaign messaging and visual storytelling.', 'Diseño de landing pages orientado a conversión, construido en torno al mensaje de campaña y el storytelling visual.')),
+);
+?>
+<section class="sol-cap">
+    <div class="container">
+        <div class="sol-cap__head">
+            <span class="sol-cap__eyebrow"><span class="sol-cap__dot"></span><?php echo esc_html($eyebrow); ?></span>
+            <h2 class="sol-cap__title"><?php echo esc_html($title); ?></h2>
+            <p class="sol-cap__subtext"><?php echo esc_html($subtext); ?></p>
+        </div>
+    </div>
+
+    <div class="sol-cap__track-wrap">
+        <div class="splide sol-cap__slider js-sol-cap-slider" role="group" aria-label="Creative capabilities">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <?php foreach ($cards as $c) :
+                        $url = $c['img'] ? wp_get_attachment_image_url($c['img'], 'large') : '';
+                    ?>
+                        <li class="splide__slide sol-cap__card<?php echo !empty($c['video']) ? ' sol-cap__card--video' : ''; ?>"<?php echo $url ? ' style="background-image:url(\'' . esc_url($url) . '\')"' : ''; ?>>
+                            <span class="sol-cap__card-overlay" aria-hidden="true"></span>
+                            <?php if (!empty($c['chips'])) : ?>
+                                <div class="sol-cap__chips">
+                                    <?php foreach ($c['chips'] as $chip) : ?>
+                                        <span class="sol-cap__chip"><?php echo esc_html($chip); ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="sol-cap__card-body">
+                                <h3 class="sol-cap__card-title"><?php echo esc_html($c['title']); ?></h3>
+                                <p class="sol-cap__card-desc"><?php echo esc_html($c['desc']); ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <?php if ($btn_text) : ?>
+        <div class="container">
+            <div class="sol-cap__footer">
+                <a href="<?php echo esc_url($btn_link); ?>" class="sol-cap__all"><?php echo esc_html($btn_text); ?></a>
+            </div>
+        </div>
+    <?php endif; ?>
+</section>
