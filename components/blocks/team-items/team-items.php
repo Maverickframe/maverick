@@ -1,3 +1,13 @@
+<?php
+    // Hide the Team section when it has no members to show. On /de/ case pages
+    // Polylang filters out the English team (no German translations yet), which
+    // would otherwise render an empty heading. Per product decision we also drop
+    // the Team block on German success-stories entirely for now. EN/ES pages with
+    // a populated team render unchanged.
+    if ( empty( get_field('items') ) || ( mfs_is('de') && is_singular('success-stories') ) ) {
+        return;
+    }
+?>
 <section class="team-items">
     <div class="container">
         <?php if (get_field('description')): ?>
