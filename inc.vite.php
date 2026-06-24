@@ -138,33 +138,7 @@ add_action('enqueue_block_editor_assets', function () {
     }
 });
 
-// Services Hub (build phase): the hub reuses blocks from several pages, whose
-// styles live in different page bundles. Load the extra compiled bundles so all
-// blocks render correctly while we lay the page out. Trim to a dedicated hub
-// bundle before go-live for performance.
-add_action('wp_enqueue_scripts', function () {
-    if (!is_page_template('templates/template-services-hub.php')) return;
-    if (defined('IS_VITE_DEVELOPMENT') && IS_VITE_DEVELOPMENT == true) return;
-
-    $manifest_path = get_template_directory() . '/' . DIST_DEF . '/.vite/manifest.json';
-    if (!file_exists($manifest_path)) return;
-
-    $manifest = json_decode(file_get_contents($manifest_path), true);
-    if (!is_array($manifest)) return;
-
-    $extra_bundles = array(
-        'src/scss/bundles/services.scss',
-        'src/scss/bundles/cases.scss',
-    );
-
-    foreach ($extra_bundles as $i => $bundle_key) {
-        if (isset($manifest[$bundle_key]['file'])) {
-            wp_enqueue_style(
-                'hub-extra-' . $i,
-                get_template_directory_uri() . '/' . DIST_DEF . '/' . $manifest[$bundle_key]['file'],
-                array('style'),
-                null
-            );
-        }
-    }
-}, 20);
+// Services Hub: previously loaded extra service+case bundles because cases.scss
+// didn't carry the hub's blocks. cases.scss now includes the hub blocks
+// (hero-front, what-we-do, performance-scale, reviews, worldwide-rendering,
+// breadcrumbs), so the temporary extra-bundle load is no longer needed.

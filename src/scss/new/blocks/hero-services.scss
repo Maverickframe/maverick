@@ -222,7 +222,10 @@
 
 .hero__btns {
     display: grid;
-    grid-template-columns: repeat(2, toRem(165));
+    // Mobile: two fluid columns that shrink to fit the viewport. The old fixed
+    // repeat(2, 165px) (~345px with the gap) overflowed narrow phones. minmax(0,1fr)
+    // lets the columns shrink below their content size so they never overflow.
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: toRem(15);
 
     @media (min-width: $md) {

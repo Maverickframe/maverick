@@ -1,6 +1,8 @@
 <section class="hero-front">
     <div class="container container_small">
-        <?php if (!is_front_page()) :
+        <?php // Services hub hero uses an eyebrow chip in the same spot — the absolute-positioned
+              // breadcrumb overlapped it, so skip breadcrumbs on the services-hub template.
+              if (!is_front_page() && !is_page_template('templates/template-services-hub.php')) :
             $hf_crumbs = [1 => ['link' => esc_url(home_url('/')), 'name' => mfs_t('Home', 'Inicio', 'Startseite')]];
             $hf_pos = 2;
             // Solutions CPT singles have no page parent — add the section crumb manually.
