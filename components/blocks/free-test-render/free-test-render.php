@@ -117,11 +117,11 @@ $ftr_cond_default = [
                     <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('I am a', 'Soy', 'Ich bin') ); ?></span>
                     <select name="Role">
                         <option value="" disabled selected><?php echo esc_html( mfs_t('I am a…', 'Soy…', 'Ich bin…') ); ?></option>
-                        <option>Architect / design studio</option>
-                        <option>Real estate developer</option>
-                        <option>Product or e-commerce brand</option>
-                        <option>Marketing team or agency</option>
-                        <option>Other</option>
+                        <option value="Architect / design studio"><?php echo esc_html( mfs_t('Architect / design studio', 'Arquitecto / estudio de diseño', 'Architekt / Designstudio') ); ?></option>
+                        <option value="Real estate developer"><?php echo esc_html( mfs_t('Real estate developer', 'Promotora inmobiliaria', 'Immobilienentwickler') ); ?></option>
+                        <option value="Product or e-commerce brand"><?php echo esc_html( mfs_t('Product or e-commerce brand', 'Marca de producto o e-commerce', 'Produkt- oder E-Commerce-Marke') ); ?></option>
+                        <option value="Marketing team or agency"><?php echo esc_html( mfs_t('Marketing team or agency', 'Equipo o agencia de marketing', 'Marketing-Team oder Agentur') ); ?></option>
+                        <option value="Other"><?php echo esc_html( mfs_t('Other', 'Otro', 'Sonstige') ); ?></option>
                     </select>
                 </label>
 
@@ -129,12 +129,12 @@ $ftr_cond_default = [
                     <span class="cta-form__label sr-only"><?php echo esc_html( mfs_t('Project type', 'Tipo de proyecto', 'Projektart') ); ?></span>
                     <select name="Project type">
                         <option value="" disabled selected><?php echo esc_html( mfs_t('Project type', 'Tipo de proyecto', 'Projektart') ); ?></option>
-                        <option>Exterior</option>
-                        <option>Interior</option>
-                        <option>Product</option>
-                        <option>Aerial</option>
-                        <option>Animation</option>
-                        <option>Other</option>
+                        <option value="Exterior"><?php echo esc_html( mfs_t('Exterior', 'Exterior', 'Exterieur') ); ?></option>
+                        <option value="Interior"><?php echo esc_html( mfs_t('Interior', 'Interior', 'Interieur') ); ?></option>
+                        <option value="Product"><?php echo esc_html( mfs_t('Product', 'Producto', 'Produkt') ); ?></option>
+                        <option value="Aerial"><?php echo esc_html( mfs_t('Aerial', 'Aérea', 'Luftaufnahme') ); ?></option>
+                        <option value="Animation"><?php echo esc_html( mfs_t('Animation', 'Animación', 'Animation') ); ?></option>
+                        <option value="Other"><?php echo esc_html( mfs_t('Other', 'Otro', 'Sonstige') ); ?></option>
                     </select>
                 </label>
 

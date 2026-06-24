@@ -90,7 +90,7 @@
                                 <?php echo $desc; ?>
                             </div>
     
-                            <button class="js-desc-more design-services-item__more-btn" type="button">More</button>
+                            <button class="js-desc-more design-services-item__more-btn" type="button"><?php echo mfs_t('More', 'Más', 'Mehr'); ?></button>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                         <span class="design-services-item__btn-icon">
                             <?php echo inline_svg('icons/expand.svg'); ?>
                         </span>
-                        <span class="design-services-item__btn-title">Expand</span>
+                        <span class="design-services-item__btn-title"><?php echo mfs_t('Expand', 'Ampliar', 'Vergrößern'); ?></span>
                     </button>
                     <?php endif; ?>
                 </div>

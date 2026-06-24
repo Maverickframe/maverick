@@ -32,7 +32,7 @@
                                             <div>
                                                 <div class="js-desc-text selective-works-item__desc"><?php echo $desc; ?></div>
     
-                                                <button class="js-desc-more selective-works-item__more-btn" type="button">More</button>
+                                                <button class="js-desc-more selective-works-item__more-btn" type="button"><?php echo mfs_t('More', 'Más', 'Mehr'); ?></button>
                                             </div>
                                         </div>
 

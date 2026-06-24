@@ -12,7 +12,7 @@ if( $cases ): ?>
                 <p class="similar-cases__desc"><?php echo mfs_t('Explore campaigns where our team delivered product rendering, 3D animation, and digital content production for marketing launches.', 'Explora campañas donde nuestro equipo entregó render de producto, animación 3D y producción de contenido digital para lanzamientos de marketing.'); ?></p>
             </div>
         <?php else : ?>
-            <p class="section-subtitle">Explore Similar Real Estate Cases</p>
+            <p class="section-subtitle"><?php echo mfs_t('Explore Similar Real Estate Cases', 'Explora casos inmobiliarios similares', 'Ähnliche Immobilien-Referenzen entdecken'); ?></p>
         <?php endif; ?>
 
         <div class="similar-cases__items js-reveal">

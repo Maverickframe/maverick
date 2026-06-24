@@ -41,7 +41,7 @@
 
         <div class="completeness-visual__cta">
             <?php echo inline_svg('icons/messages.svg'); ?>
-            <?php echo get_field('cta_text') ?? "Need help figuring out your render type? Let's chat!"; ?>
+            <?php echo get_field('cta_text') ?: mfs_t("Need help figuring out your render type? Let's chat!", "¿No sabes qué tipo de render necesitas? ¡Hablemos!", "Unsicher, welcher Render-Typ der richtige ist? Lass uns sprechen!"); ?>
 
             <button class="btn-main js-modal-open" data-modal="book" type="button">
                 <?php echo mfs_t('Book a call', 'Reservar una llamada', 'Beratung buchen'); ?>

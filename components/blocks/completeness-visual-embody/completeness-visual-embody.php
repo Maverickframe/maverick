@@ -33,7 +33,7 @@
                                 <?php echo $desc; ?>
                             </div>
     
-                            <button class="js-desc-more completeness-visual-embody-item__more-btn" type="button">More</button>
+                            <button class="js-desc-more completeness-visual-embody-item__more-btn" type="button"><?php echo mfs_t('More', 'Más', 'Mehr'); ?></button>
                         </div>
                     </div>
                 </div>

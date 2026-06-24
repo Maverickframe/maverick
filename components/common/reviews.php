@@ -45,7 +45,7 @@
                                             </div>
 
                                             <?php if($link): ?>
-                                                <a href="<?php echo $link; ?>" target="_blank" rel="nofollow noopener">More</a>
+                                                <a href="<?php echo $link; ?>" target="_blank" rel="nofollow noopener"><?php echo mfs_t('More', 'Más', 'Mehr'); ?></a>
                                             <?php endif; ?>
                                         </div>
     
