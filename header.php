@@ -61,8 +61,18 @@ $classes = trim($classes);
 
     <?php wp_head(); ?>
 
-    <?php if (get_field('common_schema', 'options')): ?>
-        <script type="application/ld+json"><?= get_field('common_schema', 'options'); ?></script>
+    <?php if ($mfs_common_schema = get_field('common_schema', 'options')): ?>
+        <?php
+        // common_schema is a single global JSON-LD string (WebSite node) with a
+        // hardcoded inLanguage of en-GB. Localize it to the current Polylang
+        // language at render time so /de/ and /es/ emit the right language signal.
+        // EN keeps en-GB (no replacement). Whitespace-tolerant regex.
+        $mfs_schema_lang = mfs_t('en-GB', 'es-ES', 'de'); // EN→en-GB, ES→es-ES, DE→de
+        if ($mfs_schema_lang !== 'en-GB') {
+            $mfs_common_schema = preg_replace('/("inLanguage"\s*:\s*)"en-GB"/', '$1"' . $mfs_schema_lang . '"', $mfs_common_schema);
+        }
+        ?>
+        <script type="application/ld+json"><?= $mfs_common_schema; ?></script>
     <?php endif; ?>
 
     <?php if (get_field('schema_org')): ?>
