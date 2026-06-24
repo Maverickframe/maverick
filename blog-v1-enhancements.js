@@ -12,8 +12,12 @@
 (function () {
     'use strict';
 
-    // Language flag: true on /es/ pages (html lang="es" / "es-ES").
-    var MFS_ES = document.documentElement.lang.toLowerCase().indexOf('es') === 0;
+    // Language flags from <html lang> ("es"/"es-ES", "de"/"de-DE").
+    var MFS_LANG = document.documentElement.lang.toLowerCase();
+    var MFS_ES = MFS_LANG.indexOf('es') === 0;
+    var MFS_DE = MFS_LANG.indexOf('de') === 0;
+    // Pick the EN/ES/DE string for the current language (EN is the default).
+    function mfsT(en, es, de) { return MFS_DE ? de : (MFS_ES ? es : en); }
 
     function init() {
         initProgressBar();
@@ -208,6 +212,43 @@
             }
         ];
 
+        // German baked defaults (used on /de/ posts that have no per-post in_article_ctas).
+        if (MFS_DE) {
+            defaults = [
+                {
+                    eyebrow: 'NEU HIER?',
+                    head: 'Sehen Sie unsere neuesten fotorealistischen 3D-Renderings.',
+                    label: 'Portfolio ansehen',
+                    url: '/de/galerie/'
+                },
+                {
+                    eyebrow: 'RESSOURCE',
+                    head: 'Die einseitige Brief-Vorlage, mit der wir CGI-Projekte planen.',
+                    label: 'PDF herunterladen',
+                    url: '/contacts/'
+                },
+                {
+                    eyebrow: 'FALLSTUDIE',
+                    head: 'Wie unsere Visuals einer Marke geholfen haben, schneller zu verkaufen — sehen Sie die Zahlen.',
+                    label: 'Fallstudie lesen',
+                    url: '/de/referenzen/'
+                },
+                {
+                    eyebrow: 'VERGLEICH',
+                    head: 'CGI vs. Fotografie — Kosten, Tempo und Flexibilität im direkten Vergleich.',
+                    label: 'Vergleich ansehen',
+                    url: '/de/blog/'
+                },
+                {
+                    eyebrow: 'SPRICH MIT UNS',
+                    head: 'Arbeitest du an einem ähnlichen Projekt? Schauen wir es uns gemeinsam an.',
+                    label: '15-Min-Gespräch buchen',
+                    url: '#book',
+                    modal: true
+                }
+            ];
+        }
+
         var source = (window.mfsBlogCtas && window.mfsBlogCtas.length) ? window.mfsBlogCtas : defaults;
         var ctas = source.map(function (c, i) {
             return {
@@ -362,7 +403,7 @@
             var overlay = document.createElement('div');
             overlay.className = 'blog-lightbox';
             overlay.innerHTML =
-                '<button type="button" class="blog-lightbox__close" aria-label="' + (MFS_ES ? 'Cerrar' : 'Close') + '">×</button>' +
+                '<button type="button" class="blog-lightbox__close" aria-label="' + mfsT('Close', 'Cerrar', 'Schließen') + '">×</button>' +
                 '<img class="blog-lightbox__img" src="' + escapeHtml(src) + '" alt="">' +
                 (caption ? '<div class="blog-lightbox__caption">' + escapeHtml(caption) + '</div>' : '');
             document.body.appendChild(overlay);
@@ -413,9 +454,9 @@
             // Time remaining (round up so we never show "0 min")
             var remaining = Math.max(0, Math.ceil(totalMin * (1 - ratio)));
             if (remaining === 0) {
-                timeEl.textContent = MFS_ES ? 'Terminado' : 'Finished';
+                timeEl.textContent = mfsT('Finished', 'Terminado', 'Fertig');
             } else {
-                timeEl.textContent = remaining + (MFS_ES ? ' min restantes' : ' min remaining');
+                timeEl.textContent = remaining + mfsT(' min remaining', ' min restantes', ' Min. übrig');
             }
 
             // Current section (which heading just crossed the trigger line)
@@ -430,11 +471,13 @@
                     }
                 }
                 if (idx === 0) {
-                    sectionEl.textContent = MFS_ES ? 'Inicio' : 'Start';
+                    sectionEl.textContent = mfsT('Start', 'Inicio', 'Start');
                 } else {
-                    sectionEl.textContent = MFS_ES
-                        ? ('Sección ' + idx + ' de ' + totalSections)
-                        : ('Section ' + idx + ' of ' + totalSections);
+                    sectionEl.textContent = MFS_DE
+                        ? ('Abschnitt ' + idx + ' von ' + totalSections)
+                        : (MFS_ES
+                            ? ('Sección ' + idx + ' de ' + totalSections)
+                            : ('Section ' + idx + ' of ' + totalSections));
                 }
             }
         }
