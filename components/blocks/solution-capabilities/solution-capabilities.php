@@ -9,7 +9,13 @@ $eyebrow  = get_field('eyebrow') ?: mfs_t('Creative capabilities', 'Capacidades 
 $title    = get_field('title') ?: mfs_t('Production-level support from a creative production studio', 'Soporte a nivel producción de un estudio de producción creativa', 'Produktionsstarke Unterstützung von einem Kreativproduktionsstudio');
 $subtext  = get_field('subtext') ?: mfs_t('Our creative production services are built for agencies delivering high-volume campaigns, launches, and digital marketing projects.', 'Nuestros servicios de producción creativa están pensados para agencias que ejecutan campañas de gran volumen, lanzamientos y proyectos de marketing digital.', 'Unsere Kreativproduktions-Leistungen sind für Agenturen gemacht, die Kampagnen mit hohem Volumen, Launches und digitale Marketing-Projekte umsetzen.');
 $btn_text = get_field('btn_text') ?: mfs_t('All services', 'Todos los servicios', 'Alle Leistungen');
-$btn_link = get_field('btn_link') ?: '/services/';
+// The "All services" CTA points at the services hub. On /de/ that hub is /de/leistungen/
+// (a saved English '/services/' value would otherwise leak through), so force the DE URL there.
+if ( function_exists('mfs_is') && mfs_is('de') ) {
+    $btn_link = home_url('/de/leistungen/');
+} else {
+    $btn_link = get_field('btn_link') ?: '/services/';
+}
 
 // Layout-first hardcoded cards (mirror Figma hover frame 14574:42164). ACF repeater later.
 $cards = array(

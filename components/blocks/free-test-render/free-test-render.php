@@ -163,7 +163,7 @@ $ftr_cond_default = [
 
             <div class="cta-form__privacy free-test-render__privacy">
                 <?php
-                $ftr_pp_url = ( function_exists('get_privacy_policy_url') && get_privacy_policy_url() ) ? get_privacy_policy_url() : home_url('/privacy-policy/');
+                $ftr_pp_url = function_exists('mfs_privacy_url') ? mfs_privacy_url() : ( ( function_exists('get_privacy_policy_url') && get_privacy_policy_url() ) ? get_privacy_policy_url() : home_url('/privacy-policy/') );
                 printf(
                     esc_html( mfs_t('By submitting, you agree to our %s.', 'Al enviar, aceptas nuestra %s.', 'Mit dem Absenden stimmen Sie unserer %s zu.') ),
                     '<a href="' . esc_url( $ftr_pp_url ) . '">' . esc_html( mfs_t('Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung') ) . '</a>'

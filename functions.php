@@ -83,9 +83,115 @@ if ( ! function_exists('mfs_consent') ) {
         if ( $target !== null ) {
             // Match flexibly: the stored text uses non-breaking spaces (U+00A0) in places.
             $pattern = '/' . str_replace( ' ', '[\s\x{00A0}]+', preg_quote( $en, '/' ) ) . '/u';
-            return preg_replace( $pattern, $target, $html );
+            $html = preg_replace( $pattern, $target, $html );
+            // The consent string also carries an English "Privacy Policy" anchor pointing at
+            // /privacy-policy/. Localize both the URL (Polylang privacy page) and the link text
+            // on ES/DE so the modal/cta consent doesn't leak the English legal page. (EN untouched.)
+            if ( function_exists( 'mfs_privacy_url' ) ) {
+                $pp_url = mfs_privacy_url();
+                $html = preg_replace( '/(href=")[^"]*privacy[^"]*(")/i', '${1}' . esc_url( $pp_url ) . '${2}', $html );
+            }
+            $html = str_ireplace( 'Privacy Policy', mfs_t( 'Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung' ), $html );
+            return $html;
         }
         return $html;
+    }
+}
+
+// Multilingual privacy-policy URL. WordPress' wp_page_for_privacy_policy option points at the
+// unused default draft, so resolve the real published page instead: DE has its own
+// Datenschutzerklärung (20457); ES has no privacy page yet → falls back to the English one.
+if ( ! function_exists( 'mfs_privacy_url' ) ) {
+    function mfs_privacy_url() {
+        if ( function_exists( 'mfs_is' ) && mfs_is( 'de' ) ) {
+            $u = get_permalink( 20457 );
+            return $u ? $u : home_url( '/de/datenschutzerklaerung/' );
+        }
+        $p = get_page_by_path( 'privacy-policy' );
+        if ( $p ) {
+            $u = get_permalink( $p->ID );
+            if ( $u ) {
+                return $u;
+            }
+        }
+        return home_url( '/privacy-policy/' );
+    }
+}
+
+// DE mega-menu, defined in code (git) instead of the per-language ACF options repeater.
+// The `menu_items_de` repeater had drifted to 2 items with the wrong structural keynames
+// (`leistungen`/`referenzen` instead of the canonical `services`/`solutions`), which broke the
+// dropdowns and the catalog CTA. Keeping the DE menu in the theme makes it version-controlled,
+// inherits future pages, and leaves the live EN (`menu_items`) / ES (`menu_items_es`) menus
+// untouched — they keep rendering from ACF. Rows match the shape menu-item.php expects.
+// Service link titles are short DE labels (mirrors the EN menu's custom titles, not the full
+// SEO post titles); this menu only ever renders on /de/. Links are post IDs → get_permalink
+// returns the correct lowercase DE URL via Polylang.
+if ( ! function_exists( 'mfs_menu_rows_de' ) ) {
+    function mfs_menu_rows_de() {
+        return array(
+            // Leistungen — services mega-dropdown (14 live DE services in 3 groups) + index.
+            array(
+                'keyname'       => 'services',
+                'label'         => 'Leistungen',
+                'desktop_label' => 'Alle Leistungen',
+                'permalink'     => get_permalink( 20757 ), // /de/leistungen/
+                'groups_links'  => array(
+                    array(
+                        'title' => 'Architektur & Immobilien',
+                        'link'  => '',
+                        'links' => array(
+                            array( 'title' => 'Architekturvisualisierung', 'link' => 20450 ),
+                            array( 'title' => 'Immobilien-Visualisierung', 'link' => 20454 ),
+                            array( 'title' => 'Innenraumvisualisierung',   'link' => 20448 ),
+                            array( 'title' => '3D-Grundriss',              'link' => 20632 ),
+                            array( 'title' => '3D-Architektur-Animation',  'link' => 20643 ),
+                        ),
+                    ),
+                    array(
+                        'title' => 'Produkt',
+                        'link'  => '',
+                        'links' => array(
+                            array( 'title' => '3D-Produktvisualisierung', 'link' => 20621 ),
+                            array( 'title' => '3D-Produktanimation',      'link' => 20655 ),
+                        ),
+                    ),
+                    array(
+                        'title' => 'Digital & Kreativ',
+                        'link'  => '',
+                        'links' => array(
+                            array( 'title' => 'Webdesign',           'link' => 20663 ),
+                            array( 'title' => 'UX/UI-Design',        'link' => 20662 ),
+                            array( 'title' => 'Landingpage',         'link' => 20664 ),
+                            array( 'title' => 'App-Design',          'link' => 20665 ),
+                            array( 'title' => 'Corporate Design',    'link' => 20661 ),
+                            array( 'title' => 'Social-Media-Design', 'link' => 20660 ),
+                            array( 'title' => 'Präsentationsdesign', 'link' => 20666 ),
+                        ),
+                    ),
+                ),
+            ),
+            // Lösungen — solutions dropdown (currently one audience landing; no archive index).
+            array(
+                'keyname'       => 'solutions',
+                'label'         => 'Lösungen',
+                'desktop_label' => '',
+                'permalink'     => null,
+                'groups_links'  => array(
+                    array(
+                        'title' => 'Für Marketing-Agenturen',
+                        'link'  => 20784, // /de/loesungen/marketing-agenturen/
+                        'links' => array(),
+                    ),
+                ),
+            ),
+            // Simple top-level links.
+            array( 'keyname' => 'referenzen', 'label' => 'Referenzen', 'desktop_label' => '', 'permalink' => get_permalink( 20577 ), 'groups_links' => array() ),
+            array( 'keyname' => 'blog',       'label' => 'Blog',       'desktop_label' => '', 'permalink' => get_permalink( 20595 ), 'groups_links' => array() ),
+            array( 'keyname' => 'team',       'label' => 'Team',       'desktop_label' => '', 'permalink' => get_permalink( 20755 ), 'groups_links' => array() ),
+            array( 'keyname' => 'galerie',    'label' => 'Galerie',    'desktop_label' => '', 'permalink' => get_permalink( 20751 ), 'groups_links' => array() ),
+            array( 'keyname' => 'kontakt',    'label' => 'Kontakt',    'desktop_label' => '', 'permalink' => get_permalink( 20750 ), 'groups_links' => array() ),
+        );
     }
 }
 

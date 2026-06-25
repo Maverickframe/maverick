@@ -3,11 +3,16 @@
         <?php // Services hub hero uses an eyebrow chip in the same spot — the absolute-positioned
               // breadcrumb overlapped it, so skip breadcrumbs on the services-hub template.
               if (!is_front_page() && !is_page_template('templates/template-services-hub.php')) :
-            $hf_crumbs = [1 => ['link' => esc_url(home_url('/')), 'name' => mfs_t('Home', 'Inicio', 'Startseite')]];
+            $hf_lang = function_exists('mfs_lang') ? mfs_lang() : 'en';
+            $hf_home = $hf_lang === 'es' ? home_url('/es/') : ( $hf_lang === 'de' ? home_url('/de/') : home_url('/') );
+            $hf_crumbs = [1 => ['link' => esc_url($hf_home), 'name' => mfs_t('Home', 'Inicio', 'Startseite')]];
             $hf_pos = 2;
             // Solutions CPT singles have no page parent — add the section crumb manually.
+            // The `solutions` CPT has no archive index; on /de/ (no Lösungen landing either) the
+            // section crumb points at the DE hub instead of a 404 /de/loesungen/.
             if (is_singular('solutions')) {
-                $hf_crumbs[$hf_pos++] = ['link' => esc_url(home_url('/solutions/')), 'name' => mfs_t('Solutions', 'Soluciones', 'Lösungen')];
+                $hf_sol = $hf_lang === 'de' ? home_url('/de/') : home_url('/solutions/');
+                $hf_crumbs[$hf_pos++] = ['link' => esc_url($hf_sol), 'name' => mfs_t('Solutions', 'Soluciones', 'Lösungen')];
             }
             foreach (array_reverse(get_post_ancestors(get_the_ID())) as $hf_anc) {
                 $hf_crumbs[$hf_pos++] = ['link' => get_permalink($hf_anc), 'name' => get_the_title($hf_anc)];
