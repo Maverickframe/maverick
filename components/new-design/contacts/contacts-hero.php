@@ -12,7 +12,7 @@ if (!$title_html) {
     $title_html = mfs_t(
         'Work with a visualization team that <em>understands what your project needs</em>',
         'Trabaja con un equipo de visualización que <em>entiende lo que tu proyecto necesita</em>',
-        'Arbeite mit einem Visualisierungsteam, das <em>versteht, was dein Projekt braucht</em>'
+        'Arbeiten Sie mit einem Visualisierungsteam, das <em>versteht, was Ihr Projekt braucht</em>'
     );
 }
 
@@ -20,7 +20,7 @@ $subtitle = get_post_meta(get_the_ID(), 'hero_subtitle', true);
 if (!$subtitle) {
     $subtitle = mfs_t(
         'Tell us what you’re working on, and our team will get back to you with the right next step.',
-        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.', 'Erzähl uns, woran du arbeitest, und unser Team meldet sich mit dem passenden nächsten Schritt.'
+        'Cuéntanos en qué estás trabajando y nuestro equipo te responderá con el siguiente paso adecuado.', 'Erzählen Sie uns, woran Sie arbeiten, und unser Team meldet sich mit dem passenden nächsten Schritt.'
     );
 }
 ?>

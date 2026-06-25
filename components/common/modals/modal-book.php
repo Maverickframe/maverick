@@ -14,10 +14,10 @@
         }
     } elseif ( mfs_is('de') ) {
         if ( strpos( $title, "Let's schedule a quick online call" ) !== false ) {
-            $title = 'Lass uns einen kurzen Online-Call vereinbaren, um über deine Anforderungen, Zeitpläne und offene Fragen zu sprechen';
+            $title = 'Vereinbaren wir einen kurzen Online-Call, um über Ihre Anforderungen, Zeitpläne und offene Fragen zu sprechen';
         }
         if ( strpos( $desc, 'We can discuss' ) !== false ) {
-            $desc = '<p><strong>Wir können besprechen:</strong></p><ul><li>Individuelle Empfehlungen für deine Ziele</li><li>Umsetzbare Marketing-Ideen für dein Unternehmen</li><li>Klarer Projektumfang und realistische Zeitpläne</li><li>Transparentes Projektbudget und Optionen</li></ul>';
+            $desc = '<p><strong>Wir können besprechen:</strong></p><ul><li>Individuelle Empfehlungen für Ihre Ziele</li><li>Umsetzbare Marketing-Ideen für Ihr Unternehmen</li><li>Klarer Projektumfang und realistische Zeitpläne</li><li>Transparentes Projektbudget und Optionen</li></ul>';
         }
     }
 ?>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="modal-book__form">
-            <h3 class="modal-book__form-title"><?php echo mfs_t('Book a call with us', 'Reserva una llamada con nosotros', 'Buche ein Gespräch mit uns'); ?></h3>
+            <h3 class="modal-book__form-title"><?php echo mfs_t('Book a call with us', 'Reserva una llamada con nosotros', 'Vereinbaren Sie ein Gespräch mit uns'); ?></h3>
             <form action="" method="POST" class="js-contacts-form modal-form" data-ga-event="book_call" data-ga-form="book_call" data-ga-type="consultation">
                 <input type="hidden" name="tag" value="SEO, <?php the_title(); ?>, Book a Call">
                 <input type="hidden" name="title" value="<?php the_title(); ?> / Book a Call">
@@ -83,8 +83,8 @@
             </div>
 
             <div class="modal__success">
-                <p><b><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.', 'Danke – deine Nachricht wurde gesendet.'); ?></b></p>
-                <p><?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.', 'Unser Team prüft deine Anfrage und meldet sich in Kürze bei dir.'); ?></p>
+                <p><b><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.', 'Danke – Ihre Nachricht wurde gesendet.'); ?></b></p>
+                <p><?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.', 'Unser Team prüft Ihre Anfrage und meldet sich in Kürze bei Ihnen.'); ?></p>
             </div>
         </div>
     </div>

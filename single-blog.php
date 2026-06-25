@@ -59,7 +59,7 @@ if ( $mfs_lang === 'es' ) {
 
     <div class="article-page__breadcrumbs-bottom">
         <div class="container">
-            <span class="article-page__breadcrumbs-label"><?= mfs_t('You are here', 'Estás aquí', 'Du bist hier'); ?></span>
+            <span class="article-page__breadcrumbs-label"><?= mfs_t('You are here', 'Estás aquí', 'Sie sind hier'); ?></span>
             <div class="article-page__breadcrumbs-wrap">
                 <?= get_template_part('components/new-design/breadcrumbs', null, [
                     'breadcrumbs' => [

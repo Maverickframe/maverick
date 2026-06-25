@@ -16,8 +16,8 @@
         </button>
 
         <div class="bookcal__intro" data-intro-sell>
-            <h2 class="modal__title"><?php echo mfs_t('Book your free intro call', 'Reserva tu llamada introductoria gratuita', 'Buche dein kostenloses Erstgespräch'); ?></h2>
-            <p class="bookcal__intro-lead"><?php echo mfs_t("Pick a time that suits you. It's a quick, no-pressure chat about your project — we'll confirm by email.", 'Elige la hora que te venga bien. Es una charla rápida y sin compromiso sobre tu proyecto; lo confirmamos por email.', 'Wähle eine Zeit, die dir passt. Es ist ein kurzes, unverbindliches Gespräch über dein Projekt — wir bestätigen per E-Mail.'); ?></p>
+            <h2 class="modal__title"><?php echo mfs_t('Book your free intro call', 'Reserva tu llamada introductoria gratuita', 'Buchen Sie Ihr kostenloses Erstgespräch'); ?></h2>
+            <p class="bookcal__intro-lead"><?php echo mfs_t("Pick a time that suits you. It's a quick, no-pressure chat about your project — we'll confirm by email.", 'Elige la hora que te venga bien. Es una charla rápida y sin compromiso sobre tu proyecto; lo confirmamos por email.', 'Wählen Sie eine Zeit, die Ihnen passt. Es ist ein kurzes, unverbindliches Gespräch über Ihr Projekt — wir bestätigen per E-Mail.'); ?></p>
             <ul class="bookcal__intro-list">
                 <li><?php echo mfs_t('A clear plan and next steps', 'Un plan claro y los siguientes pasos', 'Ein klarer Plan und die nächsten Schritte'); ?></li>
                 <li><?php echo mfs_t('Realistic timeline and budget range', 'Plazos realistas y rango de presupuesto', 'Realistischer Zeitplan und Budgetrahmen'); ?></li>
@@ -28,7 +28,7 @@
 
         <div class="bookcal__intro bookcal__intro--thanks" data-intro-thanks hidden>
             <h2 class="modal__title"><?php echo mfs_t("Thank you — you're all set", 'Gracias, todo listo', 'Danke — alles erledigt'); ?></h2>
-            <p class="bookcal__intro-lead"><?php echo mfs_t("Your call is saved and a calendar invite is on its way to your inbox. We'll send a meeting link before the call.", 'Tu llamada está reservada y te enviamos la invitación de calendario al correo. Te enviaremos el enlace de la reunión antes de la llamada.', 'Dein Gespräch ist gebucht und eine Kalendereinladung ist auf dem Weg in dein Postfach. Den Meeting-Link senden wir vor dem Gespräch.'); ?></p>
+            <p class="bookcal__intro-lead"><?php echo mfs_t("Your call is saved and a calendar invite is on its way to your inbox. We'll send a meeting link before the call.", 'Tu llamada está reservada y te enviamos la invitación de calendario al correo. Te enviaremos el enlace de la reunión antes de la llamada.', 'Ihr Gespräch ist gebucht und eine Kalendereinladung ist auf dem Weg in Ihr Postfach. Den Meeting-Link senden wir vor dem Gespräch.'); ?></p>
             <p class="bookcal__intro-note"><?php echo mfs_t('Talk soon — Maverick Frame Studio', 'Hasta pronto — Maverick Frame Studio', 'Bis bald — Maverick Frame Studio'); ?></p>
         </div>
 
@@ -36,7 +36,7 @@
 
             <!-- Step 1: date + time -->
             <div class="bookcal__step" data-step="1">
-                <h3 class="bookcal__heading"><?php echo mfs_t('Pick a time that works', 'Elige una hora que te funcione', 'Wähle eine passende Zeit'); ?></h3>
+                <h3 class="bookcal__heading"><?php echo mfs_t('Pick a time that works', 'Elige una hora que te funcione', 'Wählen Sie eine passende Zeit'); ?></h3>
 
                 <div class="bookcal__cal-head">
                     <button type="button" class="bookcal__nav" data-cal-prev aria-label="Previous month">&lsaquo;</button>
@@ -74,7 +74,7 @@
 
             <!-- Step 2: details -->
             <div class="bookcal__step" data-step="2" hidden>
-                <h3 class="bookcal__heading"><?php echo mfs_t('Your details', 'Tus datos', 'Deine Daten'); ?></h3>
+                <h3 class="bookcal__heading"><?php echo mfs_t('Your details', 'Tus datos', 'Ihre Daten'); ?></h3>
 
                 <div class="bookcal__summary">
                     <span data-summary></span>
@@ -99,16 +99,16 @@
                     </label>
                     <button type="submit" class="btn-cta bookcal__confirm"><?php echo mfs_t('Confirm booking', 'Confirmar reserva', 'Buchung bestätigen'); ?></button>
                     <p class="bookcal__error" data-bookcal-error role="alert"></p>
-                    <p class="bookcal__privacy"><?php echo mfs_t('By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our', 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra', 'Mit dem Klick erklärst du dich einverstanden, Mitteilungen von Maverick Frame Studio gemäß unserer'); ?> <a href="<?php echo get_permalink(6397); ?>"><?php echo mfs_t('Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung'); ?></a>.</p>
+                    <p class="bookcal__privacy"><?php echo mfs_t('By clicking, you agree to receive communications from Maverick Frame Studio in accordance with our', 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra', 'Mit dem Klick erklären Sie sich einverstanden, Mitteilungen von Maverick Frame Studio gemäß unserer'); ?> <a href="<?php echo get_permalink(6397); ?>"><?php echo mfs_t('Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung'); ?></a>.</p>
                 </form>
             </div>
 
             <!-- Step 3: confirmation -->
             <div class="bookcal__step bookcal__step--done" data-step="3" hidden>
                 <div class="bookcal__check" aria-hidden="true">&#10003;</div>
-                <h3 class="bookcal__heading"><?php echo mfs_t("You're booked!", '¡Reservado!', 'Du bist gebucht!'); ?></h3>
+                <h3 class="bookcal__heading"><?php echo mfs_t("You're booked!", '¡Reservado!', 'Sie sind gebucht!'); ?></h3>
                 <p class="bookcal__done-text" data-done-text></p>
-                <p class="bookcal__done-sub"><?php echo mfs_t('A calendar invite is on its way to your inbox.', 'Te enviamos la invitación de calendario al correo.', 'Eine Kalendereinladung ist auf dem Weg in dein Postfach.'); ?></p>
+                <p class="bookcal__done-sub"><?php echo mfs_t('A calendar invite is on its way to your inbox.', 'Te enviamos la invitación de calendario al correo.', 'Eine Kalendereinladung ist auf dem Weg in Ihr Postfach.'); ?></p>
             </div>
 
         </div>

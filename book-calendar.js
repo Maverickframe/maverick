@@ -14,9 +14,10 @@
     var DAY_END = 24 * 60;                       // 24:00
     var SLOT_STEP = 30;                          // minutes
     var CALL_MIN = 30;                           // call length shown to user
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    // Localized via window.MFS_I18N (functions.php), English fallback.
+    var MONTHS = (window.MFS_I18N && MFS_I18N.calMonths) || ['January', 'February', 'March', 'April', 'May', 'June', 'July',
         'August', 'September', 'October', 'November', 'December'];
-    var WD = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    var WD = (window.MFS_I18N && MFS_I18N.calWeekdays) || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     var TZ_CHOICES = [
         'Europe/London', 'Europe/Kyiv', 'Europe/Berlin', 'Europe/Moscow',

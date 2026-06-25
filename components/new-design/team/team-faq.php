@@ -14,14 +14,14 @@
             mfs_t('Do you work with an in-house team or freelancers?', '¿Trabajáis con equipo propio o con freelancers?', 'Arbeitet ihr mit einem internen Team oder mit Freelancern?'),
             mfs_t(
                 'Maverick Frame is a dedicated in-house team of senior 3D artists, designers, architects and project managers. You work with the same people from brief to final delivery — not a rotating pool of freelancers.',
-                'Maverick Frame es un equipo propio de artistas 3D sénior, diseñadores, arquitectos y gestores de proyecto. Trabajas con las mismas personas desde el brief hasta la entrega final, no con freelancers rotativos.', 'Maverick Frame ist ein festes internes Team aus erfahrenen 3D-Artists, Designern, Architekten und Projektmanagern. Du arbeitest vom Brief bis zur finalen Lieferung mit denselben Personen — nicht mit wechselnden Freelancern.'
+                'Maverick Frame es un equipo propio de artistas 3D sénior, diseñadores, arquitectos y gestores de proyecto. Trabajas con las mismas personas desde el brief hasta la entrega final, no con freelancers rotativos.', 'Maverick Frame ist ein festes internes Team aus erfahrenen 3D-Artists, Designern, Architekten und Projektmanagern. Sie arbeiten vom Brief bis zur finalen Lieferung mit denselben Personen — nicht mit wechselnden Freelancern.'
             ),
         ),
         array(
             mfs_t('Which clients and markets does the team work with?', '¿Con qué clientes y mercados trabaja el equipo?', 'Mit welchen Kunden und Märkten arbeitet das Team?'),
             mfs_t(
                 'We serve 150+ brands, developers and agencies worldwide and align our schedule with your time zone to keep communication fast during your working hours.',
-                'Atendemos a más de 150 marcas, promotoras y agencias en todo el mundo y adaptamos nuestro horario a tu zona horaria para mantener una comunicación ágil durante tu jornada.', 'Wir betreuen über 150 Marken, Entwickler und Agenturen weltweit und richten unseren Zeitplan nach deiner Zeitzone aus, damit die Kommunikation während deiner Arbeitszeit schnell bleibt.'
+                'Atendemos a más de 150 marcas, promotoras y agencias en todo el mundo y adaptamos nuestro horario a tu zona horaria para mantener una comunicación ágil durante tu jornada.', 'Wir betreuen über 150 Marken, Entwickler und Agenturen weltweit und richten unseren Zeitplan nach Ihrer Zeitzone aus, damit die Kommunikation während Ihrer Arbeitszeit schnell bleibt.'
             ),
         ),
         array(

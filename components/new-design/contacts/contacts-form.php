@@ -51,7 +51,7 @@ $countries = [
                     <label class="cform__input">
                         <span class="sr-only"><?php echo mfs_t('Full name', 'Nombre completo', 'Vollständiger Name'); ?></span>
                         <input type="text" name="Name" maxlength="80" placeholder="<?php echo esc_attr(mfs_t('Full name', 'Nombre completo', 'Vollständiger Name')); ?>*" required>
-                        <span class="cform__error"><?php echo mfs_t('Enter your name', 'Introduce tu nombre', 'Gib deinen Namen ein'); ?></span>
+                        <span class="cform__error"><?php echo mfs_t('Enter your name', 'Introduce tu nombre', 'Geben Sie Ihren Namen ein'); ?></span>
                     </label>
 
                     <label class="cform__input">
@@ -84,14 +84,14 @@ $countries = [
                     <label class="cform__phone-field">
                         <span class="sr-only"><?php echo mfs_t('Phone number', 'Número de teléfono', 'Telefonnummer'); ?></span>
                         <input type="tel" class="cform__phone-num" inputmode="tel" autocomplete="tel-national" maxlength="20" placeholder="<?php echo esc_attr(mfs_t('Phone number', 'Número de teléfono', 'Telefonnummer')); ?>">
-                        <span class="cform__error cform__phone-error"><?php echo mfs_t('Enter a valid phone number', 'Introduce un número de teléfono válido', 'Gib eine gültige Telefonnummer ein'); ?></span>
+                        <span class="cform__error cform__phone-error"><?php echo mfs_t('Enter a valid phone number', 'Introduce un número de teléfono válido', 'Geben Sie eine gültige Telefonnummer ein'); ?></span>
                     </label>
                     <input type="hidden" name="Phone">
                 </div>
 
                 <label class="cform__input">
-                    <span class="sr-only"><?php echo mfs_t('How can we help you?', '¿Cómo podemos ayudarte?', 'Wie können wir dir helfen?'); ?></span>
-                    <textarea name="Message" rows="4" maxlength="1000" class="js-msg" placeholder="<?php echo esc_attr(mfs_t('How can we help you?', '¿Cómo podemos ayudarte?', 'Wie können wir dir helfen?')); ?>"></textarea>
+                    <span class="sr-only"><?php echo mfs_t('How can we help you?', '¿Cómo podemos ayudarte?', 'Wie können wir Ihnen helfen?'); ?></span>
+                    <textarea name="Message" rows="4" maxlength="1000" class="js-msg" placeholder="<?php echo esc_attr(mfs_t('How can we help you?', '¿Cómo podemos ayudarte?', 'Wie können wir Ihnen helfen?')); ?>"></textarea>
                     <span class="cform__count js-msg-count" aria-hidden="true">0 / 1000</span>
                 </label>
 
@@ -120,7 +120,7 @@ $countries = [
                         <a href="<?php echo esc_url($privacy_url); ?>" target="_blank" rel="noopener"><?php echo mfs_t('Privacy Policy', 'Política de privacidad', 'Datenschutzerklärung'); ?></a>
                         <?php echo mfs_t('and give my permission to process my personal data for the purposes specified in the Privacy Policy.', 'y doy mi consentimiento para tratar mis datos personales con los fines indicados en la Política de privacidad.', 'und willige in die Verarbeitung meiner personenbezogenen Daten zu den in der Datenschutzerklärung genannten Zwecken ein.'); ?>*
                     </span>
-                    <span class="cform__error"><?php echo mfs_t('Please accept the Privacy Policy', 'Debes aceptar la Política de privacidad', 'Bitte akzeptiere die Datenschutzerklärung'); ?></span>
+                    <span class="cform__error"><?php echo mfs_t('Please accept the Privacy Policy', 'Debes aceptar la Política de privacidad', 'Bitte akzeptieren Sie die Datenschutzerklärung'); ?></span>
                 </label>
 
                 <label class="cform__check">
@@ -138,8 +138,8 @@ $countries = [
                         <?php echo inline_svg('icons/close-white.svg') ?: '&times;'; ?>
                     </button>
                     <p class="cform__success-text">
-                        <span class="cform__success-hl"><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.', 'Danke – deine Nachricht wurde gesendet.'); ?></span>
-                        <?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.', 'Unser Team prüft deine Anfrage und meldet sich in Kürze bei dir.'); ?>
+                        <span class="cform__success-hl"><?php echo mfs_t('Thank you – your message has been sent.', 'Gracias, tu mensaje se ha enviado.', 'Danke – Ihre Nachricht wurde gesendet.'); ?></span>
+                        <?php echo mfs_t('Our team will review your request and get back to you shortly.', 'Nuestro equipo revisará tu solicitud y te responderá en breve.', 'Unser Team prüft Ihre Anfrage und meldet sich in Kürze bei Ihnen.'); ?>
                     </p>
                 </div>
             </div>

@@ -10,7 +10,7 @@ $bannerBtnVariant = isset($bannerButton['color']) ? $bannerButton['color'] : 'bt
 
 <div class="article-page__banner">
     <img class="article-page__banner-img" src="<?= $bannerImage; ?>"
-        alt="Architectural CGI Treehouse Resort In Forest Landscape">
+        alt="<?php echo esc_attr( mfs_t('Architectural CGI Treehouse Resort In Forest Landscape', 'Resort de casa del árbol CGI arquitectónico en un paisaje boscoso', 'Architektonisches CGI-Baumhaus-Resort in Waldlandschaft') ); ?>">
 
     <div class="article-page__banner-content">
         <h3 class="article-page__banner-title"><?= $bannerTitle; ?></h3>

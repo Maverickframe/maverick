@@ -6,7 +6,7 @@
         
         <div class="team-members__items">
             <?php
-                $tm_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
+                $tm_lang = function_exists('pll_current_language') ? pll_current_language() : 'en';
                 $tm_pos_es = [
                     'Company Owner'             => 'Propietario de la empresa',
                     'Co-Founder & CEO'          => 'Cofundador y CEO',
@@ -28,6 +28,28 @@
                     'BIM Specialist'            => 'Especialista BIM',
                     '3D Artist (Unreal Engine)' => 'Artista 3D (Unreal Engine)',
                     'VFX Artist'                => 'Artista VFX',
+                ];
+                $tm_pos_de = [
+                    'Company Owner'             => 'Inhaber',
+                    'Co-Founder & CEO'          => 'Mitgründer & CEO',
+                    'UX/UI & Graphic Designer'  => 'UX/UI- & Grafikdesigner',
+                    'Art Director'              => 'Art Director',
+                    'Project Manager'           => 'Projektmanager',
+                    'Storyboard Artist'         => 'Storyboard-Artist',
+                    '3D Generalist'             => '3D-Generalist',
+                    '3D Artist (Blender)'       => '3D-Artist (Blender)',
+                    '3D Modeller'               => '3D-Modeller',
+                    'AI Artist'                 => 'KI-Artist',
+                    '3D Artist (Twinmotion)'    => '3D-Artist (Twinmotion)',
+                    '2D Motion Graphic Artist'  => '2D-Motion-Graphic-Artist',
+                    '3D Artist (3Ds Max)'       => '3D-Artist (3Ds Max)',
+                    '3D Artist (Cinema 4D)'     => '3D-Artist (Cinema 4D)',
+                    '3D Cinematic Artist'       => '3D-Cinematic-Artist',
+                    'Interior Designer'         => 'Innenarchitekt',
+                    'Senior Architect'          => 'Senior-Architekt',
+                    'BIM Specialist'            => 'BIM-Spezialist',
+                    '3D Artist (Unreal Engine)' => '3D-Artist (Unreal Engine)',
+                    'VFX Artist'                => 'VFX-Artist',
                 ];
                 $args = array(
                     'post_type' => 'team',
@@ -57,8 +79,10 @@
                         $img = get_post_thumbnail_id();
                         $color_photo = get_field( 'color_bg_photo' );
                         $position = get_field( 'position' );
-                        if ( $tm_is_es && isset($tm_pos_es[$position]) ) {
+                        if ( $tm_lang === 'es' && isset($tm_pos_es[$position]) ) {
                             $position = $tm_pos_es[$position];
+                        } elseif ( $tm_lang === 'de' && isset($tm_pos_de[$position]) ) {
+                            $position = $tm_pos_de[$position];
                         }
                         $link = get_permalink();
 

@@ -6,9 +6,14 @@ $categories = get_posts([
     'orderby' => 'menu_order',
 ]);
 
-$gal_is_es = function_exists('pll_current_language') && pll_current_language() === 'es';
-$gal_map = ['Product'=>'Producto','Vehicles'=>'Vehículos','Furniture'=>'Mobiliario','Animations'=>'Animaciones','AI'=>'IA','Interiors'=>'Interiores','Exteriors'=>'Exteriores'];
-$gal_label = function($t) use ($gal_is_es, $gal_map){ return ($gal_is_es && isset($gal_map[$t])) ? $gal_map[$t] : $t; };
+$gal_lang = function_exists('pll_current_language') ? pll_current_language() : 'en';
+$gal_map_es = ['Product'=>'Producto','Vehicles'=>'Vehículos','Furniture'=>'Mobiliario','Animations'=>'Animaciones','AI'=>'IA','Interiors'=>'Interiores','Exteriors'=>'Exteriores'];
+$gal_map_de = ['Product'=>'Produkt','Vehicles'=>'Fahrzeuge','Furniture'=>'Möbel','Animations'=>'Animationen','AI'=>'KI','Interiors'=>'Innenräume','Exteriors'=>'Außenansichten'];
+$gal_label = function($t) use ($gal_lang, $gal_map_es, $gal_map_de){
+    if ($gal_lang === 'es' && isset($gal_map_es[$t])) return $gal_map_es[$t];
+    if ($gal_lang === 'de' && isset($gal_map_de[$t])) return $gal_map_de[$t];
+    return $t;
+};
 
 if($categories): ?>
 <div class="container">
