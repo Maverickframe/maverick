@@ -29,6 +29,6 @@ $postId = get_the_ID();
         </div>
     </div>
     <div class="feedback__thanks" data-feedback-thanks hidden>
-        <p class="feedback__title"><?= mfs_t('Thanks for the feedback!', '¡Gracias por tu opinión!', 'Danke für dein Feedback!'); ?></p>
+        <p class="feedback__title"><?= mfs_t('Thanks for the feedback!', '¡Gracias por tu opinión!', 'Danke für Ihr Feedback!'); ?></p>
     </div>
 </div>

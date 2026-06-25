@@ -6,9 +6,9 @@
  */
 
 $stats = array(
-    array('num' => '10',  'sym' => '+', 'label' => mfs_t('Years in creative production and visual production', 'Años en producción creativa y visual')),
-    array('num' => '95',  'sym' => '%', 'label' => mfs_t('On-time project delivery', 'Entrega de proyectos a tiempo')),
-    array('num' => '350', 'sym' => '+', 'label' => mfs_t('Brands and agencies supported', 'Marcas y agencias atendidas')),
+    array('num' => '10',  'sym' => '+', 'label' => mfs_t('Years in creative production and visual production', 'Años en producción creativa y visual', 'Jahre in Kreativ- und Visual-Produktion')),
+    array('num' => '95',  'sym' => '%', 'label' => mfs_t('On-time project delivery', 'Entrega de proyectos a tiempo', 'Termingerechte Projektlieferung')),
+    array('num' => '350', 'sym' => '+', 'label' => mfs_t('Brands and agencies supported', 'Marcas y agencias atendidas', 'Betreute Marken und Agenturen')),
 );
 ?>
 <section class="sol-stats">

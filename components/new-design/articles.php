@@ -136,7 +136,7 @@ wp_localize_script(
 
 		<div class="section__notfound not-found js-articles-notfound" aria-hidden="true" role="alert">
 			<div class="not-found__title h2"><?php echo mfs_t('Nothing Found', 'No se encontró nada', 'Nichts gefunden'); ?></div>
-			<div class="not-found__text"><?php echo mfs_t("Oops! We couldn't find any results matching your search. Please try different keywords or check back later!", '¡Vaya! No encontramos resultados para tu búsqueda. Prueba con otras palabras o vuelve más tarde.', 'Hoppla! Wir haben keine Ergebnisse für deine Suche gefunden. Versuche es mit anderen Suchbegriffen oder schau später wieder vorbei!'); ?></div>
+			<div class="not-found__text"><?php echo mfs_t("Oops! We couldn't find any results matching your search. Please try different keywords or check back later!", '¡Vaya! No encontramos resultados para tu búsqueda. Prueba con otras palabras o vuelve más tarde.', 'Hoppla! Wir haben keine Ergebnisse für Ihre Suche gefunden. Versuchen Sie es mit anderen Suchbegriffen oder schauen Sie später wieder vorbei!'); ?></div>
 			<button class="btn-main js-articles-search-reset" type="button" aria-label="<?php echo esc_attr(mfs_t('Reset posts filters', 'Restablecer filtros', 'Filter zurücksetzen')); ?>"><?php echo mfs_t('Reset filters', 'Restablecer filtros', 'Filter zurücksetzen'); ?></button>
 		</div>
 

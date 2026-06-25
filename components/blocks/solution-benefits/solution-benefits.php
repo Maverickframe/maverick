@@ -4,15 +4,15 @@
  * Layout-first (matches Figma node 23518:5487).
  */
 
-$eyebrow = get_field('eyebrow') ?: mfs_t('You won’t miss', 'Lo que sí tendrás');
-$title   = get_field('title') ?: mfs_t('Built to support agency delivery at scale', 'Diseñado para sostener la entrega de las agencias a escala');
-$desc    = get_field('description') ?: mfs_t('Marketing agencies rely on Maverick Frame when campaigns require scalable digital content production and reliable marketing content production. Our workflow ensures agencies can deliver complex visual campaigns without internal production bottlenecks.', 'Las agencias de marketing confían en Maverick Frame cuando las campañas exigen una producción de contenido digital escalable y una producción de contenido de marketing fiable. Nuestro flujo de trabajo permite a las agencias entregar campañas visuales complejas sin cuellos de botella de producción internos.');
+$eyebrow = get_field('eyebrow') ?: mfs_t('You won’t miss', 'Lo que sí tendrás', 'Das bekommen Sie');
+$title   = get_field('title') ?: mfs_t('Built to support agency delivery at scale', 'Diseñado para sostener la entrega de las agencias a escala', 'Gebaut, um Agentur-Delivery im großen Maßstab zu unterstützen');
+$desc    = get_field('description') ?: mfs_t('Marketing agencies rely on Maverick Frame when campaigns require scalable digital content production and reliable marketing content production. Our workflow ensures agencies can deliver complex visual campaigns without internal production bottlenecks.', 'Las agencias de marketing confían en Maverick Frame cuando las campañas exigen una producción de contenido digital escalable y una producción de contenido de marketing fiable. Nuestro flujo de trabajo permite a las agencias entregar campañas visuales complejas sin cuellos de botella de producción internos.', 'Marketing-Agenturen setzen auf Maverick Frame, wenn Kampagnen skalierbare digitale Content-Produktion und verlässliche Marketing-Content-Produktion erfordern. Unser Workflow sorgt dafür, dass Agenturen komplexe visuelle Kampagnen ohne interne Produktionsengpässe ausliefern können.');
 
 $cards = array(
-    array('variant' => 'grey',    'text' => mfs_t('Faster turnaround', 'Entregas más rápidas')),
-    array('variant' => 'outline', 'text' => mfs_t('Scale creative production capacity up or down depending on campaign volume', 'Escala la capacidad de producción creativa según el volumen de cada campaña')),
-    array('variant' => 'dark',    'text' => mfs_t('Campaign-ready assets', 'Assets listos para campaña')),
-    array('variant' => 'accent',  'text' => mfs_t('Structured collaboration', 'Colaboración estructurada')),
+    array('variant' => 'grey',    'text' => mfs_t('Faster turnaround', 'Entregas más rápidas', 'Schnellere Durchlaufzeiten')),
+    array('variant' => 'outline', 'text' => mfs_t('Scale creative production capacity up or down depending on campaign volume', 'Escala la capacidad de producción creativa según el volumen de cada campaña', 'Kreativproduktions-Kapazität je nach Kampagnenvolumen hoch- oder herunterskalieren')),
+    array('variant' => 'dark',    'text' => mfs_t('Campaign-ready assets', 'Assets listos para campaña', 'Kampagnenfertige Assets')),
+    array('variant' => 'accent',  'text' => mfs_t('Structured collaboration', 'Colaboración estructurada', 'Strukturierte Zusammenarbeit')),
 );
 ?>
 <section class="sol-ben">

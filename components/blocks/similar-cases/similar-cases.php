@@ -6,10 +6,10 @@ if( $cases ): ?>
         <?php if ( is_singular('solutions') ) : ?>
             <div class="similar-cases__head">
                 <div class="similar-cases__head-main">
-                    <p class="section-subtitle similar-cases__kicker"><?php echo mfs_t('Related cases', 'Casos relacionados'); ?></p>
-                    <h2 class="similar-cases__title"><?php echo mfs_t('See how agencies scale creative production with Maverick Frame', 'Mira cómo las agencias escalan su producción creativa con Maverick Frame'); ?></h2>
+                    <p class="section-subtitle similar-cases__kicker"><?php echo mfs_t('Related cases', 'Casos relacionados', 'Ähnliche Referenzen'); ?></p>
+                    <h2 class="similar-cases__title"><?php echo mfs_t('See how agencies scale creative production with Maverick Frame', 'Mira cómo las agencias escalan su producción creativa con Maverick Frame', 'So skalieren Agenturen ihre Kreativproduktion mit Maverick Frame'); ?></h2>
                 </div>
-                <p class="similar-cases__desc"><?php echo mfs_t('Explore campaigns where our team delivered product rendering, 3D animation, and digital content production for marketing launches.', 'Explora campañas donde nuestro equipo entregó render de producto, animación 3D y producción de contenido digital para lanzamientos de marketing.'); ?></p>
+                <p class="similar-cases__desc"><?php echo mfs_t('Explore campaigns where our team delivered product rendering, 3D animation, and digital content production for marketing launches.', 'Explora campañas donde nuestro equipo entregó render de producto, animación 3D y producción de contenido digital para lanzamientos de marketing.', 'Entdecken Sie Kampagnen, in denen unser Team Produktrendering, 3D-Animation und digitale Content-Produktion für Marketing-Launches geliefert hat.'); ?></p>
             </div>
         <?php else : ?>
             <p class="section-subtitle"><?php echo mfs_t('Explore Similar Real Estate Cases', 'Explora casos inmobiliarios similares', 'Ähnliche Immobilien-Referenzen entdecken'); ?></p>

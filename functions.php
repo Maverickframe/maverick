@@ -78,7 +78,7 @@ if ( ! function_exists('mfs_consent') ) {
         if ( mfs_is('es') ) {
             $target = 'Al hacer clic, aceptas recibir comunicaciones de Maverick Frame Studio de acuerdo con nuestra';
         } elseif ( mfs_is('de') ) {
-            $target = 'Mit dem Klick erklärst du dich einverstanden, Mitteilungen von Maverick Frame Studio gemäß unserer';
+            $target = 'Mit dem Klick erklären Sie sich einverstanden, Mitteilungen von Maverick Frame Studio gemäß unserer';
         }
         if ( $target !== null ) {
             // Match flexibly: the stored text uses non-breaking spaces (U+00A0) in places.
@@ -97,6 +97,20 @@ add_action( 'wp_head', function () {
         'bookACall'      => mfs_t( 'Book a call', 'Reservar una llamada', 'Beratung buchen' ),
         'nextReview'     => mfs_t( 'Next review', 'Siguiente reseña', 'Nächste Bewertung' ),
     );
+    // Calendar month/weekday labels for book-calendar.js (rendered client-side).
+    $mfs_cal_months = array(
+        'en' => array('January','February','March','April','May','June','July','August','September','October','November','December'),
+        'es' => array('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'),
+        'de' => array('Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'),
+    );
+    $mfs_cal_wd = array(
+        'en' => array('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),
+        'es' => array('Lun','Mar','Mié','Jue','Vie','Sáb','Dom'),
+        'de' => array('Mo','Di','Mi','Do','Fr','Sa','So'),
+    );
+    $mfs_cal_lang = isset( $mfs_cal_months[ mfs_lang() ] ) ? mfs_lang() : 'en';
+    $i18n['calMonths']   = $mfs_cal_months[ $mfs_cal_lang ];
+    $i18n['calWeekdays'] = $mfs_cal_wd[ $mfs_cal_lang ];
     echo '<script>window.MFS_I18N=' . wp_json_encode( $i18n ) . ';</script>' . "\n";
 }, 1 );
 
