@@ -8,38 +8,49 @@ if (!$privacy_url) {
     $privacy_url = home_url('/privacy-policy/');
 }
 
-// [dial code, flag emoji, name] — full country list. Value submitted = dial code.
+// Language for labels + default country. EN/DE show English country names; ES shows Spanish.
+$cf_lang = function_exists('mfs_lang') ? mfs_lang() : 'en';
+$cf_is_es = ($cf_lang === 'es');
+// Default selected country by language: EN → USA, ES → Spain, DE → Germany.
+$cf_defaults = [
+    'es' => ['+34','🇪🇸','España'],
+    'de' => ['+49','🇩🇪','Deutschland'],
+    'en' => ['+1','🇺🇸','United States'],
+];
+$cf_default = $cf_defaults[$cf_lang] ?? $cf_defaults['en'];
+
+// [dial code, flag emoji, Spanish name, English name] — value submitted = dial code.
 $countries = [
-    ['+93','🇦🇫','Afganistán'],['+355','🇦🇱','Albania'],['+213','🇩🇿','Argelia'],['+376','🇦🇩','Andorra'],
-    ['+244','🇦🇴','Angola'],['+54','🇦🇷','Argentina'],['+374','🇦🇲','Armenia'],['+61','🇦🇺','Australia'],
-    ['+43','🇦🇹','Austria'],['+994','🇦🇿','Azerbaiyán'],['+973','🇧🇭','Baréin'],['+880','🇧🇩','Bangladés'],
-    ['+375','🇧🇾','Bielorrusia'],['+32','🇧🇪','Bélgica'],['+501','🇧🇿','Belice'],['+229','🇧🇯','Benín'],
-    ['+591','🇧🇴','Bolivia'],['+387','🇧🇦','Bosnia y Herzegovina'],['+267','🇧🇼','Botsuana'],['+55','🇧🇷','Brasil'],
-    ['+359','🇧🇬','Bulgaria'],['+855','🇰🇭','Camboya'],['+237','🇨🇲','Camerún'],['+1','🇨🇦','Canadá'],
-    ['+56','🇨🇱','Chile'],['+86','🇨🇳','China'],['+57','🇨🇴','Colombia'],['+506','🇨🇷','Costa Rica'],
-    ['+385','🇭🇷','Croacia'],['+53','🇨🇺','Cuba'],['+357','🇨🇾','Chipre'],['+420','🇨🇿','Chequia'],
-    ['+45','🇩🇰','Dinamarca'],['+1','🇩🇴','Rep. Dominicana'],['+593','🇪🇨','Ecuador'],['+20','🇪🇬','Egipto'],
-    ['+503','🇸🇻','El Salvador'],['+372','🇪🇪','Estonia'],['+251','🇪🇹','Etiopía'],['+358','🇫🇮','Finlandia'],
-    ['+33','🇫🇷','Francia'],['+995','🇬🇪','Georgia'],['+49','🇩🇪','Alemania'],['+233','🇬🇭','Ghana'],
-    ['+30','🇬🇷','Grecia'],['+502','🇬🇹','Guatemala'],['+504','🇭🇳','Honduras'],['+852','🇭🇰','Hong Kong'],
-    ['+36','🇭🇺','Hungría'],['+354','🇮🇸','Islandia'],['+91','🇮🇳','India'],['+62','🇮🇩','Indonesia'],
-    ['+98','🇮🇷','Irán'],['+964','🇮🇶','Irak'],['+353','🇮🇪','Irlanda'],['+972','🇮🇱','Israel'],
-    ['+39','🇮🇹','Italia'],['+81','🇯🇵','Japón'],['+962','🇯🇴','Jordania'],['+7','🇰🇿','Kazajistán'],
-    ['+254','🇰🇪','Kenia'],['+965','🇰🇼','Kuwait'],['+371','🇱🇻','Letonia'],['+961','🇱🇧','Líbano'],
-    ['+218','🇱🇾','Libia'],['+370','🇱🇹','Lituania'],['+352','🇱🇺','Luxemburgo'],['+60','🇲🇾','Malasia'],
-    ['+356','🇲🇹','Malta'],['+52','🇲🇽','México'],['+373','🇲🇩','Moldavia'],['+377','🇲🇨','Mónaco'],
-    ['+212','🇲🇦','Marruecos'],['+95','🇲🇲','Myanmar'],['+264','🇳🇦','Namibia'],['+977','🇳🇵','Nepal'],
-    ['+31','🇳🇱','Países Bajos'],['+64','🇳🇿','Nueva Zelanda'],['+505','🇳🇮','Nicaragua'],['+234','🇳🇬','Nigeria'],
-    ['+47','🇳🇴','Noruega'],['+968','🇴🇲','Omán'],['+92','🇵🇰','Pakistán'],['+507','🇵🇦','Panamá'],
-    ['+595','🇵🇾','Paraguay'],['+51','🇵🇪','Perú'],['+63','🇵🇭','Filipinas'],['+48','🇵🇱','Polonia'],
-    ['+351','🇵🇹','Portugal'],['+974','🇶🇦','Catar'],['+40','🇷🇴','Rumanía'],['+7','🇷🇺','Rusia'],
-    ['+966','🇸🇦','Arabia Saudita'],['+221','🇸🇳','Senegal'],['+381','🇷🇸','Serbia'],['+65','🇸🇬','Singapur'],
-    ['+421','🇸🇰','Eslovaquia'],['+386','🇸🇮','Eslovenia'],['+27','🇿🇦','Sudáfrica'],['+82','🇰🇷','Corea del Sur'],
-    ['+34','🇪🇸','España'],['+94','🇱🇰','Sri Lanka'],['+46','🇸🇪','Suecia'],['+41','🇨🇭','Suiza'],
-    ['+886','🇹🇼','Taiwán'],['+255','🇹🇿','Tanzania'],['+66','🇹🇭','Tailandia'],['+216','🇹🇳','Túnez'],
-    ['+90','🇹🇷','Turquía'],['+380','🇺🇦','Ucrania'],['+971','🇦🇪','Emiratos Árabes Unidos'],['+44','🇬🇧','Reino Unido'],
-    ['+1','🇺🇸','Estados Unidos'],['+598','🇺🇾','Uruguay'],['+998','🇺🇿','Uzbekistán'],['+58','🇻🇪','Venezuela'],
-    ['+84','🇻🇳','Vietnam'],['+967','🇾🇪','Yemen'],['+260','🇿🇲','Zambia'],['+263','🇿🇼','Zimbabue'],
+    ['+93','🇦🇫','Afganistán','Afghanistan'],['+355','🇦🇱','Albania','Albania'],['+213','🇩🇿','Argelia','Algeria'],['+376','🇦🇩','Andorra','Andorra'],
+    ['+244','🇦🇴','Angola','Angola'],['+54','🇦🇷','Argentina','Argentina'],['+374','🇦🇲','Armenia','Armenia'],['+61','🇦🇺','Australia','Australia'],
+    ['+43','🇦🇹','Austria','Austria'],['+994','🇦🇿','Azerbaiyán','Azerbaijan'],['+973','🇧🇭','Baréin','Bahrain'],['+880','🇧🇩','Bangladés','Bangladesh'],
+    ['+375','🇧🇾','Bielorrusia','Belarus'],['+32','🇧🇪','Bélgica','Belgium'],['+501','🇧🇿','Belice','Belize'],['+229','🇧🇯','Benín','Benin'],
+    ['+591','🇧🇴','Bolivia','Bolivia'],['+387','🇧🇦','Bosnia y Herzegovina','Bosnia and Herzegovina'],['+267','🇧🇼','Botsuana','Botswana'],['+55','🇧🇷','Brasil','Brazil'],
+    ['+359','🇧🇬','Bulgaria','Bulgaria'],['+855','🇰🇭','Camboya','Cambodia'],['+237','🇨🇲','Camerún','Cameroon'],['+1','🇨🇦','Canadá','Canada'],
+    ['+56','🇨🇱','Chile','Chile'],['+86','🇨🇳','China','China'],['+57','🇨🇴','Colombia','Colombia'],['+506','🇨🇷','Costa Rica','Costa Rica'],
+    ['+385','🇭🇷','Croacia','Croatia'],['+53','🇨🇺','Cuba','Cuba'],['+357','🇨🇾','Chipre','Cyprus'],['+420','🇨🇿','Chequia','Czechia'],
+    ['+45','🇩🇰','Dinamarca','Denmark'],['+1','🇩🇴','Rep. Dominicana','Dominican Republic'],['+593','🇪🇨','Ecuador','Ecuador'],['+20','🇪🇬','Egipto','Egypt'],
+    ['+503','🇸🇻','El Salvador','El Salvador'],['+372','🇪🇪','Estonia','Estonia'],['+251','🇪🇹','Etiopía','Ethiopia'],['+358','🇫🇮','Finlandia','Finland'],
+    ['+33','🇫🇷','Francia','France'],['+995','🇬🇪','Georgia','Georgia'],['+49','🇩🇪','Alemania','Germany'],['+233','🇬🇭','Ghana','Ghana'],
+    ['+30','🇬🇷','Grecia','Greece'],['+502','🇬🇹','Guatemala','Guatemala'],['+504','🇭🇳','Honduras','Honduras'],['+852','🇭🇰','Hong Kong','Hong Kong'],
+    ['+36','🇭🇺','Hungría','Hungary'],['+354','🇮🇸','Islandia','Iceland'],['+91','🇮🇳','India','India'],['+62','🇮🇩','Indonesia','Indonesia'],
+    ['+98','🇮🇷','Irán','Iran'],['+964','🇮🇶','Irak','Iraq'],['+353','🇮🇪','Irlanda','Ireland'],['+972','🇮🇱','Israel','Israel'],
+    ['+39','🇮🇹','Italia','Italy'],['+81','🇯🇵','Japón','Japan'],['+962','🇯🇴','Jordania','Jordan'],['+7','🇰🇿','Kazajistán','Kazakhstan'],
+    ['+254','🇰🇪','Kenia','Kenya'],['+965','🇰🇼','Kuwait','Kuwait'],['+371','🇱🇻','Letonia','Latvia'],['+961','🇱🇧','Líbano','Lebanon'],
+    ['+218','🇱🇾','Libia','Libya'],['+370','🇱🇹','Lituania','Lithuania'],['+352','🇱🇺','Luxemburgo','Luxembourg'],['+60','🇲🇾','Malasia','Malaysia'],
+    ['+356','🇲🇹','Malta','Malta'],['+52','🇲🇽','México','Mexico'],['+373','🇲🇩','Moldavia','Moldova'],['+377','🇲🇨','Mónaco','Monaco'],
+    ['+212','🇲🇦','Marruecos','Morocco'],['+95','🇲🇲','Myanmar','Myanmar'],['+264','🇳🇦','Namibia','Namibia'],['+977','🇳🇵','Nepal','Nepal'],
+    ['+31','🇳🇱','Países Bajos','Netherlands'],['+64','🇳🇿','Nueva Zelanda','New Zealand'],['+505','🇳🇮','Nicaragua','Nicaragua'],['+234','🇳🇬','Nigeria','Nigeria'],
+    ['+47','🇳🇴','Noruega','Norway'],['+968','🇴🇲','Omán','Oman'],['+92','🇵🇰','Pakistán','Pakistan'],['+507','🇵🇦','Panamá','Panama'],
+    ['+595','🇵🇾','Paraguay','Paraguay'],['+51','🇵🇪','Perú','Peru'],['+63','🇵🇭','Filipinas','Philippines'],['+48','🇵🇱','Polonia','Poland'],
+    ['+351','🇵🇹','Portugal','Portugal'],['+974','🇶🇦','Catar','Qatar'],['+40','🇷🇴','Rumanía','Romania'],['+7','🇷🇺','Rusia','Russia'],
+    ['+966','🇸🇦','Arabia Saudita','Saudi Arabia'],['+221','🇸🇳','Senegal','Senegal'],['+381','🇷🇸','Serbia','Serbia'],['+65','🇸🇬','Singapur','Singapore'],
+    ['+421','🇸🇰','Eslovaquia','Slovakia'],['+386','🇸🇮','Eslovenia','Slovenia'],['+27','🇿🇦','Sudáfrica','South Africa'],['+82','🇰🇷','Corea del Sur','South Korea'],
+    ['+34','🇪🇸','España','Spain'],['+94','🇱🇰','Sri Lanka','Sri Lanka'],['+46','🇸🇪','Suecia','Sweden'],['+41','🇨🇭','Suiza','Switzerland'],
+    ['+886','🇹🇼','Taiwán','Taiwan'],['+255','🇹🇿','Tanzania','Tanzania'],['+66','🇹🇭','Tailandia','Thailand'],['+216','🇹🇳','Túnez','Tunisia'],
+    ['+90','🇹🇷','Turquía','Turkey'],['+380','🇺🇦','Ucrania','Ukraine'],['+971','🇦🇪','Emiratos Árabes Unidos','United Arab Emirates'],['+44','🇬🇧','Reino Unido','United Kingdom'],
+    ['+1','🇺🇸','Estados Unidos','United States'],['+598','🇺🇾','Uruguay','Uruguay'],['+998','🇺🇿','Uzbekistán','Uzbekistan'],['+58','🇻🇪','Venezuela','Venezuela'],
+    ['+84','🇻🇳','Vietnam','Vietnam'],['+967','🇾🇪','Yemen','Yemen'],['+260','🇿🇲','Zambia','Zambia'],['+263','🇿🇼','Zimbabue','Zimbabwe'],
 ];
 ?>
 <div class="js-contacts-form-container contacts-form-card">
@@ -62,19 +73,19 @@ $countries = [
                 </div>
 
                 <div class="cform__input cform__phone">
-                    <div class="cform__country js-country" data-dial="+34">
+                    <div class="cform__country js-country" data-dial="<?php echo esc_attr($cf_default[0]); ?>">
                         <button type="button" class="cform__country-toggle js-country-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="<?php echo esc_attr(mfs_t('Country code', 'Código de país', 'Ländervorwahl')); ?>">
-                            <span class="cform__country-flag">🇪🇸</span>
-                            <span class="cform__country-code">+34</span>
+                            <span class="cform__country-flag"><?php echo $cf_default[1]; ?></span>
+                            <span class="cform__country-code"><?php echo esc_html($cf_default[0]); ?></span>
                             <svg class="cform__country-caret" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                         <div class="cform__country-pop">
                             <input type="text" class="cform__country-search js-country-search" placeholder="<?php echo esc_attr(mfs_t('Search country…', 'Buscar país…', 'Land suchen…')); ?>" aria-label="<?php echo esc_attr(mfs_t('Search country', 'Buscar país', 'Land suchen')); ?>">
                             <ul class="cform__country-list" role="listbox">
-                                <?php foreach ($countries as $c): ?>
-                                    <li class="cform__country-opt" role="option" data-dial="<?php echo esc_attr($c[0]); ?>" data-flag="<?php echo esc_attr($c[1]); ?>" data-name="<?php echo esc_attr(mb_strtolower($c[2])); ?>">
+                                <?php foreach ($countries as $c): $cf_cn = $cf_is_es ? $c[2] : $c[3]; ?>
+                                    <li class="cform__country-opt" role="option" data-dial="<?php echo esc_attr($c[0]); ?>" data-flag="<?php echo esc_attr($c[1]); ?>" data-name="<?php echo esc_attr(mb_strtolower($cf_cn)); ?>">
                                         <span class="cform__country-opt-flag"><?php echo $c[1]; ?></span>
-                                        <span class="cform__country-opt-name"><?php echo esc_html($c[2]); ?></span>
+                                        <span class="cform__country-opt-name"><?php echo esc_html($cf_cn); ?></span>
                                         <span class="cform__country-opt-code"><?php echo esc_html($c[0]); ?></span>
                                     </li>
                                 <?php endforeach; ?>

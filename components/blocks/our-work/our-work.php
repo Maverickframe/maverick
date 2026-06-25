@@ -6,7 +6,7 @@ if( $cases ): ?>
     <div class="container">
         <div class="our-work__info">
             <div>
-                <p class="section-subtitle">Our work</p>
+                <p class="section-subtitle"><?php echo mfs_t('Our work', 'Nuestro trabajo', 'Unsere Arbeiten'); ?></p>
 
                 <h2><?php the_field('title'); ?></h2>
             </div>
