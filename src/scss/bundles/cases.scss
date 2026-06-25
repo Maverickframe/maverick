@@ -1,5 +1,39 @@
 @import url("base.scss");
-@import url("blocks-frontend.scss");
+
+// Used by success-stories single pages AND the services hub (template-services-hub.php)
+// — both load this bundle. Trimmed from blocks-frontend.scss (all ~50 blocks) to the
+// real union scanned across every published success-story + the hub content.
+// Case-page blocks:
+@import url("../new/blocks/hero-block.scss");
+@import url("../new/blocks/client-context.scss");
+@import url("../new/blocks/business-challenge.scss");
+@import url("../new/blocks/project-objectives.scss");
+@import url("../new/blocks/services-provided.scss");
+@import url("../new/blocks/production-process.scss");
+@import url("../new/blocks/key-visuals.scss");
+@import url("../new/blocks/visual-results.scss");
+@import url("../new/blocks/strategic-cgi.scss");
+@import url("../new/blocks/result-business-impact.scss");
+@import url("../new/blocks/marketing-sales.scss");
+@import url("../new/blocks/key-insight.scss");
+@import url("../new/blocks/team-items.scss");
+@import url("../new/blocks/similar-cases.scss");
+@import url("../new/blocks/small-cta.scss");
+@import url("../new/blocks/faq.scss");
+// Services-hub blocks (shared bundle):
+@import url("../new/blocks/breadcrumbs.scss");
+@import url("../new/blocks/hero-front.scss");
+// hero-front REUSES the rating/buttons classes (.hero__reviews, .review-item,
+// .hero__btns — incl. the "|" divider) that are defined only in hero-services.scss.
+// The hub renders hero-front, so without this import the rating row + CTA buttons
+// lose their layout/spacing. (Cross-block class reuse — not caught by content scan.)
+@import url("../new/blocks/hero-services.scss");
+@import url("../new/blocks/trusted.scss");
+@import url("../new/blocks/what-we-do.scss");
+@import url("../new/blocks/performance-scale.scss");
+@import url("../new/blocks/reviews.scss");
+@import url("../new/blocks/worldwide-rendering.scss");
+// Page-level partials:
 @import url("../new/blocks/articles.scss");
 @import url("../new/blocks/cards.scss");
 @import url("../new/pages/success-stories.scss");

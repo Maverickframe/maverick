@@ -1,2 +1,26 @@
 @import url("base.scss");
-@import url("blocks-frontend.scss");
+
+// Only the blocks actually used on service pages (template-services.php).
+// Previously imported blocks-frontend.scss (all ~50 blocks) — trimmed to the real
+// union scanned across every published `services` page, so the bundle stays lean.
+@import url("../new/blocks/hero-services.scss");
+@import url("../new/blocks/trusted.scss");
+@import url("../new/blocks/completeness-visual.scss");
+@import url("../new/blocks/visuals-slider.scss");
+@import url("../new/blocks/production-process.scss");
+@import url("../new/blocks/presentation-clients.scss");
+@import url("../new/blocks/challenges.scss");
+@import url("../new/blocks/why-choose-us.scss");
+@import url("../new/blocks/visual-results.scss");
+@import url("../new/blocks/worldwide-rendering.scss");
+@import url("../new/blocks/design-services.scss"); // covers acf/design-services + acf/design-services-extended
+@import url("../new/blocks/our-work.scss");
+@import url("../new/blocks/selective-works.scss");
+@import url("../new/blocks/cta.scss");
+@import url("../new/blocks/cta-form.scss");
+@import url("../new/blocks/price.scss");
+@import url("../new/blocks/quiz.scss");
+@import url("../new/blocks/reviews.scss");
+@import url("../new/blocks/workflow.scss");
+@import url("../new/blocks/faq.scss");
+@import url("../new/blocks/free-test-render.scss");

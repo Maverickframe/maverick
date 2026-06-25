@@ -912,8 +912,11 @@ if (completenessVisualSlider) {
   splide.mount();
 }
 
-const productionProcessSlider = document.querySelector('.js-production-process-slider');
-if (productionProcessSlider) {
+// NOTE: use querySelectorAll — pages like 3D Furniture Rendering have TWO
+// production-process blocks. querySelector only mounted the first, leaving the
+// second slider unmounted (first slide stretched to full height = big white gap).
+const productionProcessSliders = document.querySelectorAll('.js-production-process-slider');
+productionProcessSliders.forEach((productionProcessSlider) => {
   const splide = new Splide(productionProcessSlider, {
     destroy: true,
     perPage: 1,
@@ -930,7 +933,7 @@ if (productionProcessSlider) {
   });
 
   splide.mount();
-}
+});
 
 const challengesSlider = document.querySelector('.js-challenges-slider');
 if (challengesSlider) {

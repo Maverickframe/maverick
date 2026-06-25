@@ -6,23 +6,16 @@
 <li>                                
     <div class="menu__post-items">
         <?php
-            // Curated list (ACF `cases`) → show exactly those.
-            // If empty, do NOT dump every case (an empty post__in is ignored by
-            // WP_Query and returns ALL success-stories — 85+ links in the header
-            // of every page). Fall back to the 6 most recent instead.
-            $ow_cases = !empty($our_works['cases']) ? $our_works['cases'] : [];
+            // These case cards render ONLY in the mobile Portfolio accordion
+            // (hidden on desktop). Show the 3 most recently published cases — fresh,
+            // compact, auto-updating. (No post__in, so no risk of dumping all cases.)
             $args = [
                 'post_type'      => 'success-stories',
                 'post_status'    => 'publish',
-                'posts_per_page' => !empty($ow_cases) ? -1 : 6,
+                'posts_per_page' => 3,
+                'orderby'        => 'date',
+                'order'          => 'DESC',
             ];
-            if (!empty($ow_cases)) {
-                $args['post__in'] = $ow_cases;
-                $args['orderby']  = 'post__in';
-            } else {
-                $args['orderby'] = 'date';
-                $args['order']   = 'DESC';
-            }
 
             $query = new WP_Query($args);
 
