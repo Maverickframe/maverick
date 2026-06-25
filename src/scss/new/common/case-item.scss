@@ -194,7 +194,8 @@
     align-items: center;
     gap: toRem(5);
 
-    // margin-top: auto;
+    margin-top: auto; // pin arrow to the bottom so it aligns across equal-height cards
+
     // align-self: flex-end;
 
     // width: toRem(24);
