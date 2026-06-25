@@ -31,7 +31,7 @@ $cards = array(
     </div>
 
     <div class="sol-cap__track-wrap">
-        <div class="splide sol-cap__slider js-sol-cap-slider" role="group" aria-label="Creative capabilities">
+        <div class="splide sol-cap__slider js-sol-cap-slider" role="group" aria-label="<?php echo esc_attr( mfs_t('Creative capabilities', 'Capacidades creativas', 'Kreative Leistungen') ); ?>">
             <div class="splide__track">
                 <ul class="splide__list">
                     <?php foreach ($cards as $c) :

@@ -3,7 +3,7 @@
         <h2><?php echo ( is_front_page() || ! is_singular() ) ? mfs_t( 'Trusted by leading teams worldwide', 'Equipos y marcas líderes de todo el mundo confían en nosotros', 'Führende Teams weltweit vertrauen uns' ) : mfs_t( 'Trusted by Leading Teams: ', 'Confían en nosotros: ', 'Vertrauen führender Teams: ' ) . esc_html( get_the_title() ); ?></h2>
         
         <div class="trusted__slider one js-reveal">
-            <div class="js-presentation-trusted-slider-one splide" role="group" aria-label="Trusted by leading teams">
+            <div class="js-presentation-trusted-slider-one splide" role="group" aria-label="<?php echo esc_attr( mfs_t( 'Trusted by leading teams', 'Equipos líderes confían en nosotros', 'Führende Teams vertrauen uns' ) ); ?>">
                 <div class="splide__track">
                     <ul class="splide__list">
                         <?php
@@ -25,7 +25,7 @@
     </div>
 
     <div class="trusted__slider two js-reveal">
-        <div class="js-presentation-trusted-slider-two splide" role="group" aria-label="Trusted by leading teams worldwide">
+        <div class="js-presentation-trusted-slider-two splide" role="group" aria-label="<?php echo esc_attr( mfs_t( 'Trusted by leading teams worldwide', 'Equipos y marcas líderes de todo el mundo confían en nosotros', 'Führende Teams weltweit vertrauen uns' ) ); ?>">
             <div class="splide__track">
                 <ul class="splide__list">
                     <?php

@@ -89,6 +89,20 @@ if ( ! function_exists('mfs_consent') ) {
     }
 }
 
+// Polylang Pro: translate the `solutions` CPT URL segment to German → /de/loesungen/<slug>/.
+// EN and ES keep the default `solutions` segment (ES pages are already live on
+// /es/solutions/ and must NOT move — changing the ES segment would break those URLs).
+// This mirrors how services→leistungen and success-stories→referenzen are translated,
+// but is defined in code so the segment ships with the theme and survives any Polylang
+// string-translation / transient reset. Hooks PLL_Translate_Slugs_Model::get_translatable_slugs();
+// after a change here flush with: wp transient delete pll_translated_slugs && wp rewrite flush.
+add_filter( 'pll_translated_slugs', function ( $slugs, $language ) {
+    if ( isset( $slugs['solutions'] ) && isset( $language->slug ) && 'de' === $language->slug ) {
+        $slugs['solutions']['translations']['de'] = 'loesungen';
+    }
+    return $slugs;
+}, 10, 2 );
+
 // Multilingual: expose UI strings rendered by JS (modals, sliders) so the bundle
 // can localize them. Read in src/js via window.MFS_I18N (falls back to English).
 add_action( 'wp_head', function () {
