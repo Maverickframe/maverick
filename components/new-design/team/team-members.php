@@ -55,13 +55,26 @@
                     'post_type' => 'team',
                     'posts_per_page' => -1,
                     'post_status' => 'publish',
-                    'lang' => '', // show team members on all languages (team CPT is EN-only)
+                    // Scope the grid to the current language: DE shows the DE
+                    // members, EN shows the EN members. Previously 'lang' => ''
+                    // returned every language at once, so after the DE team was
+                    // published the grid rendered 40 cards (20 EN + 20 DE).
+                    'lang' => $tm_lang,
                     'orderby' => array(
                         'date' => 'ASC',
                     )
                 );
             
                 $query = new WP_Query( $args );
+
+                // Fallback for languages that have no team posts of their own
+                // (e.g. ES): show the English set. Positions are still localized
+                // via the maps above (EN strings → ES/DE).
+                if ( ! $query->have_posts() && $tm_lang !== 'en' ) {
+                    wp_reset_postdata();
+                    $args['lang'] = 'en';
+                    $query = new WP_Query( $args );
+                }
 
                 $extra_images = [
                     7  => get_field('team_image_1'),

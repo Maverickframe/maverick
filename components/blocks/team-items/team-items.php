@@ -1,10 +1,10 @@
 <?php
-    // Hide the Team section when it has no members to show. On /de/ case pages
-    // Polylang filters out the English team (no German translations yet), which
-    // would otherwise render an empty heading. Per product decision we also drop
-    // the Team block on German success-stories entirely for now. EN/ES pages with
-    // a populated team render unchanged.
-    if ( empty( get_field('items') ) || ( mfs_is('de') && is_singular('success-stories') ) ) {
+    // Hide the Team section only when it has no members to show. Polylang filters
+    // the ACF 'items' field by language, so on /de/ case pages it now returns the
+    // German team members (the DE team exists as of 2026-06-25). The previous
+    // blanket drop on German success-stories is removed; the empty() guard still
+    // covers any page/language whose selection filters down to nothing.
+    if ( empty( get_field('items') ) ) {
         return;
     }
 ?>
