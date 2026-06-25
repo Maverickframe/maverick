@@ -51,12 +51,12 @@
 
                 <div class="splide__arrows">
                     <button class="splide__arrow splide__arrow--prev">
-                        <span class="sr-only">prev slide</span>
+                        <span class="sr-only"><?php echo esc_html( mfs_t('prev slide', 'Diapositiva anterior', 'Vorherige Folie') ); ?></span>
                         <?php echo inline_svg('icons/arrow-left-slider-square.svg'); ?>
                     </button>
                     <button class="splide__arrow splide__arrow--next">
                         <span class="sr-only">
-                            Next slide
+                            <?php echo esc_html( mfs_t('Next slide', 'Siguiente diapositiva', 'Nächste Folie') ); ?>
                         </span>
                         <?php echo inline_svg('icons/arrow-right-slider-square.svg'); ?>
                     </button>

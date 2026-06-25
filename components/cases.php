@@ -55,14 +55,14 @@
 
                     <div class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev">
-                            <span class="sr-only">prev slide</span>
+                            <span class="sr-only"><?php echo esc_html( mfs_t('prev slide', 'Diapositiva anterior', 'Vorherige Folie') ); ?></span>
                         </button>
                         <button class="btn splide__arrow splide__arrow--next">
                             <svg width="29" height="28" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.13825 13.64L0 13.7709L0.13825 13.9169V13.64ZM14.7876 27.5959L27.8388 15.2391L28.565 14.5516L27.8774 13.8254L15.3603 0.604916L14.7876 0V1.45449L27.1513 14.5129L14.7876 26.2188V27.5959Z" fill="#2C3ADA"/>
                                 <polyline points="28,1 28,27 1,27" class="hl-line" stroke="#fff" />
                             </svg>
-                            <span class="sr-only">Next client</span>
+                            <span class="sr-only"><?php echo esc_html( mfs_t('Next client', 'Siguiente cliente', 'Nächster Kunde') ); ?></span>
                         </button>
                     </div>
                 </div>

@@ -59,11 +59,11 @@
 
                         <div class="splide__arrows">
                             <button class="splide__arrow splide__arrow--prev">
-                                <span>prev slide</span>
+                                <span><?php echo esc_html( mfs_t('prev slide', 'Diapositiva anterior', 'Vorherige Folie') ); ?></span>
                             </button>
                             <button class="btn hero-slider__next-btn splide__arrow splide__arrow--next">
                                 <span>
-                                    Next slide
+                                    <?php echo esc_html( mfs_t('Next slide', 'Siguiente diapositiva', 'Nächste Folie') ); ?>
                                 </span>
                             </button>
                         </div>

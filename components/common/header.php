@@ -14,7 +14,7 @@
         <?php endif; ?>
 
         <button class="header__menu-btn js-menu-btn">
-            <span class="sr-only">Toggle menu</span>
+            <span class="sr-only"><?php echo esc_html( mfs_t('Toggle menu', 'Alternar menú', 'Menü umschalten') ); ?></span>
             <span class="burger"><?php echo inline_svg('icons/menu.svg'); ?></span>
             <span class="close"><?php echo inline_svg('icons/close-white.svg'); ?></span>
         </button>
