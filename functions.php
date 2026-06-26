@@ -127,10 +127,15 @@ if ( ! function_exists( 'mfs_privacy_url' ) ) {
 // Service link titles are short DE labels (mirrors the EN menu's custom titles, not the full
 // SEO post titles); this menu only ever renders on /de/. Links are post IDs → get_permalink
 // returns the correct lowercase DE URL via Polylang.
+// Top-level order + grouping mirror the EN menu 1:1 (Services, Portfolio, Resources,
+// Company, Solutions) — only labels/links are German. our_works (Portfolio) and resources
+// (Ressourcen) reuse the EN special sub-templates; their DE content comes from the code
+// helpers below (mfs_menu_ow_de / mfs_menu_res_de), so nothing leaks English and no ACF
+// menu_*_de data is needed.
 if ( ! function_exists( 'mfs_menu_rows_de' ) ) {
     function mfs_menu_rows_de() {
         return array(
-            // Leistungen — services mega-dropdown (14 live DE services in 3 groups) + index.
+            // 1. Leistungen (services) — mega-dropdown: 14 live DE services in 3 groups + catalog CTA.
             array(
                 'keyname'       => 'services',
                 'label'         => 'Leistungen',
@@ -171,7 +176,36 @@ if ( ! function_exists( 'mfs_menu_rows_de' ) ) {
                     ),
                 ),
             ),
-            // Lösungen — solutions dropdown (currently one audience landing; no archive index).
+            // 2. Portfolio (our_works) — special dropdown: Referenzen + Galerie + recent DE cases
+            //    + Katalog-Download. Items come from mfs_menu_ow_de().
+            array(
+                'keyname'       => 'our_works',
+                'label'         => 'Portfolio',
+                'desktop_label' => '',
+                'permalink'     => null,
+                'groups_links'  => array(),
+            ),
+            // 3. Ressourcen (resources) — special dropdown: icon-links + recent DE blog posts +
+            //    "Blog ansehen" footer. Items come from mfs_menu_res_de().
+            array(
+                'keyname'       => 'resources',
+                'label'         => 'Ressourcen',
+                'desktop_label' => 'Blog ansehen',
+                'permalink'     => get_permalink( 20595 ), // /de/blog/
+                'groups_links'  => array(),
+            ),
+            // 4. Unternehmen (company) — Team + Kontakt (rendered via menu-big-links company branch).
+            array(
+                'keyname'       => 'company',
+                'label'         => 'Unternehmen',
+                'desktop_label' => '',
+                'permalink'     => null,
+                'groups_links'  => array(
+                    array( 'title' => 'Team',    'link' => 20755, 'links' => array() ), // /de/team/
+                    array( 'title' => 'Kontakt', 'link' => 20750, 'links' => array() ), // /de/kontakt/
+                ),
+            ),
+            // 5. Lösungen (solutions) — dropdown (one audience landing) + catalog CTA.
             array(
                 'keyname'       => 'solutions',
                 'label'         => 'Lösungen',
@@ -185,12 +219,33 @@ if ( ! function_exists( 'mfs_menu_rows_de' ) ) {
                     ),
                 ),
             ),
-            // Simple top-level links.
-            array( 'keyname' => 'referenzen', 'label' => 'Referenzen', 'desktop_label' => '', 'permalink' => get_permalink( 20577 ), 'groups_links' => array() ),
-            array( 'keyname' => 'blog',       'label' => 'Blog',       'desktop_label' => '', 'permalink' => get_permalink( 20595 ), 'groups_links' => array() ),
-            array( 'keyname' => 'team',       'label' => 'Team',       'desktop_label' => '', 'permalink' => get_permalink( 20755 ), 'groups_links' => array() ),
-            array( 'keyname' => 'galerie',    'label' => 'Galerie',    'desktop_label' => '', 'permalink' => get_permalink( 20751 ), 'groups_links' => array() ),
-            array( 'keyname' => 'kontakt',    'label' => 'Kontakt',    'desktop_label' => '', 'permalink' => get_permalink( 20750 ), 'groups_links' => array() ),
+        );
+    }
+}
+
+// DE content for the Portfolio (our_works) dropdown — mirrors menu_our_works_es (Success
+// stories / Gallery curated links + Download-Catalog button). Used by menu-big-links.php
+// and menu-our-works.php on /de/ so no English leaks and no ACF menu_our_works_de is needed.
+if ( ! function_exists( 'mfs_menu_ow_de' ) ) {
+    function mfs_menu_ow_de() {
+        return array(
+            'items' => array(
+                array( 'image' => 20026, 'link' => 20577, 'title' => 'Referenzen' ), // /de/referenzen/
+                array( 'image' => 20027, 'link' => 20751, 'title' => 'Galerie' ),    // /de/galerie/
+            ),
+            'download_image' => 19981,
+            'download_title' => 'Katalog herunterladen',
+        );
+    }
+}
+
+// DE content for the Ressourcen (resources) dropdown — mirrors menu_resources_es icon-links.
+if ( ! function_exists( 'mfs_menu_res_de' ) ) {
+    function mfs_menu_res_de() {
+        return array(
+            array( 'icon_title' => 'success-menu',  'title' => 'Referenzen',  'description' => 'Unsere Projekte & Fallstudien',        'link' => home_url( '/de/referenzen/' ) ),
+            array( 'icon_title' => 'articles-menu', 'title' => 'Artikel',     'description' => 'Lernen Sie aus unseren Experten-Artikeln', 'link' => home_url( '/de/blog/' ) ),
+            array( 'icon_title' => 'ratings-menu',  'title' => 'Bewertungen', 'description' => 'Wählen Sie die richtigen Partner',      'link' => home_url( '/de/blog/' ) ),
         );
     }
 }

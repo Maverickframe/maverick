@@ -16,7 +16,7 @@ $groups_links  = $args['groups_links'] ?? array();
 $has_group_links = ! empty( $groups_links );
 $has_submenu     = $has_group_links || $keyname === 'our_works' || $keyname === 'resources';
 $with_cta        = $keyname === 'services' || $keyname === 'solutions';
-$show_cta        = $with_cta && ! ( function_exists( 'mfs_is' ) && mfs_is( 'de' ) );
+$show_cta        = $with_cta; // catalog CTA on services/solutions (all languages; DE label localized)
 ?>
 <li <?php if($has_submenu): ?>class="menu-item-has-children"<?php endif; ?>>
     <?php if(!$has_submenu): ?>

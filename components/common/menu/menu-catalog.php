@@ -9,6 +9,18 @@ $cat = function ($name) {
             return $v;
         }
     }
+    // German fallback labels (the DE menu is code-driven; no menu_catalog_*_de option is set).
+    // The catalog asset/image stays English on purpose — only the card copy is localized.
+    if ( $lang === 'de' ) {
+        $de = array(
+            'menu_catalog_title'    => 'UNSER KATALOG',
+            'menu_catalog_desc'     => 'Wir haben unsere besten Arbeiten in einer einzigen PDF-Datei zusammengestellt.',
+            'menu_catalog_download' => 'Herunterladen',
+        );
+        if ( isset($de[$name]) ) {
+            return $de[$name];
+        }
+    }
     return get_field($name, 'options');
 };
 ?>

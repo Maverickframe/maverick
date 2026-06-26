@@ -2,8 +2,12 @@
     $desktop_label = $args['desktop_label'] ?? '';
     $permalink = $args['permalink'] ?? '';
     $mfs_res_lang = mfs_lang();
-    $res_field = ( $mfs_res_lang !== 'en' && get_field('menu_resources_' . $mfs_res_lang, 'options') ) ? 'menu_resources_' . $mfs_res_lang : 'menu_resources';
-    $resources = get_field($res_field, 'options');
+    if ( $mfs_res_lang === 'de' && function_exists('mfs_menu_res_de') ) {
+        $resources = mfs_menu_res_de(); // DE menu is code-driven (no menu_resources_de ACF)
+    } else {
+        $res_field = ( $mfs_res_lang !== 'en' && get_field('menu_resources_' . $mfs_res_lang, 'options') ) ? 'menu_resources_' . $mfs_res_lang : 'menu_resources';
+        $resources = get_field($res_field, 'options');
+    }
 ?>
 <li class="menu__icons">
     <div class="menu__icons-links">

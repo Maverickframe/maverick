@@ -6,8 +6,12 @@ $links = $args['links'] ?? [];
 
 if ($keyname == 'our_works') {
     $mfs_ow_lang = mfs_lang();
-    $ow_field = ( $mfs_ow_lang !== 'en' && get_field('menu_our_works_' . $mfs_ow_lang, 'options') ) ? 'menu_our_works_' . $mfs_ow_lang : 'menu_our_works';
-    $our_works = get_field($ow_field, 'options');
+    if ( $mfs_ow_lang === 'de' && function_exists('mfs_menu_ow_de') ) {
+        $our_works = mfs_menu_ow_de(); // DE menu is code-driven (no menu_our_works_de ACF)
+    } else {
+        $ow_field = ( $mfs_ow_lang !== 'en' && get_field('menu_our_works_' . $mfs_ow_lang, 'options') ) ? 'menu_our_works_' . $mfs_ow_lang : 'menu_our_works';
+        $our_works = get_field($ow_field, 'options');
+    }
     if (!empty($our_works['items'])) {
         $links = $our_works['items'];
     }
