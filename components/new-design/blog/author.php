@@ -1,5 +1,13 @@
 <?php
 $author = get_field('author');
+// Polylang filters the post_object relation by language; team posts exist only
+// in EN/DE, so on ES the relation is empty. Fall back to the raw stored team ID.
+if (!$author) {
+    $rawAuthorId = (int) get_post_meta(get_the_ID(), 'author', true);
+    if ($rawAuthorId) {
+        $author = get_post($rawAuthorId);
+    }
+}
 if ($author) {
     $authorAvatar = get_field('black_photo', $author->ID);
     $authorName = get_the_title($author->ID);

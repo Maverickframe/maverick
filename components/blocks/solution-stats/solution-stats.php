@@ -5,7 +5,14 @@
  * separated by thin vertical dividers.
  */
 
-$stats = array(
+$acf_stats = get_field('stats');
+$stats = array();
+if ($acf_stats) {
+    foreach ($acf_stats as $row) {
+        $stats[] = array('num' => isset($row['num'])?$row['num']:'', 'sym' => isset($row['sym'])?$row['sym']:'', 'label' => isset($row['label'])?$row['label']:'');
+    }
+}
+if (empty($stats)) $stats = array(
     array('num' => '10',  'sym' => '+', 'label' => mfs_t('Years in creative production and visual production', 'Años en producción creativa y visual', 'Jahre in Kreativ- und Visual-Produktion')),
     array('num' => '95',  'sym' => '%', 'label' => mfs_t('On-time project delivery', 'Entrega de proyectos a tiempo', 'Termingerechte Projektlieferung')),
     array('num' => '350', 'sym' => '+', 'label' => mfs_t('Brands and agencies supported', 'Marcas y agencias atendidas', 'Betreute Marken und Agenturen')),

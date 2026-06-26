@@ -63,11 +63,11 @@ $faqs = [
             <h2><?php echo mfs_t('Frequently asked questions', 'Preguntas frecuentes', 'Häufig gestellte Fragen'); ?></h2>
         </div>
 
-        <div class="faq__items">
+        <div class="faq__items js-faq">
             <?php foreach ($faqs as $item):
                 $q = $item['q_' . $mfs_faq_lang] ?? $item['q_en'];
                 $a = $item['a_' . $mfs_faq_lang] ?? $item['a_en']; ?>
-                <div class="faq-item">
+                <div class="faq-item js-faq-item">
                     <button class="faq-item__btn js-faq-btn" type="button">
                         <span><?php echo esc_html($q); ?></span>
                     </button>

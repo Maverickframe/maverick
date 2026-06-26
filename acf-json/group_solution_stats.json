@@ -1,0 +1,77 @@
+{
+    "key": "group_solution_stats",
+    "title": "Block Solution Stats",
+    "fields": [
+        {
+            "key": "field_solstat_stats",
+            "label": "Stats",
+            "name": "stats",
+            "type": "repeater",
+            "instructions": "Leave empty to use the default studio stats.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_solstat_num",
+                    "label": "Number",
+                    "name": "num",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_solstat_stats"
+                },
+                {
+                    "key": "field_solstat_sym",
+                    "label": "Symbol",
+                    "name": "sym",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_solstat_stats"
+                },
+                {
+                    "key": "field_solstat_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_solstat_stats"
+                }
+            ]
+        }
+    ],
+    "location": [[{ "param": "block", "operator": "==", "value": "acf\/solution-stats" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}
