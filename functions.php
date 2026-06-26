@@ -242,10 +242,13 @@ if ( ! function_exists( 'mfs_menu_ow_de' ) ) {
 // DE content for the Ressourcen (resources) dropdown — mirrors menu_resources_es icon-links.
 if ( ! function_exists( 'mfs_menu_res_de' ) ) {
     function mfs_menu_res_de() {
+        // Resources = articles/blog only. "Referenzen" lives in the Portfolio dropdown
+        // (mfs_menu_ow_de) — it was duplicated here as an EN-quirk carry-over and removed.
+        // "Bewertungen" was also removed: it pointed at /de/blog/ (a false target — reviews
+        // are not the blog), and there is no DE reviews page; the footer "Bewerten Sie uns"
+        // block already carries the Google/Trustpilot review CTA.
         return array(
-            array( 'icon_title' => 'success-menu',  'title' => 'Referenzen',  'description' => 'Unsere Projekte & Fallstudien',        'link' => home_url( '/de/referenzen/' ) ),
-            array( 'icon_title' => 'articles-menu', 'title' => 'Artikel',     'description' => 'Lernen Sie aus unseren Experten-Artikeln', 'link' => home_url( '/de/blog/' ) ),
-            array( 'icon_title' => 'ratings-menu',  'title' => 'Bewertungen', 'description' => 'Wählen Sie die richtigen Partner',      'link' => home_url( '/de/blog/' ) ),
+            array( 'icon_title' => 'articles-menu', 'title' => 'Artikel', 'description' => 'Lernen Sie aus unseren Experten-Artikeln', 'link' => home_url( '/de/blog/' ) ),
         );
     }
 }
@@ -310,8 +313,10 @@ if ( ! function_exists( 'mfs_footer_menu_de' ) ) {
                     ),
                 ),
             ),
-            // 3. Ressourcen — Referenzen + Artikel + Bewertungen (header resources dropdown;
-            //    Artikel/Bewertungen both point at the DE blog hub, mirroring the header 1:1).
+            // 3. Ressourcen — Artikel only (mirrors the header resources dropdown after cleanup).
+            //    "Referenzen" lives in the Portfolio column above (removed here as a duplicate);
+            //    "Bewertungen" removed (it pointed at /de/blog/ — a false target; review CTA is
+            //    in the footer "Bewerten Sie uns" block).
             array(
                 'title'  => 'Ressourcen',
                 'groups' => array(
@@ -319,9 +324,7 @@ if ( ! function_exists( 'mfs_footer_menu_de' ) ) {
                         'title' => '',
                         'link'  => 0,
                         'links' => array(
-                            array( 'title' => 'Referenzen',  'link' => 20577 ),
-                            array( 'title' => 'Artikel',     'link' => 20595 ),
-                            array( 'title' => 'Bewertungen', 'link' => 20595 ),
+                            array( 'title' => 'Artikel', 'link' => 20595 ),
                         ),
                     ),
                 ),
