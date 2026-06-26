@@ -547,6 +547,7 @@ if (heroPresentationSlider) {
     gap: 15,
     pagination: false,
     type: 'loop',
+    ...heroLoopExtra,
     autoScroll: {
       speed: 0.5
     }
@@ -804,6 +805,16 @@ if (selectiveWorksSlider) {
   splide.mount();
 }
 
+// Solutions-page hero uses short landscape case images. Splide's auto loop-clone
+// count (~2/side) gives too small a buffer for them, so the upward-scrolling right
+// column shows a black seam. Force extra clones there ONLY — combined with the
+// height-constraint CSS (html.single-solutions in hero-front.scss) the column stays
+// viewport-height so the js-reveal IntersectionObserver (0.15 threshold) still fires.
+// Homepage hero (tall portrait crops) is left on Splide defaults — untouched.
+const heroLoopExtra = document.documentElement.classList.contains('single-solutions')
+  ? { clones: 12 }
+  : {};
+
 const heroHoverSliderLeft = document.querySelector('.js-hero-hover-slider-left');
 if (heroHoverSliderLeft) {
   const splide = new Splide(heroHoverSliderLeft, {
@@ -814,6 +825,7 @@ if (heroHoverSliderLeft) {
     height: '100%',
     pagination: false,
     type: 'loop',
+    ...heroLoopExtra,
     autoScroll: {
       speed: 0.5
     },
@@ -847,6 +859,7 @@ if (heroHoverSliderRight) {
     height: '100%',
     pagination: false,
     type: 'loop',
+    ...heroLoopExtra,
     autoScroll: {
       speed: -0.5
     },

@@ -11,8 +11,25 @@ $subtext  = get_field('subtext') ?: mfs_t('Our creative production services are 
 $btn_text = get_field('btn_text') ?: mfs_t('All services', 'Todos los servicios');
 $btn_link = get_field('btn_link') ?: '/services/';
 
-// Layout-first hardcoded cards (mirror Figma hover frame 14574:42164). ACF repeater later.
-$cards = array(
+// Per-page cards via ACF repeater; fall back to the default capability cards.
+$acf_cards = get_field('cards');
+$cards = array();
+if ($acf_cards) {
+    foreach ($acf_cards as $row) {
+        $chips = array();
+        if (!empty($row['chips'])) {
+            foreach ($row['chips'] as $cr) { if (!empty($cr['chip'])) { $chips[] = $cr['chip']; } }
+        }
+        $cards[] = array(
+            'img'   => $row['image'] ?: 0,
+            'video' => !empty($row['video']),
+            'chips' => $chips,
+            'title' => isset($row['title']) ? $row['title'] : '',
+            'desc'  => isset($row['desc']) ? $row['desc'] : '',
+        );
+    }
+}
+if (empty($cards)) $cards = array(
     array('img' => 16176, 'video' => true,  'chips' => array(mfs_t('Exterior rendering', 'Render exterior'), mfs_t('Interior rendering', 'Render interior')),                                            'title' => mfs_t('Exterior & Architectural Rendering', 'Render exterior y arquitectónico'),         'desc' => mfs_t('High-quality architectural rendering used in property marketing campaigns, real estate presentations, and development launches.', 'Render arquitectónico de alta calidad para campañas de marketing inmobiliario, presentaciones de proyectos y lanzamientos de promociones.')),
     array('img' => 16187, 'video' => false, 'chips' => array(mfs_t('Product showcase', 'Showcase de producto'), mfs_t('Featured products', 'Productos destacados')),                                                'title' => mfs_t('Product Rendering', 'Render de producto'),                          'desc' => mfs_t('High-end product rendering for marketing visuals, product launches, and e-commerce campaigns.', 'Render de producto de alta gama para visuales de marketing, lanzamientos de producto y campañas de ecommerce.')),
     array('img' => 16712, 'video' => false, 'chips' => array(mfs_t('Pitch deck', 'Pitch deck'), mfs_t('Investor deck', 'Investor deck'), mfs_t('Sales deck', 'Sales deck'), mfs_t('Events & keynotes', 'Eventos y keynotes'), mfs_t('Business presentation', 'Presentación de empresa')), 'title' => mfs_t('Presentation Design', 'Diseño de presentaciones'),                        'desc' => mfs_t('Professional presentation design for client pitches, investor decks, and campaign presentations.', 'Diseño de presentaciones profesional para pitches de clientes, investor decks y presentaciones de campaña.')),

@@ -95,6 +95,14 @@ function snapWorkflowDots() {
       // --- Mobile ---
       const dotSide = align === 'flex-end' ? 'left' : 'right'; // side the dot lives on
 
+      // Anchor the dash to the heading's own edge, not the content box. The box is
+      // the full column width, so a short heading (e.g. "Strategic Planning") would
+      // otherwise get only a stub of dash floating next to the dot. The h3 is
+      // align-self:flex-start, so its rect is tight to the visible text.
+      const heading = item.querySelector('h3');
+      const hr = heading ? heading.getBoundingClientRect() : cr;
+      const textEdge = dotSide === 'left' ? hr.left : hr.right;
+
       // Pick the crossing on the text's outward side so the connector points away
       // from the text (never behind it); fall back to the extreme crossing otherwise.
       let best = null;
@@ -106,11 +114,28 @@ function snapWorkflowDots() {
         if (!best) best = crossings.reduce((a, b) => (b.x > a.x ? b : a));
       }
 
-      // Keep a minimum gap between dot and text (the dot may drift a touch off the
-      // curve only when the curve nearly meets the column).
+      // Default nudges: push the dot a few px further onto the curve (the inner
+      // crossing lands a hair short of the stroke centre) and let the dash run a
+      // touch past the dot. Per-step overrides (keyed by heading text) fine-tune
+      // the Solutions page; other pages fall through to the defaults.
+      //   overshoot — px the dot moves further out onto the curve
+      //   stub      — px the dash runs past the dot, so the dot sits ON the line
+      //   trim      — px shaved off the dash on the heading side (dot unchanged)
+      const htext = (heading ? heading.textContent : '').trim().toLowerCase();
+      let overshoot = 5;
+      let stub = 6;
+      let trim = 0;
+      if (htext.includes('integrated production')) {
+        overshoot = 12;
+      } else if (htext.includes('delivery')) {
+        overshoot = 5; stub = 0; trim = 34;
+      } else if (htext.includes('ongoing support')) {
+        overshoot = 0; stub = 0;
+      }
+
       let dotX = best.x;
-      if (dotSide === 'left') dotX = Math.min(dotX, cr.left - MIN_CONN);
-      else dotX = Math.max(dotX, cr.right + MIN_CONN);
+      if (dotSide === 'left') dotX = Math.min(dotX, cr.left - MIN_CONN) - overshoot;
+      else dotX = Math.max(dotX, cr.right + MIN_CONN) + overshoot;
 
       dot.style.left = `${dotX - ir.left - dotSize / 2}px`;
       dot.style.right = 'auto';
@@ -118,11 +143,15 @@ function snapWorkflowDots() {
       if (conn) {
         conn.style.right = 'auto';
         if (dotSide === 'left') {
-          conn.style.left = `${dotX - ir.left}px`;
-          conn.style.width = `${cr.left - dotX}px`;
+          // Dash from a stub left of the dot up to the heading's left edge.
+          const start = dotX - stub;
+          conn.style.left = `${start - ir.left}px`;
+          conn.style.width = `${(textEdge - trim) - start}px`;
         } else {
-          conn.style.left = `${cr.right - ir.left}px`;
-          conn.style.width = `${dotX - cr.right}px`;
+          // Dash from the heading's right edge to a stub past the dot.
+          const start = textEdge + trim;
+          conn.style.left = `${start - ir.left}px`;
+          conn.style.width = `${(dotX + stub) - start}px`;
         }
       }
     });

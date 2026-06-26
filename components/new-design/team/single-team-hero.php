@@ -1,11 +1,15 @@
 <section class="single-team-hero">
     <div class="container">
         <div class="single-team-hero__main">
-            <?php // todo: common ?>
+            <?php
+            // Breadcrumb labels + links must follow the page language (Polylang).
+            $bc_home = function_exists('pll_home_url') ? pll_home_url() : home_url();
+            $bc_team_id = function_exists('pll_get_post') ? (pll_get_post(1945) ?: 1945) : 1945;
+            ?>
             <ul class="single-team-hero__breadcrumbs">
-                <li><a href="<?php echo home_url(); ?>">Home</a></li>
-                <li><a href="<?php echo get_permalink(1945); ?>">Team</a></li>
-                <li><span><?php the_title(); ?></span></li> 
+                <li><a href="<?php echo esc_url($bc_home); ?>"><?php echo mfs_t('Home', 'Inicio', 'Startseite'); ?></a></li>
+                <li><a href="<?php echo esc_url(get_permalink($bc_team_id)); ?>"><?php echo mfs_t('Team', 'Equipo', 'Team'); ?></a></li>
+                <li><span><?php the_title(); ?></span></li>
             </ul>
 
             <div class="single-team-hero__info">

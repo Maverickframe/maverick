@@ -250,3 +250,15 @@
     background-size: 0 0;
     color: inherit;
 }
+
+// Solutions-page hero only. Its case images are short landscape renders, so Splide's
+// default loop clone count (~2/side) leaves too small a buffer and the upward-scrolling
+// right column shows a black seam. sliders.js forces `clones: 12` there to cover the
+// viewport — but that makes each column far taller than one screen, so the js-reveal
+// IntersectionObserver (0.15 threshold) never fires and the columns would stay at
+// opacity 0 (`.js-reveal { opacity: 0 }` in common.scss). Show them immediately instead;
+// the hero text keeps its own reveal. Scoped to .single-solutions so the homepage hero
+// (tall portrait crops, default clones, normal reveal) is untouched.
+html.single-solutions .hero-front__slider.js-reveal {
+    opacity: 1 !important;
+}

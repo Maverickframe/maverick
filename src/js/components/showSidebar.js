@@ -13,6 +13,14 @@ function showSidebar() {
     }
 }
 
-if (window.innerWidth < 1270) {
+// NB: do NOT gate this behind a load-time `window.innerWidth` check — that was
+// evaluated once at script execution, so loading wide (or DevTools resize from
+// desktop to mobile) left the "Contents" toggle without a click handler. The
+// toggle button is hidden on desktop via CSS, so always wiring it is safe.
+// Also run immediately if the DOM is already parsed (module scripts may execute
+// after DOMContentLoaded depending on load order).
+if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', showSidebar);
+} else {
+    showSidebar();
 }

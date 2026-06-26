@@ -60,8 +60,8 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php eager_attachment($image, 'full', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
-                                        <?php lazy_attachment($hover_image, 'full'); ?>
+                                        <?php eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
+                                        <?php lazy_attachment($hover_image, 'large'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
@@ -94,8 +94,8 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php eager_attachment($image, 'full', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
-                                        <?php lazy_attachment($hover_image, 'full'); ?>
+                                        <?php eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
+                                        <?php lazy_attachment($hover_image, 'large'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>

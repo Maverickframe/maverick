@@ -5,6 +5,16 @@
  * vertical space the way the bottom-of-article author block does.
  */
 $author = get_field('author');
+// Polylang translates the post_object relation per language; team posts exist
+// only in EN/DE, so on ES (or any language without a team translation) the
+// relation resolves to empty. Fall back to the raw stored team ID so the author
+// card still renders (with the original-language team profile).
+if (!$author) {
+    $rawAuthorId = (int) get_post_meta(get_the_ID(), 'author', true);
+    if ($rawAuthorId) {
+        $author = get_post($rawAuthorId);
+    }
+}
 if (!$author) return;
 $avatarId = get_field('black_photo', $author->ID);
 $avatarUrl = $avatarId ? wp_get_attachment_image_url($avatarId, 'thumbnail') : '';
