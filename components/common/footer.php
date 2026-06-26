@@ -45,27 +45,12 @@ $t = function ($en, $es = null, $de = null) {
         <div class="footer__links js-footer-acc">
             <?php
             $footer_menu = $opt('footer_menu');
-            // Small real German footer until footer_menu_de (ACF) is filled in: one
-            // "Leistungen" column linking the published /de/ service pages only, so
-            // every footer target stays on German (no EN-page leakage). Grows as /de/
-            // grows. Mirrors the live German header menu (menu_items_de).
+            // German footer nav is code-defined (mfs_footer_menu_de) so it mirrors the German
+            // header 1:1 — Leistungen / Portfolio / Ressourcen / Unternehmen / Lösungen, same
+            // order, German labels, all links resolving to lowercase /de/ URLs. EN/ES footers
+            // stay ACF-driven (footer_menu / footer_menu_es) and are untouched.
             if ( $mfs_footer_lang === 'de' && ! get_field('footer_menu_de', 'options') ) {
-                $footer_menu = array(
-                    array(
-                        'title'  => 'Leistungen',
-                        'groups' => array(
-                            array(
-                                'title' => '',
-                                'link'  => 0,
-                                'links' => array(
-                                    array( 'title' => 'Immobilien-Visualisierung', 'link' => 20454 ),
-                                    array( 'title' => 'Innenraumvisualisierung',  'link' => 20448 ),
-                                    array( 'title' => 'Architekturvisualisierung', 'link' => 20450 ),
-                                ),
-                            ),
-                        ),
-                    ),
-                );
+                $footer_menu = mfs_footer_menu_de();
             }
             if ($footer_menu):
                 foreach ($footer_menu as $footer_menu_item):

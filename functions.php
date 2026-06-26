@@ -250,6 +250,113 @@ if ( ! function_exists( 'mfs_menu_res_de' ) ) {
     }
 }
 
+// DE footer navigation — mirrors the German header (mfs_menu_rows_de) so the footer sitemap
+// matches the top menu 1:1: Leistungen / Portfolio / Ressourcen / Unternehmen / Lösungen, in
+// the same order, German labels only. Links are DE post IDs → get_permalink returns the correct
+// lowercase /de/ URL via Polylang. Shaped for footer.php (columns → groups → links). Only ever
+// rendered on /de/ (EN/ES footers stay ACF-driven and untouched). Grows with the header.
+if ( ! function_exists( 'mfs_footer_menu_de' ) ) {
+    function mfs_footer_menu_de() {
+        return array(
+            // 1. Leistungen — 14 live DE services in 3 groups (same grouping as the header).
+            array(
+                'title'  => 'Leistungen',
+                'groups' => array(
+                    array(
+                        'title' => 'Architektur & Immobilien',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Architekturvisualisierung', 'link' => 20450 ),
+                            array( 'title' => 'Immobilien-Visualisierung', 'link' => 20454 ),
+                            array( 'title' => 'Innenraumvisualisierung',   'link' => 20448 ),
+                            array( 'title' => '3D-Grundriss',              'link' => 20632 ),
+                            array( 'title' => '3D-Architektur-Animation',  'link' => 20643 ),
+                        ),
+                    ),
+                    array(
+                        'title' => 'Produkt',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => '3D-Produktvisualisierung', 'link' => 20621 ),
+                            array( 'title' => '3D-Produktanimation',      'link' => 20655 ),
+                        ),
+                    ),
+                    array(
+                        'title' => 'Digital & Kreativ',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Webdesign',           'link' => 20663 ),
+                            array( 'title' => 'UX/UI-Design',        'link' => 20662 ),
+                            array( 'title' => 'Landingpage',         'link' => 20664 ),
+                            array( 'title' => 'App-Design',          'link' => 20665 ),
+                            array( 'title' => 'Corporate Design',    'link' => 20661 ),
+                            array( 'title' => 'Social-Media-Design', 'link' => 20660 ),
+                            array( 'title' => 'Präsentationsdesign', 'link' => 20666 ),
+                        ),
+                    ),
+                ),
+            ),
+            // 2. Portfolio — Referenzen + Galerie (header our_works dropdown).
+            array(
+                'title'  => 'Portfolio',
+                'groups' => array(
+                    array(
+                        'title' => '',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Referenzen', 'link' => 20577 ),
+                            array( 'title' => 'Galerie',    'link' => 20751 ),
+                        ),
+                    ),
+                ),
+            ),
+            // 3. Ressourcen — Referenzen + Artikel + Bewertungen (header resources dropdown;
+            //    Artikel/Bewertungen both point at the DE blog hub, mirroring the header 1:1).
+            array(
+                'title'  => 'Ressourcen',
+                'groups' => array(
+                    array(
+                        'title' => '',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Referenzen',  'link' => 20577 ),
+                            array( 'title' => 'Artikel',     'link' => 20595 ),
+                            array( 'title' => 'Bewertungen', 'link' => 20595 ),
+                        ),
+                    ),
+                ),
+            ),
+            // 4. Unternehmen — Team + Kontakt (header company branch).
+            array(
+                'title'  => 'Unternehmen',
+                'groups' => array(
+                    array(
+                        'title' => '',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Team',    'link' => 20755 ),
+                            array( 'title' => 'Kontakt', 'link' => 20750 ),
+                        ),
+                    ),
+                ),
+            ),
+            // 5. Lösungen — audience landing (header solutions dropdown).
+            array(
+                'title'  => 'Lösungen',
+                'groups' => array(
+                    array(
+                        'title' => '',
+                        'link'  => 0,
+                        'links' => array(
+                            array( 'title' => 'Für Marketing-Agenturen', 'link' => 20784 ),
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+}
+
 // Polylang Pro: translate the `solutions` CPT URL segment to German → /de/loesungen/<slug>/.
 // EN and ES keep the default `solutions` segment (ES pages are already live on
 // /es/solutions/ and must NOT move — changing the ES segment would break those URLs).
