@@ -1,0 +1,181 @@
+@import "../common/vars";
+
+/* Legal / text pages (Privacy Policy, Terms, Cookies) — new design.
+   Font (Inter Tight), header, footer and tokens come from base.scss. */
+
+.legal-page {
+    margin-top: var(--header-height);
+    padding: toRem(32) 0 toRem(80);
+    background-color: var(--white-color);
+    color: var(--text-middle-grey-color);
+
+    @media (min-width: $md) {
+        padding: toRem(48) 0 toRem(120);
+    }
+}
+
+.legal {
+    &__breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: toRem(8);
+
+        font-size: toRem(14);
+        color: var(--text-grey-color);
+
+        a {
+            color: var(--text-grey-color);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--accent-color);
+            }
+        }
+
+        &-sep {
+            color: var(--stroke-light-grey-color);
+        }
+
+        &-current {
+            color: var(--text-middle-grey-color);
+        }
+    }
+
+    &__head {
+        max-width: toRem(820);
+        margin-top: toRem(24);
+
+        @media (min-width: $md) {
+            margin-top: toRem(40);
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: "Inter Tight", sans-serif;
+        font-weight: 500;
+        font-size: toRem(34);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--black-color);
+
+        @media (min-width: $md) {
+            font-size: toRem(52);
+        }
+    }
+
+    &__updated {
+        margin: toRem(16) 0 0;
+        font-size: toRem(14);
+        color: var(--text-grey-color);
+    }
+
+    /* Readable single text column */
+    &__content {
+        max-width: toRem(820);
+        margin-top: toRem(36);
+
+        font-family: "Inter Tight", sans-serif;
+        font-size: toRem(17);
+        line-height: 1.7;
+        color: var(--text-middle-grey-color);
+
+        @media (min-width: $md) {
+            margin-top: toRem(48);
+        }
+
+        p {
+            margin: 0 0 toRem(18);
+        }
+
+        h2 {
+            margin: toRem(48) 0 toRem(16);
+            font-weight: 500;
+            font-size: toRem(26);
+            line-height: 1.25;
+            color: var(--black-color);
+
+            @media (min-width: $md) {
+                font-size: toRem(30);
+            }
+        }
+
+        h3 {
+            margin: toRem(34) 0 toRem(12);
+            font-weight: 500;
+            font-size: toRem(20);
+            line-height: 1.3;
+            color: var(--black-color);
+
+            @media (min-width: $md) {
+                font-size: toRem(22);
+            }
+        }
+
+        ul,
+        ol {
+            margin: 0 0 toRem(18);
+            padding-left: toRem(22);
+
+            li {
+                margin-bottom: toRem(8);
+            }
+        }
+
+        ul li {
+            list-style: disc;
+        }
+
+        ol li {
+            list-style: decimal;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+
+            &:hover {
+                color: var(--accent-hover-color);
+            }
+        }
+
+        strong {
+            font-weight: 500;
+            color: var(--black-color);
+        }
+
+        hr {
+            margin: toRem(40) 0;
+            border: none;
+            border-top: 1px solid var(--line);
+        }
+
+        /* Tables (e.g. data-processor / cookie lists) */
+        .wp-block-table,
+        table {
+            width: 100%;
+            margin: 0 0 toRem(24);
+        }
+
+        table {
+            border-collapse: collapse;
+            font-size: toRem(15);
+
+            td,
+            th {
+                padding: toRem(12) toRem(14);
+                border: 1px solid var(--line);
+                text-align: left;
+                vertical-align: top;
+            }
+
+            tbody tr:first-child td {
+                font-weight: 500;
+                background-color: var(--alt);
+                color: var(--black-color);
+            }
+        }
+    }
+}

@@ -38,6 +38,7 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/team-page.php') || is_singular('team')) return 'src/scss/bundles/team.scss';
     if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
     if (is_page_template('templates/template-contacts.php')) return 'src/scss/bundles/contacts.scss';
+    if (is_page_template('templates/template-legal.php')) return 'src/scss/bundles/legal.scss';
     return 'src/scss/bundles/front.scss';
 }
 
