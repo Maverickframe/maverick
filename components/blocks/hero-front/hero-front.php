@@ -1,3 +1,12 @@
+<?php
+    // On the front page the above-the-fold hero must not stay at opacity:0 waiting for
+    // the deferred theme bundle (GSAP reveals .js-reveal on intersect). That JS-gated
+    // reveal pushed the LCP paint past Lighthouse's measurement window → NO_LCP / very
+    // late LCP. Use a CSS-animated reveal class on the front page so the hero (H1 +
+    // images) paints immediately and GSAP never touches it. Inner-page heroes keep the
+    // JS .js-reveal path (and the .single-solutions slider hack in hero-front.scss).
+    $hf_reveal = is_front_page() ? 'hero-front__reveal' : 'js-reveal';
+?>
 <section class="hero-front">
     <div class="container container_small">
         <?php // Services hub hero uses an eyebrow chip in the same spot — the absolute-positioned
@@ -20,7 +29,7 @@
         ?>
             <?php echo get_template_part('components/new-design/breadcrumbs', null, ['breadcrumbs' => $hf_crumbs]); ?>
         <?php endif; ?>
-        <div class="hero__main hero-front__main js-reveal">
+        <div class="hero__main hero-front__main <?php echo $hf_reveal; ?>">
             <div class="hero-front__titles">
                 <div class="hero-front__subtitle"><?php the_field('subtitle'); ?></div>
                 <h1 class="hero__title js-highlight text-highlight"><?php the_field('title'); ?></h1>
@@ -48,7 +57,7 @@
         </div>
 
         <div class="hero-front__sliders">
-            <div class="hero-front__slider js-reveal">
+            <div class="hero-front__slider <?php echo $hf_reveal; ?>">
                 <div class="js-hero-hover-slider-left splide" role="group" aria-label="<?php the_title(); ?>">
                     <div class="splide__track">
                         <ul class="splide__list">
@@ -65,7 +74,21 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
+                                        <?php
+                                            // Only the first slide of each column is eager + high priority (LCP candidate).
+                                            // The rest use native loading=lazy: the browser still loads any slide that is
+                                            // in the viewport on load (incl. Splide loop clones), but defers off-screen
+                                            // slides — cutting the hero from ~20 eager images to a couple. Size stays
+                                            // 'large' so retina quality is unchanged (images render ~409px @ up to DPR 2).
+                                            if ($i === 0) {
+                                                eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', true);
+                                            } else {
+                                                echo wp_get_attachment_image($image, 'large', false, [
+                                                    'loading' => 'lazy',
+                                                    'sizes'   => '(max-width: 767px) 45vw, 288px',
+                                                ]);
+                                            }
+                                        ?>
                                         <?php lazy_attachment($hover_image, 'large'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
@@ -82,7 +105,7 @@
                 </div>
             </div>
 
-            <div class="hero-front__slider js-reveal">
+            <div class="hero-front__slider <?php echo $hf_reveal; ?>">
                 <div class="js-hero-hover-slider-right splide" role="group" aria-label="<?php the_title(); ?>">
                     <div class="splide__track">
                         <ul class="splide__list">
@@ -99,7 +122,21 @@
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
-                                        <?php eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', $i === 0); ?>
+                                        <?php
+                                            // Only the first slide of each column is eager + high priority (LCP candidate).
+                                            // The rest use native loading=lazy: the browser still loads any slide that is
+                                            // in the viewport on load (incl. Splide loop clones), but defers off-screen
+                                            // slides — cutting the hero from ~20 eager images to a couple. Size stays
+                                            // 'large' so retina quality is unchanged (images render ~409px @ up to DPR 2).
+                                            if ($i === 0) {
+                                                eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', true);
+                                            } else {
+                                                echo wp_get_attachment_image($image, 'large', false, [
+                                                    'loading' => 'lazy',
+                                                    'sizes'   => '(max-width: 767px) 45vw, 288px',
+                                                ]);
+                                            }
+                                        ?>
                                         <?php lazy_attachment($hover_image, 'large'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>

@@ -262,3 +262,32 @@
 html.single-solutions .hero-front__slider.js-reveal {
     opacity: 1 !important;
 }
+
+// Front-page hero reveal via CSS (not GSAP). hero-front.php swaps .js-reveal → this
+// class on the front page so the LCP element (H1 + hero images) paints on the first
+// frame: a CSS animation begins at paint, unlike the GSAP/IntersectionObserver reveal
+// which waited for the deferred theme bundle and pushed LCP past Lighthouse's window.
+// Opacity-only fade to match the previous GSAP look exactly. Inner-page heroes keep
+// .js-reveal.
+.hero-front__reveal {
+    opacity: 0;
+    animation: hero-front-reveal 0.6s ease 0.05s forwards;
+    will-change: opacity;
+}
+
+@keyframes hero-front-reveal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-front__reveal {
+        animation: none;
+        opacity: 1;
+    }
+}

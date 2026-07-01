@@ -49,10 +49,10 @@
         </div>
 
         <?php if ( $show_filter ): ?>
-            <div class="team-awards__filter" role="tablist" aria-label="Filter recognitions by type">
-                <button type="button" class="team-awards__tab is-active" data-filter="all" aria-selected="true"><?php echo esc_html( mfs_t('All', 'Todos', 'Alle') ); ?></button>
+            <div class="team-awards__filter" role="group" aria-label="<?php echo esc_attr( mfs_t('Filter recognitions by type', 'Filtrar reconocimientos por tipo', 'Auszeichnungen nach Typ filtern') ); ?>">
+                <button type="button" class="team-awards__tab is-active" data-filter="all" aria-pressed="true"><?php echo esc_html( mfs_t('All', 'Todos', 'Alle') ); ?></button>
                 <?php foreach ( $tabs as $key => $label ): ?>
-                    <button type="button" class="team-awards__tab" data-filter="<?php echo esc_attr($key); ?>" aria-selected="false"><?php echo esc_html($label); ?></button>
+                    <button type="button" class="team-awards__tab" data-filter="<?php echo esc_attr($key); ?>" aria-pressed="false"><?php echo esc_html($label); ?></button>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
@@ -101,7 +101,7 @@
                     tabs.forEach(function(t){
                         var on = ( t === tab );
                         t.classList.toggle('is-active', on);
-                        t.setAttribute('aria-selected', on ? 'true' : 'false');
+                        t.setAttribute('aria-pressed', on ? 'true' : 'false');
                     });
                     cards.forEach(function(c){
                         var show = ( f === 'all' || c.getAttribute('data-type') === f );
