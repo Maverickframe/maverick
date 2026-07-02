@@ -210,7 +210,14 @@
         }
     }
 
-    img:nth-child(2) {
+    // Hover image = the 2nd <img>. Target it by an explicit class (added in
+    // hero-front.php) AND by :nth-of-type(2) — NOT :nth-child(2). For logged-out
+    // visitors WP Rocket's optimizations can inject sibling nodes into the slide
+    // item, which shifts :nth-child indices so the overlay rule stops matching and
+    // both images render side-by-side. Class + :nth-of-type are immune to that
+    // (logged-in admins bypass the optimizations, which is why it looked fine there).
+    img:nth-of-type(2),
+    .hero-front__slider-hover {
         position: absolute;
         left: 0;
         top: 50%;
@@ -226,7 +233,8 @@
     }
 
     &:hover {
-        img:nth-child(2) {
+        img:nth-of-type(2),
+        .hero-front__slider-hover {
             opacity: 1;
         }
     }
