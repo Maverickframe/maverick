@@ -46,7 +46,7 @@ if($categories): ?>
 
         <ul class="gallery-items__tabs">
             <li>
-                <button class="js-gallery-tab-btn" data-tab="all"><?php echo mfs_t('All', 'Todas', 'Alle'); ?></button>
+                <button class="js-gallery-tab-btn active" data-tab="all"><?php echo mfs_t('All', 'Todas', 'Alle'); ?></button>
             </li>
             <?php foreach($categories as $cat): ?>
                 <li class="js-category">
@@ -73,7 +73,7 @@ if($categories): ?>
         </ul>
 
         <div class="gallery-items__tabs-content">
-            <div class="gallery-items__items js-gallery-tab-content js-gallery" id="all">
+            <div class="gallery-items__items js-gallery-tab-content js-gallery active" id="all">
                 <?php
                 foreach($categories as $cat):
                     $items = get_field('items', $cat->ID);

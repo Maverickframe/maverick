@@ -75,21 +75,26 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // Only the first slide of each column is eager + high priority (LCP candidate).
-                                            // The rest use native loading=lazy: the browser still loads any slide that is
-                                            // in the viewport on load (incl. Splide loop clones), but defers off-screen
-                                            // slides — cutting the hero from ~20 eager images to a couple. Size stays
-                                            // 'large' so retina quality is unchanged (images render ~409px @ up to DPR 2).
-                                            if ($i === 0) {
-                                                eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', true);
+                                            // First 3 slides of each column are eager; the rest native loading=lazy.
+                                            // The hero is an auto-scrolling Splide marquee, so the LCP element is
+                                            // whichever slide is largest when LCP fires — NOT deterministically slide 0.
+                                            // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
+                                            // LCP ~7.7s. Eager-ing the first few visible slides makes the LCP image load
+                                            // immediately. fetchpriority=high only on the very first (one LCP hint).
+                                            // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
+                                            // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
+                                            if ($i < 3) {
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 767px) 45vw, 288px',
+                                                    'sizes'   => '(max-width: 1270px) 150px, 420px',
                                                 ]);
                                             }
                                         ?>
-                                        <?php lazy_attachment($hover_image, 'large'); ?>
+                                        <?php // Explicit class so the CSS overlay targets this image by class, not by
+                                              // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
@@ -123,21 +128,26 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // Only the first slide of each column is eager + high priority (LCP candidate).
-                                            // The rest use native loading=lazy: the browser still loads any slide that is
-                                            // in the viewport on load (incl. Splide loop clones), but defers off-screen
-                                            // slides — cutting the hero from ~20 eager images to a couple. Size stays
-                                            // 'large' so retina quality is unchanged (images render ~409px @ up to DPR 2).
-                                            if ($i === 0) {
-                                                eager_attachment($image, 'large', '(max-width: 767px) 45vw, 288px', true);
+                                            // First 3 slides of each column are eager; the rest native loading=lazy.
+                                            // The hero is an auto-scrolling Splide marquee, so the LCP element is
+                                            // whichever slide is largest when LCP fires — NOT deterministically slide 0.
+                                            // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
+                                            // LCP ~7.7s. Eager-ing the first few visible slides makes the LCP image load
+                                            // immediately. fetchpriority=high only on the very first (one LCP hint).
+                                            // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
+                                            // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
+                                            if ($i < 3) {
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 767px) 45vw, 288px',
+                                                    'sizes'   => '(max-width: 1270px) 150px, 420px',
                                                 ]);
                                             }
                                         ?>
-                                        <?php lazy_attachment($hover_image, 'large'); ?>
+                                        <?php // Explicit class so the CSS overlay targets this image by class, not by
+                                              // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>

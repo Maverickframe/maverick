@@ -1,6 +1,13 @@
 <?php
     $desktop_label = $args['desktop_label'] ?? '';
     $permalink = $args['permalink'] ?? '';
+    // The top-level "Resources" menu item has no ACF `link` (there is no /resources/
+    // page), so this bottom "Resources →" CTA was rendering an empty href. Fall back to
+    // the blog archive (Articles hub). Yields to an ACF link if one is ever set. Polylang
+    // returns the current-language archive automatically.
+    if (empty($permalink)) {
+        $permalink = get_post_type_archive_link('blog') ?: home_url('/blog/');
+    }
     $mfs_res_lang = mfs_lang();
     if ( $mfs_res_lang === 'de' && function_exists('mfs_menu_res_de') ) {
         $resources = mfs_menu_res_de(); // DE menu is code-driven (no menu_resources_de ACF)

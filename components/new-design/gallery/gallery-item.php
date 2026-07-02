@@ -27,12 +27,25 @@
             $class .= ' is-video';
         }
     }
+
+    // Reserve each cell's aspect ratio up-front so lazy-loaded images don't reflow the
+    // grid as they arrive (the footer was shifting → CLS ~0.49 on /gallery/). Uses the
+    // media's real dimensions, so rendered proportions are identical to before — the
+    // space is just reserved before load. Fallback 16/9 for iframes / dimensionless video.
+    $ar_w = (int) ($media['width'] ?? 0);
+    $ar_h = (int) ($media['height'] ?? 0);
+    if ((!$ar_w || !$ar_h) && !empty($media['id'])) {
+        $ar_src = wp_get_attachment_image_src($media['id'], 'full');
+        if ($ar_src) { $ar_w = (int) $ar_src[1]; $ar_h = (int) $ar_src[2]; }
+    }
+    if (!$ar_w || !$ar_h) { $ar_w = 16; $ar_h = 9; }
+    $ar_style = ' style="aspect-ratio:' . $ar_w . '/' . $ar_h . '"';
 ?>
 
 <?php if ($media || $isVideoIframe): ?>
 
     <?php if ($isVideoIframe): ?>
-<div class="js-reveal gallery-item <?php echo esc_attr($class); ?>">
+<div class="js-reveal gallery-item <?php echo esc_attr($class); ?>"<?php echo $ar_style; ?>>
     <?php else: ?>
 <a
     href="<?php echo esc_url($link ?: $media['url']); ?>"
@@ -40,6 +53,7 @@
         data-fancybox="fancy-<?php echo esc_attr($galleryId); ?>"
     <?php endif; ?>
     class="js-reveal gallery-item <?php echo esc_attr($class); ?>"
+    <?php echo $ar_style; ?>
 >
 <?php endif; ?>
 
