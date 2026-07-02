@@ -1,18 +1,22 @@
 <header class="js-reveal header <?php if (isset($args['class']))
     echo $args['class']; ?>" data-anim="down">
     <div class="container container_small header__container">
-        <?php // No fetchpriority on the logo: it's a tiny SVG that loads instantly
-              // anyway, and fetchpriority="high" here competes with the hero LCP
-              // image for early bandwidth (PSI wants exactly one high-priority hint). ?>
+        <?php // No fetchpriority on the logo (it competed with the hero LCP image for
+              // early bandwidth), BUT it must carry data-no-lazy + skip-lazy: it turned
+              // out fetchpriority="high" was what kept WP Rocket LazyLoad away — once
+              // removed, Rocket rewrote the logo to data-lazy-src and PSI mobile picked
+              // the late-swapping logo as the LCP element (report r0rjsv2f68, 07-02). ?>
         <?php if (is_front_page()): ?>
             <span class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
-                    alt="Maverick Frame Studio logo" width="44" height="44">
+                    alt="Maverick Frame Studio logo" width="44" height="44"
+                    class="skip-lazy" data-no-lazy="1">
             </span>
         <?php else: ?>
             <a href="<?php echo home_url(); ?>" class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
-                    alt="Maverick Frame Studio logo" width="44" height="44">
+                    alt="Maverick Frame Studio logo" width="44" height="44"
+                    class="skip-lazy" data-no-lazy="1">
             </a>
         <?php endif; ?>
 

@@ -40,6 +40,31 @@ function addScrollBar(splide, scrollbarSelector) {
   });
 }
 
+// Start AutoScroll marquees ~3s after load (or on first user interaction,
+// whichever comes first) instead of immediately. Lighthouse's Speed Index
+// measures when the page LOOKS settled — a marquee that starts moving right
+// away keeps repainting the hero and inflates SI/LCP lab numbers forever
+// (PSI mobile SI stuck at ~5.9s). Users barely notice a 3s-still hero;
+// anyone interacting gets the motion instantly. autoStart:false in each
+// autoScroll config + this helper. Re-plays after Splide refresh() (the ttb
+// hero sliders refresh on window load) in case the timer fired first.
+const AUTOSCROLL_DELAY_MS = 3000;
+function delayAutoScrollStart(splide) {
+  let started = false;
+  const events = ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'];
+  const start = () => {
+    if (started) return;
+    started = true;
+    events.forEach((e) => window.removeEventListener(e, start));
+    splide.Components.AutoScroll?.play();
+  };
+  events.forEach((e) => window.addEventListener(e, start, { passive: true }));
+  setTimeout(start, AUTOSCROLL_DELAY_MS);
+  splide.on('refresh', () => {
+    if (started) setTimeout(() => splide.Components.AutoScroll?.play(), 0);
+  });
+}
+
 const heroSlider = document.querySelector('.js-hero-slider');
 if (heroSlider) {
   const splide = new Splide(heroSlider, {
@@ -335,6 +360,7 @@ if (trustedSlider) {
     fixedHeight: 51,
     type: 'loop',
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     },
     breakpoints: {
@@ -346,6 +372,7 @@ if (trustedSlider) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const stackSlider = document.querySelector('.js-stack-slider');
@@ -359,6 +386,7 @@ if (stackSlider) {
     fixedHeight: 44,
     type: 'loop',
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     },
     breakpoints: {
@@ -370,6 +398,7 @@ if (stackSlider) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const cgiSliderMobile = document.querySelector('.js-cgi-slider-mobile');
@@ -565,11 +594,13 @@ if (heroPresentationSlider) {
     type: 'loop',
     ...heroLoopExtra,
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     }
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const solCapSlider = document.querySelector('.js-sol-cap-slider');
@@ -584,6 +615,7 @@ if (solCapSlider) {
     fixedHeight: 600,
     flickPower: 300,
     autoScroll: {
+      autoStart: false,
       speed: 0.6,
       pauseOnHover: true,
       pauseOnFocus: false
@@ -598,6 +630,7 @@ if (solCapSlider) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const trustedOnePresentationSlider = document.querySelector('.js-presentation-trusted-slider-one');
@@ -611,6 +644,7 @@ if (trustedOnePresentationSlider) {
     fixedHeight: 121,
     type: 'loop',
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     },
     breakpoints: {
@@ -624,6 +658,7 @@ if (trustedOnePresentationSlider) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const trustedTwoPresentationSlider = document.querySelector('.js-presentation-trusted-slider-two');
@@ -638,6 +673,7 @@ if (trustedTwoPresentationSlider) {
     fixedHeight: 121,
     type: 'loop',
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     },
     breakpoints: {
@@ -651,6 +687,7 @@ if (trustedTwoPresentationSlider) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 }
 
 const teamNewSlider = document.querySelector('.js-team-new-slider');
@@ -833,6 +870,7 @@ if (heroHoverSliderLeft) {
     type: 'loop',
     ...heroLoopExtra,
     autoScroll: {
+      autoStart: false,
       speed: 0.5
     },
     breakpoints: {
@@ -849,6 +887,7 @@ if (heroHoverSliderLeft) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 
   // Recompute ttb loop geometry after images/layout settle
   // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
@@ -867,6 +906,7 @@ if (heroHoverSliderRight) {
     type: 'loop',
     ...heroLoopExtra,
     autoScroll: {
+      autoStart: false,
       speed: -0.5
     },
     breakpoints: {
@@ -883,6 +923,7 @@ if (heroHoverSliderRight) {
   });
 
   splide.mount({ AutoScroll });
+  delayAutoScrollStart(splide);
 
   // Recompute ttb loop geometry after images/layout settle
   // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
