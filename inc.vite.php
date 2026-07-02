@@ -79,7 +79,13 @@ add_action( 'wp_enqueue_scripts', function() {
                         wp_enqueue_script( 'main', DIST_URI . '/' . $js_file, JS_DEPENDENCY, '', JS_LOAD_IN_FOOTER );
                         add_filter('script_loader_tag', function($tag, $handle){
                             if ($handle === 'main') {
-                                return str_replace(' src', ' defer src', $tag);
+                                // The code-split bundle is ESM: the entry contains
+                                // import.meta + dynamic import() (Vite preload helper),
+                                // which are SyntaxErrors in a classic script. Load as a
+                                // module — modules are deferred by default, so the old
+                                // `defer` timing is preserved. Strip any type WP added.
+                                $tag = preg_replace('/\stype=("|\')[^"\']*\1/', '', $tag);
+                                return str_replace('<script ', '<script type="module" ', $tag);
                             }
                             return $tag;
                         }, 10, 2);

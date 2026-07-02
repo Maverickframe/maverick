@@ -532,6 +532,17 @@ function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority =
 // End Lazy load
 
 
+// WebP quality for generated intermediate sizes. WP default is 82, which left hero
+// slide variants at 150-185 KB (PSI "Improve image delivery" flagged ~540 KB on the
+// front page). 68 is visually indistinguishable on photographic CGI renders but
+// roughly halves variant size. Applies on (re)generation only — after deploying,
+// run Force Regenerate Thumbnails (plugin already active) on the hero/media images
+// so existing variants get re-encoded in place with the same filenames/URLs.
+add_filter('wp_editor_set_quality', function ($quality, $mime_type) {
+    return $mime_type === 'image/webp' ? 68 : $quality;
+}, 10, 2);
+
+
 // Remove unused
 
 remove_action('wp_head', 'rsd_link');
