@@ -14,6 +14,19 @@ $classes = trim($classes);
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#2d40ae">
+
+    <?php // Early-connect hints for the third-party origins loaded high in the page
+          // (GTM + HubSpot). PSI flagged "no origins were preconnected". preconnect for
+          // the two heaviest/earliest; dns-prefetch for the rest. No crossorigin — these
+          // are script origins fetched without CORS (crossorigin would open a 2nd unused
+          // socket). Fonts are first-party and already preloaded below. ?>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://js-eu1.hs-scripts.com">
+    <link rel="dns-prefetch" href="https://js-eu1.hs-analytics.net">
+    <link rel="dns-prefetch" href="https://js-eu1.hs-banner.com">
+    <link rel="dns-prefetch" href="https://track-eu1.hubspot.com">
+    <link rel="dns-prefetch" href="https://www.google.com">
+
     <?php
     $portfolioType = gettype(get_field('portfolio_type')) === 'array'
         ? get_field('portfolio_type')

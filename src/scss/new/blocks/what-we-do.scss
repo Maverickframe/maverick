@@ -323,11 +323,25 @@ ul.what-we-do__tabs {
     line-height: 1;
     cursor: pointer;
 
-    animation: mfs-cta-pulse 2s ease-in-out infinite;
     transition:
         background-color 0.3s ease,
         border-color 0.3s ease,
         transform 0.3s ease;
+
+    // Pulsing ring via a pseudo-element whose OPACITY is animated (GPU-composited),
+    // instead of animating box-shadow on the button itself (non-composited → Lighthouse
+    // "avoid non-composited animations", flagged 44 elements). The ring is a static
+    // box-shadow on ::after; only its opacity pulses, so the compositor handles it.
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        box-shadow: 0 0 0 4px rgba(45, 64, 174, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        animation: mfs-cta-pulse 2s ease-in-out infinite;
+    }
 
     svg {
         width: toRem(13);
@@ -337,7 +351,11 @@ ul.what-we-do__tabs {
     &:disabled {
         opacity: 0.45;
         cursor: default;
+    }
+
+    &:disabled::after {
         animation: none;
+        opacity: 0;
     }
 
     @media (min-width: $md) {
@@ -345,6 +363,16 @@ ul.what-we-do__tabs {
             background: rgba(45, 64, 174, 0.7);
             border-color: rgba(255, 255, 255, 0.45);
             transform: scale(1.05);
+        }
+
+        &:hover:not(:disabled)::after {
+            animation: none;
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &::after {
             animation: none;
         }
     }
@@ -353,11 +381,11 @@ ul.what-we-do__tabs {
 @keyframes mfs-cta-pulse {
     0%,
     100% {
-        box-shadow: 0 0 0 0 rgba(45, 64, 174, 0);
+        opacity: 0;
     }
 
     50% {
-        box-shadow: 0 0 0 4px rgba(45, 64, 174, 0.35);
+        opacity: 1;
     }
 }
 
