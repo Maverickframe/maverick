@@ -63,6 +63,8 @@
                         <ul class="splide__list">
                             <?php
                                 $i = 0;
+                                $hf_col = get_field('cases_left');
+                                $hf_total = is_array($hf_col) ? count($hf_col) : 0;
                                 while( have_rows('cases_left')) : the_row();
                                     $link = get_sub_field('link');
                                     $image = get_sub_field('image');
@@ -75,7 +77,11 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // First 4 slides of each column are eager; the rest native loading=lazy.
+                                            // First 4 AND last 2 slides of each column are eager; the rest lazy.
+                                            // Last 2 too: one column's AutoScroll runs backwards (speed -0.5), so
+                                            // Splide's loop CLONES of the TAIL slides are visible within seconds —
+                                            // PSI mobile LCP was the 10th (last) slide of the right column, still
+                                            // lazy → 3s load delay (report ox2ewd5hxl, 07-02).
                                             // The hero is an auto-scrolling Splide marquee, so the LCP element is
                                             // whichever slide is largest when LCP fires — NOT deterministically slide 0.
                                             // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
@@ -86,7 +92,7 @@
                                             // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
-                                            if ($i < 4) {
+                                            if ($i < 4 || $i >= $hf_total - 2) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
@@ -119,6 +125,8 @@
                         <ul class="splide__list">
                             <?php
                                 $i = 0;
+                                $hf_col = get_field('cases_right');
+                                $hf_total = is_array($hf_col) ? count($hf_col) : 0;
                                 while( have_rows('cases_right')) : the_row();
                                     $link = get_sub_field('link');
                                     $image = get_sub_field('image');
@@ -131,7 +139,11 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // First 4 slides of each column are eager; the rest native loading=lazy.
+                                            // First 4 AND last 2 slides of each column are eager; the rest lazy.
+                                            // Last 2 too: one column's AutoScroll runs backwards (speed -0.5), so
+                                            // Splide's loop CLONES of the TAIL slides are visible within seconds —
+                                            // PSI mobile LCP was the 10th (last) slide of the right column, still
+                                            // lazy → 3s load delay (report ox2ewd5hxl, 07-02).
                                             // The hero is an auto-scrolling Splide marquee, so the LCP element is
                                             // whichever slide is largest when LCP fires — NOT deterministically slide 0.
                                             // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
@@ -142,7 +154,7 @@
                                             // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
-                                            if ($i < 4) {
+                                            if ($i < 4 || $i >= $hf_total - 2) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
