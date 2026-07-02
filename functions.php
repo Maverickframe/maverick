@@ -514,7 +514,16 @@ function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '
 
 function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority = false)
 {
-    $attrs = ['loading' => 'eager'];
+    // data-no-lazy + skip-lazy: WP Rocket's LazyLoad ignores loading="eager" and
+    // rewrote these images to JS lazyload for logged-out visitors anyway — the
+    // mobile LCP hero image got a 3.3s resource-load delay (PSI "LCP request
+    // discovery": lazy + no fetchpriority). Both markers are honored by WP Rocket
+    // (and other lazyload plugins), keeping eager images truly eager on prod.
+    $attrs = [
+        'loading'      => 'eager',
+        'data-no-lazy' => '1',
+        'class'        => 'skip-lazy',
+    ];
     if ($sizes) $attrs['sizes'] = $sizes;
     if ($fetchpriority) $attrs['fetchpriority'] = 'high';
     echo wp_get_attachment_image($attachment_id, $size, false, $attrs);

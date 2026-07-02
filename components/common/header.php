@@ -1,15 +1,18 @@
 <header class="js-reveal header <?php if (isset($args['class']))
     echo $args['class']; ?>" data-anim="down">
     <div class="container container_small header__container">
+        <?php // No fetchpriority on the logo: it's a tiny SVG that loads instantly
+              // anyway, and fetchpriority="high" here competes with the hero LCP
+              // image for early bandwidth (PSI wants exactly one high-priority hint). ?>
         <?php if (is_front_page()): ?>
             <span class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
-                    alt="Maverick Frame Studio logo" width="44" height="44" fetchpriority="high">
+                    alt="Maverick Frame Studio logo" width="44" height="44">
             </span>
         <?php else: ?>
             <a href="<?php echo home_url(); ?>" class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
-                    alt="Maverick Frame Studio logo" width="44" height="44" fetchpriority="high">
+                    alt="Maverick Frame Studio logo" width="44" height="44">
             </a>
         <?php endif; ?>
 
