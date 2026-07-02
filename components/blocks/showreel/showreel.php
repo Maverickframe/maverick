@@ -3,6 +3,14 @@ $subtitle = get_field('subtitle');
 $title = get_field('title');
 $description = get_field('description');
 $video = get_field('video');
+
+// The `video` field holds raw embed HTML (Bunny iframe) pasted by editors, and it
+// comes without a title attribute — PSI flags "<iframe> elements do not have a
+// title" (a11y + agentic-browsing). Inject a fallback title here in code instead
+// of chasing the field value across EN/ES/DE pages. No-op if a title is present.
+if ($video && stripos($video, '<iframe') !== false && stripos($video, 'title=') === false) {
+    $video = preg_replace('/<iframe\b/i', '<iframe title="Maverick Frame showreel"', $video, 1);
+}
 ?>
 <section class="showreel">
     <div class="container container_small">

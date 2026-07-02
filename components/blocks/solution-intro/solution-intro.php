@@ -30,6 +30,11 @@ $si_poster  = get_field('poster') ?: 16195;
                 // Same Bunny Stream showreel as the homepage block. Editable later via an ACF `video` field.
                 $si_video = get_field('video');
                 if ($si_video) {
+                    // Same guard as showreel.php: pasted embeds come without a title
+                    // attribute, which PSI flags (iframe-title a11y audit).
+                    if (stripos($si_video, '<iframe') !== false && stripos($si_video, 'title=') === false) {
+                        $si_video = preg_replace('/<iframe\b/i', '<iframe title="Maverick Frame showreel"', $si_video, 1);
+                    }
                     echo $si_video;
                 } else {
                 ?>

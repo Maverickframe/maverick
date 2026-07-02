@@ -75,15 +75,18 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // First 3 slides of each column are eager; the rest native loading=lazy.
+                                            // First 4 slides of each column are eager; the rest native loading=lazy.
                                             // The hero is an auto-scrolling Splide marquee, so the LCP element is
                                             // whichever slide is largest when LCP fires — NOT deterministically slide 0.
                                             // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
                                             // LCP ~7.7s. Eager-ing the first few visible slides makes the LCP image load
-                                            // immediately. fetchpriority=high only on the very first (one LCP hint).
+                                            // immediately. 4 (not 3): the marquee auto-scrolls ~30px/s, so on mobile the
+                                            // 4th slide enters the viewport within the LCP window (~6s) and became the
+                                            // lazy-loaded LCP element (PSI 07-02: load delay 3.3s). fetchpriority=high
+                                            // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
-                                            if ($i < 3) {
+                                            if ($i < 4) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
@@ -128,15 +131,18 @@
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
                                         <?php
-                                            // First 3 slides of each column are eager; the rest native loading=lazy.
+                                            // First 4 slides of each column are eager; the rest native loading=lazy.
                                             // The hero is an auto-scrolling Splide marquee, so the LCP element is
                                             // whichever slide is largest when LCP fires — NOT deterministically slide 0.
                                             // Making only slide 0 eager left the real LCP slide lazy+JS-gated → mobile
                                             // LCP ~7.7s. Eager-ing the first few visible slides makes the LCP image load
-                                            // immediately. fetchpriority=high only on the very first (one LCP hint).
+                                            // immediately. 4 (not 3): the marquee auto-scrolls ~30px/s, so on mobile the
+                                            // 4th slide enters the viewport within the LCP window (~6s) and became the
+                                            // lazy-loaded LCP element (PSI 07-02: load delay 3.3s). fetchpriority=high
+                                            // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
-                                            if ($i < 3) {
+                                            if ($i < 4) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [

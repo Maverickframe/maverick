@@ -1,6 +1,10 @@
 import Splide from '@splidejs/splide';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+// Must be imported wherever Splide instances are created: strips the invalid
+// role="group|tabpanel" Splide puts on <li> slides (Lighthouse agentic-browsing
+// audit / axe aria-allowed-role). See splide-a11y.js for details.
+import './splide-a11y';
 
 function addScrollBar(splide, scrollbarSelector) {
   const scrollbar = document.querySelector(scrollbarSelector);
