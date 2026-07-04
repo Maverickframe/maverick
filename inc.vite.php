@@ -76,7 +76,15 @@ add_action( 'wp_enqueue_scripts', function() {
                 {
                     $js_file = $value['file'];
                     if ( ! empty($js_file)) {
-                        wp_enqueue_script( 'main', DIST_URI . '/' . $js_file, JS_DEPENDENCY, '', JS_LOAD_IN_FOOTER );
+                        // Version MUST be null (no ?ver query). The hashed filename
+                        // already busts cache. With a ?ver, WordPress loads the ESM
+                        // entry as main-*.js?ver=X while Vite's code-split runtime
+                        // references the same chunk by its canonical main-*.js (no
+                        // query). Different URLs = two separate module instances, so
+                        // every top-level binding (e.g. the archive "Load more" click
+                        // handler) runs TWICE — one click fired two AJAX requests and
+                        // appended each page of posts twice (duplicate cards).
+                        wp_enqueue_script( 'main', DIST_URI . '/' . $js_file, JS_DEPENDENCY, null, JS_LOAD_IN_FOOTER );
                         add_filter('script_loader_tag', function($tag, $handle){
                             if ($handle === 'main') {
                                 // The code-split bundle is ESM: the entry contains
