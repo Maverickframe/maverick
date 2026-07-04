@@ -1242,7 +1242,7 @@ add_action('wp_enqueue_scripts', function () {
  * To disable globally: set MFS_DEFER_MENU to false (or revert this block) and redeploy.
  */
 if ( ! defined( 'MFS_DEFER_MENU' ) ) {
-    define( 'MFS_DEFER_MENU', false ); // TEMP OFF — header js-reveal intro anim stalls when header is last in DOM; re-enable after fix
+    define( 'MFS_DEFER_MENU', true ); // LIVE — verified: header/menu render + reveal OK when relocated (earlier "stall" was a hidden-tab rAF artifact, identical on normal prod)
 }
 
 if ( ! function_exists( 'mfs_defer_menu_enabled' ) ) {
