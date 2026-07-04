@@ -1219,3 +1219,81 @@ add_action('wp_enqueue_scripts', function () {
     }
 }, 200);
 /* === /Blog v1 width override === */
+
+/* === GEO readability (T13): relocate site <header> to end of <body> ===
+ * The service pages emit ~150KB of mega-menu markup (all submenu panels) BEFORE the
+ * main content. Crawlers / LLMs that read source HTML top-down spend budget on that
+ * navigation before reaching the actual page copy and pricing. This moves the whole
+ * <header> block to just before </body>, so content precedes the menu in source order.
+ *
+ * Why it is visually / functionally inert:
+ *   - .header is position:fixed (viewport-relative) — DOM position does not affect layout.
+ *   - z-index is explicit: header 100, blur 999, modal 1000 — modals/overlays stay above
+ *     the header even though it now comes later in the DOM.
+ *   - All header/menu JS is selector-based (.header / .js-menu / .js-menu-btn / .closest)
+ *     with no reliance on DOM order or sibling position.
+ * So NO CSS/JS change is needed — only the source order of the <header> node changes.
+ *
+ * Mechanism: header.php opens an output buffer right after <body>; footer.php flushes it
+ * before wp_footer(), cutting the leading <header>…</header> block and re-emitting it last.
+ *
+ * SAFETY: experiment — enabled on non-production only. Do NOT enable on prod without sign-off.
+ * Per-request override for A/B measurement on the same URL: ?mfs_defer=0 (off) / ?mfs_defer=1 (on).
+ */
+if ( ! defined( 'MFS_DEFER_MENU' ) ) {
+    define( 'MFS_DEFER_MENU', true );
+}
+
+if ( ! function_exists( 'mfs_defer_menu_enabled' ) ) {
+    function mfs_defer_menu_enabled() {
+        // Per-request override (measurement only).
+        if ( isset( $_GET['mfs_defer'] ) ) {
+            $ov = $_GET['mfs_defer'] === '1';
+            if ( ! $ov ) return false;
+        } elseif ( ! MFS_DEFER_MENU ) {
+            return false;
+        }
+        // Hard guard: never relocate on the live production host, even if the constant
+        // leaks into a prod deploy. Enabled only for *.local / non-production environments.
+        $host = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
+        $is_local = ( strpos( $host, '.local' ) !== false ) || ( strpos( $host, 'localhost' ) !== false );
+        $non_prod = function_exists( 'wp_get_environment_type' ) && wp_get_environment_type() !== 'production';
+        return $is_local || $non_prod;
+    }
+}
+
+if ( ! function_exists( 'mfs_defer_menu_start' ) ) {
+    function mfs_defer_menu_start() {
+        if ( mfs_defer_menu_enabled() ) {
+            ob_start();
+        }
+    }
+}
+
+if ( ! function_exists( 'mfs_defer_menu_flush' ) ) {
+    function mfs_defer_menu_flush() {
+        if ( ! mfs_defer_menu_enabled() ) return;
+        if ( ! ob_get_level() ) return;
+
+        $buf = ob_get_clean();
+
+        // Locate the site header by its unique class signature. If absent (e.g. the
+        // full-screen tour-builder template never renders it), emit the buffer untouched.
+        $marker = '<header class="js-reveal header';
+        $start  = strpos( $buf, $marker );
+        if ( $start === false ) { echo $buf; return; }
+
+        // The site header renders in full (all submenus) before any page content, and
+        // contains no nested <header>, so the first </header> after $start closes it.
+        $close = strpos( $buf, '</header>', $start );
+        if ( $close === false ) { echo $buf; return; }
+
+        $end         = $close + strlen( '</header>' );
+        $header_html = substr( $buf, $start, $end - $start );
+        $rest        = substr( $buf, 0, $start ) . substr( $buf, $end );
+
+        echo $rest;         // main content first
+        echo $header_html;  // navigation / mega-menu last
+    }
+}
+/* === /GEO readability (T13) === */
