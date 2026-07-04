@@ -1237,8 +1237,9 @@ add_action('wp_enqueue_scripts', function () {
  * Mechanism: header.php opens an output buffer right after <body>; footer.php flushes it
  * before wp_footer(), cutting the leading <header>…</header> block and re-emitting it last.
  *
- * SAFETY: experiment — enabled on non-production only. Do NOT enable on prod without sign-off.
- * Per-request override for A/B measurement on the same URL: ?mfs_defer=0 (off) / ?mfs_defer=1 (on).
+ * LIVE site-wide (enabled on prod per Dima's sign-off, 2026-07-04).
+ * Kill switch / A-B override on any URL: ?mfs_defer=0 forces OFF, ?mfs_defer=1 forces ON.
+ * To disable globally: set MFS_DEFER_MENU to false (or revert this block) and redeploy.
  */
 if ( ! defined( 'MFS_DEFER_MENU' ) ) {
     define( 'MFS_DEFER_MENU', true );
@@ -1246,19 +1247,12 @@ if ( ! defined( 'MFS_DEFER_MENU' ) ) {
 
 if ( ! function_exists( 'mfs_defer_menu_enabled' ) ) {
     function mfs_defer_menu_enabled() {
-        // Per-request override (measurement only).
+        // Per-request override / kill switch: ?mfs_defer=0 forces OFF, ?mfs_defer=1 forces ON.
+        // Lets us A/B-compare the same live URL and disable per-request in an emergency.
         if ( isset( $_GET['mfs_defer'] ) ) {
-            $ov = $_GET['mfs_defer'] === '1';
-            if ( ! $ov ) return false;
-        } elseif ( ! MFS_DEFER_MENU ) {
-            return false;
+            return $_GET['mfs_defer'] === '1';
         }
-        // Hard guard: never relocate on the live production host, even if the constant
-        // leaks into a prod deploy. Enabled only for *.local / non-production environments.
-        $host = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
-        $is_local = ( strpos( $host, '.local' ) !== false ) || ( strpos( $host, 'localhost' ) !== false );
-        $non_prod = function_exists( 'wp_get_environment_type' ) && wp_get_environment_type() !== 'production';
-        return $is_local || $non_prod;
+        return (bool) MFS_DEFER_MENU;
     }
 }
 
