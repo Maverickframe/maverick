@@ -789,6 +789,11 @@ function loadmore_articles_ajax_handler()
     $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
     $orderbyRaw = $_POST['orderby'] ?? 'latest';
     $paged = $_POST['current_page'] ?? 1;
+    // admin-ajax runs in is_admin() context where Polylang does NOT auto-filter
+    // the query by language, so it returns posts from ALL languages and diverges
+    // from the language-filtered front-end list (duplicates + cross-language leak).
+    // Pass the current language explicitly so WP_Query is filtered like the front end.
+    $lang = isset($_POST['lang']) ? sanitize_key($_POST['lang']) : '';
 
     $args = [
         'post_type' => $post_type,
@@ -797,6 +802,10 @@ function loadmore_articles_ajax_handler()
         'post_status' => 'publish',
         'cat' => $cat,
     ];
+
+    if ($lang !== '') {
+        $args['lang'] = $lang;
+    }
 
     if (!empty($search)) {
         $args['s'] = $search;

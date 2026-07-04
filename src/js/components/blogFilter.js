@@ -134,7 +134,8 @@ async function loadItems(append) {
     subcat: params.subcat || 'all',
     tag: params.tag || 'all',
     search: params.search || '',
-    orderby: params.orderby || 'latest'
+    orderby: params.orderby || 'latest',
+    lang: params.lang || 'en'
   });
 
   const res = await fetch(params.ajaxurl, { method: 'POST', body });

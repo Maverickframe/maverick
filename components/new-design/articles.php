@@ -39,7 +39,8 @@ wp_localize_script(
 		'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php',
 		'max_page' => $query->max_num_pages,
 		'current_page' => $paged,
-		'post_type' => $post_type
+		'post_type' => $post_type,
+		'lang' => mfs_lang()
 	]
 );
 ?>
