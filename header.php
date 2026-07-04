@@ -100,3 +100,7 @@ $classes = trim($classes);
                 style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
     <?php endif; ?>
+    <?php // GEO readability (T13): start buffering the page body so footer.php can relocate
+          // the site <header> (mega-menu) to the end of <body>. Inert unless enabled
+          // (non-prod only). See mfs_defer_menu_* in functions.php. ?>
+    <?php mfs_defer_menu_start(); ?>
