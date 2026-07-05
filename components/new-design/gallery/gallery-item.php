@@ -15,6 +15,22 @@
 
     if ($isVideoIframe) {
         $class .= ' iframe';
+
+        // Gallery cells should PREVIEW on hover. Tag the Bunny embed with
+        // &mfsmode=hover so the theme's video converter (inc.video.php) renders it
+        // as our hover-to-play native player (muted loop, plays on mouseenter,
+        // resets on leave) instead of the default click-to-play. iframes can't
+        // hover-play — this is why they were previously left static.
+        if (strpos($videoIframe, 'mfsmode=') === false) {
+            $videoIframe = preg_replace_callback(
+                '#(https?:)?//(?:iframe|player)\.mediadelivery\.net/embed/[0-9]+/[0-9a-fA-F-]{36}([^"\'\s]*)#i',
+                function ($m) {
+                    $qs = $m[2];
+                    return $m[0] . (strpos($qs, '?') === false ? '?mfsmode=hover' : '&mfsmode=hover');
+                },
+                $videoIframe
+            );
+        }
     }
 
     if ($media) {

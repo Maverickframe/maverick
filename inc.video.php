@@ -46,10 +46,10 @@ if ( ! defined( 'MFS_VIDEO_HLS' ) ) {
 }
 if ( ! defined( 'MFS_VIDEO_ONLY_IDS' ) ) {
 	// Comma-separated singular post IDs to scope the conversion to (staged rollout).
-	// Empty string = site-wide (convert every Bunny embed everywhere). While rolling
-	// out we point this at ONE case/service page; the rest of the site keeps its
-	// original Bunny iframes untouched. Flip to '' to go site-wide.
-	define( 'MFS_VIDEO_ONLY_IDS', '15462' );
+	// Empty string = SITE-WIDE: convert every Bunny embed on every view. Verified on
+	// case 15462 first, now rolled out site-wide (2026-07-05) — no Bunny iframe reaches
+	// the browser anywhere. Set to specific IDs again to re-scope if ever needed.
+	define( 'MFS_VIDEO_ONLY_IDS', '' );
 }
 if ( ! defined( 'MFS_BUNNY_LIBRARY' ) ) {
 	define( 'MFS_BUNNY_LIBRARY', '655216' );
