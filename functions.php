@@ -446,6 +446,7 @@ function isNewDesign()
 include "inc.vite.php";
 require_once __DIR__ . '/forms/book-call-handler.php';
 require_once __DIR__ . '/inc.tour.php';
+require_once __DIR__ . '/inc.video.php';
 
 // HubSpot tracking is installed via the official HubSpot WP plugin (leadin),
 // not the theme (EU region handled by the plugin). Keep WP Rocket from delaying/

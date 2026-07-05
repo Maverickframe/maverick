@@ -1,0 +1,161 @@
+<?php
+/**
+ * inc.video.php — replace Bunny Stream iframe embeds with a native <video>+hls.js
+ * player theme-side, in a single output-buffer pass. Player JS: src/js/components/mfs-video.js.
+ *
+ * WHY: the Bunny iframe ships its own player whose console logs (fatal HLS retries,
+ * 500b.jpg preview sprites — third-party code in Bunny's iframe) count against PSI
+ * Best-Practices, force its default controls, and can't do hover-to-play. Bunny's
+ * HLS manifest is directly reachable from our domain (CORS open, no token — verified
+ * 2026-07-05), so we point our own <video> at the same manifest and drop the iframe.
+ * The video stays hosted on Bunny (we don't touch hosting/traffic).
+ *
+ * SCOPE: one preg_replace_callback over the whole page HTML catches EVERY Bunny
+ * embed — post_content (~63 posts), ACF-rendered blocks (showreel, solution-intro,
+ * sticky-cta) and any future paste — so "no iframe reaches the browser" holds
+ * literally, site-wide, without editing 63+ records by hand. Schema JSON-LD
+ * embedUrl is a plain string (not an <iframe>), so it is left untouched and the
+ * VideoObject stays valid.
+ *
+ * MODE (playback behaviour) is inferred from the Bunny params, or forced with an
+ * explicit &mfsmode=bg|click|hover in the embed URL:
+ *   autoplay=true & muted=true  -> bg    (muted autoplay loop, no controls)
+ *   otherwise                   -> click (poster + click-to-play w/ sound + controls)
+ *   &mfsmode=hover              -> hover (muted loop preview on hover) — opt-in
+ *
+ * Kill switch / A-B on any URL: ?mfs_video=0 forces OFF (original iframe), ?mfs_video=1 ON.
+ * Global off: set MFS_VIDEO_HLS to false and redeploy.
+ *
+ * NOTE (Referrer-Policy): Bunny "Block direct URL file access" is ON with our domain
+ * in allowed referrers, so the browser must send a Referer to b-cdn.net. Keep the
+ * site Referrer-Policy at strict-origin-when-cross-origin (default) — NOT no-referrer.
+ * Add any new video domain to Bunny's allowed referrers.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( ! defined( 'MFS_VIDEO_HLS' ) ) {
+	define( 'MFS_VIDEO_HLS', true );
+}
+if ( ! defined( 'MFS_VIDEO_ONLY_IDS' ) ) {
+	// Comma-separated singular post IDs to scope the conversion to (staged rollout).
+	// Empty string = site-wide (convert every Bunny embed everywhere). While rolling
+	// out we point this at ONE case/service page; the rest of the site keeps its
+	// original Bunny iframes untouched. Flip to '' to go site-wide.
+	define( 'MFS_VIDEO_ONLY_IDS', '15462' );
+}
+if ( ! defined( 'MFS_BUNNY_LIBRARY' ) ) {
+	define( 'MFS_BUNNY_LIBRARY', '655216' );
+}
+if ( ! defined( 'MFS_BUNNY_PULLZONE' ) ) {
+	// Bunny Stream CDN hostname for library 655216 (HLS manifest + thumbnail live here).
+	define( 'MFS_BUNNY_PULLZONE', 'vz-2d099666-772.b-cdn.net' );
+}
+
+if ( ! function_exists( 'mfs_video_enabled' ) ) {
+	function mfs_video_enabled() {
+		// Per-request override / kill switch: ?mfs_video=0 forces OFF, ?mfs_video=1 ON.
+		if ( isset( $_GET['mfs_video'] ) ) {
+			return $_GET['mfs_video'] === '1';
+		}
+		return (bool) MFS_VIDEO_HLS;
+	}
+}
+
+/**
+ * Open a page-wide output buffer after routing. `template_redirect` never fires
+ * for admin, REST or admin-ajax, so only front-end HTML is captured. Feeds, robots
+ * and sitemaps carry no <iframe>, so the callback no-ops on them regardless.
+ */
+if ( ! function_exists( 'mfs_video_ob_start' ) ) {
+	function mfs_video_ob_start() {
+		if ( is_admin() || is_feed() || is_robots() ) {
+			return;
+		}
+		if ( ! mfs_video_enabled() ) {
+			return;
+		}
+		// Staged rollout: when MFS_VIDEO_ONLY_IDS is set, only buffer the listed
+		// singular page(s). Everywhere else the original Bunny iframe is served.
+		$only = array_filter( array_map( 'trim', explode( ',', (string) MFS_VIDEO_ONLY_IDS ) ) );
+		if ( ! empty( $only ) ) {
+			if ( ! is_singular() || ! in_array( (string) get_queried_object_id(), $only, true ) ) {
+				return;
+			}
+		}
+		ob_start( 'mfs_video_convert_html' );
+	}
+	add_action( 'template_redirect', 'mfs_video_ob_start', 0 );
+}
+
+if ( ! function_exists( 'mfs_video_convert_html' ) ) {
+	function mfs_video_convert_html( $html ) {
+		// Fast bail: nothing to do unless a Bunny embed is present in this buffer.
+		if ( strpos( $html, 'mediadelivery.net/embed/' ) === false ) {
+			return $html;
+		}
+
+		// Match a whole <iframe …>…</iframe> (or self-terminated). The attribute
+		// blob is inspected in the callback, so attribute order is irrelevant and
+		// any non-Bunny iframe is returned byte-for-byte unchanged.
+		$pattern = '#<iframe\b([^>]*)>\s*(?:</iframe>)?#i';
+
+		$out = preg_replace_callback( $pattern, 'mfs_video_replace_iframe', $html );
+
+		// preg_replace_callback returns null on failure (e.g. PCRE backtrack limit);
+		// never emit a blank page — fall back to the original buffer.
+		return ( $out === null ) ? $html : $out;
+	}
+}
+
+if ( ! function_exists( 'mfs_video_replace_iframe' ) ) {
+	function mfs_video_replace_iframe( $m ) {
+		$attrs = $m[1];
+		$lib   = preg_quote( MFS_BUNNY_LIBRARY, '#' );
+
+		// Only touch Bunny Stream embeds for our library; otherwise pass through.
+		if ( ! preg_match(
+			'#src\s*=\s*(["\'])\s*(?:https?:)?//(?:iframe|player)\.mediadelivery\.net/embed/' . $lib . '/([0-9a-fA-F-]{36})([^"\']*)\1#i',
+			$attrs,
+			$s
+		) ) {
+			return $m[0];
+		}
+
+		$guid  = strtolower( $s[2] );
+		$query = html_entity_decode( $s[3], ENT_QUOTES ); // &amp; -> &
+
+		parse_str( ltrim( $query, '?' ), $q );
+
+		// Mode: explicit &mfsmode= wins, else infer from Bunny playback params.
+		$mode = '';
+		if ( ! empty( $q['mfsmode'] ) && in_array( $q['mfsmode'], array( 'bg', 'click', 'hover' ), true ) ) {
+			$mode = $q['mfsmode'];
+		} else {
+			$autoplay = isset( $q['autoplay'] ) && filter_var( $q['autoplay'], FILTER_VALIDATE_BOOLEAN );
+			$muted    = isset( $q['muted'] ) && filter_var( $q['muted'], FILTER_VALIDATE_BOOLEAN );
+			$mode     = ( $autoplay && $muted ) ? 'bg' : 'click';
+		}
+
+		// Title (a11y + GA4 label) from the iframe's own title attribute, if any.
+		$title = '';
+		if ( preg_match( '#title\s*=\s*(["\'])(.*?)\1#i', $attrs, $t ) ) {
+			$title = trim( $t[2] );
+		}
+
+		$pz     = MFS_BUNNY_PULLZONE;
+		$src    = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
+		$poster = 'https://' . $pz . '/' . $guid . '/thumbnail.jpg';
+
+		return sprintf(
+			'<div class="mfs-video js-mfs-video mfs-video--%1$s" data-guid="%2$s" data-src="%3$s" data-poster="%4$s" data-mode="%1$s"%5$s></div>',
+			esc_attr( $mode ),
+			esc_attr( $guid ),
+			esc_url( $src ),
+			esc_url( $poster ),
+			$title !== '' ? ' data-title="' . esc_attr( $title ) . '"' : ''
+		);
+	}
+}

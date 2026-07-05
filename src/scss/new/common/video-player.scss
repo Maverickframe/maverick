@@ -1,0 +1,79 @@
+/* mfs-video — native <video>+hls.js player that replaces the Bunny iframe embed.
+ * Emitted site-wide by inc.video.php. Loaded via base.scss (every bundle), so it
+ * is present wherever a converted embed can appear (front, cases, services, blog…).
+ *
+ * The root fills its host: it is position:absolute so it stretches inside both
+ * (a) Bunny's responsive wrapper <div style="padding-top:56.25%"> (already
+ * position:relative) and (b) the theme's fixed-height media wells once those are
+ * made position:relative (rules at the bottom of this file). */
+
+.mfs-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--black-color, #000);
+  border-radius: 1px; /* site-wide radius */
+
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--black-color, #000);
+  }
+}
+
+/* Click-to-play: poster (native) + centered play button. */
+.mfs-video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  padding-left: 4px; /* optically centre the play glyph */
+  color: #fff;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  transition: background 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--accent-color, #2d40ae);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+/* Once playing (native controls take over) the play button is gone. */
+.mfs-video.is-playing .mfs-video__play {
+  display: none;
+}
+
+/* Hover-preview: soft dim while idle so the poster reads as "hover me". */
+.mfs-video--hover {
+  cursor: pointer;
+
+  &.is-idle video {
+    filter: brightness(0.82);
+  }
+  video {
+    transition: filter 0.3s ease;
+  }
+}
+
+/* Host wells that render a bare Bunny iframe (no responsive wrapper) must be
+ * positioned so the absolute .mfs-video can fill them. They already carry a
+ * fixed height, so position:relative is all that's needed. */
+.showreel__video,
+.solution-intro__media,
+.sticky-cta__media {
+  position: relative;
+}
