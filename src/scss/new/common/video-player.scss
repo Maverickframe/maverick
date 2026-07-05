@@ -72,8 +72,8 @@
 /* Bunny-style quality picker: gear button (top-right) + dropdown of resolutions. */
 .mfs-video__quality {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  right: 10px;
+  bottom: 46px; /* sit just above the browser's native control bar (bottom-right cluster) */
   z-index: 3;
 }
 
@@ -101,7 +101,7 @@
 
 .mfs-video__menu {
   position: absolute;
-  top: calc(100% + 6px);
+  bottom: calc(100% + 6px); /* open upward — the gear sits near the bottom */
   right: 0;
   min-width: 104px;
   max-height: 240px;
