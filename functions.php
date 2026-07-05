@@ -1329,6 +1329,21 @@ if ( ! function_exists( 'mfs_geo_dequeue_enabled' ) ) {
     }
 }
 
+if ( ! function_exists( 'mfs_is_solution_page' ) ) {
+    function mfs_is_solution_page() {
+        // Solutions are regular Pages (post_type=page) under /solutions/<slug>/ that
+        // render ACF blocks (acf/solution-*), NOT core Gutenberg blocks — so they are
+        // as safe to strip as services. is_singular('solutions') never matches (no such
+        // CPT), hence this path match. Covers /es/ /de/ locale clones; excludes a bare
+        // /solutions/ landing (requires a child segment).
+        if ( ! is_page() ) {
+            return false;
+        }
+        $uri = isset( $_SERVER['REQUEST_URI'] ) ? strtok( $_SERVER['REQUEST_URI'], '?' ) : '';
+        return (bool) preg_match( '#/solutions/[^/]+/?$#', $uri );
+    }
+}
+
 if ( ! function_exists( 'mfs_geo_dequeue_wp_css' ) ) {
     function mfs_geo_dequeue_wp_css() {
         if ( is_admin() || ! mfs_geo_dequeue_enabled() ) {
@@ -1336,7 +1351,7 @@ if ( ! function_exists( 'mfs_geo_dequeue_wp_css' ) ) {
         }
         // Allowlist of measured-safe, non-core-block page types. Everything else
         // (blog, success-stories, team, plain pages) keeps WP CSS until audited.
-        $safe = is_front_page() || is_singular( array( 'services', 'solutions' ) );
+        $safe = is_front_page() || is_singular( 'services' ) || mfs_is_solution_page();
         if ( ! $safe ) {
             return;
         }
