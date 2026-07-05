@@ -1331,13 +1331,12 @@ if ( ! function_exists( 'mfs_geo_dequeue_enabled' ) ) {
 
 if ( ! function_exists( 'mfs_is_solution_page' ) ) {
     function mfs_is_solution_page() {
-        // Solutions are regular Pages (post_type=page) under /solutions/<slug>/ that
-        // render ACF blocks (acf/solution-*), NOT core Gutenberg blocks — so they are
-        // as safe to strip as services. is_singular('solutions') never matches (no such
-        // CPT), hence this path match. Covers /es/ /de/ locale clones; excludes a bare
-        // /solutions/ landing (requires a child segment).
-        if ( ! is_page() ) {
-            return false;
+        // Solutions are a CPT (post_type=solutions) at /solutions/<slug>/ that render ACF
+        // blocks (acf/solution-*), NOT core Gutenberg blocks — as safe to strip as services.
+        // is_singular('solutions') proved unreliable here in practice, so we also match by
+        // URL path as a robust fallback (covers /es/ /de/ clones; excludes a bare /solutions/).
+        if ( is_singular( 'solutions' ) ) {
+            return true;
         }
         $uri = isset( $_SERVER['REQUEST_URI'] ) ? strtok( $_SERVER['REQUEST_URI'], '?' ) : '';
         return (bool) preg_match( '#/solutions/[^/]+/?$#', $uri );
