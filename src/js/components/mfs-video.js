@@ -274,6 +274,56 @@ function initClick(root, video) {
   btn.addEventListener('click', play);
 }
 
+// Bunny's per-video preview.webp is an ANIMATED webp. Used directly as a <video
+// poster> it loops on idle tiles and reads as a low-quality autoplay. Freeze its
+// first frame to a static image via canvas instead (CORS on b-cdn is open). If
+// the canvas is tainted for any reason, fall back to the animated image.
+function setStaticPoster(video, url) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    try {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth;
+      c.height = img.naturalHeight;
+      c.getContext('2d').drawImage(img, 0, 0);
+      video.poster = c.toDataURL('image/jpeg', 0.85);
+    } catch (e) {
+      video.poster = url;
+    }
+  };
+  img.onerror = () => { /* no poster — the badge still marks it as video */ };
+  img.src = url;
+}
+
+function isAnimatedPoster(u) {
+  return !!u && /preview\.webp/i.test(u);
+}
+
+// Featured images / non-preview posters are already static → set directly, with a
+// probe that swaps to the fallback preview if the preferred image fails to load.
+function setPoster(video, poster, posterFb) {
+  const applyFb = () => {
+    if (!posterFb) return;
+    if (isAnimatedPoster(posterFb)) setStaticPoster(video, posterFb);
+    else video.poster = posterFb;
+  };
+  if (poster) {
+    if (isAnimatedPoster(poster)) {
+      setStaticPoster(video, poster);
+    } else {
+      video.poster = poster;
+      if (posterFb && posterFb !== poster) {
+        const probe = new Image();
+        probe.onerror = applyFb;
+        probe.src = poster;
+      }
+    }
+  } else {
+    applyFb();
+  }
+}
+
 function build(root) {
   if (root.dataset.mfsInit) return;
   root.dataset.mfsInit = '1';
@@ -286,21 +336,7 @@ function build(root) {
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('disablepictureinpicture', '');
   video.setAttribute('disableremoteplayback', '');
-  // Poster with graceful fallback: <video poster> gives no load-error event, so
-  // probe the preferred poster via an Image and swap to Bunny's preview.webp if
-  // it fails (e.g. a page without a featured image).
-  const poster = root.dataset.poster;
-  const posterFb = root.dataset.posterFallback;
-  if (poster) {
-    video.poster = poster;
-    if (posterFb && posterFb !== poster) {
-      const probe = new Image();
-      probe.onerror = () => { video.poster = posterFb; };
-      probe.src = poster;
-    }
-  } else if (posterFb) {
-    video.poster = posterFb;
-  }
+  setPoster(video, root.dataset.poster, root.dataset.posterFallback);
   if (root.dataset.title) video.setAttribute('title', root.dataset.title);
   // attachSource() reads the manifest from video.dataset.src; the data-* live on
   // the root placeholder, so copy the source onto the <video> we just created.
