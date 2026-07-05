@@ -45,7 +45,7 @@ function canPlayNativeHls(video) {
 // wired (native) or hls.js is attached. Transient (non-fatal) HLS errors are
 // swallowed and fatal ones recovered quietly, so nothing lands in the console
 // (keeps PSI Best-Practices clean — the whole point of dropping Bunny's iframe).
-async function attachSource(video) {
+async function attachSource(video, root) {
   if (video.dataset.mfsAttached) return;
   video.dataset.mfsAttached = '1';
 
@@ -67,10 +67,9 @@ async function attachSource(video) {
 
   const Hls = await loadHls();
   if (Hls && Hls.isSupported()) {
-    const hls = new Hls({
-      capLevelToPlayerSize: true, // don't pull 4K into a 550px window
-      maxBufferLength: 30,
-    });
+    // No capLevelToPlayerSize: Auto is pure bandwidth ABR (like Bunny/YouTube),
+    // and a manual quality pick can force ANY rung regardless of window size.
+    const hls = new Hls({ maxBufferLength: 30 });
     hls.on(Hls.Events.ERROR, (_evt, data) => {
       if (!data || !data.fatal) return; // transient — ignore, no console noise
       if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
@@ -81,6 +80,11 @@ async function attachSource(video) {
         hls.destroy();
       }
     });
+    // Bunny-style quality picker: build the gear menu once the level ladder is
+    // known. Click mode only (bg loops / hover previews have no controls).
+    if (root && root.dataset.mode === 'click') {
+      hls.on(Hls.Events.MANIFEST_PARSED, () => buildQualityMenu(root, hls, Hls));
+    }
     hls.loadSource(src);
     hls.attachMedia(video);
     video._mfsHls = hls;
@@ -88,6 +92,72 @@ async function attachSource(video) {
     // Last resort (very old browsers): let the element try the manifest itself.
     video.src = src;
   }
+}
+
+// ---- Quality picker (Bunny-style gear) --------------------------------------
+// Builds a gear button + dropdown listing "Auto" and each resolution rung from
+// the HLS manifest. Auto = bandwidth ABR; picking a rung forces that level.
+function buildQualityMenu(root, hls, Hls) {
+  if (root.querySelector('.mfs-video__quality')) return; // once per player
+  const levels = hls.levels || [];
+  if (levels.length < 2) return; // nothing to choose
+
+  // One entry per distinct height (keep the highest-bitrate rung for each).
+  const byHeight = new Map();
+  levels.forEach((l, i) => {
+    const prev = byHeight.get(l.height);
+    if (!prev || l.bitrate > prev.bitrate) byHeight.set(l.height, { i, h: l.height, bitrate: l.bitrate });
+  });
+  const rungs = [...byHeight.values()].sort((a, b) => b.h - a.h);
+
+  const wrap = document.createElement('div');
+  wrap.className = 'mfs-video__quality';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'mfs-video__gear js-mfs-gear';
+  btn.setAttribute('aria-label', 'Quality');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M19.14 12.94a7.5 7.5 0 000-1.88l2.03-1.58a.5.5 0 00.12-.64l-1.92-3.32a.5.5 0 00-.6-.22l-2.39.96a7 7 0 00-1.62-.94l-.36-2.54a.5.5 0 00-.5-.42h-3.84a.5.5 0 00-.5.42l-.36 2.54c-.58.24-1.12.56-1.62.94l-2.39-.96a.5.5 0 00-.6.22L2.68 8.84a.5.5 0 00.12.64l2.03 1.58a7.5 7.5 0 000 1.88l-2.03 1.58a.5.5 0 00-.12.64l1.92 3.32a.5.5 0 00.6.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54a.5.5 0 00.5.42h3.84a.5.5 0 00.5-.42l.36-2.54c.58-.24 1.12-.56 1.62-.94l2.39.96a.5.5 0 00.6-.22l1.92-3.32a.5.5 0 00-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1112 8.5a3.5 3.5 0 010 7z"/></svg>';
+
+  const menu = document.createElement('div');
+  menu.className = 'mfs-video__menu';
+
+  function render() {
+    menu.innerHTML = '';
+    const auto = hls.autoLevelEnabled;               // true when in Auto
+    const playing = hls.levels[hls.currentLevel];    // active rung (or undefined in auto)
+    const mk = (label, val, active) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mfs-video__menu-item' + (active ? ' is-active' : '');
+      b.textContent = label;
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hls.currentLevel = val;   // -1 = auto, else force that rung
+        menu.classList.remove('is-open');
+        render();
+      });
+      menu.appendChild(b);
+    };
+    // Auto shows the currently-playing height as a hint, like YouTube/Bunny.
+    const autoHint = auto && playing ? ' (' + playing.height + 'p)' : '';
+    mk('Auto' + autoHint, -1, auto);
+    rungs.forEach((r) => mk(r.h + 'p', r.i, !auto && hls.currentLevel === r.i));
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    render();
+    menu.classList.toggle('is-open');
+  });
+  // Close on outside click / when the video is tapped.
+  document.addEventListener('click', () => menu.classList.remove('is-open'));
+  // Keep the Auto hint fresh as ABR switches rungs.
+  hls.on(Hls.Events.LEVEL_SWITCHED, () => { if (menu.classList.contains('is-open')) render(); });
+
+  wrap.appendChild(btn);
+  wrap.appendChild(menu);
+  root.appendChild(wrap);
 }
 
 // ---- GA4 funnel (dataLayer → GTM). Fired for click reels only: those are the
@@ -143,7 +213,7 @@ function initBg(root, video) {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          attachSource(video).then(() => video.play().catch(() => {}));
+          attachSource(video, root).then(() => video.play().catch(() => {}));
         } else {
           video.pause();
         }
@@ -162,7 +232,7 @@ function initHover(root, video) {
 
   let playing = false;
   const start = () => {
-    attachSource(video).then(() => {
+    attachSource(video, root).then(() => {
       video.play().catch(() => {});
       playing = true;
       root.classList.remove('is-idle');
@@ -199,7 +269,7 @@ function initClick(root, video) {
     root.classList.add('is-playing');
     video.muted = false;
     video.controls = true;
-    attachSource(video).then(() => video.play().catch(() => {}));
+    attachSource(video, root).then(() => video.play().catch(() => {}));
   };
   btn.addEventListener('click', play);
 }
