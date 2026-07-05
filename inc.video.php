@@ -69,21 +69,49 @@ if ( ! function_exists( 'mfs_video_enabled' ) ) {
  * for admin, REST or admin-ajax, so only front-end HTML is captured. Feeds, robots
  * and sitemaps carry no <iframe>, so the callback no-ops on them regardless.
  */
-if ( ! function_exists( 'mfs_video_ob_start' ) ) {
-	function mfs_video_ob_start() {
+if ( ! function_exists( 'mfs_video_active_here' ) ) {
+	/**
+	 * Whether the player conversion should run for the CURRENT front-end request.
+	 * Shared by the output buffer and the CSP override so they stay in lock-step.
+	 */
+	function mfs_video_active_here() {
 		if ( is_admin() || is_feed() || is_robots() ) {
-			return;
+			return false;
 		}
 		if ( ! mfs_video_enabled() ) {
-			return;
+			return false;
 		}
-		// Staged rollout: when MFS_VIDEO_ONLY_IDS is set, only buffer the listed
-		// singular page(s). Everywhere else the original Bunny iframe is served.
+		// Staged rollout: when MFS_VIDEO_ONLY_IDS is set, only the listed singular
+		// page(s) convert. Everywhere else the original Bunny iframe is served.
 		$only = array_filter( array_map( 'trim', explode( ',', (string) MFS_VIDEO_ONLY_IDS ) ) );
 		if ( ! empty( $only ) ) {
 			if ( ! is_singular() || ! in_array( (string) get_queried_object_id(), $only, true ) ) {
-				return;
+				return false;
 			}
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists( 'mfs_video_ob_start' ) ) {
+	function mfs_video_ob_start() {
+		if ( ! mfs_video_active_here() ) {
+			return;
+		}
+		// CSP: our <video> plays through hls.js, which uses Media Source Extensions
+		// — a `blob:` object URL as the media source and a `blob:`-created Web
+		// Worker for demuxing. The site's base CSP allows `blob:` for frame-src
+		// (the old Bunny iframe) but NOT for media-src/worker-src, so MSE playback
+		// is refused (video error 4 "no supported sources"). Re-send a CSP that
+		// adds `blob:` to default-src + media-src + worker-src, same pattern as the
+		// tour builder's override (inc.tour.php). Done here at template_redirect —
+		// after the main query is parsed (conditionals reliable) but before any
+		// template output, so headers can still be sent.
+		// NOTE: if the base CSP is enforced at the edge (Cloudflare/Nginx) and wins
+		// the intersection, this PHP override won't take effect — then `blob:` must
+		// be added to media-src + worker-src at the host level.
+		if ( ! headers_sent() ) {
+			header( "Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; media-src 'self' https: data: blob:; worker-src 'self' blob:; frame-src 'self' https: blob:;" );
 		}
 		ob_start( 'mfs_video_convert_html' );
 	}

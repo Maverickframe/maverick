@@ -27,9 +27,11 @@
 
 let hlsPromise = null;
 function loadHls() {
-  // Light build: no subtitles / alt-audio / EME — none of which Bunny VOD needs.
-  // ~110 KB min vs ~160 KB for the full build, still fetched as its own lazy chunk.
-  if (!hlsPromise) hlsPromise = import('hls.js/dist/hls.light.mjs').then((m) => m.default || m);
+  // Full build (NOT hls.light): Bunny Stream serves demuxed audio via a separate
+  // #EXT-X-MEDIA:TYPE=AUDIO rendition group, which the light build can't handle —
+  // it throws manifestParsingError and the video never starts. The full build is
+  // still fetched as its own lazy chunk, only when a player actually needs to play.
+  if (!hlsPromise) hlsPromise = import('hls.js').then((m) => m.default || m);
   return hlsPromise;
 }
 
