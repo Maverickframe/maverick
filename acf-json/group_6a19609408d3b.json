@@ -178,6 +178,137 @@
             ]
         },
         {
+            "key": "field_6c05c0570001",
+            "label": "Cost answer — question (H3)",
+            "name": "cost_q",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional (GEO / answer-first). Cost question rendered as H3 inside this price block, after the tariff cards. The whole Cost answer sub-section shows only if this or the answer text is filled.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6c05c0570002",
+            "label": "Cost answer — text",
+            "name": "cost_answer",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Optional. Answer-first paragraph, plain text (rendered inside a single <p>). Do not paste HTML.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_6c05c0570003",
+            "label": "Cost answer — rows",
+            "name": "cost_rows",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Optional. Machine-readable list of typical prices (term — price).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6c05c0570004",
+                    "label": "Label",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6c05c0570003"
+                },
+                {
+                    "key": "field_6c05c0570005",
+                    "label": "Price",
+                    "name": "price",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6c05c0570003"
+                }
+            ]
+        },
+        {
+            "key": "field_6c05c0570006",
+            "label": "Cost answer — turnaround note",
+            "name": "cost_note",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional. Small note under the rows (e.g. turnaround).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6a1960940ce39",
             "label": "CTA",
             "name": "cta",
@@ -259,5 +390,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1780048494
+    "modified": 1783272600
 }
