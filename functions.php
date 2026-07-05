@@ -1300,12 +1300,13 @@ if ( ! function_exists( 'mfs_defer_menu_flush' ) ) {
  * plus wp-block-library (~3.6 KB). Pure dead weight on page types whose body is
  * NOT built from core Gutenberg blocks.
  *
- * Scope = ALLOWLIST (front page + services + solutions). Those render from ACF
- * blocks / theme templates, so nothing references these stylesheets. Deliberately
- * EXCLUDES the blog and every other type: blog posts render with core blocks whose
- * CSS is present because the blocks are on the page, and inline block styles can
- * reference the --wp--preset--* custom properties defined in global-styles. Those
- * stay untouched until a per-block audit (T14 step 2).
+ * Scope = DENYLIST by content: strip on every view EXCEPT one whose queried post
+ * body contains CORE Gutenberg blocks (wp:paragraph/heading/image/table/list/...).
+ * ACF blocks (wp:acf/*) render as theme HTML and need no WP core CSS, so ACF-only
+ * bodies (front, services, solutions, team, landings, most pages) get stripped;
+ * blog posts and any Gutenberg-authored page (e.g. /privacy-policy/, 41 core blocks)
+ * keep the CSS because their inline block styles may reference the --wp--preset--*
+ * custom properties defined in global-styles. Verified via per-type DOM audit 05.07.2026.
  *
  * Timing: wp_dequeue_style('global-styles') only takes effect when it runs AFTER
  * core enqueues it — hence priority 100. The pre-existing wpassist_remove_block_library_css
@@ -1329,17 +1330,21 @@ if ( ! function_exists( 'mfs_geo_dequeue_enabled' ) ) {
     }
 }
 
-if ( ! function_exists( 'mfs_is_solution_page' ) ) {
-    function mfs_is_solution_page() {
-        // Solutions are a CPT (post_type=solutions) at /solutions/<slug>/ that render ACF
-        // blocks (acf/solution-*), NOT core Gutenberg blocks — as safe to strip as services.
-        // is_singular('solutions') proved unreliable here in practice, so we also match by
-        // URL path as a robust fallback (covers /es/ /de/ clones; excludes a bare /solutions/).
-        if ( is_singular( 'solutions' ) ) {
-            return true;
+if ( ! function_exists( 'mfs_page_has_core_blocks' ) ) {
+    function mfs_page_has_core_blocks() {
+        // Only a singular view can carry a block-authored body (archives/search/404 → none).
+        if ( ! is_singular() ) {
+            return false;
         }
-        $uri = isset( $_SERVER['REQUEST_URI'] ) ? strtok( $_SERVER['REQUEST_URI'], '?' ) : '';
-        return (bool) preg_match( '#/solutions/[^/]+/?$#', $uri );
+        $post = get_queried_object();
+        if ( ! ( $post instanceof WP_Post ) ) {
+            return false;
+        }
+        // Match core/plugin block markers (<!-- wp:paragraph -->, <!-- wp:heading -->, ...)
+        // but NOT ACF blocks (<!-- wp:acf/* -->), which produce plain theme HTML and need
+        // no WP core CSS. So ACF-only bodies (front/services/solutions/team/landings) get
+        // stripped; blog posts and Gutenberg-authored pages (e.g. /privacy-policy/) keep it.
+        return (bool) preg_match( '/<!--\s+wp:(?!acf\/)[a-z0-9-]+/i', (string) $post->post_content );
     }
 }
 
@@ -1348,10 +1353,8 @@ if ( ! function_exists( 'mfs_geo_dequeue_wp_css' ) ) {
         if ( is_admin() || ! mfs_geo_dequeue_enabled() ) {
             return;
         }
-        // Allowlist of measured-safe, non-core-block page types. Everything else
-        // (blog, success-stories, team, plain pages) keeps WP CSS until audited.
-        $safe = is_front_page() || is_singular( 'services' ) || mfs_is_solution_page();
-        if ( ! $safe ) {
+        // Keep WP core CSS only where core Gutenberg blocks actually render.
+        if ( mfs_page_has_core_blocks() ) {
             return;
         }
         wp_dequeue_style( 'global-styles' );       // theme.json-generated inline CSS (~9 KB)
