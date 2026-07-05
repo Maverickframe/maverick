@@ -145,16 +145,33 @@ if ( ! function_exists( 'mfs_video_replace_iframe' ) ) {
 			$title = trim( $t[2] );
 		}
 
-		$pz     = MFS_BUNNY_PULLZONE;
-		$src    = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
-		$poster = 'https://' . $pz . '/' . $guid . '/thumbnail.jpg';
+		$pz  = MFS_BUNNY_PULLZONE;
+		$src = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
+
+		// Poster: Bunny's default thumbnail.jpg is NOT generated for this library
+		// (404); only the animated preview.webp exists, and it's a soft 320x180.
+		// So prefer the page's own featured image (crisp, static, hand-picked) on
+		// singular views, and fall back to Bunny's preview.webp elsewhere. The JS
+		// swaps to the preview if the featured image ever fails to load.
+		$poster_fallback = 'https://' . $pz . '/' . $guid . '/preview.webp';
+		$poster          = $poster_fallback;
+		if ( is_singular() ) {
+			$qid = get_queried_object_id();
+			if ( $qid && has_post_thumbnail( $qid ) ) {
+				$feat = get_the_post_thumbnail_url( $qid, 'large' );
+				if ( $feat ) {
+					$poster = $feat;
+				}
+			}
+		}
 
 		return sprintf(
-			'<div class="mfs-video js-mfs-video mfs-video--%1$s" data-guid="%2$s" data-src="%3$s" data-poster="%4$s" data-mode="%1$s"%5$s></div>',
+			'<div class="mfs-video js-mfs-video mfs-video--%1$s" data-guid="%2$s" data-src="%3$s" data-poster="%4$s" data-poster-fallback="%5$s" data-mode="%1$s"%6$s></div>',
 			esc_attr( $mode ),
 			esc_attr( $guid ),
 			esc_url( $src ),
 			esc_url( $poster ),
+			esc_url( $poster_fallback ),
 			$title !== '' ? ' data-title="' . esc_attr( $title ) . '"' : ''
 		);
 	}

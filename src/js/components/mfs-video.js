@@ -50,7 +50,15 @@ async function attachSource(video) {
   const src = video.dataset.src;
   if (!src) return;
 
-  if (canPlayNativeHls(video)) {
+  // Prefer hls.js wherever Media Source Extensions exist (Chrome/Firefox/Edge/
+  // Android). Chrome reports canPlayType('application/vnd.apple.mpegurl') ===
+  // 'maybe' but CANNOT actually play HLS natively — trusting that would stall the
+  // video at readyState 0. Use native HLS only on Safari/iOS, which have native
+  // playback but no usable MSE-for-HLS, so we also skip downloading hls.js there.
+  const mseOk =
+    'MediaSource' in window &&
+    MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"');
+  if (canPlayNativeHls(video) && !mseOk) {
     video.src = src;
     return;
   }
@@ -206,7 +214,21 @@ function build(root) {
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('disablepictureinpicture', '');
   video.setAttribute('disableremoteplayback', '');
-  if (root.dataset.poster) video.poster = root.dataset.poster;
+  // Poster with graceful fallback: <video poster> gives no load-error event, so
+  // probe the preferred poster via an Image and swap to Bunny's preview.webp if
+  // it fails (e.g. a page without a featured image).
+  const poster = root.dataset.poster;
+  const posterFb = root.dataset.posterFallback;
+  if (poster) {
+    video.poster = poster;
+    if (posterFb && posterFb !== poster) {
+      const probe = new Image();
+      probe.onerror = () => { video.poster = posterFb; };
+      probe.src = poster;
+    }
+  } else if (posterFb) {
+    video.poster = posterFb;
+  }
   if (root.dataset.title) video.setAttribute('title', root.dataset.title);
   root.appendChild(video);
 

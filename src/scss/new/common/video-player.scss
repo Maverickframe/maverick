@@ -70,10 +70,20 @@
 }
 
 /* Host wells that render a bare Bunny iframe (no responsive wrapper) must be
- * positioned so the absolute .mfs-video can fill them. They already carry a
- * fixed height, so position:relative is all that's needed. */
+ * positioned so the absolute .mfs-video can fill them. */
 .showreel__video,
 .solution-intro__media,
 .sticky-cta__media {
   position: relative;
+}
+
+/* Some wells (sticky CTA, solution intro) took their height from the iframe's
+ * intrinsic size — with the iframe gone, an absolute-filled .mfs-video would
+ * collapse to 0. Give them a 16:9 box, but ONLY when our player is present, so
+ * pages still serving the original iframe (staged rollout) are untouched.
+ * .showreel__video already has an explicit height, so it's left alone. */
+.sticky-cta__media:has(> .js-mfs-video),
+.solution-intro__media:has(> .js-mfs-video) {
+  aspect-ratio: 16 / 9;
+  height: auto;
 }
