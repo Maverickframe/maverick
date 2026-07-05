@@ -37,7 +37,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'MFS_VIDEO_HLS' ) ) {
-	define( 'MFS_VIDEO_HLS', true );
+	// TEMPORARILY OFF: MSE playback is blocked by the edge (Cloudflare) CSP, which
+	// has no `blob:` in media-src/worker-src. Until `blob:` is added there, the
+	// converted <video> can't play, so we keep serving the original Bunny iframe.
+	// Flip back to true once the CSP is updated (then set MFS_VIDEO_ONLY_IDS).
+	define( 'MFS_VIDEO_HLS', false );
 }
 if ( ! defined( 'MFS_VIDEO_ONLY_IDS' ) ) {
 	// Comma-separated singular post IDs to scope the conversion to (staged rollout).

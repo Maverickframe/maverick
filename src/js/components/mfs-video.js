@@ -232,6 +232,9 @@ function build(root) {
     video.poster = posterFb;
   }
   if (root.dataset.title) video.setAttribute('title', root.dataset.title);
+  // attachSource() reads the manifest from video.dataset.src; the data-* live on
+  // the root placeholder, so copy the source onto the <video> we just created.
+  if (root.dataset.src) video.dataset.src = root.dataset.src;
   root.appendChild(video);
 
   if (mode === 'bg') initBg(root, video);
