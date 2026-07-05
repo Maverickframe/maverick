@@ -284,6 +284,24 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_6c05c0570003"
+                },
+                {
+                    "key": "field_6c05c0570007",
+                    "label": "Link (optional)",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "Optional. If filled, the whole row becomes a link (e.g. related case or service). Leave empty for a plain term–price row.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_6c05c0570003"
                 }
             ]
         },

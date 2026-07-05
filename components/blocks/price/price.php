@@ -66,10 +66,15 @@
 
                 <?php if ( have_rows('cost_rows') ) : ?>
                     <ul class="price__cost-rows">
-                        <?php while ( have_rows('cost_rows') ) : the_row(); ?>
+                        <?php while ( have_rows('cost_rows') ) : the_row();
+                            $cost_url = get_sub_field('url');
+                            $cost_tag = $cost_url ? 'a' : 'span';
+                        ?>
                             <li class="price__cost-row">
-                                <span class="price__cost-label"><?php the_sub_field('label'); ?></span>
-                                <span class="price__cost-price"><?php the_sub_field('price'); ?></span>
+                                <<?php echo $cost_tag; ?> class="price__cost-line<?php echo $cost_url ? ' price__cost-line--link' : ''; ?>"<?php echo $cost_url ? ' href="' . esc_url( $cost_url ) . '"' : ''; ?>>
+                                    <span class="price__cost-label"><?php the_sub_field('label'); ?></span>
+                                    <span class="price__cost-price"><?php the_sub_field('price'); ?></span>
+                                </<?php echo $cost_tag; ?>>
                             </li>
                         <?php endwhile; ?>
                     </ul>

@@ -400,11 +400,6 @@
 }
 
 .price__cost-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: toRem(16);
-
     padding-bottom: toRem(8);
     border-bottom: 1px solid var(--stroke-light-grey-color);
 
@@ -417,6 +412,27 @@
     &:last-child {
         padding-bottom: 0;
         border-bottom: 0;
+    }
+}
+
+.price__cost-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: toRem(16);
+
+    color: inherit;
+    text-decoration: none;
+}
+
+a.price__cost-line {
+    transition: color 0.2s ease;
+
+    &:hover {
+        .price__cost-label,
+        .price__cost-price {
+            color: var(--accent-color);
+        }
     }
 }
 
