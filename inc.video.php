@@ -37,11 +37,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'MFS_VIDEO_HLS' ) ) {
-	// TEMPORARILY OFF: MSE playback is blocked by the edge (Cloudflare) CSP, which
-	// has no `blob:` in media-src/worker-src. Until `blob:` is added there, the
-	// converted <video> can't play, so we keep serving the original Bunny iframe.
-	// Flip back to true once the CSP is updated (then set MFS_VIDEO_ONLY_IDS).
-	define( 'MFS_VIDEO_HLS', false );
+	// ON. The blocker (edge CSP lacked `blob:` for media-src/worker-src) is fixed:
+	// the CSP is set in the site .htaccess (LiteSpeed `Header set`, which beats the
+	// PHP header override), and `blob:` was added to default-src + media-src +
+	// worker-src there on 2026-07-05, so hls.js MSE playback works. Staged rollout
+	// continues via MFS_VIDEO_ONLY_IDS below; set it to '' to go site-wide.
+	define( 'MFS_VIDEO_HLS', true );
 }
 if ( ! defined( 'MFS_VIDEO_ONLY_IDS' ) ) {
 	// Comma-separated singular post IDs to scope the conversion to (staged rollout).
