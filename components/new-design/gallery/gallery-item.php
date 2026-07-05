@@ -14,7 +14,10 @@
     $isVideoIframe = !empty($videoIframe);
 
     if ($isVideoIframe) {
-        $class .= ' iframe';
+        // `is-video` shows the existing video badge (icons/gallery-video.svg) so
+        // visitors can tell it's a clip, not a still — the badge CSS was keyed to
+        // .is-video (native videos) only, and Bunny-iframe items never got it.
+        $class .= ' iframe is-video';
 
         // Gallery cells should PREVIEW on hover. Tag the Bunny embed with
         // &mfsmode=hover so the theme's video converter (inc.video.php) renders it
@@ -56,6 +59,14 @@
     }
     if (!$ar_w || !$ar_h) { $ar_w = 16; $ar_h = 9; }
     $ar_style = ' style="aspect-ratio:' . $ar_w . '/' . $ar_h . '"';
+
+    // Video (iframe) cells: drop the fixed 16/9 aspect so the cell can stretch to
+    // the grid row height and line up with its (often taller) image neighbours;
+    // the player covers the cell (object-fit:cover). CSS gives a min-height floor
+    // for the rare case a video sits alone in a row.
+    if ($isVideoIframe) {
+        $ar_style = '';
+    }
 ?>
 
 <?php if ($media || $isVideoIframe): ?>

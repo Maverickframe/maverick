@@ -221,6 +221,12 @@
     }
 
     &.iframe {
+        // No fixed aspect-ratio on video cells (see gallery-item.php) — stretch to
+        // the grid row height so they line up with taller image neighbours; the
+        // player covers the cell. min-height floors the rare alone-in-a-row case.
+        align-self: stretch;
+        min-height: toRem(200);
+
         & > div {
             height: 100%;
         }
