@@ -92,12 +92,15 @@
                                             // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
+                                            // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
+                                            // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
+                                            // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
                                             if ($i < 4 || $i >= $hf_total - 2) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 1270px) 150px, 420px',
+                                                    'sizes'   => '(max-width: 1270px) 150px, 300px',
                                                 ]);
                                             }
                                         ?>
@@ -154,12 +157,15 @@
                                             // only on the very first (one LCP hint).
                                             // sizes match Splide breakpoints: ≤1270px the slider is fixedWidth 145 → mobile
                                             // picks ~400w (not 768) — keeps retina quality, cuts mobile bytes.
+                                            // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
+                                            // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
+                                            // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
                                             if ($i < 4 || $i >= $hf_total - 2) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 420px', $i === 0);
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 1270px) 150px, 420px',
+                                                    'sizes'   => '(max-width: 1270px) 150px, 300px',
                                                 ]);
                                             }
                                         ?>
