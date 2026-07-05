@@ -1291,3 +1291,61 @@ if ( ! function_exists( 'mfs_defer_menu_flush' ) ) {
     }
 }
 /* === /GEO readability (T13) === */
+
+
+/* === GEO readability (T14): drop unused WordPress core CSS ===
+ * The theme is a classic (SCSS-bundle) theme and does not use the block editor's
+ * global styles or the core block-library CSS. WordPress injects them anyway as
+ * inline <style> BEFORE the main content: global-styles-inline-css (~9 KB/page)
+ * plus wp-block-library (~3.6 KB). Pure dead weight on page types whose body is
+ * NOT built from core Gutenberg blocks.
+ *
+ * Scope = ALLOWLIST (front page + services + solutions). Those render from ACF
+ * blocks / theme templates, so nothing references these stylesheets. Deliberately
+ * EXCLUDES the blog and every other type: blog posts render with core blocks whose
+ * CSS is present because the blocks are on the page, and inline block styles can
+ * reference the --wp--preset--* custom properties defined in global-styles. Those
+ * stay untouched until a per-block audit (T14 step 2).
+ *
+ * Timing: wp_dequeue_style('global-styles') only takes effect when it runs AFTER
+ * core enqueues it — hence priority 100. The pre-existing wpassist_remove_block_library_css
+ * runs at the default priority 10 and was a no-op for global-styles (fired before the
+ * enqueue), which is why global-styles still survived in the raw HTML.
+ *
+ * Kill switch / A-B override on any URL: ?mfs_dequeue=0 forces OFF (WP CSS restored),
+ * ?mfs_dequeue=1 forces ON. To disable globally: set MFS_GEO_DEQUEUE_CSS to false and redeploy.
+ */
+if ( ! defined( 'MFS_GEO_DEQUEUE_CSS' ) ) {
+    define( 'MFS_GEO_DEQUEUE_CSS', true );
+}
+
+if ( ! function_exists( 'mfs_geo_dequeue_enabled' ) ) {
+    function mfs_geo_dequeue_enabled() {
+        // Per-request override / kill switch: ?mfs_dequeue=0 forces OFF, ?mfs_dequeue=1 forces ON.
+        if ( isset( $_GET['mfs_dequeue'] ) ) {
+            return $_GET['mfs_dequeue'] === '1';
+        }
+        return (bool) MFS_GEO_DEQUEUE_CSS;
+    }
+}
+
+if ( ! function_exists( 'mfs_geo_dequeue_wp_css' ) ) {
+    function mfs_geo_dequeue_wp_css() {
+        if ( is_admin() || ! mfs_geo_dequeue_enabled() ) {
+            return;
+        }
+        // Allowlist of measured-safe, non-core-block page types. Everything else
+        // (blog, success-stories, team, plain pages) keeps WP CSS until audited.
+        $safe = is_front_page() || is_singular( array( 'services', 'solutions' ) );
+        if ( ! $safe ) {
+            return;
+        }
+        wp_dequeue_style( 'global-styles' );       // theme.json-generated inline CSS (~9 KB)
+        wp_dequeue_style( 'wp-block-library' );     // core block library base CSS (~3.6 KB)
+        wp_dequeue_style( 'wp-block-library-theme' );
+        // Prevent a late re-print of global styles from the footer hook.
+        remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
+    }
+    add_action( 'wp_enqueue_scripts', 'mfs_geo_dequeue_wp_css', 100 );
+}
+/* === /GEO readability (T14) === */
