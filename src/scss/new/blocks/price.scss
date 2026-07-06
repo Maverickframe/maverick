@@ -345,3 +345,113 @@
         }
     }
 }
+
+
+/* Cost answer — GEO / answer-first sub-panel inside the price block.
+   Reads as a continuation of the same block, visually distinct from the
+   tariff cards (bordered light panel, term–price rows, no second CTA). */
+.price__cost-answer {
+    margin-bottom: toRem(20);
+    padding: toRem(20);
+
+    border-radius: 1px;
+    border: 1px solid var(--stroke-light-grey-color);
+
+    @media (min-width: $md) {
+        padding: toRem(30);
+    }
+}
+
+.price__cost-q {
+    margin-bottom: toRem(10);
+
+    font-size: toRem(18);
+    font-weight: 500;
+    color: var(--black-color);
+
+    @media (min-width: $lg) {
+        font-size: toRem(20);
+    }
+}
+
+.price__cost-answer-text {
+    margin-bottom: toRem(20);
+    max-width: toRem(760);
+
+    font-size: toRem(14);
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        font-size: toRem(16);
+    }
+}
+
+.price__cost-rows {
+    margin: 0 0 toRem(16);
+    padding: 0;
+    list-style: none;
+
+    display: grid;
+    gap: toRem(8);
+
+    @media (min-width: $md) {
+        max-width: toRem(560);
+    }
+}
+
+.price__cost-row {
+    padding-bottom: toRem(8);
+    border-bottom: 1px solid var(--stroke-light-grey-color);
+
+    font-size: toRem(14);
+
+    @media (min-width: $md) {
+        font-size: toRem(16);
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+.price__cost-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: toRem(16);
+
+    color: inherit;
+    text-decoration: none;
+}
+
+a.price__cost-line {
+    transition: color 0.2s ease;
+
+    &:hover {
+        .price__cost-label,
+        .price__cost-price {
+            color: var(--accent-color);
+        }
+    }
+}
+
+.price__cost-label {
+    color: var(--text-grey-color);
+}
+
+.price__cost-price {
+    flex-shrink: 0;
+
+    font-weight: 600;
+    color: var(--black-color);
+}
+
+.price__cost-note {
+    font-size: toRem(12);
+    color: var(--text-grey-color);
+
+    @media (min-width: $md) {
+        font-size: toRem(14);
+    }
+}
