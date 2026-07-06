@@ -375,15 +375,15 @@
 }
 
 .price__cost-answer-text {
-    margin-bottom: toRem(22);
+    margin-bottom: toRem(20);
     max-width: toRem(720);
 
-    font-size: toRem(16);
+    font-size: toRem(15);
     line-height: 1.55;
     color: var(--black-color);
 
     @media (min-width: $md) {
-        font-size: toRem(18);
+        font-size: toRem(16);
     }
 }
 
