@@ -117,7 +117,9 @@ maverickframe/
 - **Sass** (dart-sass)
 - **ACF/SCF Pro** with JSON sync to `acf-json/`
 - **Rank Math** for SEO
-- **WP Rocket** for caching — note that **Used CSS** mode strips inline
+- **WP Rocket** for caching — CSS delivery runs in **"Load CSS
+  asynchronously"** mode (critical CSS inline + async front.css); do NOT
+  switch to Remove Unused CSS: **Used CSS** mode strips inline
   `<style>` tags, so all CSS must be enqueued, not inlined.
 - Hosting: **Rocket.net** (managed WP, Cloudflare Enterprise edge)
 - Local dev: **LocalWP** (formerly Local by Flywheel)
@@ -195,6 +197,41 @@ maverickframe/
   grid, use `position: relative` + an absolutely positioned prefix. (V1
   in-article CTA in blog redesign was the example.)
 
+- **WP Rocket LazyLoad ignores `loading="eager"`** but skips images with
+  `fetchpriority="high"`. Any image that must never be lazy (logo, hero
+  slides) needs `data-no-lazy="1"` / class `skip-lazy` explicitly —
+  `eager_attachment()` adds them. (Removing fetchpriority from the logo made
+  Rocket lazyload it → the logo became the mobile LCP element.)
+
+- **Splide v4 puts `role="group|tabpanel"` on every slide** — invalid on
+  `<li>` (axe aria-allowed-role), fails PSI's Agentic Browsing
+  "accessibility tree" audit. Fixed by `src/js/components/splide-a11y.js`
+  (patches `Splide.prototype.mount`); it MUST be imported in every file
+  that creates Splide instances (currently sliders.js, modals.js).
+
+- **Hero marquee loops both ways:** one column auto-scrolls backwards and
+  shows clones of the TAIL slides within seconds. Eager-load first 4 AND
+  last 2 slides per column in hero-front.php — eager-ing only the head
+  leaves the real LCP slide lazy.
+
+- **AutoScroll marquees start delayed** (~3s or first interaction,
+  `delayAutoScrollStart()` in sliders.js, `autoStart: false` in configs):
+  an immediately-moving marquee pins lab Speed Index at ~6s forever. Keep
+  this when touching sliders.
+
+- **Code-split bundle = `type="module"` + Rocket JS-minify exclusion.**
+  The entry has `import.meta`/dynamic `import()` (SyntaxError as a classic
+  script) — `inc.vite.php` swaps the tag. WP Rocket → Excluded JavaScript
+  Files must keep `/wp-content/themes/maverickframe/build/(.*).js`, else
+  main.js is served from `/cache/min/…` and relative chunk URLs 404.
+  In bundle.js, modules that rely on DOMContentLoaded (videoPlay,
+  visualResultsGallery, sticky-cta) must stay statically imported — an
+  async chunk can arrive after the event and never init.
+
+- **Purge order after changing WP Rocket settings:** Rocket clear → open a
+  page logged-out once (regenerates page cache) → THEN Cloudflare "Purge
+  Everything". Purging CDN first re-caches the stale HTML at the edge.
+
 ---
 
 ## 8. Blog redesign — single-blog template
@@ -222,6 +259,14 @@ that they're loading.
 ---
 
 ## 9. Deploy mechanics — how code reaches each environment
+
+> **SUPERSEDED (2026-07-02): the current process lives in `WORKFLOW.md`.**
+> Short version: branch `fix/<task>` off fresh `main` per task → PR to
+> `main` → Dima merges and runs the manual "Deploy theme to PRODUCTION"
+> Action → CDN Purge Everything + WP Rocket Clear. `multilang` is retired
+> (it accumulated rebase-duplicate commits → false PR conflicts) and was
+> reset to main. Batch small fixes into one branch instead of deploying
+> one-liners. The staging pipeline below no longer exists.
 
 ### Local → GitHub
 Standard git. `main` is the only long-lived branch. Feature branches OK,
@@ -455,6 +500,16 @@ upload to media library.
   150-400 KB, max-width 1920 px, WebP q=80
 - **Context / small detail images:** 100-200 KB, max-width 1920 px, q=78
 
+### Generated intermediate sizes (2026-07-02)
+`functions.php` filters `wp_editor_set_quality` → WordPress re-encodes
+**WebP intermediate sizes at q=68** (default 82 left hero variants at
+150-185 KB). To recompress the EXISTING library in place, run **Force
+Regenerate Thumbnails** (plugin active) — filenames/URLs stay the same.
+There is no way to replace upload files from outside on Rocket.net
+(Imagify needs an account; no file access to uploads/), so quality filter
++ regenerate is the canonical recompression path. Don't downsize served
+variants (large→medium) — retina blur.
+
 ### Conversion command (one image)
 ```bash
 convert source.png -resize 2400x\> -quality 82 -define webp:method=6 target.webp
@@ -502,8 +557,13 @@ title via the WPVibe REST: `POST /wp/v2/media/<id>` with
 - **"Staging shows old version after deploy"** → clear Rocket CDN cache
   via dashboard, plus WP Rocket via WP-admin or `wp rocket clean
   --confirm`.
+- **"Lighthouse in DevTools shows a disaster, PSI is fine"** → DevTools
+  runs on your machine/network: right after a purge the first hit is a
+  cold cache (TTFB ~2.5s), and on a slow connection `splide.refresh()` on
+  window load produces phantom CLS on the hero columns. Absolute numbers:
+  PSI + field CrUX data only. Always measure logged-out.
 
 ---
 
-_Last updated: 2026-06-03. Edit in place when something changes — don't
+_Last updated: 2026-07-02. Edit in place when something changes — don't
 append "as of 2026-08" updates, just rewrite the relevant section._

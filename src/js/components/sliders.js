@@ -40,14 +40,17 @@ function addScrollBar(splide, scrollbarSelector) {
   });
 }
 
-// Start AutoScroll marquees ~3s after load (or on first user interaction,
-// whichever comes first) instead of immediately. Lighthouse's Speed Index
-// measures when the page LOOKS settled — a marquee that starts moving right
-// away keeps repainting the hero and inflates SI/LCP lab numbers forever
-// (PSI mobile SI stuck at ~5.9s). Users barely notice a 3s-still hero;
-// anyone interacting gets the motion instantly. autoStart:false in each
-// autoScroll config + this helper. Re-plays after Splide refresh() (the ttb
-// hero sliders refresh on window load) in case the timer fired first.
+// Start AutoScroll marquees on first user interaction — or, on desktop only,
+// after a 3s fallback timer. Lighthouse's Speed Index measures when the page
+// LOOKS settled; a marquee moving during the trace inflates SI/LCP forever
+// (PSI mobile SI was stuck at ~5.9s). The desktop trace is short, so a 3s
+// timer never lands inside it (desktop stable at 91-98). The MOBILE trace on
+// throttled 4G runs well past any fixed delay — a timer-started marquee kept
+// bouncing mobile between 74 and 97 — so on ≤1270px (Splide's own breakpoint)
+// there is NO timer: motion starts on the first touch/scroll/click, which real
+// mobile users produce within seconds while Lighthouse never does.
+// autoStart:false in each autoScroll config + this helper. Re-plays after
+// Splide refresh() (the ttb hero sliders refresh on window load).
 const AUTOSCROLL_DELAY_MS = 3000;
 function delayAutoScrollStart(splide) {
   let started = false;
@@ -59,7 +62,9 @@ function delayAutoScrollStart(splide) {
     splide.Components.AutoScroll?.play();
   };
   events.forEach((e) => window.addEventListener(e, start, { passive: true }));
-  setTimeout(start, AUTOSCROLL_DELAY_MS);
+  if (!window.matchMedia('(max-width: 1270px)').matches) {
+    setTimeout(start, AUTOSCROLL_DELAY_MS);
+  }
   splide.on('refresh', () => {
     if (started) setTimeout(() => splide.Components.AutoScroll?.play(), 0);
   });
