@@ -48,6 +48,7 @@ export default defineConfig(({ mode }) => {
                     css: resolve(__dirname, env.VITE_STYLES),
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
                     front: resolve(__dirname, "src/scss/bundles/front.scss"),
+                    fallback: resolve(__dirname, "src/scss/bundles/fallback.scss"),
                     services: resolve(__dirname, "src/scss/bundles/services.scss"),
                     presentation: resolve(__dirname, "src/scss/bundles/presentation.scss"),
                     cases: resolve(__dirname, "src/scss/bundles/cases.scss"),

@@ -1,2 +1,6 @@
+// Front page (page 6) ONLY. Slim bundle: shared chrome + just the blocks the
+// homepage renders. All other pages that used to share this bundle now load
+// fallback.scss (base + all blocks) via the router fallback. If you add a new
+// block to the homepage, add its partial to blocks-home.scss too.
 @import url("base.scss");
-@import url("blocks-frontend.scss");
+@import url("blocks-home.scss");

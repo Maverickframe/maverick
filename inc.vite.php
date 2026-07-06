@@ -39,7 +39,10 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
     if (is_page_template('templates/template-contacts.php')) return 'src/scss/bundles/contacts.scss';
     if (is_page_template('templates/template-legal.php')) return 'src/scss/bundles/legal.scss';
-    return 'src/scss/bundles/front.scss';
+    // Catch-all: any page without a dedicated bundle (solutions singulars, plain
+    // pages, localized /es/ /de/ homepages) gets the full block set, not the slim
+    // homepage bundle. Only the real front page uses front.scss.
+    return 'src/scss/bundles/fallback.scss';
 }
 
 add_action( 'wp_enqueue_scripts', function() {

@@ -1,0 +1,6 @@
+// Catch-all bundle for any page without a dedicated bundle (router fallback):
+// solutions singulars, plain pages, localized homepages (/es/, /de/), etc.
+// Contains ALL block styles so no fallback page is ever unstyled.
+// The real front page uses the slim front.scss (base + blocks-home) instead.
+@import url("base.scss");
+@import url("blocks-frontend.scss");
