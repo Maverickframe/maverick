@@ -441,6 +441,7 @@ function isNewDesign()
         || is_page_template('templates/template-contacts.php')
         || is_page_template('templates/template-legal.php')
         || is_singular('solutions')
+        || is_404()
         || is_front_page();
 }
 

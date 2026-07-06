@@ -39,6 +39,7 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
     if (is_page_template('templates/template-contacts.php')) return 'src/scss/bundles/contacts.scss';
     if (is_page_template('templates/template-legal.php')) return 'src/scss/bundles/legal.scss';
+    if (is_404()) return 'src/scss/bundles/error.scss';
     // Catch-all: any page without a dedicated bundle (solutions singulars, plain
     // pages, localized /es/ /de/ homepages) gets the full block set, not the slim
     // homepage bundle. Only the real front page uses front.scss.
