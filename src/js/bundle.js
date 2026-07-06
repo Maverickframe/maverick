@@ -26,7 +26,6 @@ import './components/tabs';
 import './components/toc';
 import './components/videoPlay';
 import './components/mfs-video';
-import './components/workflow-dot-snap';
 import './components/visualResultsGallery';
 import './components/select';
 
@@ -35,8 +34,6 @@ import './components/showMoreText';
 import './components/showSidebar';
 import './components/sticky-cta';
 import './components/modal-offer';
-import './components/quiz';
-import './components/calculator';
 
 // --- Heavy modules: split into async chunks, loaded per feature-detect --------
 // The old single bundle evaluated Splide, GSAP+ScrollTrigger, THREE.js, Fancybox
@@ -69,20 +66,35 @@ lazyModules.forEach(([selector, load]) => {
   if (document.querySelector(selector)) load();
 });
 
-// THREE.js particles (551 KB chunk) — decorative background in the
-// worldwide-rendering section, ~5500px below the fold on the front page.
-// Loaded only when the wrapper approaches the viewport, so THREE never
-// downloads/evaluates during initial load (or in a Lighthouse trace at all).
-const particlesWrapper = document.querySelector('.js-particles-wrapper');
-if (particlesWrapper) {
+// --- Below-the-fold modules: loaded when their block approaches the viewport --
+// These blocks always sit deep in the page, and their INIT cost (not just the
+// download) is what hurts: on solutions pages quiz + calculator + workflow-dot-
+// snap init made the same 75 KB main.js evaluate for ~2s (PSI TBT 740-1070ms)
+// while on the front page they no-op. IO-gating moves both download AND init
+// out of the initial load — and out of the Lighthouse trace entirely.
+// Safe to arrive late: quiz/calculator init behind a readyState guard,
+// workflow-dot-snap re-snaps via its own setTimeout(600) fallback,
+// particlesAnimation queries the DOM at top level.
+function loadWhenNear(selector, load) {
+  const el = document.querySelector(selector);
+  if (!el) return;
   const io = new IntersectionObserver(
     (entries, observer) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
-        import('./components/particlesAnimation');
+        load();
       }
     },
     { rootMargin: '600px 0px' }
   );
-  io.observe(particlesWrapper);
+  io.observe(el);
 }
+
+// THREE.js particles (551 KB chunk) — decorative background, worldwide-rendering
+loadWhenNear('.js-particles-wrapper', () => import('./components/particlesAnimation'));
+// Lead quiz (branching stepper)
+loadWhenNear('.js-mfsq', () => import('./components/quiz'));
+// Price calculator
+loadWhenNear('.js-mfcalc', () => import('./components/calculator'));
+// Workflow dot-snapping (heavy getBoundingClientRect loops)
+loadWhenNear('.workflow', () => import('./components/workflow-dot-snap'));
