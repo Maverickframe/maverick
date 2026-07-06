@@ -74,7 +74,7 @@ lazyModules.forEach(([selector, load]) => {
 // out of the initial load — and out of the Lighthouse trace entirely.
 // Safe to arrive late: quiz/calculator init behind a readyState guard,
 // workflow-dot-snap re-snaps via its own setTimeout(600) fallback,
-// particlesAnimation queries the DOM at top level.
+// renderReveal queries the DOM at top level.
 function loadWhenNear(selector, load) {
   const el = document.querySelector(selector);
   if (!el) return;
@@ -90,8 +90,9 @@ function loadWhenNear(selector, load) {
   io.observe(el);
 }
 
-// THREE.js particles (551 KB chunk) — decorative background, worldwide-rendering
-loadWhenNear('.js-particles-wrapper', () => import('./components/particlesAnimation'));
+// Render-reveal interactive (canvas 2D, no deps) — worldwide-rendering block.
+// Replaced the THREE.js particle sphere (551 KB chunk).
+loadWhenNear('.js-render-reveal', () => import('./components/renderReveal'));
 // Lead quiz (branching stepper)
 loadWhenNear('.js-mfsq', () => import('./components/quiz'));
 // Price calculator

@@ -15,8 +15,11 @@
             </button>
         </div>
 
-        <div class="js-particles-wrapper worldwide-rendering__particle-wrapper" data-img="<?php echo get_field('img'); ?>">
-            <img src="<?php echo get_field('img'); ?>" alt="<?php the_field('title'); ?>">
+        <div class="js-render-reveal worldwide-rendering__particle-wrapper" data-img="<?php echo esc_url( get_field('img') ); ?>">
+            <img src="<?php echo esc_url( get_field('img') ); ?>" alt="<?php the_field('title'); ?>" loading="lazy" decoding="async">
+            <span class="worldwide-rendering__hint" aria-hidden="true">
+                <?php echo esc_html( mfs_t('Move to reveal the render', 'Mueve para revelar el render', 'Bewegen und Render enthüllen') ); ?>
+            </span>
         </div>
     </div>
 </section>

@@ -35,7 +35,6 @@
     "hls.js": "^1.6.16",
     "lazysizes": "^5.3.2",
     "player.js": "^0.1.0",
-    "simplelightbox": "^2.9.0",
-    "three": "^0.184.0"
+    "simplelightbox": "^2.9.0"
   }
 }

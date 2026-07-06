@@ -1,0 +1,342 @@
+@import "../common/vars";
+
+/* 404 page — "scene failed to render" concept (new design).
+   Font (Inter Tight), header, footer and tokens come from base.scss.
+   The wireframe cube tilt + render counter live in an inline script in 404.php. */
+
+.error-page {
+    margin-top: var(--header-height);
+    padding: toRem(24) 0 toRem(80);
+    background-color: var(--white-color);
+    color: var(--text-middle-grey-color);
+
+    @media (min-width: $md) {
+        padding: toRem(40) 0 toRem(110);
+    }
+}
+
+.error404 {
+    &__viewport {
+        position: relative;
+        overflow: hidden;
+        padding: toRem(56) toRem(16) toRem(40);
+
+        border: toRem(1) solid var(--line);
+        border-radius: var(--radius);
+        background-color: var(--alt);
+        background-image:
+            linear-gradient(var(--line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: toRem(44) toRem(44);
+        background-position: center center;
+
+        @media (min-width: $md) {
+            padding: toRem(72) toRem(32) toRem(48);
+        }
+    }
+
+    /* viewport corner brackets */
+    &__corner {
+        position: absolute;
+        width: toRem(18);
+        height: toRem(18);
+        border: toRem(2) solid var(--stroke-grey-color);
+        opacity: 0.55;
+
+        &:nth-child(1) { top: toRem(10); left: toRem(10); border-right: 0; border-bottom: 0; }
+        &:nth-child(2) { top: toRem(10); right: toRem(10); border-left: 0; border-bottom: 0; }
+        &:nth-child(3) { bottom: toRem(10); left: toRem(10); border-right: 0; border-top: 0; }
+        &:nth-child(4) { bottom: toRem(10); right: toRem(10); border-left: 0; border-top: 0; }
+    }
+
+    /* viewport HUD labels */
+    &__hud {
+        position: absolute;
+        display: flex;
+        gap: toRem(10);
+
+        font-size: toRem(11);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+        color: var(--text-grey-color);
+        opacity: 0.7;
+        user-select: none;
+
+        &--tl { top: toRem(18); left: toRem(40); }
+        &--tr { top: toRem(18); right: toRem(40); }
+        &--bl { bottom: toRem(14); left: toRem(40); display: none; }
+        &--br { bottom: toRem(14); right: toRem(40); display: none; }
+
+        @media (min-width: $sm) {
+            &--bl,
+            &--br { display: flex; }
+        }
+    }
+
+    &__hud-dot {
+        color: var(--accent-color);
+    }
+
+    /* 4 [cube] 4 */
+    &__scene {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(#{toRem(12)}, 4vw, #{toRem(40)});
+    }
+
+    &__digit {
+        font-size: clamp(#{toRem(110)}, 24vw, #{toRem(230)});
+        font-weight: 500; // Inter Tight ships only in 400/500 — 600 renders faux-bold
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        color: var(--black-color);
+        user-select: none;
+    }
+
+    /* wireframe cube standing in for the zero */
+    &__stage {
+        --cube: clamp(#{toRem(84)}, 15vw, #{toRem(150)});
+
+        position: relative;
+        width: var(--cube);
+        height: var(--cube);
+        perspective: toRem(900);
+    }
+
+    &__tilt {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        transition: transform 0.25s ease-out;
+    }
+
+    &__cube {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        animation: error404-spin 16s linear infinite;
+    }
+
+    &__face {
+        position: absolute;
+        inset: 0;
+        border: toRem(1.5) solid var(--accent-color);
+        background-color: rgba(45, 64, 174, 0.05);
+
+        &:nth-child(1) { transform: translateZ(calc(var(--cube) / 2)); }
+        &:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--cube) / 2)); }
+        &:nth-child(3) { transform: rotateY(90deg) translateZ(calc(var(--cube) / 2)); }
+        &:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--cube) / 2)); }
+        &:nth-child(5) { transform: rotateX(90deg) translateZ(calc(var(--cube) / 2)); }
+        &:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--cube) / 2)); }
+    }
+
+    /* dashed selection bbox, counter-rotating */
+    &__bbox {
+        position: absolute;
+        inset: toRem(-14);
+        border: toRem(1) dashed var(--accent-light-color);
+        opacity: 0.6;
+        animation: error404-bbox 9s linear infinite;
+    }
+
+    &__shadow {
+        position: absolute;
+        left: 50%;
+        bottom: toRem(-34);
+        width: 76%;
+        height: toRem(12);
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(16, 24, 40, 0.16), transparent 70%);
+    }
+
+    /* stuck render progress */
+    &__progress {
+        width: min(#{toRem(430)}, 86%);
+        margin: toRem(44) auto 0;
+        font-variant-numeric: tabular-nums;
+
+        @media (min-width: $md) {
+            margin-top: toRem(56);
+        }
+    }
+
+    &__progress-row {
+        display: flex;
+        justify-content: space-between;
+        gap: toRem(12);
+        margin-bottom: toRem(8);
+
+        font-size: toRem(11);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-grey-color);
+    }
+
+    &__progress-track {
+        height: toRem(4);
+        border-radius: toRem(2);
+        background-color: var(--stroke-light-grey-color);
+        overflow: hidden;
+    }
+
+    &__progress-fill {
+        width: 0;
+        height: 100%;
+        border-radius: toRem(2);
+        background-image: repeating-linear-gradient(
+            -45deg,
+            var(--accent-color) 0,
+            var(--accent-color) toRem(8),
+            var(--accent-light-color) toRem(8),
+            var(--accent-light-color) toRem(16)
+        );
+        background-size: toRem(23) 100%;
+        transition: width 0.2s linear;
+        animation: error404-stripes 1.2s linear infinite;
+    }
+
+    &__progress-note {
+        margin: toRem(8) 0 0;
+        font-size: toRem(12);
+        color: var(--text-grey-color);
+        opacity: 0.75;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    /* text block under the viewport */
+    &__body {
+        max-width: toRem(620);
+        margin: toRem(40) auto 0;
+        text-align: center;
+
+        @media (min-width: $md) {
+            margin-top: toRem(56);
+        }
+    }
+
+    &__title {
+        margin: 0 0 toRem(14);
+        font-size: clamp(#{toRem(28)}, 4.4vw, #{toRem(44)});
+        font-weight: 500; // site headings are Inter Tight 500
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--black-color);
+    }
+
+    &__text {
+        margin: 0 auto toRem(28);
+        max-width: toRem(520);
+        font-size: toRem(16);
+        line-height: 1.5;
+        color: var(--text-grey-color);
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: toRem(12);
+
+        @media (min-width: $sm) {
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+
+    /* outline button for a light background (btn-secondary is built for dark) */
+    &__btn-outline {
+        display: inline-block;
+        width: fit-content;
+        min-width: toRem(182);
+        padding-inline: toRem(20);
+        line-height: toRem(42);
+
+        font-family: inherit;
+        font-size: toRem(14);
+        font-weight: 500;
+        white-space: nowrap;
+        text-decoration: none;
+        text-align: center;
+
+        color: var(--black-color);
+        border: toRem(1) solid var(--black-color);
+        border-radius: toRem(2);
+        background-color: transparent;
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+
+        &:hover,
+        &:active {
+            background-color: var(--black-color);
+            color: var(--white-color);
+        }
+    }
+
+    &__links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: toRem(8);
+        row-gap: toRem(6);
+        margin-top: toRem(28);
+
+        font-size: toRem(12);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    &__link {
+        color: var(--text-grey-color);
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: var(--accent-color);
+        }
+    }
+
+    &__link-sep {
+        color: var(--stroke-light-grey-color);
+        user-select: none;
+    }
+}
+
+@keyframes error404-spin {
+    from { transform: rotateX(-18deg) rotateY(0deg); }
+    to   { transform: rotateX(-18deg) rotateY(360deg); }
+}
+
+@keyframes error404-bbox {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+@keyframes error404-stripes {
+    from { background-position: 0 0; }
+    to   { background-position: toRem(23) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .error404__cube,
+    .error404__bbox,
+    .error404__progress-fill {
+        animation: none;
+    }
+
+    .error404__cube {
+        transform: rotateX(-18deg) rotateY(35deg);
+    }
+
+    .error404__tilt {
+        transition: none;
+    }
+}
