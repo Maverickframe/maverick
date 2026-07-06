@@ -410,6 +410,11 @@ add_image_size('card_small', 400, 9999, false);
 add_image_size('case_content', 1024, 9999, false);
 add_image_size('big', 1440, 9999, false);
 add_image_size('hero_full', 1920, 9999, false);
+// Intermediate widths so DPR1 (PSI-desktop) can size to container instead of rounding up.
+// card_xs ~ hero portrait slot (288px CSS); card_med ~ performance-scale case card (560px CSS).
+// Only used images are regenerated (wp media regenerate <ids> --only-missing); retina/DPR2 picks unchanged.
+add_image_size('card_xs', 300, 9999, false);
+add_image_size('card_med', 600, 9999, false);
 
 // Don't generate unused oversized core sizes (replaces Perfect Images' disabling). Keep 'large' — used by templates.
 add_filter('intermediate_image_sizes_advanced', function ($sizes) {

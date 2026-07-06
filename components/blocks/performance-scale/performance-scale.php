@@ -57,7 +57,7 @@
                 <div class="performance-scale-case js-reveal">
                     <?php if($image_id): ?>
                         <div class="performance-scale-case__img">
-                            <?php echo wp_get_attachment_image($image_id, 'large', false, ['sizes' => '(min-width: 1270px) 620px, 92vw']); ?>
+                            <?php echo wp_get_attachment_image($image_id, 'large', false, ['sizes' => '(min-width: 1270px) 560px, 92vw']); ?>
                         </div>
                     <?php endif; ?>
 
