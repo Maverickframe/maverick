@@ -352,66 +352,74 @@
    tariff cards (bordered light panel, term–price rows, no second CTA). */
 .price__cost-answer {
     margin-bottom: toRem(20);
-    padding: toRem(20);
+    padding: toRem(24);
 
     border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
     @media (min-width: $md) {
-        padding: toRem(30);
+        padding: toRem(32) toRem(36);
     }
 }
 
 .price__cost-q {
-    margin-bottom: toRem(10);
+    margin-bottom: toRem(12);
 
     font-size: toRem(18);
     font-weight: 500;
     color: var(--black-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(20);
+        font-size: toRem(22);
     }
 }
 
 .price__cost-answer-text {
-    margin-bottom: toRem(20);
-    max-width: toRem(760);
+    margin-bottom: toRem(22);
+    max-width: toRem(720);
 
-    font-size: toRem(14);
-    color: var(--text-grey-color);
+    font-size: toRem(16);
+    line-height: 1.55;
+    color: var(--black-color);
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: toRem(18);
     }
 }
 
 .price__cost-rows {
-    margin: 0 0 toRem(16);
+    margin: 0;
     padding: 0;
     list-style: none;
 
     display: grid;
-    gap: toRem(8);
+    gap: toRem(12);
 
-    @media (min-width: $md) {
-        max-width: toRem(560);
-    }
+    max-width: toRem(640);
 }
 
 .price__cost-row {
-    padding-bottom: toRem(8);
-    border-bottom: 1px solid var(--stroke-light-grey-color);
+    position: relative;
+    padding-left: toRem(20);
 
     font-size: toRem(14);
+    line-height: 1.5;
+    color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: toRem(15);
     }
 
-    &:last-child {
-        padding-bottom: 0;
-        border-bottom: 0;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: toRem(8);
+
+        width: toRem(6);
+        height: toRem(6);
+
+        background: var(--accent-color);
     }
 }
 
@@ -429,6 +437,8 @@ a.price__cost-line {
     transition: color 0.2s ease;
 
     &:hover {
+        color: var(--accent-color);
+
         .price__cost-label,
         .price__cost-price {
             color: var(--accent-color);
@@ -437,7 +447,7 @@ a.price__cost-line {
 }
 
 .price__cost-label {
-    color: var(--text-grey-color);
+    color: inherit;
 }
 
 .price__cost-price {
@@ -448,10 +458,8 @@ a.price__cost-line {
 }
 
 .price__cost-note {
-    font-size: toRem(12);
-    color: var(--text-grey-color);
+    margin-top: toRem(14);
 
-    @media (min-width: $md) {
-        font-size: toRem(14);
-    }
+    font-size: toRem(13);
+    color: var(--text-grey-color);
 }
