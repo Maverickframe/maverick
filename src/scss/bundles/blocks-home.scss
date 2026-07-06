@@ -3,6 +3,7 @@
 // homepage DOM (root selectors present). Any block NOT on the homepage lives
 // in blocks-frontend.scss (loaded via fallback.scss on non-homepage pages).
 @import url("../new/blocks/hero-front.scss");
+@import url("../new/blocks/hero-services.scss"); // hero-front reuses .hero__* element classes (btns/main/reviews)
 @import url("../new/blocks/what-we-do.scss");
 @import url("../new/blocks/showreel.scss");
 @import url("../new/blocks/trusted.scss");
@@ -13,5 +14,6 @@
 @import url("../new/blocks/cta-form.scss");
 @import url("../new/blocks/quiz.scss");
 @import url("../new/blocks/faq.scss");
+@import url("../new/blocks/reviews.scss"); // .review-item used by hero Google/Trustpilot ratings
 @import url("../new/blocks/team-awards.scss");
 @import url("../new/blocks/worldwide-rendering.scss");
