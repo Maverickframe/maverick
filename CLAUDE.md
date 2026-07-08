@@ -52,7 +52,12 @@ migration time and intentionally drifts from prod.
   - **Legacy** templates and SCSS — older landing pages.
   - **New design** — selected via `isNewDesign()` in `functions.php`.
 - New design covers: front-page, blog, success-stories, team, gallery,
-  service templates, presentation-design. Everything else still uses legacy.
+  service templates, presentation-design, 404. Everything else still uses legacy.
+- 404: "scene failed to render" concept, own `error.scss` bundle. The
+  worldwide-rendering block uses `renderReveal.js` (canvas 2D tear-to-reveal,
+  replaced the three.js particle sphere); it stays a static image while the
+  ACF `img` value is the legacy dots-SVG — activate by swapping the value to a
+  raster render (Cycle 2).
 
 ---
 

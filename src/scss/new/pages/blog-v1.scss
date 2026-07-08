@@ -2003,6 +2003,9 @@ html.single-blog .section-related .cards--3 {
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 0 !important;
     border-top: 1px solid #0A0A0A !important;
+    /* long words in card titles must never widen the 1fr tracks past the
+       viewport (that gave the whole page a horizontal scroll on phones) */
+    min-width: 0 !important;
 }
 html.single-blog .section-related .case-item.--related {
     background: transparent !important;
@@ -2019,6 +2022,27 @@ html.single-blog .section-related .case-item.--related:nth-child(n+2) {
 html.single-blog .section-related .case-item.--related:last-child {
     border-right: 0 !important;
     padding-right: 0 !important;
+}
+/* Mobile: stack Read Next into a single editorial column — three side-by-side
+   cards overflowed the viewport and made the whole page pannable sideways.
+   (Must come AFTER the base --related rules: equal specificity + !important
+   means source order decides.) */
+@media (max-width: 767px) {
+    html.single-blog .section-related .cards--3 {
+        grid-template-columns: 1fr !important;
+    }
+    html.single-blog .section-related .case-item.--related {
+        border-right: 0 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        padding: 22px 0 !important;
+    }
+    html.single-blog .section-related .case-item.--related:nth-child(n+2) {
+        padding-left: 0 !important;
+    }
+    html.single-blog .section-related .case-item.--related:last-child {
+        border-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 html.single-blog .section-related .case-item.--related .case-item__link {
     display: block !important;
