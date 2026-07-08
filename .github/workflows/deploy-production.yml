@@ -57,6 +57,36 @@ jobs:
             CLAUDE.md
             README.md
 
+      # T46 (2026-07-08): a theme deploy changes rendered HTML WITHOUT firing any
+      # WP save-hook, so WP Rocket's ORIGIN file cache is never invalidated and a
+      # bare Rocket.net purge only clears the Cloudflare edge (which then re-caches
+      # the stale origin file for up to 30 days). Fix = two-layer flush, origin FIRST
+      # then edge. See Marketing Claude/reports-inbox.md T46 + rocket-purge.py.
+      - name: Purge cache (WP Rocket origin + Cloudflare edge)
+        if: success()
+        continue-on-error: true
+        env:
+          ROCKET_USER: ${{ secrets.ROCKET_USER }}
+          ROCKET_PASS: ${{ secrets.ROCKET_PASS }}
+        run: |
+          SITE=271260
+          ORIGIN='/home/e2i1ixd/public_html/wp-content/cache/wp-rocket/maverickframe.com'
+          if [ -z "$ROCKET_USER" ] || [ -z "$ROCKET_PASS" ]; then
+            echo "::warning title=Cache::ROCKET_USER/ROCKET_PASS secrets not set — skipping auto-purge. Run rocket-purge.py --all manually."; exit 0; fi
+          JWT=$(curl -s https://api.rocket.net/v1/login -H "Content-Type: application/json" \
+            -d "{\"username\":\"$ROCKET_USER\",\"password\":\"$ROCKET_PASS\"}" \
+            | jq -r '.token // .data.token // .jwt // .access_token // empty')
+          if [ -z "$JWT" ]; then
+            echo "::warning title=Cache::Rocket.net login failed — skipping auto-purge. Run rocket-purge.py --all manually."; exit 0; fi
+          echo "1/2 delete WP Rocket origin cache tree ($ORIGIN)"
+          curl -s -X DELETE "https://api.rocket.net/v1/sites/$SITE/files" \
+            -H "Authorization: Bearer $JWT" -H "Content-Type: application/json" \
+            -d "{\"file\":\"$ORIGIN\"}"; echo
+          echo "2/2 purge Cloudflare edge (purge_everything)"
+          curl -s -X POST "https://api.rocket.net/v1/sites/$SITE/cache/purge_everything" \
+            -H "Authorization: Bearer $JWT"; echo
+          echo "::notice title=Cache::Two-layer flush done — verify canonical anonymously (no query string)."
+
       - name: Summary
         if: success()
         run: |
