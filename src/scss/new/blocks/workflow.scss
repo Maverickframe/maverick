@@ -51,12 +51,17 @@
         margin-bottom: 0;
 
         font-size: toRem(16);
+
+        // Drop the intro text down to the curve's starting tip so the line
+        // visually flows out of it (visual shift only — layout flow untouched).
+        transform: translateY(toRem(70));
     }
 
     @media (min-width: $lg) {
         width: toRem(694);
         margin-right: toRem(146);
         font-size: toRem(18);
+        transform: translateY(toRem(85));
     }
 }
 
@@ -114,6 +119,7 @@
     min-height: toRem(869);
 
     @media (min-width: $md) {
+        margin-top: toRem(50); // air between the h2 row and the curve start
         padding-top: toRem(80);
         width: 100%;
         min-height: toRem(988);
@@ -121,6 +127,7 @@
     }
 
     @media (min-width: $lg) {
+        margin-top: toRem(60);
         padding-top: toRem(110);
         min-height: toRem(1214);
     }
