@@ -166,10 +166,19 @@ maverickframe/
   `wp_head` as an inline tag will disappear on cached pages. Enqueue real
   files.
 
-- **WP Rocket cache lives between deploys.** After a code deploy that
-  affects rendered HTML, in LocalWP Shell run `wp rocket clean --confirm`,
-  `wp cache flush`, `wp rewrite flush --hard`. On staging/prod use the
-  "Clear Cache" button in Rocket dashboard.
+- **WP Rocket cache lives between deploys (T46 2026-07-08).** A deploy changes
+  rendered HTML without firing any WP save-hook, so WP Rocket's **origin file
+  cache** (`wp-content/cache/wp-rocket/maverickframe.com/<path>/index-https.html`)
+  is never invalidated. A bare Rocket.net purge does NOT clear it: targeted purge
+  clears nothing; `purge_everything` clears only the Cloudflare edge, which then
+  re-caches the stale origin file for up to 30 days (`s-maxage=2592000`).
+  **Prod deploy now auto-flushes** — the `Purge cache` step in
+  `deploy-production.yml` deletes the WP Rocket origin tree via the Rocket file
+  API then `purge_everything` (needs repo secrets `ROCKET_USER` / `ROCKET_PASS`).
+  Manual equivalent: `rocket-purge.py --all` (in Marketing Claude). LocalWP only:
+  `wp rocket clean --confirm`, `wp cache flush`. **Verify canonical anonymously**
+  (no query string; a logged-in browser bypasses all cache and shows a false
+  "fresh"). Full write-up: Marketing Claude/reports-inbox.md T46.
 
 - **`File unchanged since last read` from WPVibe.** The MCP caches reads
   per conversation. If you need to re-read, use a slightly different path
