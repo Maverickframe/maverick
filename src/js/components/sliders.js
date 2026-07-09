@@ -713,34 +713,9 @@ if (whatWeDoItems.length > 0) {
 // (components/blocks/production-process/production-process.php + components/scroll-snap.js)
 // NOTE: multiple blocks per page (e.g. 3D Furniture) — the helper inits every .mfs-snap, no manual loop.
 
-const challengesSlider = document.querySelector('.js-challenges-slider');
-if (challengesSlider) {
-  const splide = new Splide(challengesSlider, {
-    arrows: true,
-    drag: true,
-    gap: 20,
-    pagination: true,
-    perPage: 4,
-    padding: { left: '5%', right: '5%' },
-    flickPower: 300,
-    snap: true,
-    type: 'loop',
-    breakpoints: {
-      1440: {
-        perPage: 3,
-        padding: { left: '11%', right: '11%' }
-      },
-      1270: {
-        arrows: false,
-        gap: 15,
-        perPage: 1,
-        padding: 0
-      }
-    }
-  });
-
-  splide.mount();
-}
+// challenges → migrated to CSS scroll-snap .mfs-snap (multi-up: perPage 4→3→1 + side-peek 11% +
+// progress-bar pagination, data-mfs-snap-multiup). See components/blocks/challenges/challenges.php
+// + components/scroll-snap.js.
 
 // cases-accordion → migrated to CSS scroll-snap .mfs-snap (peek carousel, ведро A)
 // (components/blocks/cases-accordion/cases-accordion.php + components/scroll-snap.js)

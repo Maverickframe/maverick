@@ -40,41 +40,62 @@
         padding: 0;
     }
 
-    .splide__pagination {
+    // Multi-up scroll-snap: perPage 4 → 3 (≤1440) → 1 (mobile), symmetric side-peek via the track's
+    // inline padding (scrolled slides show through it, matching the old Splide `padding`). Items fill
+    // the content box (trackWidth − 2×peek) split into --per columns.
+    .mfs-snap__track {
+        --peek: 0px;
+        --per: 1;
+        --mfs-snap-gap: #{toRem(15)};
+
+        padding-inline: var(--peek);
+        scroll-padding-inline: var(--peek);
+        align-items: stretch;
+
+        @media (min-width: $md) {
+            --peek: 11%;
+            --per: 3;
+            --mfs-snap-gap: #{toRem(20)};
+        }
+
+        @media (min-width: 1441px) {
+            --peek: 5%;
+            --per: 4;
+        }
+    }
+
+    .mfs-snap__item {
+        width: calc((100% - (var(--per) - 1) * var(--mfs-snap-gap)) / var(--per));
+    }
+
+    .mfs-snap__dots {
         margin-top: toRem(20);
         display: flex;
         gap: toRem(4);
         height: toRem(6);
 
-        li {
-            flex: 1 1 auto;
-            height: 100%;
-        }
-
-        button {
+        .mfs-snap__dot {
             @include btn;
 
+            flex: 1 1 auto;
             width: 100%;
             height: 100%;
 
             border-radius: toRem(1);
             background-color: var(--stroke-light-grey-color);
 
-            &.is-active {
+            &[aria-current] {
                 min-width: toRem(100);
                 background-color: var(--accent-color);
             }
         }
 
         @media (min-width: $md) {
-            li {
+            .mfs-snap__dot {
                 flex: 0 0 auto;
-            }
-
-            button {
                 width: toRem(60);
 
-                &.is-active {
+                &[aria-current] {
                     min-width: toRem(143);
                 }
             }
@@ -85,7 +106,7 @@
         }
     }
 
-    .splide__arrows {
+    .mfs-snap__arrows {
         display: none;
 
         @media (min-width: $md) {
@@ -103,7 +124,7 @@
         }
     }
 
-    .splide__arrow {
+    .mfs-snap__arrow {
         @include btn;
         width: toRem(34);
         height: toRem(34);
