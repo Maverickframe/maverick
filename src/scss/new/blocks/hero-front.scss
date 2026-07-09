@@ -203,15 +203,12 @@
 .hero-front__marquee {
     --mfs-marquee-dur: 40s;
 
-    // mobile: fixed tiles (was Splide fixedWidth:145/fixedHeight:177); image fills & crops
+    // mobile: fixed tiles (was Splide fixedWidth:145/fixedHeight:177). Image keeps its aspect
+    // ratio inside the tile (height:auto from base) — landscape stays landscape, portrait portrait.
     .mfs-marquee__item {
         width: toRem(145);
         height: toRem(177);
         margin-right: toRem(10);
-    }
-
-    .hero-front__slider-item img {
-        height: 100%;
     }
 
     @media (min-width: $md) {
@@ -230,11 +227,6 @@
             height: auto;
             margin-right: 0;
             margin-bottom: toRem(30);
-        }
-
-        // desktop: portrait image sets the tile height
-        .hero-front__slider-item img {
-            height: auto;
         }
     }
 }
