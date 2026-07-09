@@ -1,0 +1,6 @@
+// Bundle for plain content pages on the default template (page.php): /app/, the DE
+// legal pages, and any future plain page. Replaces the retired old-design main.scss
+// for these pages — base gives the full new-design chrome (header/footer/fonts/…),
+// text-page adds the .text-page content styles.
+@import url("base.scss");
+@import url("../new/pages/text-page.scss");

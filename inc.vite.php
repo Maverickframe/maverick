@@ -40,9 +40,12 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/template-contacts.php')) return 'src/scss/bundles/contacts.scss';
     if (is_page_template('templates/template-legal.php')) return 'src/scss/bundles/legal.scss';
     if (is_404()) return 'src/scss/bundles/error.scss';
-    // Catch-all: any page without a dedicated bundle (solutions singulars, plain
-    // pages, localized /es/ /de/ homepages) gets the full block set, not the slim
-    // homepage bundle. Only the real front page uses front.scss.
+    // Plain content pages on the default template (page.php): /app/, DE legal pages,
+    // any future plain page. Replaces the retired old-design main.scss for them.
+    if (is_page()) return 'src/scss/bundles/page.scss';
+    // Catch-all: anything else without a dedicated bundle (solutions singulars) gets
+    // the full block set, not the slim homepage bundle. Only the real front page uses
+    // front.scss.
     return 'src/scss/bundles/fallback.scss';
 }
 
@@ -56,12 +59,9 @@ add_action( 'wp_enqueue_scripts', function() {
         function vite_head_module_hook() {
             echo '<script type="module" crossorigin src="' . VITE_SERVER . '/@vite/client"></script>';
 
-            if (!isNewDesign()) {
-                echo '<link rel="stylesheet" href="' . VITE_SERVER . VITE_STYLES . '" rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-            } else {
-                echo '<link rel="stylesheet" href="' . VITE_SERVER . VITE_STYLES_NEW . '" rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-                echo '<link rel="stylesheet" href="' . VITE_SERVER . VITE_STYLES_BLOCKS . '" rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
-            }
+            // Old-design main.scss retired — dev always serves the new-design styles.
+            echo '<link rel="stylesheet" href="' . VITE_SERVER . VITE_STYLES_NEW . '" rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
+            echo '<link rel="stylesheet" href="' . VITE_SERVER . VITE_STYLES_BLOCKS . '" rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">';
             echo '<script type="module" crossorigin src="' . VITE_SERVER . VITE_ENTRY_POINT . '"></script>';
         }
         add_action('wp_head', 'vite_head_module_hook');
@@ -103,22 +103,10 @@ add_action( 'wp_enqueue_scripts', function() {
                         }, 10, 2);
                     }
                 }
-                if (!isNewDesign()) {
-                    if($key == "src/scss/main.scss")
-                    {
-                        $css_file = $value['file'];
-                        if ( ! empty($css_file)) {
-                            wp_register_style('main', DIST_URI . '/' . $css_file, [], null);
-                            wp_enqueue_style('main');
-                            add_filter('style_loader_tag', function($tag, $handle){
-                                if($handle === 'main') {
-                                    return str_replace("rel='stylesheet'", "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $tag);
-                                }
-                                return $tag;
-                            }, 10, 2);
-                        }
-                    }
-                } else if($key == mfs_page_bundle_key())
+                // Every page (including plain pages / DE legal / /app/, which now map to
+                // bundles/page.scss) loads its per-type bundle. The old-design main.scss
+                // branch is gone — the old-design CSS system was fully retired.
+                if($key == mfs_page_bundle_key())
                 {
                     $css_file = $value['file'];
                     if ( ! empty($css_file)) {

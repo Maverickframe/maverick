@@ -45,8 +45,8 @@ export default defineConfig(({ mode }) => {
             rollupOptions: {
                 input: {
                     main: resolve(__dirname, env.VITE_ENTRY_POINT),
-                    css: resolve(__dirname, env.VITE_STYLES),
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
+                    page: resolve(__dirname, "src/scss/bundles/page.scss"),
                     front: resolve(__dirname, "src/scss/bundles/front.scss"),
                     fallback: resolve(__dirname, "src/scss/bundles/fallback.scss"),
                     services: resolve(__dirname, "src/scss/bundles/services.scss"),

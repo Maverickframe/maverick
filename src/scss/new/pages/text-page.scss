@@ -1,21 +1,10 @@
-@import "_vars";
+@import "../common/vars";
 
-// Common
-
-html.single-page {
-    @media all and (min-width: $xl) {
-        font-size: calc(1920 / 1440 * 16px);
-    }
-
-    img {
-        overflow: hidden;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-// End Common
-
-// Page
+// Plain content pages rendered by the default template (page.php) — /app/, the DE
+// legal pages, and any future plain page. Migrated out of the retired old-design
+// monolith (components/9-text-page.scss) so these pages ride the new-design bundle
+// (bundles/page.scss = base + this) instead of main.scss. Root font-size / base
+// styles come from base.scss, consistent with every other new-design page.
 
 .text-page {
     margin-bottom: toRem(96);
@@ -109,7 +98,6 @@ html.single-page {
         }
     }
 
-
     ul {
         padding-left: toRem(24);
 
@@ -141,5 +129,3 @@ html.single-page {
         }
     }
 }
-
-// End Page
