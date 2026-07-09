@@ -1,0 +1,41 @@
+// Canonical pure-CSS marquee — reusable across ведро B (replaces Splide + AutoScroll).
+// Track is rendered ×2 in markup → translateX(-50%) loops seamlessly, because each item
+// owns its trailing gap via margin (NOT flex `gap`), so the two halves tile exactly.
+// Speed via --mfs-marquee-dur; .mfs-marquee--reverse flips direction; pauses on hover;
+// halts under prefers-reduced-motion. No edge mask baked in — blocks add their own fade.
+.mfs-marquee {
+    overflow: hidden;
+
+    &__track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        animation: mfs-marquee-x var(--mfs-marquee-dur, 45s) linear infinite;
+        will-change: transform;
+    }
+
+    &__item {
+        flex: 0 0 auto;
+    }
+
+    &--reverse &__track {
+        animation-direction: reverse;
+    }
+
+    &:hover &__track {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes mfs-marquee-x {
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mfs-marquee__track {
+        animation: none;
+    }
+}

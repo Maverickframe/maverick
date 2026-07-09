@@ -80,9 +80,16 @@
     overflow: hidden;
 }
 
+// Speed ≈ old Splide autoScroll (~36px/s); duration ∝ set width (~6 cards × 475px).
+.sol-cap__marquee {
+    --mfs-marquee-dur: 80s;
+}
+
 .sol-cap__card {
     position: relative;
+    width: toRem(300); // was Splide fixedWidth (mobile); now set in CSS since Splide is gone
     height: toRem(440);
+    margin-right: toRem(16); // was Splide gap:16 — margin so duplicated halves tile seamlessly
     display: flex;
     flex-direction: column;
     padding: toRem(24);
@@ -94,17 +101,10 @@
     color: var(--white-color);
 
     @media (min-width: $md) {
+        width: toRem(455); // was Splide fixedWidth (desktop)
         height: toRem(600);
+        margin-right: toRem(20); // was Splide gap:20
         padding: toRem(30);
-    }
-}
-
-// Drag cursor for the infinite slider
-.sol-cap__slider {
-    cursor: grab;
-
-    &.is-dragging {
-        cursor: grabbing;
     }
 }
 

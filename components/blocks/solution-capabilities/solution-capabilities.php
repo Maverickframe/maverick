@@ -54,29 +54,40 @@ if (empty($cards)) $cards = array(
     </div>
 
     <div class="sol-cap__track-wrap">
-        <div class="splide sol-cap__slider js-sol-cap-slider" role="group" aria-label="<?php echo esc_attr( mfs_t('Creative capabilities', 'Capacidades creativas', 'Kreative Leistungen') ); ?>">
-            <div class="splide__track">
-                <ul class="splide__list">
-                    <?php foreach ($cards as $c) :
-                        $url = $c['img'] ? wp_get_attachment_image_url($c['img'], 'large') : '';
-                    ?>
-                        <li class="splide__slide sol-cap__card<?php echo !empty($c['video']) ? ' sol-cap__card--video' : ''; ?>"<?php echo $url ? ' style="background-image:url(\'' . esc_url($url) . '\')"' : ''; ?>>
-                            <span class="sol-cap__card-overlay" aria-hidden="true"></span>
-                            <?php if (!empty($c['chips'])) : ?>
-                                <div class="sol-cap__chips">
-                                    <?php foreach ($c['chips'] as $chip) : ?>
-                                        <span class="sol-cap__chip"><?php echo esc_html($chip); ?></span>
-                                    <?php endforeach; ?>
+        <?php
+            // Pure-CSS marquee (was Splide + AutoScroll). Track rendered ×2 for a seamless
+            // translateX(-50%) loop; when there are few cards, repeat the set enough times
+            // ($set_reps) so one half still overflows the widest viewport (~2000px @ ~475px/card).
+            // Only the very first pass is exposed to assistive tech; the rest are aria-hidden.
+            $card_count = count( $cards );
+            $set_reps   = max( 1, (int) ceil( 2000 / ( max( 1, $card_count ) * 475 ) ) );
+        ?>
+        <div class="mfs-marquee sol-cap__marquee" role="group" aria-label="<?php echo esc_attr( mfs_t('Creative capabilities', 'Capacidades creativas', 'Kreative Leistungen') ); ?>">
+            <ul class="mfs-marquee__track">
+                <?php for ( $half = 0; $half < 2; $half++ ) : ?>
+                    <?php for ( $r = 0; $r < $set_reps; $r++ ) : ?>
+                        <?php foreach ($cards as $c) :
+                            $url  = $c['img'] ? wp_get_attachment_image_url($c['img'], 'large') : '';
+                            $dupe = ( $half || $r ); // only first pass ($half=0,$r=0) exposed to AT
+                        ?>
+                            <li class="mfs-marquee__item sol-cap__card<?php echo !empty($c['video']) ? ' sol-cap__card--video' : ''; ?>"<?php echo $dupe ? ' aria-hidden="true"' : ''; ?><?php echo $url ? ' style="background-image:url(\'' . esc_url($url) . '\')"' : ''; ?>>
+                                <span class="sol-cap__card-overlay" aria-hidden="true"></span>
+                                <?php if (!empty($c['chips'])) : ?>
+                                    <div class="sol-cap__chips">
+                                        <?php foreach ($c['chips'] as $chip) : ?>
+                                            <span class="sol-cap__chip"><?php echo esc_html($chip); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="sol-cap__card-body">
+                                    <h3 class="sol-cap__card-title"><?php echo esc_html($c['title']); ?></h3>
+                                    <p class="sol-cap__card-desc"><?php echo esc_html($c['desc']); ?></p>
                                 </div>
-                            <?php endif; ?>
-                            <div class="sol-cap__card-body">
-                                <h3 class="sol-cap__card-title"><?php echo esc_html($c['title']); ?></h3>
-                                <p class="sol-cap__card-desc"><?php echo esc_html($c['desc']); ?></p>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endfor; ?>
+                <?php endfor; ?>
+            </ul>
         </div>
     </div>
 
