@@ -81,8 +81,56 @@
     }
 }
 
+// Pure-CSS marquee (replaces Splide + AutoScroll on the two trusted rows).
+// Generic + reusable; promote to base.scss when the next ведро-B marquee migrates.
+// Track is rendered ×2 in markup → translateX(-50%) loops seamlessly (each item owns
+// its trailing gap via margin, so the two halves tile exactly). No edge mask here —
+// .trusted__slider.one keeps its own ::before white fade.
+.mfs-marquee {
+    overflow: hidden;
+
+    &__track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        animation: mfs-marquee-x var(--mfs-marquee-dur, 45s) linear infinite;
+        will-change: transform;
+    }
+
+    &__item {
+        flex: 0 0 auto;
+    }
+
+    &--reverse &__track {
+        animation-direction: reverse;
+    }
+
+    &:hover &__track {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes mfs-marquee-x {
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mfs-marquee__track {
+        animation: none;
+    }
+}
+
+// Per-row speed ≈ old Splide autoScroll (~30px/s): duration ∝ set width.
+// Row one = 5 logos (short set), row two = 11 logos (~2.2× wider) → ~2× duration.
+.trusted__slider.one { --mfs-marquee-dur: 40s; }
+.trusted__slider.two { --mfs-marquee-dur: 85s; }
+
 .trusted__slider-item {
     transition: filter 0.3s ease;
+    margin-right: toRem(15); // was Splide gap:15 — margin so duplicated halves tile seamlessly
 
     img {
         width: toRem(120);

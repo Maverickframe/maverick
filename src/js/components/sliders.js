@@ -614,62 +614,7 @@ if (solCapSlider) {
   delayAutoScrollStart(splide);
 }
 
-const trustedOnePresentationSlider = document.querySelector('.js-presentation-trusted-slider-one');
-if (trustedOnePresentationSlider) {
-  const splide = new Splide(trustedOnePresentationSlider, {
-    autoWidth: true,
-    arrows: false,
-    drag: true,
-    gap: 15,
-    pagination: false,
-    fixedHeight: 121,
-    type: 'loop',
-    autoScroll: {
-      autoStart: false,
-      speed: 0.5
-    },
-    breakpoints: {
-      1750: {
-        fixedHeight: 100
-      },
-      1270: {
-        fixedHeight: 66
-      }
-    }
-  });
-
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-}
-
-const trustedTwoPresentationSlider = document.querySelector('.js-presentation-trusted-slider-two');
-if (trustedTwoPresentationSlider) {
-  const splide = new Splide(trustedTwoPresentationSlider, {
-    autoWidth: true,
-    arrows: false,
-    direction: 'rtl',
-    drag: true,
-    gap: 15,
-    pagination: false,
-    fixedHeight: 121,
-    type: 'loop',
-    autoScroll: {
-      autoStart: false,
-      speed: 0.5
-    },
-    breakpoints: {
-      1750: {
-        fixedHeight: 100
-      },
-      1270: {
-        fixedHeight: 66
-      }
-    }
-  });
-
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-}
+// trusted block (2 rows) → migrated to pure-CSS .mfs-marquee (components/blocks/trusted/trusted.php)
 
 const teamNewSlider = document.querySelector('.js-team-new-slider');
 if (teamNewSlider) {
