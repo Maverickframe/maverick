@@ -48,17 +48,20 @@
 }
 
 .visual-results__slider {
-    .splide__slide {
-        transition: transform 0.3s ease;
-        transform: scale(0.94);
-        transform-origin: center;
+    // Migrated Splide → CSS scroll-snap (.mfs-snap). perPage:1 with side-peek: the
+    // track carries the peek as padding-inline (+ scroll-padding-inline so snap lands
+    // correctly), item keeps the canonical 100% width and fills the content box, so
+    // the neighbouring slides show through the gutters. Arrows are wired by the
+    // generic scroll-snap helper (native [disabled] at the ends). The old per-slide
+    // scale-focus needed Splide's is-active class and is dropped.
+    --vr-peek: 13%;
 
-        &.is-active {
-            transform: scale(1);
-        }
+    .mfs-snap__track {
+        padding-inline: var(--vr-peek);
+        scroll-padding-inline: var(--vr-peek);
     }
 
-    .splide__arrows {
+    .mfs-snap__arrows {
         margin-top: toRem(30);
 
         display: flex;
@@ -66,7 +69,7 @@
         gap: toRem(15);
     }
 
-    .splide__arrow {
+    .mfs-snap__arrow {
         @include btn;
         width: toRem(40);
         height: toRem(40);
