@@ -50,39 +50,41 @@
 .production-process__items {
     counter-reset: production-process-items;
 
-    .splide__pagination {
+    .mfs-snap__dots {
         margin-top: toRem(15);
         padding: 0 toRem(15);
         display: flex;
         gap: toRem(4);
         height: toRem(6);
 
-        li {
-            flex: 1 1 auto;
-            height: 100%;
-        }
-
-        button {
+        .mfs-snap__dot {
             @include btn;
 
             display: block;
+            flex: 1 1 auto;
             width: 100%;
             height: 100%;
 
             border-radius: toRem(1);
             background-color: var(--stroke-light-grey-color);
 
-            &.is-active {
+            &[aria-current] {
                 background-color: var(--accent-color);
             }
         }
     }
 
     @media (min-width: $md) {
-        .splide.is-initialized:not(.is-active) .splide__list,
-        .splide__list {
+        // desktop: static single-column grid (was Splide destroy) — turn the scroller off
+        .mfs-snap__track {
             display: grid;
             gap: toRem(40);
+            overflow: visible;
+            scroll-snap-type: none;
+        }
+
+        .mfs-snap__dots {
+            display: none;
         }
     }
 }
