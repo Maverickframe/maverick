@@ -49,6 +49,8 @@ import './components/modal-offer';
 const lazyModules = [
   // Splide sliders (incl. hero marquee)
   ['.splide', () => import('./components/sliders')],
+  // CSS scroll-snap carousels (ведро A) — vanilla, no Splide; own light chunk
+  ['.mfs-snap', () => import('./components/scroll-snap')],
   // Modals + their inner Splide instances (book-a-call is site-wide)
   ['.modal, .js-modal-open', () => import('./components/modals')],
   // GSAP + ScrollTrigger animations

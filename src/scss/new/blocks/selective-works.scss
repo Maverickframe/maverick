@@ -55,27 +55,35 @@
 .selective-works__items {
     position: relative;
 
-    .splide__pagination {
+    .mfs-snap__track {
+        --mfs-snap-gap: #{toRem(15)};
+
+        @media (min-width: $md) {
+            --mfs-snap-gap: #{toRem(20)};
+        }
+
+        @media (min-width: $lg) {
+            --mfs-snap-gap: #{toRem(30)};
+        }
+    }
+
+    .mfs-snap__dots {
         margin-top: toRem(20);
         display: flex;
         gap: toRem(4);
         height: toRem(6);
 
-        li {
-            flex: 1 1 auto;
-            height: 100%;
-        }
-
-        button {
+        .mfs-snap__dot {
             @include btn;
 
+            flex: 1 1 auto;
             width: 100%;
             height: 100%;
 
             border-radius: toRem(1);
             background-color: var(--stroke-light-grey-color);
 
-            &.is-active {
+            &[aria-current] {
                 min-width: toRem(100);
                 background-color: var(--accent-color);
             }
@@ -83,21 +91,19 @@
 
         @media (min-width: $md) {
             margin-top: toRem(30);
-            li {
-                flex: 0 0 auto;
-            }
 
-            button {
+            .mfs-snap__dot {
+                flex: 0 0 auto;
                 width: toRem(60);
 
-                &.is-active {
+                &[aria-current] {
                     min-width: toRem(143);
                 }
             }
         }
     }
 
-    .splide__arrows {
+    .mfs-snap__arrows {
         display: none;
 
         @media (min-width: $md) {
@@ -110,7 +116,7 @@
         }
     }
 
-    .splide__arrow {
+    .mfs-snap__arrow {
         @include btn;
         width: toRem(34);
         height: toRem(34);
@@ -147,6 +153,7 @@
 }
 
 .selective-works-item {
+    position: relative; // anchor for the desktop absolute img (Splide slides used to provide this)
     border-radius: 1px;
     overflow: hidden;
 

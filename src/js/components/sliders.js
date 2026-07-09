@@ -702,30 +702,8 @@ if (visualsItemsSlider) {
   splide.mount();
 }
 
-const selectiveWorksSlider = document.querySelector('.js-selective-works-slider');
-if (selectiveWorksSlider) {
-  const splide = new Splide(selectiveWorksSlider, {
-    arrows: true,
-    drag: true,
-    gap: 30,
-    pagination: true,
-    perPage: 1,
-    flickPower: 300,
-    snap: true,
-    type: 'loop',
-    breakpoints: {
-      1750: {
-        gap: 20
-      },
-      1270: {
-        arrows: false,
-        gap: 15
-      }
-    }
-  });
-
-  splide.mount();
-}
+// selective-works → migrated to CSS scroll-snap .mfs-snap (ведро A pilot)
+// (components/blocks/selective-works/selective-works.php + components/scroll-snap.js)
 
 // hero-hover left column → migrated to pure-CSS vertical .mfs-marquee (components/blocks/hero-front/hero-front.php)
 

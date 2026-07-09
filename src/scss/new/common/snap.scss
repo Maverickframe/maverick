@@ -1,0 +1,51 @@
+// Canonical CSS scroll-snap carousel — reusable across ведро A (replaces perPage Splide swipers).
+// The track scrolls horizontally with mandatory snap; items are flex:0 0 auto. A tiny vanilla
+// helper (src/js/components/scroll-snap.js) wires arrows/dots via IntersectionObserver — it never
+// reads layout on scroll, so no forced reflow. Blocks override item width per breakpoint (perPage)
+// and set --mfs-snap-gap. Scroll-snap has no infinite loop → arrows disable at the ends. Only the
+// structural + functional rules live here; per-block dot/arrow LOOK stays in the block SCSS
+// (same philosophy as marquee.scss — no visual chrome baked into the canonical).
+.mfs-snap {
+    position: relative;
+
+    &__track {
+        display: flex;
+        gap: var(--mfs-snap-gap, 20px);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+
+        // Hidden scrollbar — swipe / arrows / dots drive the scroll.
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__item {
+        flex: 0 0 auto;
+        width: 100%; // one-per-view default; blocks override for multi-up / peek
+        scroll-snap-align: start;
+    }
+
+    // Helper toggles the native [disabled] attribute on the end arrow; blocks keep their own colours.
+    &__arrow[disabled] {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mfs-snap__track {
+        scroll-behavior: auto;
+    }
+}
