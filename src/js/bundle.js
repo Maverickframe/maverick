@@ -54,10 +54,12 @@ const lazyModules = [
   ['.js-reviews-slider', () => import('./components/reviews-sync')],
   // Modals (book-a-call is site-wide; What-We-Do modal carousels are now .mfs-snap)
   ['.modal, .js-modal-open', () => import('./components/modals')],
-  // GSAP + ScrollTrigger animations
+  // Reveal-on-enter animations — vanilla IntersectionObserver + CSS transitions,
+  // no GSAP. Own tiny chunk; loads on every page that has reveals (i.e. almost
+  // all of them) but without pulling in GSAP+ScrollTrigger.
   [
-    '.js-reveal, .js-reveal-group, .js-highlight, .js-quote, .js-workflow-item, .path-anim, .js-video-anim',
-    () => import('./components/gsap')
+    '.js-reveal, .js-reveal-group, .js-highlight',
+    () => import('./components/reveal')
   ],
   // Fancybox gallery page
   ['.js-gallery-tab-btn, .js-gallery-mobile, [data-fancybox]', () => import('./components/gallery')],

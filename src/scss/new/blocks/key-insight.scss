@@ -53,13 +53,13 @@
     background: linear-gradient(90deg, var(--black-color) 0% 50%, var(--text-grey-color) 50%);
 
     background-size: 200% 100%;
-    background-position: 100% 0;
+    // Was scroll-animated grey->black via GSAP (.js-quote). Effect removed;
+    // pin to the revealed (black) end state so the key insight reads solid.
+    background-position: 0 0;
 
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-
-    transition: background-position 1s;
 
     @media (min-width: $md) {
         font-size: toRem(42);

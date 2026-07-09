@@ -431,14 +431,55 @@ button {
     }
 }
 
+// Reveal-on-enter: base hidden state + CSS transition. IntersectionObserver
+// (components/reveal.js) only toggles `.is-in` — zero forced reflow, no JS
+// animation lib. Timings match the former GSAP fromTo: 0.6s, easeOutCubic
+// (power2.out), directional offsets via [data-anim], group stagger 0.12s.
 .js-reveal {
-    will-change: transform, opacity;
     opacity: 0;
+    transition:
+        transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+        opacity 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+
+    &[data-anim="up"] {
+        transform: translateY(40px);
+    }
+    &[data-anim="down"] {
+        transform: translateY(-80px);
+    }
+    &[data-anim="left"] {
+        transform: translateX(-40px);
+    }
+    &[data-anim="right"] {
+        transform: translateX(40px);
+    }
+
+    &.is-in {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .js-reveal-group > .js-reveal-item {
-    will-change: transform, opacity;
     opacity: 0;
+    transform: translateX(-60px);
+    transition:
+        transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+        opacity 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+
+    &.is-in {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal,
+    .js-reveal-group > .js-reveal-item {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .text-highlight {
