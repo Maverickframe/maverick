@@ -477,6 +477,17 @@ require_once __DIR__ . '/inc.video.php';
 // NOTE: the HubSpot cookie-consent banner (hs-banner) and ads pixel (hsadspixel)
 // are pulled by HubSpot's loader per PORTAL settings, not WP — to remove them
 // entirely (not just delay), turn them off in HubSpot Settings -> Privacy & Consent.
+//
+// The leadin (HubSpot) plugin re-adds its own tracking loader to WP Rocket's delay
+// exclusions, so simply not excluding it in the theme is not enough — it stays
+// eager. Strip HubSpot back OUT of the delay exclusions at a late priority (after
+// leadin) so WP Rocket delays it like every other third-party script.
+add_filter('rocket_delay_js_exclusions', function ($excluded) {
+    if (!is_array($excluded)) return $excluded;
+    return array_values(array_filter($excluded, function ($url) {
+        return !preg_match('#hs-scripts|hs-analytics|hs-banner|hsforms|hsadspixel|hubspot#i', (string) $url);
+    }));
+}, 99999);
 
 // End Enqueue Scripts and Styles
 
