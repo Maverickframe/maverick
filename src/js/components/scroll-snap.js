@@ -2,9 +2,8 @@
 // One helper drives every `.mfs-snap` on the page with zero carousel library. The active slide is
 // read from an IntersectionObserver keyed to the track, so nothing measures layout during scroll —
 // that removes the forced-reflow this whole migration targets. Layout is read ONLY on an arrow/dot
-// click (one getBoundingClientRect delta) and mandatory CSS snap finishes the alignment, so peek
-// padding and gaps need no math here. Every piece degrades gracefully: a block may ship arrows,
-// dots, both, or neither.
+// click (one getBoundingClientRect delta) and, for multi-up blocks, on init/resize (perView probe).
+// Every piece degrades gracefully: a block may ship arrows, dots, both, or neither.
 //
 // Markup contract:
 //   .mfs-snap                          carousel root
@@ -12,7 +11,12 @@
 //     .mfs-snap__arrows (optional)  →  .mfs-snap__arrow--prev / --next
 //     .mfs-snap__dots   (optional)     empty container — dots are generated inside it
 //
-//   data-mfs-snap-step="N"   slides advanced per arrow click (default 1; multi-up blocks set perPage)
+//   data-mfs-snap-step="N"    slides advanced per arrow click (single-up only; default 1)
+//   data-mfs-snap-multiup     opt-in: dots + arrows become PAGE-based. A page = perView slides,
+//                             perView is measured from layout (responsive 4→3→1) on init + resize,
+//                             never on scroll. dots = ceil(items / perView), active page =
+//                             floor(activeItem / perView). With perView 1 this is identical to the
+//                             single-up path, so existing consumers stay byte-for-byte unchanged.
 
 function initSnap(root) {
   const track = root.querySelector('.mfs-snap__track');
@@ -24,9 +28,29 @@ function initSnap(root) {
   const prev = root.querySelector('.mfs-snap__arrow--prev');
   const next = root.querySelector('.mfs-snap__arrow--next');
   const dotsBox = root.querySelector('.mfs-snap__dots');
-  const step = Math.max(1, parseInt(root.dataset.mfsSnapStep, 10) || 1);
 
-  let active = 0;
+  const multiUp = root.hasAttribute('data-mfs-snap-multiup');
+  const stepAttr = Math.max(1, parseInt(root.dataset.mfsSnapStep, 10) || 1);
+
+  let perView = 1; // how many slides share a page (multi-up); always 1 for single-up blocks
+  let active = 0; // active ITEM index (from the IntersectionObserver)
+  let dots = [];
+
+  const pageOf = (i) => Math.floor(i / perView);
+  const pageCount = () => Math.ceil(items.length / perView);
+
+  // Count whole items that fit across the track's CONTENT box. Layout read — runs on init + resize
+  // only, never during scroll. Uses the offsetLeft stride (width + gap) and subtracts the inline
+  // peek padding from clientWidth, otherwise the gutters inflate the count (e.g. a 3-up page would
+  // round up to 4). Result: round(contentBox / stride) === perView at every breakpoint.
+  function measurePerView() {
+    if (!multiUp) return 1;
+    const stride = items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : items[0].offsetWidth;
+    if (stride <= 0) return 1;
+    const cs = getComputedStyle(track);
+    const contentBox = track.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    return Math.max(1, Math.round(contentBox / stride));
+  }
 
   // Move item i to the track's start. getBoundingClientRect (a layout read) runs on click only;
   // mandatory scroll-snap then corrects the final resting position, so gaps/peek need no offsets.
@@ -36,41 +60,43 @@ function initSnap(root) {
     track.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
-  // --- dots ------------------------------------------------------------------
-  let dots = [];
-  if (dotsBox) {
+  // --- dots (page-based; a single-up page holds exactly one slide) --------------
+  function buildDots() {
+    if (!dotsBox) return;
+    const count = pageCount();
+    const currentPage = pageOf(active);
     dotsBox.innerHTML = '';
-    dots = items.map((item, i) => {
+    dots = Array.from({ length: count }, (unused, p) => {
       const dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'mfs-snap__dot';
-      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      if (i === 0) dot.setAttribute('aria-current', 'true');
-      dot.addEventListener('click', () => scrollToIndex(i));
+      dot.setAttribute('aria-label', `Go to slide ${p * perView + 1}`);
+      if (p === currentPage) dot.setAttribute('aria-current', 'true');
+      dot.addEventListener('click', () => scrollToIndex(p * perView));
       dotsBox.appendChild(dot);
       return dot;
     });
   }
 
-  // --- arrows ----------------------------------------------------------------
-  if (prev) {
-    prev.addEventListener('click', () => scrollToIndex(active - step));
-    prev.disabled = true;
+  function syncControls() {
+    const page = pageOf(active);
+    dots.forEach((dot, p) => {
+      if (p === page) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+    if (prev) prev.disabled = page <= 0;
+    if (next) next.disabled = page >= pageCount() - 1;
   }
-  if (next) {
-    next.addEventListener('click', () => scrollToIndex(active + step));
-    next.disabled = false;
-  }
+
+  // --- arrows ------------------------------------------------------------------
+  const arrowTarget = (dir) => (multiUp ? (pageOf(active) + dir) * perView : active + dir * stepAttr);
+  if (prev) prev.addEventListener('click', () => scrollToIndex(arrowTarget(-1)));
+  if (next) next.addEventListener('click', () => scrollToIndex(arrowTarget(1)));
 
   function setActive(i) {
     if (i === active) return;
     active = i;
-    dots.forEach((dot, di) => {
-      if (di === i) dot.setAttribute('aria-current', 'true');
-      else dot.removeAttribute('aria-current');
-    });
-    if (prev) prev.disabled = i <= 0;
-    if (next) next.disabled = i >= items.length - 1;
+    syncControls();
   }
 
   // --- active slide via IntersectionObserver (no scroll-time layout reads) ----
@@ -87,7 +113,24 @@ function initSnap(root) {
     },
     { root: track, threshold: [0.25, 0.5, 0.6, 0.75, 1] }
   );
+
+  // --- init + responsive perView (multi-up) -----------------------------------
+  perView = measurePerView();
+  buildDots();
+  syncControls();
   items.forEach((item) => io.observe(item));
+
+  if (multiUp && 'ResizeObserver' in window) {
+    const ro = new ResizeObserver(() => {
+      const pv = measurePerView();
+      if (pv !== perView) {
+        perView = pv;
+        buildDots();
+        syncControls();
+      }
+    });
+    ro.observe(track);
+  }
 }
 
 document.querySelectorAll('.mfs-snap').forEach(initSnap);

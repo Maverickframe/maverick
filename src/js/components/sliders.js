@@ -673,34 +673,9 @@ if (visualResultsSlider) {
   splide.mount();
 }
 
-const visualsItemsSlider = document.querySelector('.js-visuals-items-slider');
-if (visualsItemsSlider) {
-  const splide = new Splide(visualsItemsSlider, {
-    arrows: true,
-    drag: true,
-    gap: 20,
-    pagination: true,
-    perPage: 4,
-    padding: { left: '5%', right: '5%' },
-    flickPower: 300,
-    snap: true,
-    type: 'loop',
-    breakpoints: {
-      1440: {
-        perPage: 3,
-        padding: { left: '10%', right: '10%' }
-      },
-      1270: {
-        arrows: false,
-        gap: 15,
-        perPage: 1,
-        padding: 0
-      }
-    }
-  });
-
-  splide.mount();
-}
+// visuals-items → migrated to CSS scroll-snap .mfs-snap (multi-up: perPage 4→3→1 + side-peek +
+// progress-bar pagination, data-mfs-snap-multiup). See components/blocks/visuals-slider/visuals-slider.php
+// + components/scroll-snap.js. Lives on service pages (2102/3d-exterior/3d-furniture/…).
 
 // selective-works → migrated to CSS scroll-snap .mfs-snap (ведро A pilot)
 // (components/blocks/selective-works/selective-works.php + components/scroll-snap.js)
