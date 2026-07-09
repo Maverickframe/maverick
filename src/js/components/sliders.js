@@ -380,31 +380,7 @@ if (trustedSlider) {
   delayAutoScrollStart(splide);
 }
 
-const stackSlider = document.querySelector('.js-stack-slider');
-if (stackSlider) {
-  const splide = new Splide(stackSlider, {
-    autoWidth: true,
-    arrows: false,
-    drag: true,
-    gap: 35,
-    pagination: false,
-    fixedHeight: 44,
-    type: 'loop',
-    autoScroll: {
-      autoStart: false,
-      speed: 0.5
-    },
-    breakpoints: {
-      1200: {
-        gap: 20,
-        fixedHeight: 30
-      }
-    }
-  });
-
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-}
+// stack marquee → migrated to pure-CSS .mfs-marquee (see components/service-page/stack.php)
 
 const cgiSliderMobile = document.querySelector('.js-cgi-slider-mobile');
 if (cgiSliderMobile) {

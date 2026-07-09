@@ -467,7 +467,52 @@
     }
 }
 
+// Generic pure-CSS marquee (replaces Splide + AutoScroll). Reusable across ведро B.
+// Track is rendered twice in markup; translateX(-50%) loops seamlessly because each
+// item owns its trailing space via margin (no flex `gap`, so the two halves tile
+// exactly). Pauses on hover; halts under prefers-reduced-motion. Speed via --mfs-marquee-dur.
+.mfs-marquee {
+    overflow: hidden;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+            mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+
+    &__track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        animation: mfs-marquee-x var(--mfs-marquee-dur, 40s) linear infinite;
+        will-change: transform;
+    }
+
+    &__item {
+        flex: 0 0 auto;
+    }
+
+    &:hover &__track {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes mfs-marquee-x {
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mfs-marquee__track {
+        animation: none;
+    }
+}
+
 .stack-section__slider-item {
+    margin-right: toRem(20);
+
+    @media all and (min-width: $lg) {
+        margin-right: toRem(35);
+    }
+
     img {
         max-height: 30px;
         width: auto;
