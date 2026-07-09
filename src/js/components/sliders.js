@@ -684,27 +684,9 @@ if (visualResultsSlider) {
 
 // hero-hover right column → migrated to pure-CSS vertical .mfs-marquee (reverse); see hero-front.php
 
-const whatWeDoItems = document.querySelectorAll('.js-what-we-do-slider');
-if (whatWeDoItems.length > 0) {
-  whatWeDoItems.forEach((slider) => {
-    const splide = new Splide(slider, {
-      destroy: true,
-      autoWidth: true,
-      arrows: false,
-      drag: true,
-      gap: 20,
-      pagination: true,
-      type: 'loop',
-      breakpoints: {
-        1100: {
-          destroy: false
-        }
-      }
-    });
-
-    splide.mount();
-  });
-}
+// what-we-do (×5 tabs) → migrated to CSS scroll-snap .mfs-snap (mobile-only autoWidth
+// swiper + round-dot pagination; desktop = 12-col masonry grid, ведро A).
+// See components/blocks/what-we-do/what-we-do.php + components/scroll-snap.js.
 
 // completeness-visual → migrated to CSS scroll-snap .mfs-snap (mobile-only; desktop = 3-col grid, ведро A)
 // (components/blocks/completeness-visual/completeness-visual.php + components/scroll-snap.js)

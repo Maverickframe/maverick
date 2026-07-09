@@ -160,14 +160,52 @@ ul.what-we-do__tabs {
         display: block;
     }
 
+    // Mobile: horizontal scroll-snap swiper with autoWidth — each item shrinks to its
+    // fixed-width card (was Splide autoWidth:true). Desktop overrides to a 12-col grid below.
+    .mfs-snap__item {
+        width: auto;
+    }
+
+    // Default round-dot pagination (was Splide pagination:true) — mobile only; the desktop
+    // grid hides it. Generated into .mfs-snap__dots by components/scroll-snap.js.
+    .mfs-snap__dots {
+        margin-top: toRem(20);
+        display: flex;
+        justify-content: center;
+        gap: toRem(8);
+
+        .mfs-snap__dot {
+            @include btn;
+
+            width: toRem(8);
+            height: toRem(8);
+
+            border-radius: 50%;
+            background-color: var(--stroke-light-grey-color);
+            transition:
+                background-color 0.3s ease,
+                transform 0.3s ease;
+
+            &[aria-current] {
+                background-color: var(--accent-color);
+                transform: scale(1.3);
+            }
+        }
+    }
+
     @media (min-width: $md) {
-        .splide.is-initialized:not(.is-active) .splide__list {
+        // Desktop: static 12-col masonry grid (was Splide destroy) — turn the scroller off.
+        .mfs-snap__track {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             gap: toRem(20);
             width: 100%;
 
-            .splide__slide {
+            overflow: visible;
+            scroll-snap-type: none;
+
+            .mfs-snap__item {
+                width: auto;
                 grid-column: span 3;
                 grid-row: span 2;
 
@@ -201,11 +239,15 @@ ul.what-we-do__tabs {
                 }
             }
         }
+
+        .mfs-snap__dots {
+            display: none;
+        }
     }
 
     @media (min-width: $lg) {
-        .splide.is-initialized:not(.is-active) .splide__list {
-            .splide__slide {
+        .mfs-snap__track {
+            .mfs-snap__item {
                 &.row-1-2 {
                     .what-we-do-item {
                         height: toRem(215);

@@ -114,23 +114,23 @@ endif;
                ?>
                    <div class="what-we-do__tab-content js-tab-content" id="tab-<?php echo sanitize_title($title); ?>">
                        <?php if ($items): ?>
-                           <div class="js-what-we-do-slider splide" role="group" aria-label="<?php the_title(); ?>">
-                               <div class="splide__track">
-                                   <ul class="splide__list">
-                                       <?php 
-                                           foreach($items as $item): 
-                                       ?>
-                                           <li class="splide__slide size-<?php echo sanitize_title($item['size']); ?> row-<?php echo sanitize_title($item['row']); ?>">
-                                               <?php get_template_part('components/blocks/what-we-do/what-we-do-item', null, [
-                                                   'item' => $item, 
-                                                   'service_index' => $item['service_index']
-                                               ]); ?>
-                                           </li>
-                                       <?php
-                                           endforeach; 
-                                       ?>
-                                   </ul>
-                               </div>
+                           <div class="mfs-snap" role="group" aria-label="<?php the_title(); ?>">
+                               <ul class="mfs-snap__track">
+                                   <?php 
+                                       foreach($items as $item): 
+                                   ?>
+                                       <li class="mfs-snap__item size-<?php echo sanitize_title($item['size']); ?> row-<?php echo sanitize_title($item['row']); ?>">
+                                           <?php get_template_part('components/blocks/what-we-do/what-we-do-item', null, [
+                                               'item' => $item, 
+                                               'service_index' => $item['service_index']
+                                           ]); ?>
+                                       </li>
+                                   <?php
+                                       endforeach; 
+                                   ?>
+                               </ul>
+
+                               <div class="mfs-snap__dots"></div>
                            </div>
                        <?php endif; ?>
                    </div>
