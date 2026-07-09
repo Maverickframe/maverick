@@ -1,11 +1,4 @@
-import Splide from '@splidejs/splide';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
-// Must be imported wherever Splide instances are created: strips the invalid
-// role="group|tabpanel" Splide puts on <li> slides (Lighthouse agentic-browsing
-// audit / axe aria-allowed-role). See splide-a11y.js for details.
-import './splide-a11y';
-
+import { initSnap } from './scroll-snap';
 import { lockUI, unlockUI } from './uiManager';
 
 const servicesData = Object.create(null);
@@ -69,23 +62,25 @@ function renderStatsGrid(data) {
   return cards.join('');
 }
 
+// Mobile stats carousel — migrated Splide → CSS scroll-snap (.mfs-snap). The markup
+// is injected after page load, so setModalContent calls initSnap() on it explicitly
+// (the bundle's auto-run only sees .mfs-snap present at chunk-eval time).
 function renderStatsSlider(data) {
   const cards = buildStatsCards(data);
   if (!cards.length) return '';
 
   const slides = cards.map((cardHtml) => `
-    <li class="splide__slide">
+    <li class="mfs-snap__item">
       ${cardHtml}
     </li>
   `);
 
   return `
-    <div class="modal-what-we-do__stats-slider js-what-we-do-stats-slider splide">
-      <div class="splide__track">
-        <ul class="splide__list">
-          ${slides.join('')}
-        </ul>
-      </div>
+    <div class="modal-what-we-do__stats-slider js-what-we-do-stats-slider mfs-snap">
+      <ul class="mfs-snap__track">
+        ${slides.join('')}
+      </ul>
+      <div class="mfs-snap__dots"></div>
     </div>
   `;
 }
@@ -108,61 +103,63 @@ function renderStats(data) {
   `;
 }
 
+// Products marquee — migrated Splide + AutoScroll → pure-CSS .mfs-marquee. The track
+// is rendered twice (the second pass aria-hidden) so translateX(-50%) loops seamlessly;
+// each item owns its trailing gap via margin (see modals.scss). Zero JS, no library.
+function renderProductCard(product, clone = false) {
+  const overlay = (product.title || product.location || product.client || product.year) ? `
+    <div class="modal-design-services__product-overlay">
+
+      <div class="modal-design-services__product-overlay-row modal-design-services__product-overlay-row_header">
+        <h3 class="modal-design-services__product-overlay-title">
+          ${product.title || ''}
+        </h3>
+      </div>
+
+      ${product.location
+    ? `<div class="modal-design-services__product-overlay-row">
+            <span>Location:</span> ${product.location}
+           </div>`
+    : ''}
+
+      ${product.client || product.year
+    ? `<div class="modal-design-services__product-overlay-row">
+            ${product.client ? `<div><span>Client:</span> ${product.client}</div>` : ''}
+            ${product.year || ''}
+           </div>`
+    : ''}
+
+    </div>
+  ` : '';
+
+  const openTag = product.link
+    ? `<a class="modal-design-services__product" href="${product.link}"${clone ? ' tabindex="-1"' : ''}>`
+    : '<div class="modal-design-services__product">';
+  const closeTag = product.link ? '</a>' : '</div>';
+
+  return `
+    <li class="mfs-marquee__item"${clone ? ' aria-hidden="true"' : ''}>
+      ${openTag}
+        ${product.media || ''}
+        ${overlay}
+      ${closeTag}
+    </li>
+  `;
+}
+
 function renderProducts(products = []) {
   if (!products.length) return '';
 
+  const lane = products.map((p) => renderProductCard(p, false)).join('');
+  const clone = products.map((p) => renderProductCard(p, true)).join('');
+
   return `
     <div class="modal-design-services__products">
-      <div class="js-design-services-slider splide">
-        <div class="splide__track">
-          <ul class="splide__list">
-
-            ${products.map((product) => `
-              <li class="splide__slide">
-
-                ${product.link
-    ? `<a class="modal-design-services__product" href="${product.link}">`
-    : '<div class="modal-design-services__product">'
-}
-
-                ${product.media || ''}
-
-                ${(product.title || product.location || product.client || product.year) ? `
-                  <div class="modal-design-services__product-overlay">
-
-                    <div class="modal-design-services__product-overlay-row modal-design-services__product-overlay-row_header">
-                      <h3 class="modal-design-services__product-overlay-title">
-                        ${product.title || ''}
-                      </h3>
-                    </div>
-
-                    ${
-  product.location
-    ? `<div class="modal-design-services__product-overlay-row">
-                            <span>Location:</span> ${product.location}
-                           </div>`
-    : ''
-}
-
-                    ${
-  product.client || product.year
-    ? `<div class="modal-design-services__product-overlay-row">
-                            ${product.client ? `<div><span>Client:</span> ${product.client}</div>` : ''}
-                            ${product.year || ''}
-                           </div>`
-    : ''
-}
-
-                  </div>
-                ` : ''}
-
-                ${product.link ? '</a>' : '</div>'}
-
-              </li>
-            `).join('')}
-
-          </ul>
-        </div>
+      <div class="js-design-services-slider mfs-marquee">
+        <ul class="mfs-marquee__track">
+          ${lane}
+          ${clone}
+        </ul>
       </div>
     </div>
   `;
@@ -212,8 +209,6 @@ function renderModal(data) {
   `;
 }
 
-let designServicesSplide = null;
-let whatWeDoStatsSplide = null;
 let removeModalScrollListener = null;
 let removeResizeListener = null;
 
@@ -233,22 +228,13 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
     const modalInner = modal.querySelector('.modal__inner');
     const modalMain = modal.querySelector('.modal-design-services__main');
     const products = modal.querySelector('.modal-design-services__products');
-    const slider = modal.querySelector('.js-design-services-slider');
     const statsSlider = modal.querySelector('.js-what-we-do-stats-slider');
-
-    if (designServicesSplide) {
-      designServicesSplide.destroy(true);
-      designServicesSplide = null;
-    }
-
-    if (whatWeDoStatsSplide) {
-      whatWeDoStatsSplide.destroy(true);
-      whatWeDoStatsSplide = null;
-    }
 
     if (removeModalScrollListener) removeModalScrollListener();
     if (removeResizeListener) removeResizeListener();
 
+    // Fit the products marquee into the space left below the info column. Pure layout
+    // math — it never depended on the carousel library, so it survives the migration.
     const updateProductsHeight = () => {
       if (!products || !modalMain) return;
       if (!modal.classList.contains('is-opened') || window.innerWidth < 768) {
@@ -271,51 +257,12 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
       }
     };
 
-    const updateStatsSlider = () => {
-      if (!statsSlider) return;
-
-      if (window.innerWidth >= 768) {
-        if (whatWeDoStatsSplide) {
-          whatWeDoStatsSplide.destroy(true);
-          whatWeDoStatsSplide = null;
-        }
-        return;
-      }
-
-      if (whatWeDoStatsSplide) return;
-
-      whatWeDoStatsSplide = new Splide(statsSlider, {
-        arrows: false,
-        drag: true,
-        gap: 15,
-        pagination: true,
-        type: 'slide'
-      });
-
-      whatWeDoStatsSplide.mount();
-    };
-
-    if (slider && modalMain && products) {
-      designServicesSplide = new Splide(slider, {
-        autoWidth: true,
-        arrows: false,
-        drag: true,
-        gap: 15,
-        pagination: false,
-        type: 'loop',
-        autoScroll: {
-          speed: 0.5
-        }
-      });
-
-      designServicesSplide.on('mounted resized', updateProductsHeight);
-      designServicesSplide.mount({ AutoScroll });
-    }
+    // The mobile stats carousel is a CSS scroll-snap swiper; the helper wires its dots
+    // (visible only <768px via CSS, so it's harmless to init at any width).
+    if (statsSlider) initSnap(statsSlider);
 
     requestAnimationFrame(() => {
       updateProductsHeight();
-      updateStatsSlider();
-      if (designServicesSplide) designServicesSplide.refresh();
     });
 
     if (modalInner) {
@@ -332,7 +279,6 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
 
     const handleResize = () => {
       updateProductsHeight();
-      updateStatsSlider();
     };
 
     window.addEventListener('resize', handleResize, { passive: true });
@@ -371,16 +317,6 @@ function closeModal(e) {
   modal.classList.remove('is-opened');
 
   unlockUI('modal');
-
-  if (designServicesSplide) {
-    designServicesSplide.destroy(true);
-    designServicesSplide = null;
-  }
-
-  if (whatWeDoStatsSplide) {
-    whatWeDoStatsSplide.destroy(true);
-    whatWeDoStatsSplide = null;
-  }
 
   const content = modal.querySelector('.js-design-services-modal-content');
   if (content) content.innerHTML = '';

@@ -18,7 +18,11 @@
 //                             floor(activeItem / perView). With perView 1 this is identical to the
 //                             single-up path, so existing consumers stay byte-for-byte unchanged.
 
-function initSnap(root) {
+// Exported so dynamically-injected markup (e.g. the What-We-Do modal, whose slides
+// are built in JS after page load) can initialise a carousel on demand — the
+// bottom auto-run only sees `.mfs-snap` present at chunk-eval time.
+// eslint-disable-next-line import/prefer-default-export
+export function initSnap(root) {
   const track = root.querySelector('.mfs-snap__track');
   if (!track) return;
 

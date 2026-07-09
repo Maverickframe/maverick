@@ -44,24 +44,25 @@ import './components/modal-offer';
 // the DOM at top level (no DOMContentLoaded dependency), so late chunk arrival
 // is safe. Vite turns each import() into a hashed chunk next to main-*.js;
 // base "./" keeps chunk URLs relative to /build/assets/, and shared deps
-// (Splide in sliders+modals, uiManager in menu+modals) are deduped into shared
-// chunks automatically.
+// (uiManager in menu+modals) are deduped into shared chunks automatically.
 const lazyModules = [
-  // Splide sliders (incl. hero marquee)
-  ['.splide', () => import('./components/sliders')],
-  // CSS scroll-snap carousels (ведро A) — vanilla, no Splide; own light chunk
+  // CSS scroll-snap carousels (ведро A/C) — vanilla, no Splide; own light chunk.
+  // Every migrated swiper (team-items, visual-results, reviews main, modal stats…)
+  // is a `.mfs-snap`, so this one selector replaces the old Splide chunk entirely.
   ['.mfs-snap', () => import('./components/scroll-snap')],
-  // Modals + their inner Splide instances (book-a-call is site-wide)
+  // Reviews thumbnail ↔ main sync (rides on top of the .mfs-snap main slider)
+  ['.js-reviews-slider', () => import('./components/reviews-sync')],
+  // Modals (book-a-call is site-wide; What-We-Do modal carousels are now .mfs-snap)
   ['.modal, .js-modal-open', () => import('./components/modals')],
   // GSAP + ScrollTrigger animations
   [
     '.js-reveal, .js-reveal-group, .js-highlight, .js-quote, .js-workflow-item, .path-anim, .js-video-anim',
-    () => import('./components/gsap'),
+    () => import('./components/gsap')
   ],
   // Fancybox gallery page
   ['.js-gallery-tab-btn, .js-gallery-mobile, [data-fancybox]', () => import('./components/gallery')],
   // SimpleLightbox for picture-in-post links
-  ['.js-pip a', () => import('./components/lightbox')],
+  ['.js-pip a', () => import('./components/lightbox')]
 ];
 
 lazyModules.forEach(([selector, load]) => {

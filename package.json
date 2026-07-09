@@ -28,8 +28,6 @@
   ],
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
-    "@splidejs/splide": "^4.1.4",
-    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "countup.js": "^2.0.8",
     "gsap": "^3.14.2",
     "hls.js": "^1.6.16",

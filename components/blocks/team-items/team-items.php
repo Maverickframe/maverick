@@ -25,9 +25,8 @@
             if( $team ): 
         ?> 
             <div class="team-items__items js-reveal">
-                <div class="js-team-new-slider splide" role="group" aria-label="<?php the_field('title'); ?>">
-                    <div class="splide__track">
-                        <ul class="splide__list">
+                <div class="js-team-new-slider mfs-snap" role="group" aria-label="<?php the_field('title'); ?>">
+                    <ul class="mfs-snap__track">
                             <?php foreach( $team as $member ): 
                                 $name = get_the_title( $member->ID );
                                 $img = get_post_thumbnail_id( $member->ID );
@@ -35,7 +34,7 @@
                                 $position = get_field( 'position', $member->ID );
                                 $link = get_permalink( $member->ID );
                             ?>
-                            <li class="splide__slide">
+                            <li class="mfs-snap__item">
                                 <?php echo get_template_part( 'components/common/team-item', null, [ 
                                         'name' => $name,
                                         'img' => $img,
@@ -46,8 +45,7 @@
                                 ); ?>
                             </li>
                             <?php endforeach; ?>
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
             </div>
         <?php endif; ?>

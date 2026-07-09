@@ -11,9 +11,8 @@
     <?php if(get_field('is_presentation')):?>
         <?php if( have_rows('items') ): ?>
             <div class="visual-results__slider js-reveal">
-                <div class="js-visual-results-slider splide" role="group" aria-label="Visual Results Slider">
-                    <div class="splide__track">
-                        <ul class="splide__list">
+                <div class="js-visual-results-slider mfs-snap" role="group" aria-label="Visual Results Slider">
+                    <ul class="mfs-snap__track">
                             <?php
                                 while( have_rows('items') ) : the_row();
                                     $title = get_sub_field('title');
@@ -21,7 +20,7 @@
                                     $video_iframe = get_sub_field('video_iframe');      
                                     $test = get_sub_field('test');      
                             ?>
-                                <li class="splide__slide">
+                                <li class="mfs-snap__item">
                                     <div 
                                         class="visual-results-item is-slider"
                                     >
@@ -48,15 +47,14 @@
                                     </div>
                                 </li>
                             <?php endwhile; ?>
-                        </ul>
-                    </div>
+                    </ul>
 
-                    <div class="splide__arrows">
-                        <button class="splide__arrow splide__arrow--prev">
+                    <div class="mfs-snap__arrows">
+                        <button class="mfs-snap__arrow mfs-snap__arrow--prev">
                             <span class="sr-only"><?php echo esc_html( mfs_t('prev slide', 'Diapositiva anterior', 'Vorherige Folie') ); ?></span>
                             <?php echo inline_svg('icons/arrow-left-slider.svg'); ?>
                         </button>
-                        <button class="splide__arrow splide__arrow--next">
+                        <button class="mfs-snap__arrow mfs-snap__arrow--next">
                             <span class="sr-only">
                                 <?php echo esc_html( mfs_t('Next slide', 'Siguiente diapositiva', 'Nächste Folie') ); ?>
                             </span>

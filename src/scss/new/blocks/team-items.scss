@@ -76,21 +76,22 @@
         width: 100%;
     }
 
-    .splide:not(.is-initialized) .splide__list {
-        overflow-x: auto;
-        overflow-y: hidden;
-
-        display: flex;
-        justify-content: center;
-        gap: toRem(15);
+    // Migrated Splide → CSS scroll-snap (.mfs-snap). Center-focused swipe carousel:
+    // `safe center` centers the row when it fits and falls back to start-alignment
+    // when it overflows (the old .splide:not(.is-overflow) behaviour), so the first
+    // card is never clipped/unreachable. Item width comes from .team-item below.
+    .mfs-snap__track {
+        --mfs-snap-gap: #{toRem(15)};
+        justify-content: safe center;
 
         @media (min-width: $md) {
-            gap: toRem(30);
+            --mfs-snap-gap: #{toRem(30)};
         }
     }
 
-    .splide:not(.is-overflow) .splide__list {
-        justify-content: center;
+    .mfs-snap__item {
+        width: auto;
+        scroll-snap-align: center;
     }
 }
 
