@@ -33,26 +33,26 @@ function initStickyCta() {
   }
 
   // 2) Suppress the card while the Free Test Render form OR the lead quiz is in
-  //    view, so it never overlaps either. The theme uses a virtualised
-  //    (transform-based) scroll, so native scroll events and IntersectionObserver
-  //    don't fire — poll the rects each frame (getBoundingClientRect reflects the
-  //    transformed position) and only toggle the class when the state changes.
+  //    view, so it never overlaps either. Scroll is native (no virtualised /
+  //    transform-based scroll — GSAP/Lenis were removed), so IntersectionObserver
+  //    fires reliably. Observe the sections and toggle the class only on change —
+  //    zero per-frame layout reads (the old rAF poll forced a reflow every frame).
   const sections = document.querySelectorAll('.free-test-render, .mfsq, .footer');
-  if (sections.length) {
+  if (sections.length && 'IntersectionObserver' in window) {
+    const visible = new Set();
     let last = null;
-    const tick = () => {
-      let inView = false;
-      sections.forEach((s) => {
-        const rect = s.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) inView = true;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
       });
+      const inView = visible.size > 0;
       if (inView !== last) {
         last = inView;
         card.classList.toggle('is-suppressed', inView);
       }
-      window.requestAnimationFrame(tick);
-    };
-    window.requestAnimationFrame(tick);
+    });
+    sections.forEach((s) => io.observe(s));
   }
 }
 
