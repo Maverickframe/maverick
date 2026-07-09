@@ -224,11 +224,16 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
 
   modalContent.innerHTML = renderModal(data[serviceIndex]);
 
+  // Init any CSS scroll-snap carousel in the freshly injected markup (the mobile stats
+  // swiper). Run synchronously: the nodes are in the DOM the moment innerHTML is set,
+  // and a deferred rAF init proved unreliable here (the dots were never built). initSnap
+  // is idempotent (buildDots clears first), so re-running is safe.
+  modalContent.querySelectorAll('.mfs-snap').forEach(initSnap);
+
   requestAnimationFrame(() => {
     const modalInner = modal.querySelector('.modal__inner');
     const modalMain = modal.querySelector('.modal-design-services__main');
     const products = modal.querySelector('.modal-design-services__products');
-    const statsSlider = modal.querySelector('.js-what-we-do-stats-slider');
 
     if (removeModalScrollListener) removeModalScrollListener();
     if (removeResizeListener) removeResizeListener();
@@ -256,10 +261,6 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
         );
       }
     };
-
-    // The mobile stats carousel is a CSS scroll-snap swiper; the helper wires its dots
-    // (visible only <768px via CSS, so it's harmless to init at any width).
-    if (statsSlider) initSnap(statsSlider);
 
     requestAnimationFrame(() => {
       updateProductsHeight();
