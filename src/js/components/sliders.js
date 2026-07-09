@@ -803,29 +803,5 @@ if (challengesSlider) {
   splide.mount();
 }
 
-const casesAccordionSlider = document.querySelector('.js-cases-accordion-slider');
-if (casesAccordionSlider) {
-  const splide = new Splide(casesAccordionSlider, {
-    arrows: false,
-    drag: true,
-    gap: 20,
-    pagination: true,
-    perPage: 1,
-    padding: { left: '18.2%', right: '18.2%' },
-    flickPower: 300,
-    snap: true,
-    type: 'loop',
-    breakpoints: {
-      1440: {
-        padding: { left: '16%', right: '16%' }
-      },
-      1270: {
-        arrows: false,
-        gap: 15,
-        padding: 0
-      }
-    }
-  });
-
-  splide.mount();
-}
+// cases-accordion → migrated to CSS scroll-snap .mfs-snap (peek carousel, ведро A)
+// (components/blocks/cases-accordion/cases-accordion.php + components/scroll-snap.js)

@@ -46,41 +46,60 @@
         padding: 0;
     }
 
-    .splide__pagination {
+    // CSS scroll-snap peek carousel (was Splide perPage:1 + padding-peek).
+    // Mobile: one full-width slide, no peek. Desktop: centered slide with side peek.
+    .mfs-snap__track {
+        --mfs-snap-gap: #{toRem(15)};
+
+        @media (min-width: $md) {
+            --mfs-snap-gap: #{toRem(20)};
+            scroll-padding-inline: 16%;
+        }
+
+        @media (min-width: 1441px) {
+            scroll-padding-inline: 18.2%;
+        }
+    }
+
+    .mfs-snap__item {
+        @media (min-width: $md) {
+            width: calc(100% - 32%); // 16% peek each side
+            scroll-snap-align: center;
+        }
+
+        @media (min-width: 1441px) {
+            width: calc(100% - 36.4%); // 18.2% peek each side
+        }
+    }
+
+    .mfs-snap__dots {
         margin-top: toRem(20);
         display: flex;
         gap: toRem(4);
         height: toRem(6);
 
-        li {
-            flex: 1 1 auto;
-            height: 100%;
-        }
-
-        button {
+        .mfs-snap__dot {
             @include btn;
 
+            flex: 1 1 auto;
             width: 100%;
             height: 100%;
 
             border-radius: toRem(1);
             background-color: var(--stroke-light-grey-color);
 
-            &.is-active {
+            &[aria-current] {
                 min-width: toRem(100);
                 background-color: var(--accent-color);
             }
         }
 
         @media (min-width: $md) {
-            li {
+            .mfs-snap__dot {
                 flex: 0 0 auto;
-            }
-
-            button {
                 width: toRem(60);
 
-                &.is-active {
+                &[aria-current] {
                     min-width: toRem(143);
                 }
             }
