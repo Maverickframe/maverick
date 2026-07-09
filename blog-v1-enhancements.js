@@ -97,12 +97,19 @@
             || document.querySelector('.article-page__content');
         if (!article) return;
 
-        function update() {
+        // Cache the article offset; scroll handler reads only pageYOffset.
+        var articleTop = 0, articleHeight = 0;
+        function measure() {
+            var y = window.pageYOffset || 0;
             var rect = article.getBoundingClientRect();
+            articleTop = rect.top + y;
+            articleHeight = rect.height;
+        }
+        function update() {
             var vh = window.innerHeight || 1;
             // 0 when article top hits viewport top; 1 when article bottom hits viewport bottom
-            var scrolled = -rect.top;
-            var max = rect.height - vh;
+            var scrolled = (window.pageYOffset || 0) - articleTop;
+            var max = articleHeight - vh;
             if (max < 1) max = 1;
             var p = scrolled / max;
             if (p < 0) p = 0;
@@ -123,13 +130,18 @@
             });
         }
 
-        var t;
-        window.addEventListener('scroll', function () {
-            clearTimeout(t);
-            t = setTimeout(update, 60);
-        }, { passive: true });
-        window.addEventListener('resize', update);
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function () { update(); ticking = false; });
+        }
+        function onResize() { measure(); update(); }
+        measure();
         update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+        window.addEventListener('load', onResize);
     }
     initSidebarRotator();
 
@@ -310,6 +322,14 @@
     }
     initInArticleCtaAnimations();
         initTableCleaner();
+
+        // The in-article CTAs above are injected into the article flow, shifting
+        // every cached heading/section offset. Re-measure all scroll handlers
+        // (they listen for 'resize') once the post-injection layout has settled,
+        // so the cached offsets reflect the final DOM — not the pre-injection one.
+        window.requestAnimationFrame(function () {
+            window.dispatchEvent(new Event('resize'));
+        });
     }
 
     /* ---------- 1. Reading progress bar ---------- */
@@ -325,16 +345,33 @@
                    || document.querySelector('.article-page__main')
                    || document.body;
 
-        function update() {
+        // Cache the article's absolute offset; the scroll handler then reads only
+        // window.pageYOffset (cheap) instead of getBoundingClientRect (forces reflow).
+        var articleTop = 0, articleHeight = 0;
+        function measure() {
+            var y = window.pageYOffset || 0;
             var rect = article.getBoundingClientRect();
-            var scrolled = Math.max(0, -rect.top);
-            var travel = rect.height - window.innerHeight;
+            articleTop = rect.top + y;
+            articleHeight = rect.height;
+        }
+        function update() {
+            var scrolled = Math.max(0, (window.pageYOffset || 0) - articleTop);
+            var travel = articleHeight - window.innerHeight;
             var ratio = travel > 0 ? Math.min(1, scrolled / travel) : 0;
             fill.style.transform = 'scaleX(' + ratio + ')';
         }
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function () { update(); ticking = false; });
+        }
+        function onResize() { measure(); update(); }
+        measure();
         update();
-        window.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+        window.addEventListener('load', onResize);
     }
 
     /* ---------- 2. TOC scroll-spy ---------- */
@@ -354,13 +391,22 @@
         });
         if (!pairs.length) return;
 
+        // Cache heading offsets; on scroll compare cached tops against
+        // pageYOffset + trigger line instead of reading layout every event.
+        var tops = [];
+        function measure() {
+            var y = window.pageYOffset || 0;
+            tops = pairs.map(function (p) {
+                return p.target.getBoundingClientRect().top + y;
+            });
+        }
         function update() {
             // The "active" section is the LAST heading whose top has crossed
             // a trigger line at ~25% from the viewport top.
-            var trigger = window.innerHeight * 0.25;
+            var line = (window.pageYOffset || 0) + window.innerHeight * 0.25;
             var activeIdx = -1;
-            for (var i = 0; i < pairs.length; i++) {
-                if (pairs[i].target.getBoundingClientRect().top <= trigger) {
+            for (var i = 0; i < tops.length; i++) {
+                if (tops[i] <= line) {
                     activeIdx = i;
                 } else {
                     break;
@@ -372,9 +418,18 @@
                 else p.link.classList.remove('is-active');
             });
         }
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function () { update(); ticking = false; });
+        }
+        function onResize() { measure(); update(); }
+        measure();
         update();
-        window.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+        window.addEventListener('load', onResize);
     }
 
     /* ---------- 3. Image lightbox ---------- */
@@ -445,10 +500,21 @@
         var headings = article.querySelectorAll('h2, h3');
         var totalSections = headings.length;
 
-        function update() {
+        // Cache article + heading offsets; scroll handler reads only pageYOffset.
+        var articleTop = 0, articleHeight = 0, headTops = [];
+        function measure() {
+            var y = window.pageYOffset || 0;
             var rect = article.getBoundingClientRect();
-            var scrolled = Math.max(0, -rect.top);
-            var travel = rect.height - window.innerHeight;
+            articleTop = rect.top + y;
+            articleHeight = rect.height;
+            headTops = Array.prototype.map.call(headings, function (h) {
+                return h.getBoundingClientRect().top + y;
+            });
+        }
+
+        function update() {
+            var scrolled = Math.max(0, (window.pageYOffset || 0) - articleTop);
+            var travel = articleHeight - window.innerHeight;
             var ratio = travel > 0 ? Math.min(1, scrolled / travel) : 0;
 
             // Time remaining (round up so we never show "0 min")
@@ -461,10 +527,10 @@
 
             // Current section (which heading just crossed the trigger line)
             if (sectionEl && totalSections > 0) {
-                var trigger = window.innerHeight * 0.25;
+                var line = (window.pageYOffset || 0) + window.innerHeight * 0.25;
                 var idx = 0;
-                for (var i = 0; i < headings.length; i++) {
-                    if (headings[i].getBoundingClientRect().top <= trigger) {
+                for (var i = 0; i < headTops.length; i++) {
+                    if (headTops[i] <= line) {
                         idx = i + 1;
                     } else {
                         break;
@@ -481,9 +547,18 @@
                 }
             }
         }
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(function () { update(); ticking = false; });
+        }
+        function onResize() { measure(); update(); }
+        measure();
         update();
-        window.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+        window.addEventListener('load', onResize);
     }
 
     /* ---------- 5. Feedback widget ---------- */
