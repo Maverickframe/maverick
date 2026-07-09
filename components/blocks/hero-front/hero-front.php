@@ -58,10 +58,13 @@
 
         <div class="hero-front__sliders">
             <div class="hero-front__slider <?php echo $hf_reveal; ?>">
-                <div class="js-hero-hover-slider-left splide" role="group" aria-label="<?php the_title(); ?>">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            <?php
+                <div class="mfs-marquee hero-front__marquee" role="group" aria-label="<?php the_title(); ?>">
+                    <ul class="mfs-marquee__track">
+                        <?php
+                            // Rendered twice for a seamless pure-CSS marquee loop; 2nd pass hidden from AT.
+                            // LCP eager/lazy runs on the 1st pass only (the visible originals).
+                            for ( $pass = 0; $pass < 2; $pass++ ) :
+                                $dupe = ( $pass === 1 );
                                 $i = 0;
                                 $hf_col = get_field('cases_left');
                                 $hf_total = is_array($hf_col) ? count($hf_col) : 0;
@@ -70,7 +73,7 @@
                                     $image = get_sub_field('image');
                                     $hover_image = get_sub_field('hover_image');
                             ?>
-                                <li class="splide__slide">
+                                <li class="mfs-marquee__item"<?php echo $dupe ? ' aria-hidden="true"' : ''; ?>>
                                     <?php if($link): ?>
                                         <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>">
                                     <?php else: ?>
@@ -95,7 +98,7 @@
                                             // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
-                                            if ($i < 4 || $i >= $hf_total - 2) {
+                                            if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
@@ -115,18 +118,20 @@
                                     <?php endif; ?>
                                 </li>
                             <?php
-                                endwhile; 
+                                endwhile;
+                            endfor;
                             ?>
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
             </div>
 
             <div class="hero-front__slider <?php echo $hf_reveal; ?>">
-                <div class="js-hero-hover-slider-right splide" role="group" aria-label="<?php the_title(); ?>">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            <?php
+                <div class="mfs-marquee mfs-marquee--reverse hero-front__marquee" role="group" aria-label="<?php the_title(); ?>">
+                    <ul class="mfs-marquee__track">
+                        <?php
+                            // Rendered twice for a seamless pure-CSS marquee loop; 2nd pass hidden from AT.
+                            for ( $pass = 0; $pass < 2; $pass++ ) :
+                                $dupe = ( $pass === 1 );
                                 $i = 0;
                                 $hf_col = get_field('cases_right');
                                 $hf_total = is_array($hf_col) ? count($hf_col) : 0;
@@ -135,7 +140,7 @@
                                     $image = get_sub_field('image');
                                     $hover_image = get_sub_field('hover_image');
                             ?>
-                                <li class="splide__slide">
+                                <li class="mfs-marquee__item"<?php echo $dupe ? ' aria-hidden="true"' : ''; ?>>
                                     <?php if($link): ?>
                                         <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>">
                                     <?php else: ?>
@@ -160,7 +165,7 @@
                                             // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
-                                            if ($i < 4 || $i >= $hf_total - 2) {
+                                            if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
                                                 eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
@@ -180,9 +185,10 @@
                                     <?php endif; ?>
                                 </li>
                             <?php
-                                endwhile; 
+                                endwhile;
+                            endfor;
                             ?>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>

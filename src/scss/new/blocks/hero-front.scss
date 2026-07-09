@@ -152,6 +152,7 @@
 
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: minmax(0, 1fr); // bound rows to hero height so marquee columns get a clipping window (Splide used to set column height inline)
         gap: toRem(20);
 
         position: relative;
@@ -184,6 +185,57 @@
         margin-right: toRem(-140);
         width: toRem(848);
         gap: toRem(30);
+    }
+}
+
+// Marquee columns (was Splide + AutoScroll). Mobile (<$md=1270): horizontal rows of fixed
+// tiles (generic .mfs-marquee = translateX). Desktop (≥1270): vertical columns — the column is
+// bound to the hero height (see grid-template-rows above) so the track scrolls via translateY.
+.hero-front__slider {
+    min-height: 0;
+    overflow: hidden;
+
+    @media (min-width: $md) {
+        height: 100%;
+    }
+}
+
+.hero-front__marquee {
+    --mfs-marquee-dur: 40s;
+
+    // mobile: fixed tiles (was Splide fixedWidth:145/fixedHeight:177); image fills & crops
+    .mfs-marquee__item {
+        width: toRem(145);
+        height: toRem(177);
+        margin-right: toRem(10);
+    }
+
+    .hero-front__slider-item img {
+        height: 100%;
+    }
+
+    @media (min-width: $md) {
+        height: 100%;
+
+        .mfs-marquee__track {
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+            height: max-content;
+            animation-name: mfs-marquee-y;
+        }
+
+        .mfs-marquee__item {
+            width: 100%;
+            height: auto;
+            margin-right: 0;
+            margin-bottom: toRem(30);
+        }
+
+        // desktop: portrait image sets the tile height
+        .hero-front__slider-item img {
+            height: auto;
+        }
     }
 }
 

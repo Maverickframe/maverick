@@ -34,6 +34,12 @@
     to { transform: translateX(-50%); }
 }
 
+// Vertical axis — used by blocks that switch a marquee to a column (e.g. hero-front on
+// desktop). The block sets flex-direction:column + animation-name:mfs-marquee-y itself.
+@keyframes mfs-marquee-y {
+    to { transform: translateY(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .mfs-marquee__track {
         animation: none;

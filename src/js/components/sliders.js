@@ -552,37 +552,8 @@ if (packagesSlider) {
   splide.mount();
 }
 
-// Solutions-page hero uses short landscape case images. Splide's auto loop-clone
-// count (~2/side) gives too small a buffer for them, so the upward-scrolling right
-// column shows a black seam. Force extra clones there ONLY — combined with the
-// height-constraint CSS (html.single-solutions in hero-front.scss) the column stays
-// viewport-height so the js-reveal IntersectionObserver (0.15 threshold) still fires.
-// Homepage hero (tall portrait crops) is left on Splide defaults — untouched.
-// Declared here (before its first use in the presentation-hero block) to avoid a
-// temporal-dead-zone ReferenceError if that block ever renders.
-const heroLoopExtra = document.documentElement.classList.contains('single-solutions')
-  ? { clones: 12 }
-  : {};
-
-const heroPresentationSlider = document.querySelector('.js-presentation-hero-slider');
-if (heroPresentationSlider) {
-  const splide = new Splide(heroPresentationSlider, {
-    autoWidth: true,
-    arrows: false,
-    drag: true,
-    gap: 15,
-    pagination: false,
-    type: 'loop',
-    ...heroLoopExtra,
-    autoScroll: {
-      autoStart: false,
-      speed: 0.5
-    }
-  });
-
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-}
+// presentation-hero slider + heroLoopExtra removed — orphaned dead code
+// (js-presentation-hero-slider markup no longer exists anywhere on the site).
 
 // sol-cap → migrated to pure-CSS .mfs-marquee (components/blocks/solution-capabilities/solution-capabilities.php)
 
@@ -756,77 +727,9 @@ if (selectiveWorksSlider) {
   splide.mount();
 }
 
-const heroHoverSliderLeft = document.querySelector('.js-hero-hover-slider-left');
-if (heroHoverSliderLeft) {
-  const splide = new Splide(heroHoverSliderLeft, {
-    arrows: false,
-    direction: 'ttb',
-    drag: true,
-    gap: 30,
-    height: '100%',
-    pagination: false,
-    type: 'loop',
-    ...heroLoopExtra,
-    autoScroll: {
-      autoStart: false,
-      speed: 0.5
-    },
-    breakpoints: {
-      1750: {
-        gap: 20
-      },
-      1270: {
-        direction: 'rtl',
-        fixedHeight: 177,
-        fixedWidth: 145,
-        gap: 10
-      }
-    }
-  });
+// hero-hover left column → migrated to pure-CSS vertical .mfs-marquee (components/blocks/hero-front/hero-front.php)
 
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-
-  // Recompute ttb loop geometry after images/layout settle
-  // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
-  window.addEventListener('load', () => splide.refresh());
-}
-
-const heroHoverSliderRight = document.querySelector('.js-hero-hover-slider-right');
-if (heroHoverSliderRight) {
-  const splide = new Splide(heroHoverSliderRight, {
-    arrows: false,
-    direction: 'ttb',
-    drag: true,
-    gap: 30,
-    height: '100%',
-    pagination: false,
-    type: 'loop',
-    ...heroLoopExtra,
-    autoScroll: {
-      autoStart: false,
-      speed: -0.5
-    },
-    breakpoints: {
-      1750: {
-        gap: 20
-      },
-      1270: {
-        direction: 'rtl',
-        fixedHeight: 177,
-        fixedWidth: 145,
-        gap: 10
-      }
-    }
-  });
-
-  splide.mount({ AutoScroll });
-  delayAutoScrollStart(splide);
-
-  // Recompute ttb loop geometry after images/layout settle
-  // (otherwise the vertical slider collapses to a black area on >=1750px until a resize)
-  window.addEventListener('load', () => splide.refresh());
-}
+// hero-hover right column → migrated to pure-CSS vertical .mfs-marquee (reverse); see hero-front.php
 
 const whatWeDoItems = document.querySelectorAll('.js-what-we-do-slider');
 if (whatWeDoItems.length > 0) {
