@@ -510,19 +510,24 @@ function my_filter_head()
 
 // Lazy load
 
-function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '')
+function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '', $sizes = 'auto')
 {
-    $src = wp_get_attachment_image_url($attachment_id, 'lqip') != wp_get_attachment_image_url($attachment_id, 'full') ? wp_get_attachment_image_url($attachment_id, 'lqip') : wp_get_attachment_image_url($attachment_id, 'thumbnail');
+    // Native lazy-loading. wp_get_attachment_image() emits the real src + srcset,
+    // so the browser fetches the correct variant directly — no lazysizes
+    // measurement (that per-image getBoundingClientRect/getComputedStyle pass was
+    // the site's biggest "forced reflow" source), and no lqip -> real double-load.
+    // 'sizes=auto' lets Chrome pick the exact rendered-width variant with zero JS
+    // (Safari/FF fall back to 100vw). Do NOT emit the 'lazyload'/'blur-up'
+    // classes: '.lazyloaded' was added by lazysizes (gone now), so '.blur-up'
+    // would stay permanently blurred.
+    $attrs = [
+        'loading'  => $nativeLazy,
+        'decoding' => 'async',
+    ];
+    if ($class) $attrs['class'] = $class;
+    if ($sizes) $attrs['sizes'] = $sizes;
 
-    echo wp_get_attachment_image($attachment_id, $size, false, [
-        'loading' => $nativeLazy,
-        'class' => 'lazyload blur-up ' . $class,
-        'src' => $src,
-        'srcset' => $src,
-        'data-src' => wp_get_attachment_image_url($attachment_id, $size),
-        'data-srcset' => wp_get_attachment_image_srcset($attachment_id, $size),
-        'data-sizes' => 'auto'
-    ]);
+    echo wp_get_attachment_image($attachment_id, $size, false, $attrs);
 }
 
 function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority = false)
