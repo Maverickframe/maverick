@@ -6,36 +6,36 @@
         </div>
 
         <div class="completeness-visual__items">
-            <div class="js-completeness-visual-slider splide" role="group" aria-label="<?php the_field('title'); ?> Slider">
-                <div class="splide__track">
-                    <ul class="splide__list">
-                        <?php
-                            while( have_rows('items')) : the_row();
-                                $title = get_sub_field('title');
-                                $color = get_sub_field('color');
-                                $desc = get_sub_field('desc');
-                                $image = get_sub_field('image');
-                        ?>
-                            <li class="splide__slide">
-                                <div class="completeness-visual-item js-reveal">
-                                    <?php lazy_attachment($image, 'full'); ?>
+            <div class="mfs-snap" role="group" aria-label="<?php the_field('title'); ?> Slider">
+                <ul class="mfs-snap__track">
+                    <?php
+                        while( have_rows('items')) : the_row();
+                            $title = get_sub_field('title');
+                            $color = get_sub_field('color');
+                            $desc = get_sub_field('desc');
+                            $image = get_sub_field('image');
+                    ?>
+                        <li class="mfs-snap__item">
+                            <div class="completeness-visual-item js-reveal">
+                                <?php lazy_attachment($image, 'full'); ?>
 
-                                    <div class="completeness-visual-item__info <?php echo $color === 'black' ? 'black-color' : ''; ?>">
-                                        <h3>
-                                            <?php echo $title; ?>
-                                        </h3>
+                                <div class="completeness-visual-item__info <?php echo $color === 'black' ? 'black-color' : ''; ?>">
+                                    <h3>
+                                        <?php echo $title; ?>
+                                    </h3>
 
-                                        <div class="p1 completeness-visual-item__text">
-                                            <?php echo $desc; ?>
-                                        </div>
+                                    <div class="p1 completeness-visual-item__text">
+                                        <?php echo $desc; ?>
                                     </div>
                                 </div>
-                            </li>
-                        <?php
-                            endwhile; 
-                        ?>
-                    </ul>
-                </div>
+                            </div>
+                        </li>
+                    <?php
+                        endwhile; 
+                    ?>
+                </ul>
+
+                <div class="mfs-snap__dots"></div>
             </div>
         </div>
 
