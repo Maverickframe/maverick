@@ -422,6 +422,12 @@ add_filter('intermediate_image_sizes_advanced', function ($sizes) {
     return $sizes;
 });
 
+// WP 6.7 core prepends "auto," to `sizes` on every loading=lazy img (wp_img_tag_add_auto_sizes).
+// Our templates declare exact sizes (hero marquee 150/300px, cards 560px). In the CSS marquee the
+// lazy DUPE slides mis-resolved `sizes=auto` and fetched the full 818w instead of 300w/600w.
+// Disable core auto-sizes so the theme's explicit sizes stay authoritative site-wide.
+add_filter('wp_img_tag_add_auto_sizes', '__return_false');
+
 // End Theme supports
 
 // New Design
