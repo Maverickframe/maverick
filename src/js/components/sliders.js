@@ -731,48 +731,12 @@ if (whatWeDoItems.length > 0) {
   });
 }
 
-const completenessVisualSlider = document.querySelector('.js-completeness-visual-slider');
-if (completenessVisualSlider) {
-  const splide = new Splide(completenessVisualSlider, {
-    destroy: true,
-    perPage: 1,
-    arrows: false,
-    drag: true,
-    gap: 15,
-    clones: 0,
-    type: 'loop',
-    breakpoints: {
-      1200: {
-        destroy: false
-      }
-    }
-  });
+// completeness-visual → migrated to CSS scroll-snap .mfs-snap (mobile-only; desktop = 3-col grid, ведро A)
+// (components/blocks/completeness-visual/completeness-visual.php + components/scroll-snap.js)
 
-  splide.mount();
-}
-
-// NOTE: use querySelectorAll — pages like 3D Furniture Rendering have TWO
-// production-process blocks. querySelector only mounted the first, leaving the
-// second slider unmounted (first slide stretched to full height = big white gap).
-const productionProcessSliders = document.querySelectorAll('.js-production-process-slider');
-productionProcessSliders.forEach((productionProcessSlider) => {
-  const splide = new Splide(productionProcessSlider, {
-    destroy: true,
-    perPage: 1,
-    arrows: false,
-    drag: true,
-    gap: 15,
-    clones: 0,
-    type: 'loop',
-    breakpoints: {
-      1200: {
-        destroy: false
-      }
-    }
-  });
-
-  splide.mount();
-});
+// production-process → migrated to CSS scroll-snap .mfs-snap (mobile-only; desktop = grid, ведро A)
+// (components/blocks/production-process/production-process.php + components/scroll-snap.js)
+// NOTE: multiple blocks per page (e.g. 3D Furniture) — the helper inits every .mfs-snap, no manual loop.
 
 const challengesSlider = document.querySelector('.js-challenges-slider');
 if (challengesSlider) {
