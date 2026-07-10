@@ -1,0 +1,18 @@
+// Universal chrome only — shared by EVERY page including the slim homepage.
+// Page-specific content styles (article typography, legacy video player, blog
+// listing UI, TOC sidebar) live in common-content.scss and are pulled in by
+// base.scss (all non-home bundles) + blocks.scss (editor) — NOT here.
+@import url("../new/common/fonts.scss");
+@import url("../new/common/common.scss");
+@import url("../new/common/btns.scss");
+@import url("../new/common/header.scss");
+@import url("../new/common/footer.scss");
+@import url("../new/common/modals.scss");
+@import url("../new/common/select.scss");
+@import url("../new/common/socials.scss");
+@import url("../new/common/marquee.scss");
+@import url("../new/common/snap.scss");
+@import url("../new/common/case-item.scss");
+@import url("../new/common/sticky-cta.scss");
+@import url("../new/common/video-player.scss");
+@import url("../new/common/editor-styles-wrapper.scss");

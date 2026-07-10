@@ -2,5 +2,7 @@
 // homepage renders. All other pages that used to share this bundle now load
 // fallback.scss (base + all blocks) via the router fallback. If you add a new
 // block to the homepage, add its partial to blocks-home.scss too.
-@import url("base.scss");
+// Uses base-slim (universal chrome only) — the homepage renders none of the
+// article/legacy-video/blog-listing/TOC-sidebar CSS in common-content.scss.
+@import url("base-slim.scss");
 @import url("blocks-home.scss");

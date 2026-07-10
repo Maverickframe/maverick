@@ -1,14 +1,6 @@
-@import url("../new/common/fonts.scss");
-@import url("../new/common/common.scss");
-@import url("../new/common/btns.scss");
-@import url("../new/common/header.scss");
-@import url("../new/common/footer.scss");
-@import url("../new/common/modals.scss");
-@import url("../new/common/select.scss");
-@import url("../new/common/socials.scss");
-@import url("../new/common/marquee.scss");
-@import url("../new/common/snap.scss");
-@import url("../new/common/case-item.scss");
-@import url("../new/common/sticky-cta.scss");
-@import url("../new/common/video-player.scss");
-@import url("../new/common/editor-styles-wrapper.scss");
+// Full base = universal chrome (base-slim) + page-specific content styles.
+// Every bundle EXCEPT the homepage (front.scss uses base-slim.scss) imports this,
+// so their CSS output is unchanged by the base split. Homepage sheds
+// common-content.scss (~8 KB raw of article/legacy-video/listing CSS it never renders).
+@import url("base-slim.scss");
+@import url("../new/common/common-content.scss");

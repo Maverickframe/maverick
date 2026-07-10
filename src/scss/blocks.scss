@@ -1,5 +1,6 @@
 @import url("./new/common/fonts.scss");
 @import url("./new/common/common.scss");
+@import url("./new/common/common-content.scss"); // article typography, figure, blockquote etc. (moved out of common.scss) — keep Gutenberg editor styling intact
 @import url("./new/common/btns.scss");
 @import url("./new/common/case-item.scss");
 @import url("./new/common/editor-styles-wrapper.scss");
