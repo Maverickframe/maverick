@@ -15,7 +15,7 @@ if (!$btn) { $btn = 'Expand fullscreen'; }
 ?>
 <section class="pano-hero">
     <div class="container">
-        <div class="pano-hero__main js-reveal">
+        <div class="pano-hero__main reveal-css">
             <div class="pano-hero__info">
                 <?php if ($eyebrow): ?>
                     <p class="section-subtitle"><?php echo esc_html($eyebrow); ?></p>

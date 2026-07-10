@@ -41,7 +41,7 @@
     </div>
 
     <div class="container container_small">
-        <div class="hero__main js-reveal">
+        <div class="hero__main reveal-css">
             <h1 class="hero__title"><?php the_field('title'); ?></h1>
 
             <div class="hero__main-info">

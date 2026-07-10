@@ -68,7 +68,7 @@ if (get_field('video')) {
 
     <div class="container">
         <div class="hero-block__main">
-            <div class="hero-block__metabox metabox js-reveal js-reveal-init" data-anim="up">
+            <div class="hero-block__metabox metabox reveal-css">
                 <span class="metabox__item metabox__item--text">
                     <?= mfs_t('Published:', 'Publicado:', 'Veröffentlicht:'); ?> <?= $date; ?>
                 </span>
@@ -92,7 +92,7 @@ if (get_field('video')) {
                 <?php endif; ?>
             </div>
 
-            <h1 class="hero-block__title js-reveal js-reveal-init" data-anim="up"><?= $heroTitle; ?></h1>
+            <h1 class="hero-block__title reveal-css"><?= $heroTitle; ?></h1>
         </div>
     </div>
 </section>

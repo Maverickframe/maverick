@@ -5,7 +5,7 @@
     // late LCP. Use a CSS-animated reveal class on the front page so the hero (H1 +
     // images) paints immediately and GSAP never touches it. Inner-page heroes keep the
     // JS .js-reveal path (and the .single-solutions slider hack in hero-front.scss).
-    $hf_reveal = is_front_page() ? 'hero-front__reveal' : 'js-reveal';
+    $hf_reveal = is_front_page() ? 'hero-front__reveal' : 'reveal-css';
 ?>
 <section class="hero-front">
     <div class="container container_small">

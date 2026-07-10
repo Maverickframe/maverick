@@ -66,7 +66,7 @@
             </button>
 
             <?php if (have_rows('tags')): ?>
-            <ul class="hero-block__items js-reveal js-reveal-init" data-anim="up">
+            <ul class="hero-block__items reveal-css">
                 <?php
                     while( have_rows('tags')) : the_row();
                         $tag = get_sub_field('tag');

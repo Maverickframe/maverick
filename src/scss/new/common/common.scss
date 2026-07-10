@@ -412,6 +412,33 @@ button {
     }
 }
 
+// Pure-CSS reveal for ABOVE-THE-FOLD hero blocks. Unlike `.js-reveal` (opacity:0
+// until reveal.js adds `.is-in`), this fades in via CSS alone, so the first screen
+// paints without waiting for the JS — which lets reveal.js load off the critical
+// request chain. Mirrors `.hero-front__reveal` (homepage) but shared across page
+// types. Below-the-fold sections keep `.js-reveal` (JS scroll-reveal on enter).
+.reveal-css {
+    opacity: 0;
+    animation: mfs-reveal-fade 0.6s ease 0.05s forwards;
+    will-change: opacity;
+}
+
+@keyframes mfs-reveal-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-css {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 .text-highlight {
     em {
         font-style: normal;

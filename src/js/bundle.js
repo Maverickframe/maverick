@@ -83,20 +83,30 @@ lazyModules.forEach(([selector, load]) => {
 });
 
 // --- Reveal-on-enter loader (vanilla IntersectionObserver + CSS transitions) ---
-// Reveal must download before an above-the-fold `.js-reveal` paints, or that
-// content stays opacity:0 until the chunk lands. Inner-page heroes ARE `.js-reveal`
-// (opacity:0) above the fold, so there reveal stays EAGER. The HOMEPAGE hero uses a
-// CSS-only reveal (`.hero-front__reveal`, added only when is_front_page) and its
-// first opacity:0 `.js-reveal` sits ~1000px down — nothing above the fold needs the
-// chunk. So on the homepage we load reveal OFF the critical request chain (on idle
-// or first scroll/pointer) instead of during this synchronous pass. The only
-// above-the-fold dependant is the hero H1's decorative `.js-highlight` sweep, whose
-// text is fully readable before the sweep plays. Pilot = homepage only (via the
-// front-page-only `.hero-front__reveal` marker); extend to other page types once
-// their heroes are CSS-revealed too.
+// A `.js-reveal` element is opacity:0 until reveal.js adds `.is-in`, so the chunk
+// must arrive before any such element that is ALREADY on-screen at load — otherwise
+// it flashes empty. So the rule is purely positional:
+//   • Any `.js-reveal`/`.js-reveal-group` in the first viewport  → load EAGER.
+//   • None above the fold (heroes use the CSS-only `.reveal-css`, real reveals sit
+//     below the fold where being opacity:0 is invisible anyway) → load OFF the
+//     critical request chain: after the load event (idle) or on first scroll/pointer.
+// This auto-adapts per page as heroes move to `.reveal-css`, and degrades safely —
+// a hero left as `.js-reveal` simply keeps the eager load (no flash). The hero H1
+// `.js-highlight` sweep is excluded from the check: its text is readable before the
+// sweep, so it never forces eager.
 if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
   const loadReveal = () => import('./components/reveal');
-  if (document.querySelector('.hero-front__reveal')) {
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  const revealAboveFold = Array.prototype.some.call(
+    document.querySelectorAll('.js-reveal, .js-reveal-group'),
+    (el) => {
+      const r = el.getBoundingClientRect();
+      return r.top < vh && r.bottom > 0;
+    }
+  );
+  if (revealAboveFold) {
+    loadReveal();
+  } else {
     let fired = false;
     const once = () => {
       if (fired) return;
@@ -106,8 +116,7 @@ if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
     // Wait for the load event BEFORE idle so the chunk is requested after the
     // initial render burst — that's what keeps it out of Lighthouse's critical
     // request chain (requestIdleCallback alone can fire before `load` on a fast
-    // page, landing the request back inside the critical window). First scroll /
-    // pointer still triggers it earlier if the visitor engages.
+    // page, landing the request back inside the critical window).
     const afterLoad = () => {
       if ('requestIdleCallback' in window) {
         requestIdleCallback(once, { timeout: 2000 });
@@ -122,8 +131,6 @@ if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
     }
     addEventListener('scroll', once, { once: true, passive: true });
     addEventListener('pointerdown', once, { once: true, passive: true });
-  } else {
-    loadReveal();
   }
 }
 

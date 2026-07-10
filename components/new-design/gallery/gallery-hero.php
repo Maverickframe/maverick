@@ -1,6 +1,6 @@
 <section class="gallery-hero">
     <div class="container">
-        <div class="gallery-hero__main js-reveal">
+        <div class="gallery-hero__main reveal-css">
             <?php // todo: common
                 $bc_lang = mfs_lang();
                 $bc_home = $bc_lang === 'es' ? home_url('/es/') : ( $bc_lang === 'de' ? home_url('/de/') : home_url('/') );

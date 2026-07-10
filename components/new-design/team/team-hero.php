@@ -1,6 +1,6 @@
 <section class="team-hero">
     <div class="container">
-        <div class="team-hero__main js-reveal">
+        <div class="team-hero__main reveal-css">
             <?php
                 $bc_lang = mfs_lang();
                 $bc_home = $bc_lang === 'es' ? home_url('/es/') : ( $bc_lang === 'de' ? home_url('/de/') : home_url('/') );
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <ul class="team-hero__numbers js-reveal">
+        <ul class="team-hero__numbers reveal-css">
             <?php
                 while( have_rows('main_numbers')) : the_row();
                     $number = get_sub_field('number');
