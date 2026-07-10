@@ -1118,6 +1118,26 @@ add_filter('rocket_lrc_optimization', '__return_false', 999);
 
 // End Fix wp rocket optimization for dynamic content
 
+// WP Rocket "Remove Unused CSS" builds the inline Used CSS by scanning the STATIC
+// DOM and drops any selector it doesn't find there. Our reveal / lazy / sticky
+// visibility is driven by classes JS adds at RUNTIME (.is-in from reveal.js,
+// .is-animated from .js-highlight, .lazyloaded from lazy-media, .is-fixed on the
+// scroll-locked body/header). Those classes aren't in the static DOM, so RUCSS
+// stripped e.g. `.js-reveal.is-in{opacity:1}` from the homepage Used CSS — leaving
+// the header (a `.js-reveal`, opacity:0 until revealed) permanently invisible =
+// "the menu disappeared". Safelist the runtime-toggled classes so their rules are
+// always kept. (Regenerate Used CSS after deploy for this to take effect.)
+add_filter('rocket_rucss_safelist', function ($safelist) {
+    return array_merge((array) $safelist, [
+        '.is-in',
+        '.is-animated',
+        '.lazyloaded',
+        '.is-fixed',
+        '.opened',
+        '.is-active',
+    ]);
+});
+
 // Search Posts in ACF Fields
 
 add_filter('posts_search', function ($search, $wp_query) {
