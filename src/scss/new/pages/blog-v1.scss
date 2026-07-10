@@ -1,2639 +1,2645 @@
 /* =========================================================
-   blog-v1-overrides.css
+   blog-single (V1) — scoped layer
    ---------------------------------------------------------
-   Layout + reading-color overrides for single-blog posts.
-   This theme puts "single-blog" on <html> (not <body>), so all
-   selectors are anchored via html.single-blog.
+   Single clean scope: this theme puts `single-blog` on <html>
+   (not <body>), so the whole layer is anchored once here.
+   No !important: the html.single-blog scope out-specifies the
+   base .article-page rules in blog-page.scss by source order +
+   specificity. Keyframes are kept at top level below.
    ========================================================= */
 
-/* === Stretch the article container to viewport edges === */
-html.single-blog .article-page-inner > .container,
-html.single-blog .article-page-inner .container {
-    max-width: 100% !important;
-    padding-left: clamp(20px, 3vw, 60px) !important;
-    padding-right: clamp(20px, 3vw, 60px) !important;
-}
-
-/* === Grid layout === */
-@media (min-width: 1024px) {
-    html.single-blog .article-page__columns.article-page__columns--3,
-    html.single-blog div.article-page__columns--3 {
-        display: grid !important;
-        /* Equal side columns (270px each), main capped at 800px. */
-        grid-template-columns: minmax(200px, 270px) minmax(0, 800px) minmax(200px, 270px) !important;
-        column-gap: clamp(20px, 3vw, 60px) !important;
-        row-gap: 0 !important;
-        align-items: stretch !important;
-        justify-content: space-between !important;
-    }
-    /* Sticky sidebars: flex-column. Author/status/feedback stay fixed.
-       Only the TOC list scrolls internally if it has many items. */
-    html.single-blog .article-page__aside .article-page__sticky,
-    html.single-blog .article-page__aside--left .article-page__sticky,
-    html.single-blog .article-page__aside--right .article-page__sticky,
-    html.single-blog div.article-page__sticky,
-    html.single-blog div.article-page__sticky.js-sidebar {
-        position: sticky !important;
-        /* Equal 60px gaps top & bottom. */
-        top: calc(var(--header-height, 70px) + 20px) !important;
-        height: calc(100vh - var(--header-height, 70px) - 40px) !important;
-        min-height: calc(100vh - var(--header-height, 70px) - 40px) !important;
-        max-height: calc(100vh - var(--header-height, 70px) - 40px) !important;
-        display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important;
-        box-sizing: border-box !important;
-    }
-    /* Make sure the aside grid item itself doesn't constrain the sticky. */
-    html.single-blog .article-page__aside,
-    html.single-blog .article-page__aside--left,
-    html.single-blog .article-page__aside--right {
-        align-self: stretch !important;
+html.single-blog {
+    /* === Stretch the article container to viewport edges === */
+    .article-page-inner > .container,
+    .article-page-inner .container {
+        max-width: 100%;
+        padding-left: clamp(20px, 3vw, 60px);
+        padding-right: clamp(20px, 3vw, 60px);
     }
 
-    /* Author / reading status / feedback: never scroll, never shrink */
-    html.single-blog .article-page__sticky > .author-mini,
-    html.single-blog .article-page__sticky > .reading-status,
-    html.single-blog .article-page__sticky > .feedback {
-        flex: 0 0 auto;
+    /* === Grid layout === */
+    @media (min-width: 1024px) {
+        .article-page__columns.article-page__columns--3,
+        div.article-page__columns--3 {
+            display: grid;
+            /* Equal side columns (270px each), main capped at 800px. */
+            grid-template-columns: minmax(200px, 270px) minmax(0, 800px) minmax(200px, 270px);
+            column-gap: clamp(20px, 3vw, 60px);
+            row-gap: 0;
+            align-items: stretch;
+            justify-content: space-between;
+        }
+        /* Sticky sidebars: flex-column. Author/status/feedback stay fixed.
+           Only the TOC list scrolls internally if it has many items. */
+        .article-page__aside .article-page__sticky,
+        .article-page__aside--left .article-page__sticky,
+        .article-page__aside--right .article-page__sticky,
+        div.article-page__sticky,
+        div.article-page__sticky.js-sidebar {
+            position: sticky;
+            /* Equal 60px gaps top & bottom. */
+            top: calc(var(--header-height, 70px) + 20px);
+            height: calc(100vh - var(--header-height, 70px) - 40px);
+            min-height: calc(100vh - var(--header-height, 70px) - 40px);
+            max-height: calc(100vh - var(--header-height, 70px) - 40px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        /* Make sure the aside grid item itself doesn't constrain the sticky. */
+        .article-page__aside,
+        .article-page__aside--left,
+        .article-page__aside--right {
+            align-self: stretch;
+        }
+
+        /* Author / reading status / feedback: never scroll, never shrink */
+        .article-page__sticky > .author-mini,
+        .article-page__sticky > .reading-status,
+        .article-page__sticky > .feedback {
+            flex: 0 0 auto;
+        }
+
+        /* TOC wrapper — flex column, title stays at top, only the list scrolls */
+        .article-page__sticky > .toc {
+            flex: 1 1 auto;
+            min-height: 0;  /* critical for overflow children inside flex */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .article-page__sticky > .toc > .toc__title {
+            flex: 0 0 auto;
+        }
+        /* The actual TOC list (whatever it's wrapped in) — make it scrollable */
+        .article-page__sticky > .toc > ul,
+        .article-page__sticky > .toc > ol,
+        .article-page__sticky > .toc > .toc__list,
+        .article-page__sticky > .toc > div:not(.toc__title) {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+            overscroll-behavior: contain;
+            /* Thin scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+        .article-page__sticky > .toc ::-webkit-scrollbar,
+        .article-page__sticky > .toc::-webkit-scrollbar {
+            width: 4px;
+        }
+        .article-page__sticky > .toc ::-webkit-scrollbar-track,
+        .article-page__sticky > .toc::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .article-page__sticky > .toc ::-webkit-scrollbar-thumb,
+        .article-page__sticky > .toc::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 1px;
+        }
+
+        /* Compact TOC items so more fit on screen */
+        .article-page__sticky .toc a {
+            font-size: 13px;
+            line-height: 1.3;
+            padding: 3px 0;
+            margin: 0;
+        }
+        /* Kill any extra margin on li/__item wrappers from the theme. */
+        .article-page__sticky .toc li,
+        .article-page__sticky .toc__item,
+        .article-page__sticky .toc__list > * {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .article-page__sticky .toc__title {
+            font-size: 11px;
+            font-weight: 400;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+        }
+        .article-page__main,
+        article.article-page__main,
+        .article-page__columns--3 > .article-page__main {
+            width: 100%;
+            max-width: 800px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .article-page__content {
+            max-width: 100%;
+            width: 100%;
+        }
     }
 
-    /* TOC wrapper — flex column, title stays at top, only the list scrolls */
-    html.single-blog .article-page__sticky > .toc {
-        flex: 1 1 auto;
-        min-height: 0;  /* critical for overflow children inside flex */
-        display: flex !important;
-        flex-direction: column !important;
+    /* === Reading colors === */
+    .article-page__content,
+    .article-page__content p,
+    .article-page__content li,
+    .article-page__content blockquote {
+        color: #2A2A2A;
+    }
+    .article-page__content h1,
+    .article-page__content h2,
+    .article-page__content h3,
+    .article-page__content h4,
+    .article-page__content h5,
+    .article-page__content h6 {
+        color: #000;
+    }
+    .article-page__content a {
+        color: #2D40AE;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .article-page__aside--left .toc a,
+    .article-page__aside--left .toc__list a,
+    .article-page__aside--left .toc__item a {
+        color: #000;
+    }
+    .article-page__aside--left .toc a.is-active,
+    .article-page__aside--left .toc a.active,
+    .article-page__aside--left .toc__item.is-active a,
+    .article-page__aside--left .toc__item.active a {
+        color: #2D40AE;
+    }
+
+
+    /* =========================================================
+       ENHANCEMENTS: progress bar, TOC scroll-spy, lightbox, captions
+       ========================================================= */
+
+    /* --- Reading progress bar (top of viewport) --- */
+    .blog-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.04);
+        z-index: 10000;
+        pointer-events: none;
+    }
+    .blog-progress-bar__fill {
+        width: 100%;
+        height: 100%;
+        background: #2D40AE;
+        transform-origin: left;
+        transform: scaleX(0);
+        transition: transform 80ms linear;
+    }
+
+    /* --- TOC scroll-spy active state --- */
+    .article-page__aside--left .toc a.is-active,
+    .article-page__aside--left .toc__list a.is-active,
+    .article-page__aside--left .toc__item a.is-active,
+    .article-page__aside--left .toc__item.is-active > a {
+        color: #2D40AE;
+        font-weight: 500;
+    }
+
+    /* --- Figcaption styling for in-article images --- */
+    .article-page__content figure {
+        margin: 32px 0;
+    }
+    .article-page__content figcaption,
+    .article-page__content .wp-caption-text {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #575757;
+        text-align: center;
+        font-style: italic;
+    }
+
+    /* --- Image hover hint (zoom-in cursor) --- */
+    .article-page__content img {
+        cursor: zoom-in;
+        transition: opacity 200ms ease;
+    }
+    .article-page__content img:hover {
+        opacity: 0.92;
+    }
+
+    /* --- Lightbox overlay --- */
+    .blog-lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px;
+        cursor: zoom-out;
+        animation: blog-lightbox-in 220ms ease;
+    }
+    .blog-lightbox__img {
+        max-width: 100%;
+        max-height: 88vh;
+        object-fit: contain;
+        cursor: default;
+        box-shadow: 0 12px 60px rgba(0, 0, 0, 0.5);
+    }
+    .blog-lightbox__caption {
+        margin-top: 20px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        text-align: center;
+        max-width: 700px;
+        line-height: 1.5;
+    }
+    .blog-lightbox__close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font: 28px/1 sans-serif;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 150ms ease;
+    }
+    .blog-lightbox__close:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Updated date pill: white on the dark hero image */
+    .metabox__item--updated {
+        color: #FFFFFF;
+        opacity: 0.92;
+    }
+
+    /* Tighten the gap between hero and the breadcrumbs/content area.
+       Theme defaults are margin-top: 80-150px — too big here. */
+    .article-page-inner {
+        margin-top: 24px;
+    }
+    @media (min-width: 1024px) {
+        .article-page-inner {
+            margin-top: 36px;
+        }
+    }
+
+    /* === Breadcrumbs (BOTTOM of article — navigation exit) =====
+       Sits between the article body and related articles.
+       Acts as a "you are here" signpost + back-out navigation.
+       ============================================================= */
+    .article-page__breadcrumbs-bottom {
+        padding: 32px 0;
+        margin-top: 40px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background: #FAFAFA;
+    }
+    @media (min-width: 1024px) {
+        .article-page__breadcrumbs-bottom {
+            padding: 40px 0;
+            margin-top: 56px;
+        }
+    }
+
+    .article-page__breadcrumbs-bottom .container {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .article-page__breadcrumbs-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #888;
+        font-weight: 500;
+        flex-shrink: 0;
+    }
+
+    /* The breadcrumbs row itself */
+    .article-page__breadcrumbs-wrap {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        line-height: 1.4;
+        border: 0;
+    }
+    @media (min-width: 1024px) {
+        .article-page__breadcrumbs-wrap {
+            font-size: 13px;
+        }
+    }
+
+    /* Container around the actual breadcrumb list — make it flex with separators */
+    .article-page__breadcrumbs-wrap > * {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* Items: links, spans, list items */
+    .article-page__breadcrumbs-wrap li,
+    .article-page__breadcrumbs-wrap a,
+    .article-page__breadcrumbs-wrap > * > span {
+        display: inline-flex;
+        align-items: center;
+        color: #575757;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .article-page__breadcrumbs-wrap a:hover {
+        color: #2D40AE;
+    }
+
+    /* Insert "/" separator BEFORE every item except the first */
+    .article-page__breadcrumbs-wrap li + li::before,
+    .article-page__breadcrumbs-wrap a + a::before,
+    .article-page__breadcrumbs-wrap > * > *:not(:first-child)::before {
+        content: '/';
+        margin: 0 12px;
+        color: rgba(0, 0, 0, 0.2);
+        font-weight: 400;
+    }
+
+    /* Hide the last breadcrumb item (it's the current article title — already in hero).
+       Cover the common patterns used by Rank Math and our manual partial. */
+    .article-page__breadcrumbs-wrap li:last-child,
+    .article-page__breadcrumbs-wrap > *:last-child:not(:first-child),
+    .article-page__breadcrumbs-wrap .last,
+    .article-page__breadcrumbs-wrap [aria-current="page"],
+    .article-page__breadcrumbs-wrap > * > *:last-child:not(a):not(:first-child) {
+        display: none;
+    }
+
+
+    /* =========================================================
+       AUTHOR MINI-CARD (top of sidebar)
+       ========================================================= */
+    .author-mini {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 0;
+        margin-bottom: 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .author-mini__avatar {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .author-mini__avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .author-mini__avatar-fallback {
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+        background: #2D40AE;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .author-mini__body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .author-mini__name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+        text-decoration: none;
+        line-height: 1.3;
+    }
+    .author-mini__name:hover {
+        color: #2D40AE;
+    }
+    .author-mini__role {
+        font-size: 12px;
+        color: #575757;
+        line-height: 1.3;
+    }
+    .author-mini__linkedin {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        color: #2D40AE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+    .author-mini__linkedin:hover {
+        opacity: 0.7;
+    }
+    .author-mini__linkedin svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* =========================================================
+       READING STATUS (between author + TOC)
+       ========================================================= */
+    .reading-status {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 16px;
+        font-size: 12px;
+        color: #575757;
+        line-height: 1.3;
+        flex-wrap: wrap;
+    }
+    .reading-status__time {
+        font-weight: 500;
+        color: #2D40AE;
+    }
+    .reading-status__sep {
+        color: rgba(0, 0, 0, 0.25);
+    }
+
+    /* =========================================================
+       FEEDBACK WIDGET (bottom of sidebar)
+       ========================================================= */
+    .feedback {
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .feedback__title {
+        font-size: 13px;
+        font-weight: 500;
+        color: #000;
+        margin: 0 0 10px;
+        line-height: 1.3;
+    }
+    .feedback__buttons {
+        display: flex;
+        gap: 8px;
+    }
+    .feedback__btn {
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 1px;
+        padding: 8px 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: #2A2A2A;
+        transition: background 150ms, border-color 150ms, color 150ms;
+        font-family: inherit;
+    }
+    .feedback__btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .feedback__btn:hover {
+        background: #fff;
+        border-color: #2D40AE;
+        color: #2D40AE;
+    }
+    .feedback__thanks .feedback__title {
+        color: #2D40AE;
+        margin: 0;
+    }
+
+
+    /* =========================================================
+       HERO: cinematic bottom-left (Medium / Vox pattern)
+       - Eyebrow with category
+       - Big title, capped at ~800px so it stays 2-3 lines max
+       - Metabox sits BELOW title (date + updated + read time)
+       - Soft bottom gradient for legibility over any image
+       ========================================================= */
+
+    /* === HERO v3: dark editorial (Stripe / Vercel / Linear style) ===
+       No image. Subtle brand gradient. Content vertically centered. */
+    .hero-block {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 360px;
+        padding: 80px 0;
+        background:
+            radial-gradient(ellipse at top right, rgba(45, 64, 174, 0.28) 0%, transparent 55%),
+            radial-gradient(ellipse at bottom left, rgba(45, 64, 174, 0.10) 0%, transparent 50%),
+            #0A0E1F;
         overflow: hidden;
     }
-    html.single-blog .article-page__sticky > .toc > .toc__title {
-        flex: 0 0 auto;
+    @media (min-width: 1024px) {
+        .hero-block {
+            min-height: 440px;
+            padding: 120px 0;
+        }
     }
-    /* The actual TOC list (whatever it's wrapped in) — make it scrollable */
-    html.single-blog .article-page__sticky > .toc > ul,
-    html.single-blog .article-page__sticky > .toc > ol,
-    html.single-blog .article-page__sticky > .toc > .toc__list,
-    html.single-blog .article-page__sticky > .toc > div:not(.toc__title) {
+
+    /* Hide the featured/background image — pure gradient hero now. */
+    .hero-block__media,
+    .hero-block > .hero-block__media {
+        display: none;
+    }
+
+    /* Remove the bottom dark gradient overlay — bg is already dark. */
+    .hero-block::after {
+        display: none;
+        content: none;
+    }
+
+    /* Container fills hero via flex, centers content vertically. */
+    .hero-block > .container,
+    .hero-block .container {
+        position: relative;
+        z-index: 2;
         flex: 1 1 auto;
-        overflow-y: auto;
-        min-height: 0;
-        overscroll-behavior: contain;
-        /* Thin scrollbar */
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
     }
-    html.single-blog .article-page__sticky > .toc ::-webkit-scrollbar,
-    html.single-blog .article-page__sticky > .toc::-webkit-scrollbar {
-        width: 4px;
+
+    /* Main: contained, comfortable max-width, vertical center via parent. */
+    .hero-block__main {
+        position: static;
+        width: 100%;
+        max-width: 880px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
     }
-    html.single-blog .article-page__sticky > .toc ::-webkit-scrollbar-track,
-    html.single-blog .article-page__sticky > .toc::-webkit-scrollbar-track {
+    @media (min-width: 1024px) {
+        .hero-block__main {
+            gap: 22px;
+        }
+    }
+
+    /* Eyebrow: category, small, uppercase, with a dot indicator */
+    .hero-block__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 100px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        line-height: 1;
+        width: max-content;
+        align-self: flex-start;
+    }
+    .hero-block__eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #FFC83D;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    /* Title: tighter font sizes, capped width, modern editorial line-height */
+    .hero-block__title {
+        max-width: 800px;
+        margin: 0;
+        font-size: clamp(32px, 4.2vw, 56px);
+        line-height: 1.1;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: -0.01em;
+    }
+    @media (min-width: 1024px) {
+        .hero-block__title {
+            font-size: clamp(36px, 4.5vw, 64px);
+        }
+    }
+
+    /* Metabox: small, soft white, sits below title */
+    .hero-block__metabox {
+        margin: 0;
+        padding: 0;
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    @media (min-width: 1024px) {
+        .hero-block__metabox {
+            font-size: 14px;
+        }
+    }
+    .hero-block__metabox .metabox__item {
+        color: inherit;
+        font-size: inherit;
+        /* kill the light-hero pill bg/padding that turned into white blocks on mobile */
+        background: transparent;
+        background-color: transparent;
+        padding: 0;
+    }
+    .hero-block__metabox .dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        margin: 0;
+    }
+
+    /* Updated date pill stays white per earlier instruction */
+    .metabox__item--updated {
+        color: rgba(255, 255, 255, 0.85);
+        opacity: 1;
+    }
+
+
+    /* =========================================================
+       SIDEBAR CTA (right sticky widget) — dark, conversion-focused
+       ========================================================= */
+    .sidebar-cta {
+        background: #1A1A1A;
+        color: #fff;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Author strip */
+    .sidebar-cta__author {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .sidebar-cta__avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+    .sidebar-cta__author-name {
+        margin: 0;
+        color: rgba(255,255,255,0.65);
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    .sidebar-cta__author-eyebrow {
+        color: rgba(255,255,255,0.65);
+        font-size: 12px;
+    }
+
+    /* Headline + sub */
+    .sidebar-cta__head {
+        margin: 0;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+    .sidebar-cta__sub {
+        margin: 0;
+        color: rgba(255,255,255,0.7);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* Primary CTA button */
+    .sidebar-cta__btn {
+        margin-top: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 12px 18px;
+        background: #2D40AE;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        text-decoration: none;
+        border-radius: 1px;
+        transition: background 150ms ease, transform 150ms ease;
+        cursor: pointer;
+    }
+    .sidebar-cta__btn:hover {
+        background: #3a52cd;
+        transform: translateY(-1px);
+    }
+    .sidebar-cta__btn svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    /* Trust footer (stars + social proof) */
+    .sidebar-cta__trust {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .sidebar-cta__stars {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        color: #FFC83D;
+    }
+    .sidebar-cta__stars svg {
+        width: 14px;
+        height: 14px;
+    }
+    .sidebar-cta__rating-num {
+        margin-left: 6px;
+        color: rgba(255,255,255,0.85);
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .sidebar-cta__proof {
+        margin: 0;
+        color: rgba(255,255,255,0.55);
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+
+    /* =========================================================
+       TYPOGRAPHY: article body (Bringhurst / Medium / NYT pattern)
+       Optimized for long-form reading comfort.
+       ========================================================= */
+
+    /* === Body baseline === */
+    .article-page__content {
+        font-size: 17px;
+        line-height: 1.7;
+        color: #2A2A2A;
+        font-weight: 400;
+        letter-spacing: -0.003em;
+        /* Modern wrapping: prevents lonely orphans on the last line */
+        text-wrap: pretty;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content {
+            font-size: 18px;
+            line-height: 1.72;
+        }
+    }
+
+    /* === Paragraphs === */
+    .article-page__content p {
+        margin: 0 0 24px 0;
+        color: #2A2A2A;
+    }
+
+    /* All paragraphs same size — consistent body, no "lead" variation. */
+
+    /* === Headings === */
+    .article-page__content h2 {
+        position: relative;
+        font-size: 30px;
+        line-height: 1.2;
+        font-weight: 700;
+        color: #000;
+        letter-spacing: -0.02em;
+        margin: 64px 0 18px 0;
+        padding-top: 20px;
+        text-wrap: balance;
+    }
+    /* Section accent: a 48px horizontal blue line ABOVE the heading */
+    .article-page__content h2::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 48px;
+        height: 3px;
+        background: #2D40AE;
+        border-radius: 1px;
+        display: block;
+        transform: none;
+        margin: 0;
+        vertical-align: baseline;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content h2 {
+            font-size: 34px;
+            margin-top: 72px;
+            padding-top: 22px;
+        }
+        .article-page__content h2::before {
+            width: 56px;
+            height: 3px;
+        }
+    }
+
+    .article-page__content h3 {
+        position: relative;
+        font-size: 23px;
+        line-height: 1.3;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.012em;
+        margin: 44px 0 12px 0;
+        padding-top: 14px;
+    }
+    /* Sub-section accent: smaller (28px) horizontal blue line above H3 */
+    .article-page__content h3::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 28px;
+        height: 2px;
+        background: #2D40AE;
+        border-radius: 1px;
+        display: block;
+        opacity: 0.75;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content h3 {
+            font-size: 26px;
+            margin-top: 48px;
+            padding-top: 16px;
+        }
+        .article-page__content h3::before {
+            width: 32px;
+        }
+    }
+
+    .article-page__content h4 {
+        font-size: 19px;
+        line-height: 1.35;
+        font-weight: 600;
+        color: #000;
+        margin: 32px 0 10px 0;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content h4 {
+            font-size: 21px;
+            margin-top: 36px;
+        }
+    }
+
+    /* Reset the dot for the first H2 if it shouldn't have one (e.g., article-leading) */
+    .article-page__content > h2:first-child {
+        margin-top: 0;
+    }
+
+    /* First heading in article has no top margin — already separated from above */
+    .article-page__content > h2:first-child,
+    .article-page__content > h3:first-child {
+        margin-top: 0;
+    }
+
+    /* === Lists === */
+    .article-page__content ul,
+    .article-page__content ol {
+        margin: 0 0 24px 0;
+        padding-left: 24px;
+        color: #2A2A2A;
+    }
+    .article-page__content li {
+        margin-bottom: 8px;
+        line-height: 1.65;
+    }
+    .article-page__content li:last-child {
+        margin-bottom: 0;
+    }
+    .article-page__content li::marker {
+        color: #888;
+    }
+
+    /* === Blockquote === */
+    .article-page__content blockquote {
+        margin: 32px 0;
+        padding: 4px 0 4px 24px;
+        border-left: 3px solid #2D40AE;
+        font-size: 1.1em;
+        line-height: 1.55;
+        font-style: italic;
+        color: #2A2A2A;
+    }
+    .article-page__content blockquote p {
+        margin-bottom: 12px;
+    }
+    .article-page__content blockquote p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* === Inline emphasis === */
+    .article-page__content strong,
+    .article-page__content b {
+        font-weight: 600;
+        color: #1A1A1A;
+    }
+    .article-page__content em,
+    .article-page__content i {
+        font-style: italic;
+    }
+
+    /* === Code (if used) === */
+    .article-page__content code {
+        font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+        font-size: 0.92em;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 2px 6px;
+        border-radius: 1px;
+        color: #1A1A1A;
+    }
+
+    /* === Horizontal rule === */
+    .article-page__content hr {
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        margin: 48px 0;
+    }
+
+    /* === Figure / image spacing === */
+    .article-page__content figure {
+        margin: 36px 0;
+    }
+    .article-page__content figcaption {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #888;
+        text-align: center;
+        font-style: italic;
+    }
+
+    /* === Tables === */
+    /* === Editorial minimal table (NYT-inspired) — NUCLEAR RESET === */
+
+    /* Wipe ALL borders explicitly per side — beats theme's per-side rules.
+       Wipe backgrounds, shadows, radii. */
+    .article-page__content figure.wp-block-table,
+    .article-page__content figure.wp-block-table *,
+    .article-page__content .wp-block-table,
+    .article-page__content .wp-block-table *,
+    .article-page__content table,
+    .article-page__content table *,
+    .article-page__content thead,
+    .article-page__content tbody,
+    .article-page__content tfoot,
+    .article-page__content tr,
+    .article-page__content th,
+    .article-page__content td {
+        background: transparent;
+        background-color: transparent;
+        background-image: none;
+        border-top: 0 none transparent;
+        border-right: 0 none transparent;
+        border-bottom: 0 none transparent;
+        border-left: 0 none transparent;
+        border-radius: 0;
+        box-shadow: none;
+        outline: 0;
+    }
+
+    /* Container reset (some themes wrap tables in figure with bg/border) */
+    .article-page__content figure.wp-block-table,
+    .article-page__content .wp-block-table {
+        padding: 0;
+        margin: 40px 0;
+        overflow: visible;
+    }
+
+    /* Table base */
+    .article-page__content table {
+        width: 100%;
+        margin: 40px 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 15px;
+        line-height: 1.55;
+        color: #2A2A2A;
+        table-layout: auto;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content table {
+            font-size: 16px;
+        }
+    }
+
+    /* Header — uppercase, small, thick black bottom border */
+    .article-page__content table thead tr th,
+    .article-page__content table > thead > tr > th,
+    .article-page__content thead th {
+        color: #000;
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-align: left;
+        padding: 14px 18px 14px 0;
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: #000;
+        vertical-align: bottom;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content table thead tr th,
+        .article-page__content thead th {
+            font-size: 12px;
+            padding: 16px 20px 16px 0;
+        }
+    }
+
+    /* Body cells — only horizontal separator */
+    .article-page__content table tbody tr td,
+    .article-page__content table > tbody > tr > td,
+    .article-page__content tbody td {
+        padding: 18px 20px 18px 0;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+        text-align: left;
+        vertical-align: top;
+        color: #2A2A2A;
+    }
+    @media (min-width: 1024px) {
+        .article-page__content table tbody tr td,
+        .article-page__content tbody td {
+            padding: 20px 24px 20px 0;
+        }
+    }
+
+    /* Last cell in each row — remove right padding for clean right edge */
+    .article-page__content table tbody tr td:last-child,
+    .article-page__content table thead tr th:last-child {
+        padding-right: 0;
+    }
+
+    /* Last row — no bottom border */
+    .article-page__content table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    /* First column — bold label */
+    .article-page__content table tbody tr td:first-child {
+        font-weight: 600;
+        color: #000;
+        width: 22%;
+    }
+
+    /* Subtle hover */
+    .article-page__content table tbody tr:hover td {
+        background: rgba(45, 64, 174, 0.025);
+    }
+
+
+    /* === Table — extra-aggressive override for WP block table + stripes === */
+    /* Kill WP's "stripes" alternating row backgrounds explicitly */
+    .article-page__content .wp-block-table.is-style-stripes tbody tr,
+    .article-page__content .wp-block-table.is-style-stripes tbody tr td,
+    .article-page__content .wp-block-table tbody tr:nth-child(even),
+    .article-page__content .wp-block-table tbody tr:nth-child(odd),
+    .article-page__content .wp-block-table tbody tr:nth-child(even) td,
+    .article-page__content .wp-block-table tbody tr:nth-child(odd) td,
+    .article-page__content table tbody tr:nth-child(even),
+    .article-page__content table tbody tr:nth-child(odd),
+    .article-page__content table tbody tr:nth-child(even) td,
+    .article-page__content table tbody tr:nth-child(odd) td {
+        background: transparent;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    /* Kill ANY border that came from inline style="" attributes */
+    .article-page__content table[style] *,
+    .article-page__content table th[style],
+    .article-page__content table td[style],
+    .article-page__content figure.wp-block-table[style] *,
+    .article-page__content figure.wp-block-table * {
+        border-top: 0 none transparent;
+        border-right: 0 none transparent;
+        border-left: 0 none transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+
+    /* Re-apply ONLY the header bottom border and row separators */
+    .article-page__content table thead tr th,
+    .article-page__content figure.wp-block-table table thead tr th {
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: #000;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+    .article-page__content table tbody tr td,
+    .article-page__content figure.wp-block-table table tbody tr td {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+    .article-page__content table tbody tr:last-child td {
+        border-bottom: 0 none transparent;
+    }
+
+    /* === TOC active marker: square instead of circle === */
+    .article-page__sticky .toc a.is-active {
+        position: relative;
+        padding-left: 16px;
+        color: #2D40AE;
+        font-weight: 600;
+    }
+    .article-page__sticky .toc a.is-active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        background: #2D40AE;
+        border-radius: 1px;
+        transform: translateY(-50%);
+        display: block;
+    }
+
+    /* Kill any theme-added dot/circle markers on active TOC item */
+    .article-page__sticky .toc__item.is-active::before,
+    .article-page__sticky .toc__item.is-active::marker,
+    .article-page__sticky .toc li.is-active::before,
+    .article-page__sticky .toc li.is-active::marker {
+        display: none;
+        content: none;
+    }
+
+
+    /* === TOC: cream bg + no bold active + kill all theme markers === */
+
+    /* Sidebar background: transparent (option B — minimal) */
+    .article-page__aside--left .article-page__sticky {
+        background-color: transparent;
         background: transparent;
     }
-    html.single-blog .article-page__sticky > .toc ::-webkit-scrollbar-thumb,
-    html.single-blog .article-page__sticky > .toc::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.18);
+
+    /* Active state: just blue color, no bold weight */
+    .article-page__sticky .toc a.is-active {
+        color: #2D40AE;
+        font-weight: 400;
+        padding-left: 16px;
+        position: relative;
+    }
+
+    /* My square marker stays */
+    .article-page__sticky .toc a.is-active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 7px;
+        height: 7px;
+        background: #2D40AE;
+        border-radius: 1px;
+        transform: translateY(-50%);
+        display: block;
+    }
+
+    /* HARD KILL all possible theme markers (circles, dots, bullets) on active items */
+    .article-page__sticky .toc li::marker,
+    .article-page__sticky .toc li::before,
+    .article-page__sticky .toc li::after,
+    .article-page__sticky .toc__item::before,
+    .article-page__sticky .toc__item::after,
+    .article-page__sticky .toc__item.is-active::before,
+    .article-page__sticky .toc__item.is-active::after,
+    .article-page__sticky .toc li.is-active::before,
+    .article-page__sticky .toc li.is-active::after,
+    .article-page__sticky .toc__list li::before,
+    .article-page__sticky .toc__list li::after,
+    .article-page__sticky .toc__list li::marker {
+        content: none;
+        display: none;
+        background: none;
+        background-color: transparent;
+    }
+
+    /* Reset list-style on all TOC lists */
+    .article-page__sticky .toc ul,
+    .article-page__sticky .toc ol,
+    .article-page__sticky .toc__list {
+        list-style: none;
+        padding-left: 0;
+    }
+    .article-page__sticky .toc li {
+        list-style: none;
+    }
+
+
+    /* === Sidebar CTA: real MFS logo (replaces author avatar) === */
+    .sidebar-cta__brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .sidebar-cta__monogram {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .sidebar-cta__monogram img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* Theme's logo.svg is dark — invert to white for the dark sidebar bg */
+        filter: brightness(0) invert(1);
+    }
+    .sidebar-cta__brand-text {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    .sidebar-cta__brand-eyebrow {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 12px;
+        letter-spacing: 0.02em;
+    }
+
+
+    /* === TABLE: FINAL nuclear override ====================
+       Targets WP block variables, inline style attrs, and all
+       possible border declarations from any source.
+       ======================================================= */
+
+    /* Override Gutenberg table CSS variables */
+    .article-page__content .wp-block-table,
+    .article-page__content figure.wp-block-table,
+    .article-page__content figure.wp-block-table table {
+        --wp--preset--table--border-color: transparent;
+        --wp--preset--color--border: transparent;
+    }
+
+    /* Cascade-killer: any element inside any table */
+    .article-page__content table,
+    .article-page__content table *,
+    .article-page__content table tbody,
+    .article-page__content table thead,
+    .article-page__content table tr,
+    .article-page__content table td,
+    .article-page__content table th,
+    .article-page__content figure.wp-block-table table *,
+    .article-page__content figure.wp-block-table table td,
+    .article-page__content figure.wp-block-table table th {
+        border-top-width: 0;
+        border-right-width: 0;
+        border-left-width: 0;
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        outline: 0 none transparent;
+        box-shadow: none;
+    }
+
+    /* Override inline style attributes (border on td/th/tr directly) */
+    .article-page__content table td[style],
+    .article-page__content table th[style],
+    .article-page__content table tr[style] {
+        border-right-width: 0;
+        border-left-width: 0;
+        border-right-style: none;
+        border-left-style: none;
+        border-right-color: transparent;
+        border-left-color: transparent;
+    }
+
+    /* Re-apply ONLY the row separators (horizontal) */
+    .article-page__content table tbody tr td {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* First row of any table — treat as header (since this table may
+       not have a real <thead>): bold, slightly more padding, thick bottom */
+    .article-page__content table tbody tr:first-child td {
+        font-weight: 700;
+        color: #000;
+        padding-top: 8px;
+        padding-bottom: 14px;
+        border-bottom-width: 2px;
+        border-bottom-color: #000;
+    }
+
+    /* Last row — clean bottom */
+    .article-page__content table tbody tr:last-child td {
+        border-bottom: 0 none transparent;
+    }
+
+
+    /* === TOC sidebar: near-black border + separators === */
+
+    /* Subtle near-black border around the whole left sidebar */
+    .article-page__aside--left .article-page__sticky {
+        border: 1px solid #0A0A0A;
         border-radius: 1px;
     }
 
-    /* Compact TOC items so more fit on screen */
-    html.single-blog .article-page__sticky .toc a {
-        font-size: 13px !important;
-        line-height: 1.3 !important;
-        padding: 3px 0 !important;
-        margin: 0 !important;
+    /* Divider between author-mini and reading status — same near-black tone */
+    .author-mini {
+        border-bottom-color: #0A0A0A;
     }
-    /* Kill any extra margin on li/__item wrappers from the theme. */
-    html.single-blog .article-page__sticky .toc li,
-    html.single-blog .article-page__sticky .toc__item,
-    html.single-blog .article-page__sticky .toc__list > * {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
+
+    /* Divider above feedback widget */
+    .feedback {
+        border-top-color: #0A0A0A;
     }
-    html.single-blog .article-page__sticky .toc__title {
-        font-size: 11px !important;
-        font-weight: 400 !important;
-        color: #888 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.12em !important;
-        margin-bottom: 10px !important;
+
+    /* TOC scrollbar — brand tinted thumb */
+    .article-page__sticky > .toc ::-webkit-scrollbar-thumb,
+    .article-page__sticky > .toc::-webkit-scrollbar-thumb {
+        background: rgba(45, 64, 174, 0.25);
     }
-    html.single-blog .article-page__main,
-    html.single-blog article.article-page__main,
-    html.single-blog .article-page__columns--3 > .article-page__main {
-        width: 100% !important;
-        max-width: 800px !important;
-        margin: 0 !important;
-        box-sizing: border-box !important;
+    .article-page__sticky > .toc ::-webkit-scrollbar-thumb:hover,
+    .article-page__sticky > .toc::-webkit-scrollbar-thumb:hover {
+        background: rgba(45, 64, 174, 0.45);
     }
-    html.single-blog .article-page__content {
-        max-width: 100% !important;
-        width: 100% !important;
+    .article-page__sticky > .toc {
+        scrollbar-color: rgba(45, 64, 174, 0.25) transparent;
+    }
+
+
+    /* === TABLE FINAL FIX: theme uses ::before / ::after pseudo-elements
+       for cell separator lines (not borders!) — kill them === */
+
+    /* ============================================================
+       ITERATION 2: revert H2/H3 lines to brand accent; TOC borders -> dark CTA color
+       ============================================================ */
+
+    /* Revert: H2 / H3 horizontal separator line back to brand accent (blue) */
+    .article-page__content h2::before,
+    .article-page__content h3::before,
+    .article-page__content > h2::before,
+    .article-page__content > h3::before {
+        background: var(--accent-color, #2A4BFF);
+        background-color: var(--accent-color, #2A4BFF);
+        border-color: var(--accent-color, #2A4BFF);
+    }
+    .article-page__content h2,
+    .article-page__content h3 {
+        border-top-color: var(--accent-color, #2A4BFF);
+    }
+
+    /* TOC borders — match dark CTA sidebar color (#0A0A0A) */
+    .article-aside,
+    .article-aside__contents,
+    .article-aside__contents-inner,
+    .article-aside .contents,
+    .article-aside .author-mini,
+    .article-aside .reading-status,
+    .article-aside .feedback,
+    .article-aside__inner,
+    .article-aside__sticky {
+        border-color: #0A0A0A;
+    }
+
+    .article-aside *,
+    .article-aside *::before,
+    .article-aside *::after {
+        border-color: #0A0A0A;
+    }
+
+    /* Internal separators inside TOC card (between author / status / contents / feedback) */
+    .article-aside__contents-inner > *,
+    .article-aside__contents > *,
+    .article-aside .contents > * {
+        border-top-color: #0A0A0A;
+        border-bottom-color: #0A0A0A;
+    }
+
+    /* Keep TOC inner scroll container smooth-scroll capable */
+    .article-aside__contents,
+    .article-aside__contents-inner,
+    .article-aside__contents ul,
+    .article-aside__contents nav,
+    .article-aside .contents,
+    .article-aside .contents ul {
+        scroll-behavior: smooth;
+    }
+
+    /* ============================================================
+       ITERATION 3: in-article CTA -> "Editor's note" + compact FAQ
+       ============================================================ */
+
+    /* --- CTA: kill banner styling, become editorial editor's-note --- */
+    .article-page__cta {
+        background: transparent;
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        border-left: 3px solid #0A0A0A;
+        padding: 4px 0 4px 28px;
+        margin: 56px 0;
+        display: block;
+        overflow: visible;
+        min-height: 0;
+        color: #0A0A0A;
+        box-shadow: none;
+    }
+    .article-page__cta-img {
+        display: none;
+    }
+    .article-page__cta-content {
+        padding: 0;
+        background: transparent;
+        color: #0A0A0A;
+        width: auto;
+        max-width: 100%;
+        position: static;
+    }
+    .article-page__cta-title {
+        font-size: 11px;
+        line-height: 1.4;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0 0 12px 0;
+        padding: 0;
+        font-family: inherit;
+    }
+    .article-page__cta-text {
+        font-size: 19px;
+        line-height: 1.55;
+        font-weight: 400;
+        font-style: italic;
+        color: #0A0A0A;
+        margin: 0 0 18px 0;
+        font-family: inherit;
+    }
+    .article-page__cta-text p {
+        font-size: inherit;
+        line-height: inherit;
+        font-style: inherit;
+        margin: 0;
+    }
+    .article-page__cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid #0A0A0A;
+        border-radius: 0;
+        padding: 2px 0 4px 0;
+        color: #0A0A0A;
+        font-size: 15px;
+        line-height: 1.3;
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        text-transform: none;
+        box-shadow: none;
+        min-height: 0;
+        width: auto;
+    }
+    .article-page__cta-button::after {
+        content: " \2192";
+        margin-left: 2px;
+        display: inline;
+        background: none;
+        width: auto;
+        height: auto;
+    }
+    .article-page__cta-button:hover {
+        background: transparent;
+        color: #2D40AE;
+        border-bottom-color: #2D40AE;
+    }
+
+    /* --- Compact FAQ: tight, editorial, single column --- */
+    .article-page__faq,
+    .faq.article-page__faq {
+        background: transparent;
+        padding: 40px 0 24px 0;
+        margin: 32px 0 0 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    .article-page__faq .container,
+    .article-page__faq .container_small {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 100%;
+    }
+    .article-page__faq .faq__info {
+        margin: 0 0 20px 0;
+        padding: 0;
+        display: block;
+    }
+    .article-page__faq .faq__info h2 {
+        font-size: 11px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0;
+        padding: 0;
+        font-family: inherit;
+    }
+    .article-page__faq .faq__info h2::before,
+    .article-page__faq .faq__info h2::after {
+        content: none;
+        display: none;
+        background: transparent;
+        width: 0;
+        height: 0;
+    }
+    .article-page__faq .faq__description {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 6px 0 0 0;
+    }
+    .article-page__faq .faq__items {
+        display: block;
+        grid-template-columns: none;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+    }
+    .article-page__faq .faq-item {
+        display: block;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0;
+        background: transparent;
+        width: 100%;
+        min-height: 0;
+    }
+    .article-page__faq .faq-item__btn {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        padding: 16px 0;
+        margin: 0;
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        color: #0A0A0A;
+        font-size: 16px;
+        line-height: 1.45;
+        font-weight: 500;
+        text-align: left;
+        text-transform: none;
+        letter-spacing: 0;
+        min-height: 0;
+        box-shadow: none;
+        cursor: pointer;
+    }
+    .article-page__faq .faq-item__btn span {
+        font-size: inherit;
+        line-height: inherit;
+        font-weight: inherit;
+        color: inherit;
+    }
+    .article-page__faq .faq-item__btn::after {
+        content: "+";
+        display: inline-block;
+        flex-shrink: 0;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.45);
+        background: none;
+        width: auto;
+        height: auto;
+        margin-top: 4px;
+        transition: transform 0.2s ease;
+    }
+    .article-page__faq .faq-item.is-active .faq-item__btn::after,
+    .article-page__faq .faq-item.active .faq-item__btn::after,
+    .article-page__faq .js-faq-item.is-active .faq-item__btn::after {
+        transform: rotate(45deg);
+    }
+    .article-page__faq .faq-item__btn svg,
+    .article-page__faq .faq-item__btn img,
+    .article-page__faq .faq-item__btn .icon,
+    .article-page__faq .faq-item__btn::before {
+        display: none;
+    }
+    .article-page__faq .faq-item__answer {
+        padding: 0 0 16px 0;
+        margin: 0;
+    }
+    .article-page__faq .faq-item__answer-inner {
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(0, 0, 0, 0.78);
+        max-width: 64ch;
+        padding: 0;
+        margin: 0;
+    }
+    .article-page__faq .faq-item__answer-inner p {
+        font-size: inherit;
+        line-height: inherit;
+        margin: 0 0 10px 0;
+    }
+
+    /* ============================================================
+       ITERATION 4: hard-collapse FAQ answers, brand-blue plus,
+       rebuild CTA as a quiet card
+       ============================================================ */
+
+    /* --- Hard-collapse FAQ answers so text doesn't bleed through --- */
+    .article-page__faq .faq-item__answer {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        padding: 0;
+        transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s linear 0.25s;
+    }
+    .article-page__faq .faq-item.active .faq-item__answer,
+    .article-page__faq .js-faq-item.active .faq-item__answer {
+        opacity: 1;
+        visibility: visible;
+        padding: 0 0 16px 0;
+        transition: max-height 0.35s ease, opacity 0.3s ease 0.05s, visibility 0s linear 0s;
+    }
+
+    /* --- Plus indicator -> brand blue --- */
+    .article-page__faq .faq-item__btn::after {
+        color: #2D40AE;
+        font-weight: 500;
+    }
+    .article-page__faq .faq-item.active .faq-item__btn::after,
+    .article-page__faq .js-faq-item.active .faq-item__btn::after {
+        color: #2D40AE;
+    }
+
+    /* --- CTA: full rebuild as a quiet light card --- */
+    .article-page__cta {
+        background: #FAFAF7;
+        background-image: none;
+        background-color: #FAFAF7;
+        border: 1px solid #0A0A0A;
+        border-radius: 1px;
+        border-left: 1px solid #0A0A0A;
+        padding: 32px 36px;
+        margin: 56px 0;
+        display: block;
+        overflow: visible;
+        color: #0A0A0A;
+        box-shadow: none;
+        position: relative;
+        min-height: 0;
+    }
+    .article-page__cta::before,
+    .article-page__cta::after {
+        content: none;
+        display: none;
+        background: transparent;
+    }
+    .article-page__cta-img {
+        display: none;
+    }
+    .article-page__cta-content {
+        padding: 0;
+        background: transparent;
+        color: #0A0A0A;
+        width: auto;
+        max-width: 100%;
+        position: static;
+        display: block;
+    }
+    .article-page__cta-title {
+        font-size: 11px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0 0 14px 0;
+        padding: 0;
+        font-family: inherit;
+        font-style: normal;
+    }
+    .article-page__cta-title::before,
+    .article-page__cta-title::after {
+        content: none;
+        display: none;
+        background: transparent;
+    }
+    .article-page__cta-text {
+        font-size: 17px;
+        line-height: 1.5;
+        font-weight: 400;
+        font-style: normal;
+        color: #0A0A0A;
+        margin: 0 0 22px 0;
+        font-family: inherit;
+        max-width: 62ch;
+    }
+    .article-page__cta-text p {
+        font-size: inherit;
+        line-height: inherit;
+        font-style: inherit;
+        color: inherit;
+        margin: 0;
+    }
+    .article-page__cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #0A0A0A;
+        background-color: #0A0A0A;
+        background-image: none;
+        border: 1px solid #0A0A0A;
+        border-radius: 1px;
+        padding: 12px 22px;
+        color: #FFFFFF;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: 0;
+        text-transform: none;
+        box-shadow: none;
+        min-height: 0;
+        width: auto;
+        text-decoration: none;
+    }
+    .article-page__cta-button::before {
+        content: none;
+        display: none;
+        background: transparent;
+    }
+    .article-page__cta-button::after {
+        content: "\2192";
+        margin-left: 0;
+        display: inline;
+        background: none;
+        color: inherit;
+        width: auto;
+        height: auto;
+        font-size: 14px;
+    }
+    .article-page__cta-button:hover {
+        background: #2D40AE;
+        background-color: #2D40AE;
+        border-color: #2D40AE;
+        color: #FFFFFF;
+    }
+
+    /* ============================================================
+       ITERATION 5: hide bottom author block on single-blog
+       (footer CTA un-hidden 2026-06-07 per Dima — keep site-wide
+       "Let's create visuals" CTA + Book a call on blog articles)
+       ============================================================ */
+
+    /* Hide bottom author "View full profile" block — left sidebar already has author-mini */
+    .article-page__author {
+        display: none;
+    }
+
+    /* ============================================================
+       ITERATION 6: Breadcrumbs A + Editorial Read Next + Sidebar rotator
+       ============================================================ */
+
+    /* --- Breadcrumbs A: thin text strip "Home · Blog · Title" --- */
+    .article-page__breadcrumbs-bottom {
+        background: transparent;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 20px 0 24px 0;
+        margin: 32px 0 0 0;
+    }
+    .article-page__breadcrumbs-bottom .container {
+        padding: 0;
+    }
+    .article-page__breadcrumbs-label {
+        display: none;
+    }
+    .article-page__breadcrumbs-wrap {
+        margin: 0;
+        padding: 0;
+    }
+    #breadcrumb,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs,
+    .article-page__breadcrumbs-bottom .rank-math-breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: transparent;
+        font-size: 13px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.55);
+        font-weight: 400;
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb li,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.55);
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb li:not(:last-child)::after,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:not(:last-child)::after {
+        content: "·";
+        display: inline-block;
+        margin: 0 8px;
+        color: rgba(0, 0, 0, 0.35);
+        background: transparent;
+        width: auto;
+        height: auto;
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb a,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a {
+        color: #0A0A0A;
+        text-decoration: underline;
+        text-decoration-color: rgba(0, 0, 0, 0.3);
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+        background: transparent;
+        padding: 0;
+        font-size: 13px;
+        font-weight: 500;
+        border: 0;
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb li:last-child span,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:last-child span,
+    .article-page__breadcrumbs-bottom #breadcrumb li:last-child,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:last-child {
+        color: rgba(0, 0, 0, 0.4);
+        font-weight: 400;
+        text-decoration: none;
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb a:hover,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a:hover {
+        color: #2D40AE;
+        text-decoration: underline;
+    }
+    .article-page__breadcrumbs-bottom #breadcrumb span,
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs span {
+        color: rgba(0, 0, 0, 0.55);
+        font-size: 13px;
+        font-weight: 400;
+    }
+    /* Hide theme's arrow separators (svg/img between crumbs) */
+    .article-page__breadcrumbs-bottom #breadcrumb li svg:not(:first-child),
+    .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li svg:not(:first-child),
+    .article-page__breadcrumbs-bottom #breadcrumb .separator,
+    .article-page__breadcrumbs-bottom .rank-math-breadcrumb .separator {
+        display: none;
+    }
+
+    /* --- Related Articles -> Editorial Read Next --- */
+    .section-related {
+        background: transparent;
+        padding: 48px 0 64px 0;
+        margin: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    .section-related .container {
+        max-width: 100%;
+    }
+    .section-related .section__title {
+        font-size: 11px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        margin: 0 0 28px 0;
+        padding: 0;
+    }
+    /* Replace text content via pseudo to keep semantic h2 but show editorial label */
+    .section-related .section__title {
+        font-size: 0;
+    }
+    .section-related .section__title::before {
+        content: "READ NEXT";
+        display: block;
+        font-size: 11px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.55);
+        background: transparent;
+        width: auto;
+        height: auto;
+        margin: 0;
+    }
+    /* ES: localize the "Read next" eyebrow above related articles (higher specificity via [lang]) */
+    &[lang^="es"] .section-related .section__title::before {
+        content: "LEER A CONTINUACIÓN";
+    }
+    .section-related .cards--3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-top: 1px solid #0A0A0A;
+        /* long words in card titles must never widen the 1fr tracks past the
+           viewport (that gave the whole page a horizontal scroll on phones) */
+        min-width: 0;
+    }
+    .section-related .case-item.--related {
+        background: transparent;
+        border: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0;
+        padding: 28px 28px 28px 0;
+        margin: 0;
+        box-shadow: none;
+    }
+    .section-related .case-item.--related:nth-child(n+2) {
+        padding-left: 28px;
+    }
+    .section-related .case-item.--related:last-child {
+        border-right: 0;
+        padding-right: 0;
+    }
+    /* Mobile: stack Read Next into a single editorial column — three side-by-side
+       cards overflowed the viewport and made the whole page pannable sideways.
+       (Must come AFTER the base --related rules: equal specificity +
+       means source order decides.) */
+    @media (max-width: 767px) {
+        .section-related .cards--3 {
+            grid-template-columns: 1fr;
+        }
+        .section-related .case-item.--related {
+            border-right: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 22px 0;
+        }
+        .section-related .case-item.--related:nth-child(n+2) {
+            padding-left: 0;
+        }
+        .section-related .case-item.--related:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+    .section-related .case-item.--related .case-item__link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: transparent;
+        padding: 0;
+        border: 0;
+    }
+    /* Hide image, tags, author — editorial-text only */
+    .section-related .case-item.--related .case-item__img,
+    .section-related .case-item.--related .case-item__tags,
+    .section-related .case-item.--related .case-item__author {
+        display: none;
+    }
+    .section-related .case-item.--related .case-item__info {
+        padding: 0;
+    }
+    .section-related .case-item.--related .case-item__date {
+        display: block;
+        font-size: 12px;
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin: 0 0 10px 0;
+        padding: 0;
+    }
+    .section-related .case-item.--related .case-item__title {
+        font-size: 19px;
+        line-height: 1.3;
+        font-weight: 500;
+        color: #0A0A0A;
+        margin: 0 0 12px 0;
+        padding: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .section-related .case-item.--related .case-item__title span {
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        line-height: inherit;
+    }
+    .section-related .case-item.--related .case-item__excerpt {
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(0, 0, 0, 0.65);
+        margin: 0 0 16px 0;
+        padding: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .section-related .case-item.--related .case-item__footer {
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        display: block;
+    }
+    .section-related .case-item.--related .case-item__arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #0A0A0A;
+        text-transform: none;
+        letter-spacing: 0;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid #0A0A0A;
+        padding: 2px 0 4px 0;
+        border-radius: 0;
+    }
+    .section-related .case-item.--related .case-item__arrow svg {
+        width: 14px;
+        height: 14px;
+    }
+    .section-related .case-item.--related:hover .case-item__title {
+        color: #2D40AE;
+    }
+    .section-related .case-item.--related:hover .case-item__arrow {
+        color: #2D40AE;
+        border-bottom-color: #2D40AE;
+    }
+
+    /* --- Sidebar CTA rotator: stack stages, fade between them --- */
+    .sidebar-cta__stages {
+        display: grid;
+        grid-template-columns: 1fr;
+        position: relative;
+        min-height: 220px;
+    }
+    .sidebar-cta__stage {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(6px);
+        transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s;
+    }
+    .sidebar-cta__stage.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s, visibility 0s linear 0s;
+    }
+    .sidebar-cta__eyebrow {
+        display: block;
+        font-size: 10px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+        margin: 0 0 10px 0;
+    }
+
+    /* ============================================================
+       ITERATION 7: more air inside sidebar CTA rotator
+       ============================================================ */
+
+    /* Outer card: roomier padding, comfortable inner layout */
+    .sidebar-cta {
+        padding: 32px 28px 28px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        height: 100%;
+        min-height: 100%;
+    }
+
+    /* Brand row + spacing before the rotating content */
+    .sidebar-cta__brand {
+        margin: 0 0 28px 0;
+        padding: 0 0 24px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        gap: 14px;
+        align-items: center;
+    }
+
+    /* Stages container: more vertical room so stage 2/3/4 don't feel squeezed */
+    .sidebar-cta__stages {
+        min-height: 260px;
+        margin: 0 0 28px 0;
+        flex: 1 1 auto;
+    }
+
+    /* Eyebrow above stage title */
+    .sidebar-cta__eyebrow {
+        margin: 0 0 16px 0;
+    }
+
+    /* Stage title */
+    .sidebar-cta__stage .sidebar-cta__head {
+        margin: 0 0 14px 0;
+        font-size: 20px;
+        line-height: 1.3;
+        font-weight: 500;
+        letter-spacing: -0.005em;
+    }
+
+    /* Stage subline */
+    .sidebar-cta__stage .sidebar-cta__sub {
+        margin: 0 0 28px 0;
+        font-size: 14px;
+        line-height: 1.55;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Stage button — slightly more padding, separated from sub */
+    .sidebar-cta__stage .sidebar-cta__btn {
+        margin: 0;
+        padding: 14px 18px;
+        gap: 10px;
+        font-size: 15px;
+        line-height: 1;
+        font-weight: 500;
+    }
+
+    /* Trust footer: clear separator + breathing room above */
+    .sidebar-cta__trust {
+        margin: auto 0 0 0;
+        padding: 24px 0 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .sidebar-cta__proof {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ============================================================
+       ITERATION 8: in-article eyebrows -> brand blue (was muted gray)
+       Consistent across CTA "TURN IDEAS", FAQ, Read Next.
+       ============================================================ */
+    .article-page__cta-title,
+    .article-page__faq .faq__info h2,
+    .section-related .section__title::before {
+        color: #2D40AE;
+    }
+
+    /* ============================================================
+       ITERATION 9: 5 in-article CTAs, visually different, scattered
+       ============================================================ */
+
+    /* Hide the legacy single CTA block (the cream card) — replaced by the JS-injected variants */
+    .article-page__cta {
+        display: none;
+    }
+
+    /* --- Shared base --- */
+    .in-cta {
+        display: block;
+        margin: 56px 0;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        color: #0A0A0A;
+    }
+    .in-cta__eyebrow {
+        display: block;
+        font-size: 11px;
+        line-height: 1.3;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #2D40AE;
+        margin: 0 0 12px 0;
+    }
+    .in-cta__head {
+        margin: 0 0 16px 0;
+        color: #0A0A0A;
+        font-size: 19px;
+        line-height: 1.5;
+        font-weight: 400;
+        font-family: inherit;
+    }
+    .in-cta__link,
+    .article-page__content .in-cta__link {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 15px;
+        line-height: 1.3;
+        font-weight: 500;
+        color: #2D40AE;
+        text-decoration: none;
+        text-decoration-line: none;
+        text-decoration-color: transparent;
+        border: 0;
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 0;
+        padding: 0;
+        background: transparent;
+    }
+    /* Kill any inherited underline on children (arrow span etc.) */
+    .in-cta__link *,
+    .article-page__content .in-cta__link * {
+        text-decoration: none;
+        text-decoration-line: none;
+        border-bottom: 0;
+    }
+    /* Hover: subtle single underline appears via text-decoration on text label only */
+    .in-cta__link:hover .in-cta__label,
+    .article-page__content .in-cta__link:hover .in-cta__label {
+        text-decoration: underline;
+        text-decoration-color: currentColor;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+    }
+    .in-cta__link:hover,
+    .article-page__content .in-cta__link:hover {
+        color: #0A0A0A;
+    }
+    .in-cta__arrow {
+        display: inline-block;
+        line-height: 1;
+        font-size: 15px;
+    }
+
+    /* --- V1: numbered editorial, big blue "01" prefix on the left --- */
+    .in-cta--v1 {
+        display: block;
+        position: relative;
+        padding: 0 0 0 88px;
+        min-height: 60px;
+    }
+    .in-cta--v1::before {
+        content: "01";
+        position: absolute;
+        left: 0;
+        top: -6px;
+        font-size: 56px;
+        line-height: 0.9;
+        font-weight: 700;
+        color: #2D40AE;
+        letter-spacing: -0.04em;
+        display: block;
+        background: transparent;
+        width: auto;
+        height: auto;
+        margin: 0;
+        font-family: inherit;
+    }
+    .in-cta--v1 .in-cta__eyebrow {
+        margin: 0 0 10px 0;
+    }
+    .in-cta--v1 .in-cta__head {
+        font-size: 19px;
+        line-height: 1.5;
+        font-style: normal;
+        font-weight: 400;
+        color: #0A0A0A;
+        margin: 0 0 14px 0;
+    }
+
+    /* --- V2: left-border editor's note --- */
+    .in-cta--v2 {
+        border-left: 3px solid #2D40AE;
+        padding-left: 24px;
+    }
+    .in-cta--v2 .in-cta__head {
+        font-size: 19px;
+        line-height: 1.5;
+    }
+
+    /* --- V3: centered pull-quote --- */
+    .in-cta--v3 {
+        text-align: center;
+        max-width: 64ch;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 8px 0;
+    }
+    .in-cta--v3::before {
+        content: "\2014";
+        display: block;
+        color: rgba(0, 0, 0, 0.3);
+        font-size: 18px;
+        line-height: 1;
+        margin-bottom: 16px;
+        background: transparent;
+        width: auto;
+        height: auto;
+    }
+    .in-cta--v3 .in-cta__eyebrow {
+        margin-bottom: 14px;
+    }
+    .in-cta--v3 .in-cta__head {
+        font-size: 23px;
+        line-height: 1.4;
+        font-style: italic;
+        font-weight: 400;
+        margin: 0 0 20px 0;
+        color: #0A0A0A;
+    }
+
+    /* --- V4: bordered card, transparent fill, link not button --- */
+    .in-cta--v4 {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 1px;
+        padding: 28px 32px;
+        background: transparent;
+    }
+    .in-cta--v4 .in-cta__head {
+        font-size: 19px;
+        font-weight: 500;
+        line-height: 1.45;
+    }
+
+    /* --- V5: hr-sandwich, centered, section-break feel --- */
+    .in-cta--v5 {
+        text-align: center;
+        border-top: 1px solid rgba(0, 0, 0, 0.14);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+        padding: 32px 0;
+        margin: 64px 0;
+    }
+    .in-cta--v5 .in-cta__head {
+        font-size: 22px;
+        line-height: 1.4;
+        font-weight: 500;
+        margin-bottom: 18px;
+    }
+    .in-cta--v5 .in-cta__eyebrow {
+        color: #2D40AE;
+    }
+
+    /* ============================================================
+       ITERATION 10 (revised): persistent pulsing "live" indicator
+       No more fade-from-nowhere on scroll. Each eyebrow gets a small
+       green dot that pulses indefinitely, signalling "active CTA".
+       ============================================================ */
+
+    /* Pulsing live dot before every CTA eyebrow */
+    .in-cta .in-cta__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        position: relative;
+    }
+    .in-cta .in-cta__eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 0;
+        background: #10B981;
+        flex-shrink: 0;
+        box-shadow: none;
+        animation: ctaSquareBlink 1.2s steps(1, end) infinite;
+        position: relative;
+        top: -1px;
+    }
+
+    /* Arrow: nudge up to optically align with text x-height; slide right on hover */
+    .in-cta__arrow {
+        display: inline-block;
+        transform: translateY(-2px);
+        transition: transform 0.25s ease;
+        font-size: 16px;
+        line-height: 1;
+    }
+    .in-cta__link:hover .in-cta__arrow {
+        transform: translateY(-2px) translateX(5px);
+    }
+
+    /* V4 bordered card: subtle hover lift (border + soft shadow) */
+    .in-cta--v4 {
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .in-cta--v4:hover {
+        border-color: #2D40AE;
+        box-shadow: 0 4px 24px rgba(45, 64, 174, 0.08);
+    }
+
+    /* Respect prefers-reduced-motion: kill the pulse */
+    @media (prefers-reduced-motion: reduce) {
+        .in-cta .in-cta__eyebrow::before {
+            animation: none;
+            opacity: 1;
+        }
+        .in-cta__arrow {
+            transition: none;
+        }
+    }
+
+
+
+
+
+
+
+
+
+    .article-page__content figure.wp-block-table td::before,
+    .article-page__content figure.wp-block-table td::after,
+    .article-page__content figure.wp-block-table th::before,
+    .article-page__content figure.wp-block-table th::after,
+    .article-page__content table td::before,
+    .article-page__content table td::after,
+    .article-page__content table th::before,
+    .article-page__content table th::after {
+        content: none;
+        display: none;
+        background: transparent;
+        background-color: transparent;
+        width: 0;
+        height: 0;
+    }
+
+    /* Also kill the theme's accent-blue background on first row (header) */
+    .article-page__content figure.wp-block-table tbody tr:first-child td {
+        background: transparent;
+        background-color: transparent;
+        color: #000;
+    }
+
+    /* Kill theme's outer border + radius on the figure wrapper */
+    .article-page__content figure.wp-block-table {
+        border: none;
+        border-radius: 0;
+    }
+
+    /* Re-apply OUR borders cleanly */
+    .article-page__content table tbody tr td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .article-page__content table tbody tr:first-child td {
+        border-bottom: 2px solid #000;
+        font-weight: 700;
+        color: #000;
+        text-transform: none;
+    }
+    .article-page__content table tbody tr:last-child td {
+        border-bottom: 0 none transparent;
+    }
+
+
+    /* =========================================================
+       MOBILE FIX (2026-06-08): redesign broke the < 1024px layout.
+       - TOC sidebar must be a fixed bottom drawer, not a full-height
+         inline block (base .article-page__sticky{position:sticky} was
+         winning over the mobile .js-sidebar{position:fixed} by cascade
+         order, so the TOC dumped to the bottom of the page).
+       - The "Contents" toggle must stay visible + fixed + clickable.
+       - Bottom breadcrumbs must keep side padding (were clipping left).
+       ========================================================= */
+    @media (max-width: 1023px) {
+        .article-page__aside--left .article-page__sticky.js-sidebar,
+        div.article-page__sticky.js-sidebar {
+            position: fixed;
+            top: auto;
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -60px;
+            width: min(92vw, 440px);
+            height: auto;
+            min-height: 0;
+            max-height: 0;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 1px;
+            z-index: 1200;
+            box-sizing: border-box;
+            transition: max-height 0.35s ease, bottom 0.35s ease, padding 0.35s ease;
+        }
+
+        .article-page__aside--left .article-page__sticky.js-sidebar.opened,
+        div.article-page__sticky.js-sidebar.opened {
+            bottom: 70px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .article-page__toggle.js-sidebar-toggle {
+            display: inline-flex;
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1201;
+            border-radius: 1px;
+            cursor: pointer;
+        }
+
+        /* Bottom breadcrumbs: keep them inside the viewport with side padding,
+           clip any horizontal overflow, and kill the js-reveal transform that
+           made them slide left/right on scroll. */
+        .article-page__breadcrumbs-bottom {
+            overflow-x: hidden;
+        }
+        .article-page__breadcrumbs-bottom .container {
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .article-page__breadcrumbs-bottom #breadcrumb,
+        .article-page__breadcrumbs-bottom .hero-block__breadcrumbs,
+        .article-page__breadcrumbs-wrap > * {
+            opacity: 1;
+            transform: none;
+            animation: none;
+            transition: none;
+            will-change: auto;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
     }
 }
 
-/* === Reading colors === */
-html.single-blog .article-page__content,
-html.single-blog .article-page__content p,
-html.single-blog .article-page__content li,
-html.single-blog .article-page__content blockquote {
-    color: #2A2A2A !important;
-}
-html.single-blog .article-page__content h1,
-html.single-blog .article-page__content h2,
-html.single-blog .article-page__content h3,
-html.single-blog .article-page__content h4,
-html.single-blog .article-page__content h5,
-html.single-blog .article-page__content h6 {
-    color: #000 !important;
-}
-html.single-blog .article-page__content a {
-    color: #2D40AE !important;
-    text-decoration: underline !important;
-    text-underline-offset: 3px !important;
-}
-html.single-blog .article-page__aside--left .toc a,
-html.single-blog .article-page__aside--left .toc__list a,
-html.single-blog .article-page__aside--left .toc__item a {
-    color: #000 !important;
-}
-html.single-blog .article-page__aside--left .toc a.is-active,
-html.single-blog .article-page__aside--left .toc a.active,
-html.single-blog .article-page__aside--left .toc__item.is-active a,
-html.single-blog .article-page__aside--left .toc__item.active a {
-    color: #2D40AE !important;
-}
-
-
-/* =========================================================
-   ENHANCEMENTS: progress bar, TOC scroll-spy, lightbox, captions
-   ========================================================= */
-
-/* --- Reading progress bar (top of viewport) --- */
-.blog-progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: rgba(0, 0, 0, 0.04);
-    z-index: 10000;
-    pointer-events: none;
-}
-.blog-progress-bar__fill {
-    width: 100%;
-    height: 100%;
-    background: #2D40AE;
-    transform-origin: left;
-    transform: scaleX(0);
-    transition: transform 80ms linear;
-}
-
-/* --- TOC scroll-spy active state --- */
-html.single-blog .article-page__aside--left .toc a.is-active,
-html.single-blog .article-page__aside--left .toc__list a.is-active,
-html.single-blog .article-page__aside--left .toc__item a.is-active,
-html.single-blog .article-page__aside--left .toc__item.is-active > a {
-    color: #2D40AE !important;
-    font-weight: 500 !important;
-}
-
-/* --- Figcaption styling for in-article images --- */
-html.single-blog .article-page__content figure {
-    margin: 32px 0 !important;
-}
-html.single-blog .article-page__content figcaption,
-html.single-blog .article-page__content .wp-caption-text {
-    margin-top: 12px !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    color: #575757 !important;
-    text-align: center !important;
-    font-style: italic !important;
-}
-
-/* --- Image hover hint (zoom-in cursor) --- */
-html.single-blog .article-page__content img {
-    cursor: zoom-in;
-    transition: opacity 200ms ease;
-}
-html.single-blog .article-page__content img:hover {
-    opacity: 0.92;
-}
-
-/* --- Lightbox overlay --- */
-.blog-lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.92);
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    cursor: zoom-out;
-    animation: blog-lightbox-in 220ms ease;
-}
 @keyframes blog-lightbox-in {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-.blog-lightbox__img {
-    max-width: 100%;
-    max-height: 88vh;
-    object-fit: contain;
-    cursor: default;
-    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.5);
-}
-.blog-lightbox__caption {
-    margin-top: 20px;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 14px;
-    text-align: center;
-    max-width: 700px;
-    line-height: 1.5;
-}
-.blog-lightbox__close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-    border-radius: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    font: 28px/1 sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 150ms ease;
-}
-.blog-lightbox__close:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
 
-/* Updated date pill: white on the dark hero image */
-html.single-blog .metabox__item--updated {
-    color: #FFFFFF !important;
-    opacity: 0.92;
-}
-
-/* Tighten the gap between hero and the breadcrumbs/content area.
-   Theme defaults are margin-top: 80-150px — too big here. */
-html.single-blog .article-page-inner {
-    margin-top: 24px !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page-inner {
-        margin-top: 36px !important;
-    }
-}
-
-/* === Breadcrumbs (BOTTOM of article — navigation exit) =====
-   Sits between the article body and related articles.
-   Acts as a "you are here" signpost + back-out navigation.
-   ============================================================= */
-html.single-blog .article-page__breadcrumbs-bottom {
-    padding: 32px 0;
-    margin-top: 40px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    background: #FAFAFA;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__breadcrumbs-bottom {
-        padding: 40px 0;
-        margin-top: 56px;
-    }
-}
-
-html.single-blog .article-page__breadcrumbs-bottom .container {
-    display: flex !important;
-    align-items: baseline !important;
-    gap: 16px !important;
-    flex-wrap: wrap !important;
-}
-
-html.single-blog .article-page__breadcrumbs-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: #888;
-    font-weight: 500;
-    flex-shrink: 0;
-}
-
-/* The breadcrumbs row itself */
-html.single-blog .article-page__breadcrumbs-wrap {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 12px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
-    line-height: 1.4 !important;
-    border: 0 !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__breadcrumbs-wrap {
-        font-size: 13px !important;
-    }
-}
-
-/* Container around the actual breadcrumb list — make it flex with separators */
-html.single-blog .article-page__breadcrumbs-wrap > * {
-    display: inline-flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
-}
-
-/* Items: links, spans, list items */
-html.single-blog .article-page__breadcrumbs-wrap li,
-html.single-blog .article-page__breadcrumbs-wrap a,
-html.single-blog .article-page__breadcrumbs-wrap > * > span {
-    display: inline-flex !important;
-    align-items: center !important;
-    color: #575757 !important;
-    text-decoration: none !important;
-    font-weight: 500 !important;
-}
-html.single-blog .article-page__breadcrumbs-wrap a:hover {
-    color: #2D40AE !important;
-}
-
-/* Insert "/" separator BEFORE every item except the first */
-html.single-blog .article-page__breadcrumbs-wrap li + li::before,
-html.single-blog .article-page__breadcrumbs-wrap a + a::before,
-html.single-blog .article-page__breadcrumbs-wrap > * > *:not(:first-child)::before {
-    content: '/' !important;
-    margin: 0 12px !important;
-    color: rgba(0, 0, 0, 0.2) !important;
-    font-weight: 400 !important;
-}
-
-/* Hide the last breadcrumb item (it's the current article title — already in hero).
-   Cover the common patterns used by Rank Math and our manual partial. */
-html.single-blog .article-page__breadcrumbs-wrap li:last-child,
-html.single-blog .article-page__breadcrumbs-wrap > *:last-child:not(:first-child),
-html.single-blog .article-page__breadcrumbs-wrap .last,
-html.single-blog .article-page__breadcrumbs-wrap [aria-current="page"],
-html.single-blog .article-page__breadcrumbs-wrap > * > *:last-child:not(a):not(:first-child) {
-    display: none !important;
-}
-
-
-/* =========================================================
-   AUTHOR MINI-CARD (top of sidebar)
-   ========================================================= */
-html.single-blog .author-mini {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 0;
-    margin-bottom: 12px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-html.single-blog .author-mini__avatar {
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-html.single-blog .author-mini__avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-html.single-blog .author-mini__avatar-fallback {
-    color: #fff;
-    font-weight: 500;
-    font-size: 18px;
-    background: #2D40AE;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-html.single-blog .author-mini__body {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-html.single-blog .author-mini__name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #000 !important;
-    text-decoration: none !important;
-    line-height: 1.3;
-}
-html.single-blog .author-mini__name:hover {
-    color: #2D40AE !important;
-}
-html.single-blog .author-mini__role {
-    font-size: 12px;
-    color: #575757;
-    line-height: 1.3;
-}
-html.single-blog .author-mini__linkedin {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    color: #2D40AE;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none !important;
-}
-html.single-blog .author-mini__linkedin:hover {
-    opacity: 0.7;
-}
-html.single-blog .author-mini__linkedin svg {
-    width: 22px;
-    height: 22px;
-}
-
-/* =========================================================
-   READING STATUS (between author + TOC)
-   ========================================================= */
-html.single-blog .reading-status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 16px;
-    font-size: 12px;
-    color: #575757;
-    line-height: 1.3;
-    flex-wrap: wrap;
-}
-html.single-blog .reading-status__time {
-    font-weight: 500;
-    color: #2D40AE;
-}
-html.single-blog .reading-status__sep {
-    color: rgba(0, 0, 0, 0.25);
-}
-
-/* =========================================================
-   FEEDBACK WIDGET (bottom of sidebar)
-   ========================================================= */
-html.single-blog .feedback {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-html.single-blog .feedback__title {
-    font-size: 13px;
-    font-weight: 500;
-    color: #000;
-    margin: 0 0 10px;
-    line-height: 1.3;
-}
-html.single-blog .feedback__buttons {
-    display: flex;
-    gap: 8px;
-}
-html.single-blog .feedback__btn {
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 1px;
-    padding: 8px 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: #2A2A2A;
-    transition: background 150ms, border-color 150ms, color 150ms;
-    font-family: inherit;
-}
-html.single-blog .feedback__btn svg {
-    width: 16px;
-    height: 16px;
-}
-html.single-blog .feedback__btn:hover {
-    background: #fff;
-    border-color: #2D40AE;
-    color: #2D40AE;
-}
-html.single-blog .feedback__thanks .feedback__title {
-    color: #2D40AE;
-    margin: 0;
-}
-
-
-/* =========================================================
-   HERO: cinematic bottom-left (Medium / Vox pattern)
-   - Eyebrow with category
-   - Big title, capped at ~800px so it stays 2-3 lines max
-   - Metabox sits BELOW title (date + updated + read time)
-   - Soft bottom gradient for legibility over any image
-   ========================================================= */
-
-/* === HERO v3: dark editorial (Stripe / Vercel / Linear style) ===
-   No image. Subtle brand gradient. Content vertically centered. */
-html.single-blog .hero-block {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    min-height: 360px !important;
-    padding: 80px 0 !important;
-    background:
-        radial-gradient(ellipse at top right, rgba(45, 64, 174, 0.28) 0%, transparent 55%),
-        radial-gradient(ellipse at bottom left, rgba(45, 64, 174, 0.10) 0%, transparent 50%),
-        #0A0E1F !important;
-    overflow: hidden !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .hero-block {
-        min-height: 440px !important;
-        padding: 120px 0 !important;
-    }
-}
-
-/* Hide the featured/background image — pure gradient hero now. */
-html.single-blog .hero-block__media,
-html.single-blog .hero-block > .hero-block__media {
-    display: none !important;
-}
-
-/* Remove the bottom dark gradient overlay — bg is already dark. */
-html.single-blog .hero-block::after {
-    display: none !important;
-    content: none !important;
-}
-
-/* Container fills hero via flex, centers content vertically. */
-html.single-blog .hero-block > .container,
-html.single-blog .hero-block .container {
-    position: relative !important;
-    z-index: 2 !important;
-    flex: 1 1 auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-}
-
-/* Main: contained, comfortable max-width, vertical center via parent. */
-html.single-blog .hero-block__main {
-    position: static !important;
-    width: 100% !important;
-    max-width: 880px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: flex-start !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .hero-block__main {
-        gap: 22px !important;
-    }
-}
-
-/* Eyebrow: category, small, uppercase, with a dot indicator */
-html.single-blog .hero-block__eyebrow {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    margin: 0 !important;
-    padding: 6px 14px !important;
-    background: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    border-radius: 100px !important;
-    color: #fff !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.06em !important;
-    text-transform: uppercase !important;
-    line-height: 1 !important;
-    width: max-content !important;
-    align-self: flex-start !important;
-}
-html.single-blog .hero-block__eyebrow-dot {
-    width: 6px !important;
-    height: 6px !important;
-    border-radius: 50% !important;
-    background: #FFC83D !important;
-    display: inline-block !important;
-    flex-shrink: 0 !important;
-}
-
-/* Title: tighter font sizes, capped width, modern editorial line-height */
-html.single-blog .hero-block__title {
-    max-width: 800px !important;
-    margin: 0 !important;
-    font-size: clamp(32px, 4.2vw, 56px) !important;
-    line-height: 1.1 !important;
-    font-weight: 500 !important;
-    color: #fff !important;
-    letter-spacing: -0.01em !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .hero-block__title {
-        font-size: clamp(36px, 4.5vw, 64px) !important;
-    }
-}
-
-/* Metabox: small, soft white, sits below title */
-html.single-blog .hero-block__metabox {
-    margin: 0 !important;
-    padding: 0 !important;
-    display: inline-flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 10px !important;
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-size: 13px !important;
-    line-height: 1.3 !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .hero-block__metabox {
-        font-size: 14px !important;
-    }
-}
-html.single-blog .hero-block__metabox .metabox__item {
-    color: inherit !important;
-    font-size: inherit !important;
-    /* kill the light-hero pill bg/padding that turned into white blocks on mobile */
-    background: transparent !important;
-    background-color: transparent !important;
-    padding: 0 !important;
-}
-html.single-blog .hero-block__metabox .dot {
-    width: 3px !important;
-    height: 3px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.5) !important;
-    margin: 0 !important;
-}
-
-/* Updated date pill stays white per earlier instruction */
-html.single-blog .metabox__item--updated {
-    color: rgba(255, 255, 255, 0.85) !important;
-    opacity: 1 !important;
-}
-
-
-/* =========================================================
-   SIDEBAR CTA (right sticky widget) — dark, conversion-focused
-   ========================================================= */
-html.single-blog .sidebar-cta {
-    background: #1A1A1A;
-    color: #fff;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-/* Author strip */
-html.single-blog .sidebar-cta__author {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-html.single-blog .sidebar-cta__avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-    border: 1px solid rgba(255,255,255,0.15);
-}
-html.single-blog .sidebar-cta__author-name {
-    margin: 0;
-    color: rgba(255,255,255,0.65);
-    font-size: 12px;
-    line-height: 1.3;
-}
-html.single-blog .sidebar-cta__author-eyebrow {
-    color: rgba(255,255,255,0.65);
-    font-size: 12px;
-}
-
-/* Headline + sub */
-html.single-blog .sidebar-cta__head {
-    margin: 0;
-    color: #fff !important;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.3;
-}
-html.single-blog .sidebar-cta__sub {
-    margin: 0;
-    color: rgba(255,255,255,0.7);
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* Primary CTA button */
-html.single-blog .sidebar-cta__btn {
-    margin-top: 4px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 12px 18px;
-    background: #2D40AE;
-    color: #fff !important;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.4;
-    text-decoration: none !important;
-    border-radius: 1px;
-    transition: background 150ms ease, transform 150ms ease;
-    cursor: pointer;
-}
-html.single-blog .sidebar-cta__btn:hover {
-    background: #3a52cd;
-    transform: translateY(-1px);
-}
-html.single-blog .sidebar-cta__btn svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-}
-
-/* Trust footer (stars + social proof) */
-html.single-blog .sidebar-cta__trust {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-html.single-blog .sidebar-cta__stars {
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    color: #FFC83D;
-}
-html.single-blog .sidebar-cta__stars svg {
-    width: 14px;
-    height: 14px;
-}
-html.single-blog .sidebar-cta__rating-num {
-    margin-left: 6px;
-    color: rgba(255,255,255,0.85);
-    font-size: 13px;
-    font-weight: 500;
-}
-html.single-blog .sidebar-cta__proof {
-    margin: 0;
-    color: rgba(255,255,255,0.55);
-    font-size: 12px;
-    line-height: 1.4;
-}
-
-
-/* =========================================================
-   TYPOGRAPHY: article body (Bringhurst / Medium / NYT pattern)
-   Optimized for long-form reading comfort.
-   ========================================================= */
-
-/* === Body baseline === */
-html.single-blog .article-page__content {
-    font-size: 17px !important;
-    line-height: 1.7 !important;
-    color: #2A2A2A !important;
-    font-weight: 400 !important;
-    letter-spacing: -0.003em !important;
-    /* Modern wrapping: prevents lonely orphans on the last line */
-    text-wrap: pretty !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content {
-        font-size: 18px !important;
-        line-height: 1.72 !important;
-    }
-}
-
-/* === Paragraphs === */
-html.single-blog .article-page__content p {
-    margin: 0 0 24px 0 !important;
-    color: #2A2A2A !important;
-}
-
-/* All paragraphs same size — consistent body, no "lead" variation. */
-
-/* === Headings === */
-html.single-blog .article-page__content h2 {
-    position: relative !important;
-    font-size: 30px !important;
-    line-height: 1.2 !important;
-    font-weight: 700 !important;
-    color: #000 !important;
-    letter-spacing: -0.02em !important;
-    margin: 64px 0 18px 0 !important;
-    padding-top: 20px !important;
-    text-wrap: balance !important;
-}
-/* Section accent: a 48px horizontal blue line ABOVE the heading */
-html.single-blog .article-page__content h2::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 48px !important;
-    height: 3px !important;
-    background: #2D40AE !important;
-    border-radius: 1px !important;
-    display: block !important;
-    transform: none !important;
-    margin: 0 !important;
-    vertical-align: baseline !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content h2 {
-        font-size: 34px !important;
-        margin-top: 72px !important;
-        padding-top: 22px !important;
-    }
-    html.single-blog .article-page__content h2::before {
-        width: 56px !important;
-        height: 3px !important;
-    }
-}
-
-html.single-blog .article-page__content h3 {
-    position: relative !important;
-    font-size: 23px !important;
-    line-height: 1.3 !important;
-    font-weight: 600 !important;
-    color: #000 !important;
-    letter-spacing: -0.012em !important;
-    margin: 44px 0 12px 0 !important;
-    padding-top: 14px !important;
-}
-/* Sub-section accent: smaller (28px) horizontal blue line above H3 */
-html.single-blog .article-page__content h3::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 28px !important;
-    height: 2px !important;
-    background: #2D40AE !important;
-    border-radius: 1px !important;
-    display: block !important;
-    opacity: 0.75 !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content h3 {
-        font-size: 26px !important;
-        margin-top: 48px !important;
-        padding-top: 16px !important;
-    }
-    html.single-blog .article-page__content h3::before {
-        width: 32px !important;
-    }
-}
-
-html.single-blog .article-page__content h4 {
-    font-size: 19px !important;
-    line-height: 1.35 !important;
-    font-weight: 600 !important;
-    color: #000 !important;
-    margin: 32px 0 10px 0 !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content h4 {
-        font-size: 21px !important;
-        margin-top: 36px !important;
-    }
-}
-
-/* Reset the dot for the first H2 if it shouldn't have one (e.g., article-leading) */
-html.single-blog .article-page__content > h2:first-child {
-    margin-top: 0 !important;
-}
-
-/* First heading in article has no top margin — already separated from above */
-html.single-blog .article-page__content > h2:first-child,
-html.single-blog .article-page__content > h3:first-child {
-    margin-top: 0 !important;
-}
-
-/* === Lists === */
-html.single-blog .article-page__content ul,
-html.single-blog .article-page__content ol {
-    margin: 0 0 24px 0 !important;
-    padding-left: 24px !important;
-    color: #2A2A2A !important;
-}
-html.single-blog .article-page__content li {
-    margin-bottom: 8px !important;
-    line-height: 1.65 !important;
-}
-html.single-blog .article-page__content li:last-child {
-    margin-bottom: 0 !important;
-}
-html.single-blog .article-page__content li::marker {
-    color: #888 !important;
-}
-
-/* === Blockquote === */
-html.single-blog .article-page__content blockquote {
-    margin: 32px 0 !important;
-    padding: 4px 0 4px 24px !important;
-    border-left: 3px solid #2D40AE !important;
-    font-size: 1.1em !important;
-    line-height: 1.55 !important;
-    font-style: italic !important;
-    color: #2A2A2A !important;
-}
-html.single-blog .article-page__content blockquote p {
-    margin-bottom: 12px !important;
-}
-html.single-blog .article-page__content blockquote p:last-child {
-    margin-bottom: 0 !important;
-}
-
-/* === Inline emphasis === */
-html.single-blog .article-page__content strong,
-html.single-blog .article-page__content b {
-    font-weight: 600 !important;
-    color: #1A1A1A !important;
-}
-html.single-blog .article-page__content em,
-html.single-blog .article-page__content i {
-    font-style: italic !important;
-}
-
-/* === Code (if used) === */
-html.single-blog .article-page__content code {
-    font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace !important;
-    font-size: 0.92em !important;
-    background: rgba(0, 0, 0, 0.05) !important;
-    padding: 2px 6px !important;
-    border-radius: 1px !important;
-    color: #1A1A1A !important;
-}
-
-/* === Horizontal rule === */
-html.single-blog .article-page__content hr {
-    border: 0 !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-    margin: 48px 0 !important;
-}
-
-/* === Figure / image spacing === */
-html.single-blog .article-page__content figure {
-    margin: 36px 0 !important;
-}
-html.single-blog .article-page__content figcaption {
-    margin-top: 12px !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    color: #888 !important;
-    text-align: center !important;
-    font-style: italic !important;
-}
-
-/* === Tables === */
-/* === Editorial minimal table (NYT-inspired) — NUCLEAR RESET === */
-
-/* Wipe ALL borders explicitly per side — beats theme's per-side rules.
-   Wipe backgrounds, shadows, radii. */
-html.single-blog .article-page__content figure.wp-block-table,
-html.single-blog .article-page__content figure.wp-block-table *,
-html.single-blog .article-page__content .wp-block-table,
-html.single-blog .article-page__content .wp-block-table *,
-html.single-blog .article-page__content table,
-html.single-blog .article-page__content table *,
-html.single-blog .article-page__content thead,
-html.single-blog .article-page__content tbody,
-html.single-blog .article-page__content tfoot,
-html.single-blog .article-page__content tr,
-html.single-blog .article-page__content th,
-html.single-blog .article-page__content td {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    border-top: 0 none transparent !important;
-    border-right: 0 none transparent !important;
-    border-bottom: 0 none transparent !important;
-    border-left: 0 none transparent !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    outline: 0 !important;
-}
-
-/* Container reset (some themes wrap tables in figure with bg/border) */
-html.single-blog .article-page__content figure.wp-block-table,
-html.single-blog .article-page__content .wp-block-table {
-    padding: 0 !important;
-    margin: 40px 0 !important;
-    overflow: visible !important;
-}
-
-/* Table base */
-html.single-blog .article-page__content table {
-    width: 100% !important;
-    margin: 40px 0 !important;
-    border-collapse: collapse !important;
-    border-spacing: 0 !important;
-    font-size: 15px !important;
-    line-height: 1.55 !important;
-    color: #2A2A2A !important;
-    table-layout: auto !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content table {
-        font-size: 16px !important;
-    }
-}
-
-/* Header — uppercase, small, thick black bottom border */
-html.single-blog .article-page__content table thead tr th,
-html.single-blog .article-page__content table > thead > tr > th,
-html.single-blog .article-page__content thead th {
-    color: #000 !important;
-    font-weight: 700 !important;
-    font-size: 11px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
-    text-align: left !important;
-    padding: 14px 18px 14px 0 !important;
-    border-bottom-width: 2px !important;
-    border-bottom-style: solid !important;
-    border-bottom-color: #000 !important;
-    vertical-align: bottom !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content table thead tr th,
-    html.single-blog .article-page__content thead th {
-        font-size: 12px !important;
-        padding: 16px 20px 16px 0 !important;
-    }
-}
-
-/* Body cells — only horizontal separator */
-html.single-blog .article-page__content table tbody tr td,
-html.single-blog .article-page__content table > tbody > tr > td,
-html.single-blog .article-page__content tbody td {
-    padding: 18px 20px 18px 0 !important;
-    border-bottom-width: 1px !important;
-    border-bottom-style: solid !important;
-    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
-    text-align: left !important;
-    vertical-align: top !important;
-    color: #2A2A2A !important;
-}
-@media (min-width: 1024px) {
-    html.single-blog .article-page__content table tbody tr td,
-    html.single-blog .article-page__content tbody td {
-        padding: 20px 24px 20px 0 !important;
-    }
-}
-
-/* Last cell in each row — remove right padding for clean right edge */
-html.single-blog .article-page__content table tbody tr td:last-child,
-html.single-blog .article-page__content table thead tr th:last-child {
-    padding-right: 0 !important;
-}
-
-/* Last row — no bottom border */
-html.single-blog .article-page__content table tbody tr:last-child td {
-    border-bottom: 0 !important;
-}
-
-/* First column — bold label */
-html.single-blog .article-page__content table tbody tr td:first-child {
-    font-weight: 600 !important;
-    color: #000 !important;
-    width: 22% !important;
-}
-
-/* Subtle hover */
-html.single-blog .article-page__content table tbody tr:hover td {
-    background: rgba(45, 64, 174, 0.025) !important;
-}
-
-
-/* === Table — extra-aggressive override for WP block table + stripes === */
-/* Kill WP's "stripes" alternating row backgrounds explicitly */
-html.single-blog .article-page__content .wp-block-table.is-style-stripes tbody tr,
-html.single-blog .article-page__content .wp-block-table.is-style-stripes tbody tr td,
-html.single-blog .article-page__content .wp-block-table tbody tr:nth-child(even),
-html.single-blog .article-page__content .wp-block-table tbody tr:nth-child(odd),
-html.single-blog .article-page__content .wp-block-table tbody tr:nth-child(even) td,
-html.single-blog .article-page__content .wp-block-table tbody tr:nth-child(odd) td,
-html.single-blog .article-page__content table tbody tr:nth-child(even),
-html.single-blog .article-page__content table tbody tr:nth-child(odd),
-html.single-blog .article-page__content table tbody tr:nth-child(even) td,
-html.single-blog .article-page__content table tbody tr:nth-child(odd) td {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-}
-
-/* Kill ANY border that came from inline style="" attributes */
-html.single-blog .article-page__content table[style] *,
-html.single-blog .article-page__content table th[style],
-html.single-blog .article-page__content table td[style],
-html.single-blog .article-page__content figure.wp-block-table[style] *,
-html.single-blog .article-page__content figure.wp-block-table * {
-    border-top: 0 none transparent !important;
-    border-right: 0 none transparent !important;
-    border-left: 0 none transparent !important;
-    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Re-apply ONLY the header bottom border and row separators */
-html.single-blog .article-page__content table thead tr th,
-html.single-blog .article-page__content figure.wp-block-table table thead tr th {
-    border-bottom-width: 2px !important;
-    border-bottom-style: solid !important;
-    border-bottom-color: #000 !important;
-    border-top: 0 !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
-}
-html.single-blog .article-page__content table tbody tr td,
-html.single-blog .article-page__content figure.wp-block-table table tbody tr td {
-    border-top: 0 !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
-    border-bottom-width: 1px !important;
-    border-bottom-style: solid !important;
-    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
-}
-html.single-blog .article-page__content table tbody tr:last-child td {
-    border-bottom: 0 none transparent !important;
-}
-
-/* === TOC active marker: square instead of circle === */
-html.single-blog .article-page__sticky .toc a.is-active {
-    position: relative !important;
-    padding-left: 16px !important;
-    color: #2D40AE !important;
-    font-weight: 600 !important;
-}
-html.single-blog .article-page__sticky .toc a.is-active::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    width: 7px !important;
-    height: 7px !important;
-    background: #2D40AE !important;
-    border-radius: 1px !important;
-    transform: translateY(-50%) !important;
-    display: block !important;
-}
-
-/* Kill any theme-added dot/circle markers on active TOC item */
-html.single-blog .article-page__sticky .toc__item.is-active::before,
-html.single-blog .article-page__sticky .toc__item.is-active::marker,
-html.single-blog .article-page__sticky .toc li.is-active::before,
-html.single-blog .article-page__sticky .toc li.is-active::marker {
-    display: none !important;
-    content: none !important;
-}
-
-
-/* === TOC: cream bg + no bold active + kill all theme markers === */
-
-/* Sidebar background: transparent (option B — minimal) */
-html.single-blog .article-page__aside--left .article-page__sticky {
-    background-color: transparent !important;
-    background: transparent !important;
-}
-
-/* Active state: just blue color, no bold weight */
-html.single-blog .article-page__sticky .toc a.is-active {
-    color: #2D40AE !important;
-    font-weight: 400 !important;
-    padding-left: 16px !important;
-    position: relative !important;
-}
-
-/* My square marker stays */
-html.single-blog .article-page__sticky .toc a.is-active::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    width: 7px !important;
-    height: 7px !important;
-    background: #2D40AE !important;
-    border-radius: 1px !important;
-    transform: translateY(-50%) !important;
-    display: block !important;
-}
-
-/* HARD KILL all possible theme markers (circles, dots, bullets) on active items */
-html.single-blog .article-page__sticky .toc li::marker,
-html.single-blog .article-page__sticky .toc li::before,
-html.single-blog .article-page__sticky .toc li::after,
-html.single-blog .article-page__sticky .toc__item::before,
-html.single-blog .article-page__sticky .toc__item::after,
-html.single-blog .article-page__sticky .toc__item.is-active::before,
-html.single-blog .article-page__sticky .toc__item.is-active::after,
-html.single-blog .article-page__sticky .toc li.is-active::before,
-html.single-blog .article-page__sticky .toc li.is-active::after,
-html.single-blog .article-page__sticky .toc__list li::before,
-html.single-blog .article-page__sticky .toc__list li::after,
-html.single-blog .article-page__sticky .toc__list li::marker {
-    content: none !important;
-    display: none !important;
-    background: none !important;
-    background-color: transparent !important;
-}
-
-/* Reset list-style on all TOC lists */
-html.single-blog .article-page__sticky .toc ul,
-html.single-blog .article-page__sticky .toc ol,
-html.single-blog .article-page__sticky .toc__list {
-    list-style: none !important;
-    padding-left: 0 !important;
-}
-html.single-blog .article-page__sticky .toc li {
-    list-style: none !important;
-}
-
-
-/* === Sidebar CTA: real MFS logo (replaces author avatar) === */
-html.single-blog .sidebar-cta__brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-html.single-blog .sidebar-cta__monogram {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-html.single-blog .sidebar-cta__monogram img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    /* Theme's logo.svg is dark — invert to white for the dark sidebar bg */
-    filter: brightness(0) invert(1);
-}
-html.single-blog .sidebar-cta__brand-text {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 12px;
-    line-height: 1.3;
-}
-html.single-blog .sidebar-cta__brand-eyebrow {
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 12px;
-    letter-spacing: 0.02em;
-}
-
-
-/* === TABLE: FINAL nuclear override ====================
-   Targets WP block variables, inline style attrs, and all
-   possible border declarations from any source.
-   ======================================================= */
-
-/* Override Gutenberg table CSS variables */
-html.single-blog .article-page__content .wp-block-table,
-html.single-blog .article-page__content figure.wp-block-table,
-html.single-blog .article-page__content figure.wp-block-table table {
-    --wp--preset--table--border-color: transparent !important;
-    --wp--preset--color--border: transparent !important;
-}
-
-/* Cascade-killer: any element inside any table */
-html.single-blog .article-page__content table,
-html.single-blog .article-page__content table *,
-html.single-blog .article-page__content table tbody,
-html.single-blog .article-page__content table thead,
-html.single-blog .article-page__content table tr,
-html.single-blog .article-page__content table td,
-html.single-blog .article-page__content table th,
-html.single-blog .article-page__content figure.wp-block-table table *,
-html.single-blog .article-page__content figure.wp-block-table table td,
-html.single-blog .article-page__content figure.wp-block-table table th {
-    border-top-width: 0 !important;
-    border-right-width: 0 !important;
-    border-left-width: 0 !important;
-    border-top-style: none !important;
-    border-right-style: none !important;
-    border-left-style: none !important;
-    border-top-color: transparent !important;
-    border-right-color: transparent !important;
-    border-left-color: transparent !important;
-    outline: 0 none transparent !important;
-    box-shadow: none !important;
-}
-
-/* Override inline style attributes (border on td/th/tr directly) */
-html.single-blog .article-page__content table td[style],
-html.single-blog .article-page__content table th[style],
-html.single-blog .article-page__content table tr[style] {
-    border-right-width: 0 !important;
-    border-left-width: 0 !important;
-    border-right-style: none !important;
-    border-left-style: none !important;
-    border-right-color: transparent !important;
-    border-left-color: transparent !important;
-}
-
-/* Re-apply ONLY the row separators (horizontal) */
-html.single-blog .article-page__content table tbody tr td {
-    border-bottom-width: 1px !important;
-    border-bottom-style: solid !important;
-    border-bottom-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* First row of any table — treat as header (since this table may
-   not have a real <thead>): bold, slightly more padding, thick bottom */
-html.single-blog .article-page__content table tbody tr:first-child td {
-    font-weight: 700 !important;
-    color: #000 !important;
-    padding-top: 8px !important;
-    padding-bottom: 14px !important;
-    border-bottom-width: 2px !important;
-    border-bottom-color: #000 !important;
-}
-
-/* Last row — clean bottom */
-html.single-blog .article-page__content table tbody tr:last-child td {
-    border-bottom: 0 none transparent !important;
-}
-
-
-/* === TOC sidebar: near-black border + separators === */
-
-/* Subtle near-black border around the whole left sidebar */
-html.single-blog .article-page__aside--left .article-page__sticky {
-    border: 1px solid #0A0A0A !important;
-    border-radius: 1px !important;
-}
-
-/* Divider between author-mini and reading status — same near-black tone */
-html.single-blog .author-mini {
-    border-bottom-color: #0A0A0A !important;
-}
-
-/* Divider above feedback widget */
-html.single-blog .feedback {
-    border-top-color: #0A0A0A !important;
-}
-
-/* TOC scrollbar — brand tinted thumb */
-html.single-blog .article-page__sticky > .toc ::-webkit-scrollbar-thumb,
-html.single-blog .article-page__sticky > .toc::-webkit-scrollbar-thumb {
-    background: rgba(45, 64, 174, 0.25) !important;
-}
-html.single-blog .article-page__sticky > .toc ::-webkit-scrollbar-thumb:hover,
-html.single-blog .article-page__sticky > .toc::-webkit-scrollbar-thumb:hover {
-    background: rgba(45, 64, 174, 0.45) !important;
-}
-html.single-blog .article-page__sticky > .toc {
-    scrollbar-color: rgba(45, 64, 174, 0.25) transparent !important;
-}
-
-
-/* === TABLE FINAL FIX: theme uses ::before / ::after pseudo-elements
-   for cell separator lines (not borders!) — kill them === */
-
-/* ============================================================
-   ITERATION 2: revert H2/H3 lines to brand accent; TOC borders -> dark CTA color
-   ============================================================ */
-
-/* Revert: H2 / H3 horizontal separator line back to brand accent (blue) */
-html.single-blog .article-page__content h2::before,
-html.single-blog .article-page__content h3::before,
-html.single-blog .article-page__content > h2::before,
-html.single-blog .article-page__content > h3::before {
-    background: var(--accent-color, #2A4BFF) !important;
-    background-color: var(--accent-color, #2A4BFF) !important;
-    border-color: var(--accent-color, #2A4BFF) !important;
-}
-html.single-blog .article-page__content h2,
-html.single-blog .article-page__content h3 {
-    border-top-color: var(--accent-color, #2A4BFF) !important;
-}
-
-/* TOC borders — match dark CTA sidebar color (#0A0A0A) */
-html.single-blog .article-aside,
-html.single-blog .article-aside__contents,
-html.single-blog .article-aside__contents-inner,
-html.single-blog .article-aside .contents,
-html.single-blog .article-aside .author-mini,
-html.single-blog .article-aside .reading-status,
-html.single-blog .article-aside .feedback,
-html.single-blog .article-aside__inner,
-html.single-blog .article-aside__sticky {
-    border-color: #0A0A0A !important;
-}
-
-html.single-blog .article-aside *,
-html.single-blog .article-aside *::before,
-html.single-blog .article-aside *::after {
-    border-color: #0A0A0A !important;
-}
-
-/* Internal separators inside TOC card (between author / status / contents / feedback) */
-html.single-blog .article-aside__contents-inner > *,
-html.single-blog .article-aside__contents > *,
-html.single-blog .article-aside .contents > * {
-    border-top-color: #0A0A0A !important;
-    border-bottom-color: #0A0A0A !important;
-}
-
-/* Keep TOC inner scroll container smooth-scroll capable */
-html.single-blog .article-aside__contents,
-html.single-blog .article-aside__contents-inner,
-html.single-blog .article-aside__contents ul,
-html.single-blog .article-aside__contents nav,
-html.single-blog .article-aside .contents,
-html.single-blog .article-aside .contents ul {
-    scroll-behavior: smooth !important;
-}
-
-/* ============================================================
-   ITERATION 3: in-article CTA -> "Editor's note" + compact FAQ
-   ============================================================ */
-
-/* --- CTA: kill banner styling, become editorial editor's-note --- */
-html.single-blog .article-page__cta {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    border-left: 3px solid #0A0A0A !important;
-    padding: 4px 0 4px 28px !important;
-    margin: 56px 0 !important;
-    display: block !important;
-    overflow: visible !important;
-    min-height: 0 !important;
-    color: #0A0A0A !important;
-    box-shadow: none !important;
-}
-html.single-blog .article-page__cta-img {
-    display: none !important;
-}
-html.single-blog .article-page__cta-content {
-    padding: 0 !important;
-    background: transparent !important;
-    color: #0A0A0A !important;
-    width: auto !important;
-    max-width: 100% !important;
-    position: static !important;
-}
-html.single-blog .article-page__cta-title {
-    font-size: 11px !important;
-    line-height: 1.4 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    margin: 0 0 12px 0 !important;
-    padding: 0 !important;
-    font-family: inherit !important;
-}
-html.single-blog .article-page__cta-text {
-    font-size: 19px !important;
-    line-height: 1.55 !important;
-    font-weight: 400 !important;
-    font-style: italic !important;
-    color: #0A0A0A !important;
-    margin: 0 0 18px 0 !important;
-    font-family: inherit !important;
-}
-html.single-blog .article-page__cta-text p {
-    font-size: inherit !important;
-    line-height: inherit !important;
-    font-style: inherit !important;
-    margin: 0 !important;
-}
-html.single-blog .article-page__cta-button {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-bottom: 1px solid #0A0A0A !important;
-    border-radius: 0 !important;
-    padding: 2px 0 4px 0 !important;
-    color: #0A0A0A !important;
-    font-size: 15px !important;
-    line-height: 1.3 !important;
-    font-weight: 500 !important;
-    font-style: normal !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-    box-shadow: none !important;
-    min-height: 0 !important;
-    width: auto !important;
-}
-html.single-blog .article-page__cta-button::after {
-    content: " \2192" !important;
-    margin-left: 2px !important;
-    display: inline !important;
-    background: none !important;
-    width: auto !important;
-    height: auto !important;
-}
-html.single-blog .article-page__cta-button:hover {
-    background: transparent !important;
-    color: #2D40AE !important;
-    border-bottom-color: #2D40AE !important;
-}
-
-/* --- Compact FAQ: tight, editorial, single column --- */
-html.single-blog .article-page__faq,
-html.single-blog .faq.article-page__faq {
-    background: transparent !important;
-    padding: 40px 0 24px 0 !important;
-    margin: 32px 0 0 0 !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
-}
-html.single-blog .article-page__faq .container,
-html.single-blog .article-page__faq .container_small {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100% !important;
-}
-html.single-blog .article-page__faq .faq__info {
-    margin: 0 0 20px 0 !important;
-    padding: 0 !important;
-    display: block !important;
-}
-html.single-blog .article-page__faq .faq__info h2 {
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-family: inherit !important;
-}
-html.single-blog .article-page__faq .faq__info h2::before,
-html.single-blog .article-page__faq .faq__info h2::after {
-    content: none !important;
-    display: none !important;
-    background: transparent !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-html.single-blog .article-page__faq .faq__description {
-    font-size: 14px !important;
-    color: rgba(0, 0, 0, 0.7) !important;
-    margin: 6px 0 0 0 !important;
-}
-html.single-blog .article-page__faq .faq__items {
-    display: block !important;
-    grid-template-columns: none !important;
-    gap: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-html.single-blog .article-page__faq .faq-item {
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    width: 100% !important;
-    min-height: 0 !important;
-}
-html.single-blog .article-page__faq .faq-item__btn {
-    display: flex !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    gap: 16px !important;
-    width: 100% !important;
-    padding: 16px 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    color: #0A0A0A !important;
-    font-size: 16px !important;
-    line-height: 1.45 !important;
-    font-weight: 500 !important;
-    text-align: left !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-    min-height: 0 !important;
-    box-shadow: none !important;
-    cursor: pointer !important;
-}
-html.single-blog .article-page__faq .faq-item__btn span {
-    font-size: inherit !important;
-    line-height: inherit !important;
-    font-weight: inherit !important;
-    color: inherit !important;
-}
-html.single-blog .article-page__faq .faq-item__btn::after {
-    content: "+" !important;
-    display: inline-block !important;
-    flex-shrink: 0 !important;
-    font-size: 18px !important;
-    line-height: 1 !important;
-    font-weight: 400 !important;
-    color: rgba(0, 0, 0, 0.45) !important;
-    background: none !important;
-    width: auto !important;
-    height: auto !important;
-    margin-top: 4px !important;
-    transition: transform 0.2s ease !important;
-}
-html.single-blog .article-page__faq .faq-item.is-active .faq-item__btn::after,
-html.single-blog .article-page__faq .faq-item.active .faq-item__btn::after,
-html.single-blog .article-page__faq .js-faq-item.is-active .faq-item__btn::after {
-    transform: rotate(45deg) !important;
-}
-html.single-blog .article-page__faq .faq-item__btn svg,
-html.single-blog .article-page__faq .faq-item__btn img,
-html.single-blog .article-page__faq .faq-item__btn .icon,
-html.single-blog .article-page__faq .faq-item__btn::before {
-    display: none !important;
-}
-html.single-blog .article-page__faq .faq-item__answer {
-    padding: 0 0 16px 0 !important;
-    margin: 0 !important;
-}
-html.single-blog .article-page__faq .faq-item__answer-inner {
-    font-size: 15px !important;
-    line-height: 1.6 !important;
-    color: rgba(0, 0, 0, 0.78) !important;
-    max-width: 64ch !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-html.single-blog .article-page__faq .faq-item__answer-inner p {
-    font-size: inherit !important;
-    line-height: inherit !important;
-    margin: 0 0 10px 0 !important;
-}
-
-/* ============================================================
-   ITERATION 4: hard-collapse FAQ answers, brand-blue plus,
-   rebuild CTA as a quiet card
-   ============================================================ */
-
-/* --- Hard-collapse FAQ answers so text doesn't bleed through --- */
-html.single-blog .article-page__faq .faq-item__answer {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    padding: 0 !important;
-    transition: max-height 0.35s ease, opacity 0.25s ease, visibility 0s linear 0.25s;
-}
-html.single-blog .article-page__faq .faq-item.active .faq-item__answer,
-html.single-blog .article-page__faq .js-faq-item.active .faq-item__answer {
-    opacity: 1;
-    visibility: visible;
-    padding: 0 0 16px 0 !important;
-    transition: max-height 0.35s ease, opacity 0.3s ease 0.05s, visibility 0s linear 0s;
-}
-
-/* --- Plus indicator -> brand blue --- */
-html.single-blog .article-page__faq .faq-item__btn::after {
-    color: #2D40AE !important;
-    font-weight: 500 !important;
-}
-html.single-blog .article-page__faq .faq-item.active .faq-item__btn::after,
-html.single-blog .article-page__faq .js-faq-item.active .faq-item__btn::after {
-    color: #2D40AE !important;
-}
-
-/* --- CTA: full rebuild as a quiet light card --- */
-html.single-blog .article-page__cta {
-    background: #FAFAF7 !important;
-    background-image: none !important;
-    background-color: #FAFAF7 !important;
-    border: 1px solid #0A0A0A !important;
-    border-radius: 1px !important;
-    border-left: 1px solid #0A0A0A !important;
-    padding: 32px 36px !important;
-    margin: 56px 0 !important;
-    display: block !important;
-    overflow: visible !important;
-    color: #0A0A0A !important;
-    box-shadow: none !important;
-    position: relative !important;
-    min-height: 0 !important;
-}
-html.single-blog .article-page__cta::before,
-html.single-blog .article-page__cta::after {
-    content: none !important;
-    display: none !important;
-    background: transparent !important;
-}
-html.single-blog .article-page__cta-img {
-    display: none !important;
-}
-html.single-blog .article-page__cta-content {
-    padding: 0 !important;
-    background: transparent !important;
-    color: #0A0A0A !important;
-    width: auto !important;
-    max-width: 100% !important;
-    position: static !important;
-    display: block !important;
-}
-html.single-blog .article-page__cta-title {
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    margin: 0 0 14px 0 !important;
-    padding: 0 !important;
-    font-family: inherit !important;
-    font-style: normal !important;
-}
-html.single-blog .article-page__cta-title::before,
-html.single-blog .article-page__cta-title::after {
-    content: none !important;
-    display: none !important;
-    background: transparent !important;
-}
-html.single-blog .article-page__cta-text {
-    font-size: 17px !important;
-    line-height: 1.5 !important;
-    font-weight: 400 !important;
-    font-style: normal !important;
-    color: #0A0A0A !important;
-    margin: 0 0 22px 0 !important;
-    font-family: inherit !important;
-    max-width: 62ch !important;
-}
-html.single-blog .article-page__cta-text p {
-    font-size: inherit !important;
-    line-height: inherit !important;
-    font-style: inherit !important;
-    color: inherit !important;
-    margin: 0 !important;
-}
-html.single-blog .article-page__cta-button {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    background: #0A0A0A !important;
-    background-color: #0A0A0A !important;
-    background-image: none !important;
-    border: 1px solid #0A0A0A !important;
-    border-radius: 1px !important;
-    padding: 12px 22px !important;
-    color: #FFFFFF !important;
-    font-size: 14px !important;
-    line-height: 1 !important;
-    font-weight: 500 !important;
-    font-style: normal !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-    box-shadow: none !important;
-    min-height: 0 !important;
-    width: auto !important;
-    text-decoration: none !important;
-}
-html.single-blog .article-page__cta-button::before {
-    content: none !important;
-    display: none !important;
-    background: transparent !important;
-}
-html.single-blog .article-page__cta-button::after {
-    content: "\2192" !important;
-    margin-left: 0 !important;
-    display: inline !important;
-    background: none !important;
-    color: inherit !important;
-    width: auto !important;
-    height: auto !important;
-    font-size: 14px !important;
-}
-html.single-blog .article-page__cta-button:hover {
-    background: #2D40AE !important;
-    background-color: #2D40AE !important;
-    border-color: #2D40AE !important;
-    color: #FFFFFF !important;
-}
-
-/* ============================================================
-   ITERATION 5: hide bottom author block on single-blog
-   (footer CTA un-hidden 2026-06-07 per Dima — keep site-wide
-   "Let's create visuals" CTA + Book a call on blog articles)
-   ============================================================ */
-
-/* Hide bottom author "View full profile" block — left sidebar already has author-mini */
-html.single-blog .article-page__author {
-    display: none !important;
-}
-
-/* ============================================================
-   ITERATION 6: Breadcrumbs A + Editorial Read Next + Sidebar rotator
-   ============================================================ */
-
-/* --- Breadcrumbs A: thin text strip "Home · Blog · Title" --- */
-html.single-blog .article-page__breadcrumbs-bottom {
-    background: transparent !important;
-    border: 0 !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
-    padding: 20px 0 24px 0 !important;
-    margin: 32px 0 0 0 !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom .container {
-    padding: 0 !important;
-}
-html.single-blog .article-page__breadcrumbs-label {
-    display: none !important;
-}
-html.single-blog .article-page__breadcrumbs-wrap {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-html.single-blog #breadcrumb,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs,
-html.single-blog .article-page__breadcrumbs-bottom .rank-math-breadcrumb {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
-    background: transparent !important;
-    font-size: 13px !important;
-    line-height: 1.5 !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    font-weight: 400 !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb li,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li {
-    display: inline-flex !important;
-    align-items: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
-    font-size: 13px !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb li:not(:last-child)::after,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:not(:last-child)::after {
-    content: "·" !important;
-    display: inline-block !important;
-    margin: 0 8px !important;
-    color: rgba(0, 0, 0, 0.35) !important;
-    background: transparent !important;
-    width: auto !important;
-    height: auto !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb a,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a {
-    color: #0A0A0A !important;
-    text-decoration: underline !important;
-    text-decoration-color: rgba(0, 0, 0, 0.3) !important;
-    text-underline-offset: 3px !important;
-    text-decoration-thickness: 1px !important;
-    background: transparent !important;
-    padding: 0 !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    border: 0 !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb li:last-child span,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:last-child span,
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb li:last-child,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li:last-child {
-    color: rgba(0, 0, 0, 0.4) !important;
-    font-weight: 400 !important;
-    text-decoration: none !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb a:hover,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a:hover {
-    color: #2D40AE !important;
-    text-decoration: underline !important;
-}
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb span,
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs span {
-    color: rgba(0, 0, 0, 0.55) !important;
-    font-size: 13px !important;
-    font-weight: 400 !important;
-}
-/* Hide theme's arrow separators (svg/img between crumbs) */
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb li svg:not(:first-child),
-html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs li svg:not(:first-child),
-html.single-blog .article-page__breadcrumbs-bottom #breadcrumb .separator,
-html.single-blog .article-page__breadcrumbs-bottom .rank-math-breadcrumb .separator {
-    display: none !important;
-}
-
-/* --- Related Articles -> Editorial Read Next --- */
-html.single-blog .section-related {
-    background: transparent !important;
-    padding: 48px 0 64px 0 !important;
-    margin: 0 !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
-}
-html.single-blog .section-related .container {
-    max-width: 100% !important;
-}
-html.single-blog .section-related .section__title {
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    margin: 0 0 28px 0 !important;
-    padding: 0 !important;
-}
-/* Replace text content via pseudo to keep semantic h2 but show editorial label */
-html.single-blog .section-related .section__title {
-    font-size: 0 !important;
-}
-html.single-blog .section-related .section__title::before {
-    content: "READ NEXT" !important;
-    display: block !important;
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: rgba(0, 0, 0, 0.55) !important;
-    background: transparent !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-}
-/* ES: localize the "Read next" eyebrow above related articles (higher specificity via [lang]) */
-html.single-blog[lang^="es"] .section-related .section__title::before {
-    content: "LEER A CONTINUACIÓN" !important;
-}
-html.single-blog .section-related .cards--3 {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 0 !important;
-    border-top: 1px solid #0A0A0A !important;
-    /* long words in card titles must never widen the 1fr tracks past the
-       viewport (that gave the whole page a horizontal scroll on phones) */
-    min-width: 0 !important;
-}
-html.single-blog .section-related .case-item.--related {
-    background: transparent !important;
-    border: 0 !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-    border-radius: 0 !important;
-    padding: 28px 28px 28px 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-}
-html.single-blog .section-related .case-item.--related:nth-child(n+2) {
-    padding-left: 28px !important;
-}
-html.single-blog .section-related .case-item.--related:last-child {
-    border-right: 0 !important;
-    padding-right: 0 !important;
-}
-/* Mobile: stack Read Next into a single editorial column — three side-by-side
-   cards overflowed the viewport and made the whole page pannable sideways.
-   (Must come AFTER the base --related rules: equal specificity + !important
-   means source order decides.) */
-@media (max-width: 767px) {
-    html.single-blog .section-related .cards--3 {
-        grid-template-columns: 1fr !important;
-    }
-    html.single-blog .section-related .case-item.--related {
-        border-right: 0 !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-        padding: 22px 0 !important;
-    }
-    html.single-blog .section-related .case-item.--related:nth-child(n+2) {
-        padding-left: 0 !important;
-    }
-    html.single-blog .section-related .case-item.--related:last-child {
-        border-bottom: 0 !important;
-        padding-bottom: 0 !important;
-    }
-}
-html.single-blog .section-related .case-item.--related .case-item__link {
-    display: block !important;
-    text-decoration: none !important;
-    color: inherit !important;
-    background: transparent !important;
-    padding: 0 !important;
-    border: 0 !important;
-}
-/* Hide image, tags, author — editorial-text only */
-html.single-blog .section-related .case-item.--related .case-item__img,
-html.single-blog .section-related .case-item.--related .case-item__tags,
-html.single-blog .section-related .case-item.--related .case-item__author {
-    display: none !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__info {
-    padding: 0 !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__date {
-    display: block !important;
-    font-size: 12px !important;
-    line-height: 1.4 !important;
-    color: rgba(0, 0, 0, 0.5) !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
-    margin: 0 0 10px 0 !important;
-    padding: 0 !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__title {
-    font-size: 19px !important;
-    line-height: 1.3 !important;
-    font-weight: 500 !important;
-    color: #0A0A0A !important;
-    margin: 0 0 12px 0 !important;
-    padding: 0 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__title span {
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    color: inherit !important;
-    line-height: inherit !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__excerpt {
-    font-size: 14px !important;
-    line-height: 1.55 !important;
-    color: rgba(0, 0, 0, 0.65) !important;
-    margin: 0 0 16px 0 !important;
-    padding: 0 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__footer {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    display: block !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__arrow {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    color: #0A0A0A !important;
-    text-transform: none !important;
-    letter-spacing: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-bottom: 1px solid #0A0A0A !important;
-    padding: 2px 0 4px 0 !important;
-    border-radius: 0 !important;
-}
-html.single-blog .section-related .case-item.--related .case-item__arrow svg {
-    width: 14px !important;
-    height: 14px !important;
-}
-html.single-blog .section-related .case-item.--related:hover .case-item__title {
-    color: #2D40AE !important;
-}
-html.single-blog .section-related .case-item.--related:hover .case-item__arrow {
-    color: #2D40AE !important;
-    border-bottom-color: #2D40AE !important;
-}
-
-/* --- Sidebar CTA rotator: stack stages, fade between them --- */
-html.single-blog .sidebar-cta__stages {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    position: relative !important;
-    min-height: 220px !important;
-}
-html.single-blog .sidebar-cta__stage {
-    grid-column: 1 / -1 !important;
-    grid-row: 1 / -1 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    transform: translateY(6px) !important;
-    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s !important;
-}
-html.single-blog .sidebar-cta__stage.is-active {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    transform: translateY(0) !important;
-    transition: opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s, visibility 0s linear 0s !important;
-}
-html.single-blog .sidebar-cta__eyebrow {
-    display: block !important;
-    font-size: 10px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    color: rgba(255, 255, 255, 0.55) !important;
-    margin: 0 0 10px 0 !important;
-}
-
-/* ============================================================
-   ITERATION 7: more air inside sidebar CTA rotator
-   ============================================================ */
-
-/* Outer card: roomier padding, comfortable inner layout */
-html.single-blog .sidebar-cta {
-    padding: 32px 28px 28px 28px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0 !important;
-    height: 100% !important;
-    min-height: 100% !important;
-}
-
-/* Brand row + spacing before the rotating content */
-html.single-blog .sidebar-cta__brand {
-    margin: 0 0 28px 0 !important;
-    padding: 0 0 24px 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    gap: 14px !important;
-    align-items: center !important;
-}
-
-/* Stages container: more vertical room so stage 2/3/4 don't feel squeezed */
-html.single-blog .sidebar-cta__stages {
-    min-height: 260px !important;
-    margin: 0 0 28px 0 !important;
-    flex: 1 1 auto !important;
-}
-
-/* Eyebrow above stage title */
-html.single-blog .sidebar-cta__eyebrow {
-    margin: 0 0 16px 0 !important;
-}
-
-/* Stage title */
-html.single-blog .sidebar-cta__stage .sidebar-cta__head {
-    margin: 0 0 14px 0 !important;
-    font-size: 20px !important;
-    line-height: 1.3 !important;
-    font-weight: 500 !important;
-    letter-spacing: -0.005em !important;
-}
-
-/* Stage subline */
-html.single-blog .sidebar-cta__stage .sidebar-cta__sub {
-    margin: 0 0 28px 0 !important;
-    font-size: 14px !important;
-    line-height: 1.55 !important;
-    color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Stage button — slightly more padding, separated from sub */
-html.single-blog .sidebar-cta__stage .sidebar-cta__btn {
-    margin: 0 !important;
-    padding: 14px 18px !important;
-    gap: 10px !important;
-    font-size: 15px !important;
-    line-height: 1 !important;
-    font-weight: 500 !important;
-}
-
-/* Trust footer: clear separator + breathing room above */
-html.single-blog .sidebar-cta__trust {
-    margin: auto 0 0 0 !important;
-    padding: 24px 0 0 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-}
-html.single-blog .sidebar-cta__proof {
-    margin: 0 !important;
-    font-size: 12px !important;
-    line-height: 1.5 !important;
-    color: rgba(255, 255, 255, 0.55) !important;
-}
-
-/* ============================================================
-   ITERATION 8: in-article eyebrows -> brand blue (was muted gray)
-   Consistent across CTA "TURN IDEAS", FAQ, Read Next.
-   ============================================================ */
-html.single-blog .article-page__cta-title,
-html.single-blog .article-page__faq .faq__info h2,
-html.single-blog .section-related .section__title::before {
-    color: #2D40AE !important;
-}
-
-/* ============================================================
-   ITERATION 9: 5 in-article CTAs, visually different, scattered
-   ============================================================ */
-
-/* Hide the legacy single CTA block (the cream card) — replaced by the JS-injected variants */
-html.single-blog .article-page__cta {
-    display: none !important;
-}
-
-/* --- Shared base --- */
-html.single-blog .in-cta {
-    display: block !important;
-    margin: 56px 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    color: #0A0A0A !important;
-}
-html.single-blog .in-cta__eyebrow {
-    display: block !important;
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: #2D40AE !important;
-    margin: 0 0 12px 0 !important;
-}
-html.single-blog .in-cta__head {
-    margin: 0 0 16px 0 !important;
-    color: #0A0A0A !important;
-    font-size: 19px !important;
-    line-height: 1.5 !important;
-    font-weight: 400 !important;
-    font-family: inherit !important;
-}
-html.single-blog .in-cta__link,
-html.single-blog .article-page__content .in-cta__link {
-    display: inline-flex !important;
-    align-items: baseline !important;
-    gap: 8px !important;
-    font-size: 15px !important;
-    line-height: 1.3 !important;
-    font-weight: 500 !important;
-    color: #2D40AE !important;
-    text-decoration: none !important;
-    text-decoration-line: none !important;
-    text-decoration-color: transparent !important;
-    border: 0 !important;
-    border-top: 0 !important;
-    border-right: 0 !important;
-    border-left: 0 !important;
-    border-bottom: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-}
-/* Kill any inherited underline on children (arrow span etc.) */
-html.single-blog .in-cta__link *,
-html.single-blog .article-page__content .in-cta__link * {
-    text-decoration: none !important;
-    text-decoration-line: none !important;
-    border-bottom: 0 !important;
-}
-/* Hover: subtle single underline appears via text-decoration on text label only */
-html.single-blog .in-cta__link:hover .in-cta__label,
-html.single-blog .article-page__content .in-cta__link:hover .in-cta__label {
-    text-decoration: underline !important;
-    text-decoration-color: currentColor !important;
-    text-underline-offset: 4px !important;
-    text-decoration-thickness: 1px !important;
-}
-html.single-blog .in-cta__link:hover,
-html.single-blog .article-page__content .in-cta__link:hover {
-    color: #0A0A0A !important;
-}
-html.single-blog .in-cta__arrow {
-    display: inline-block !important;
-    line-height: 1 !important;
-    font-size: 15px !important;
-}
-
-/* --- V1: numbered editorial, big blue "01" prefix on the left --- */
-html.single-blog .in-cta--v1 {
-    display: block !important;
-    position: relative !important;
-    padding: 0 0 0 88px !important;
-    min-height: 60px !important;
-}
-html.single-blog .in-cta--v1::before {
-    content: "01" !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: -6px !important;
-    font-size: 56px !important;
-    line-height: 0.9 !important;
-    font-weight: 700 !important;
-    color: #2D40AE !important;
-    letter-spacing: -0.04em !important;
-    display: block !important;
-    background: transparent !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0 !important;
-    font-family: inherit !important;
-}
-html.single-blog .in-cta--v1 .in-cta__eyebrow {
-    margin: 0 0 10px 0 !important;
-}
-html.single-blog .in-cta--v1 .in-cta__head {
-    font-size: 19px !important;
-    line-height: 1.5 !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    color: #0A0A0A !important;
-    margin: 0 0 14px 0 !important;
-}
-
-/* --- V2: left-border editor's note --- */
-html.single-blog .in-cta--v2 {
-    border-left: 3px solid #2D40AE !important;
-    padding-left: 24px !important;
-}
-html.single-blog .in-cta--v2 .in-cta__head {
-    font-size: 19px !important;
-    line-height: 1.5 !important;
-}
-
-/* --- V3: centered pull-quote --- */
-html.single-blog .in-cta--v3 {
-    text-align: center !important;
-    max-width: 64ch !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 8px 0 !important;
-}
-html.single-blog .in-cta--v3::before {
-    content: "\2014" !important;
-    display: block !important;
-    color: rgba(0, 0, 0, 0.3) !important;
-    font-size: 18px !important;
-    line-height: 1 !important;
-    margin-bottom: 16px !important;
-    background: transparent !important;
-    width: auto !important;
-    height: auto !important;
-}
-html.single-blog .in-cta--v3 .in-cta__eyebrow {
-    margin-bottom: 14px !important;
-}
-html.single-blog .in-cta--v3 .in-cta__head {
-    font-size: 23px !important;
-    line-height: 1.4 !important;
-    font-style: italic !important;
-    font-weight: 400 !important;
-    margin: 0 0 20px 0 !important;
-    color: #0A0A0A !important;
-}
-
-/* --- V4: bordered card, transparent fill, link not button --- */
-html.single-blog .in-cta--v4 {
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
-    border-radius: 1px !important;
-    padding: 28px 32px !important;
-    background: transparent !important;
-}
-html.single-blog .in-cta--v4 .in-cta__head {
-    font-size: 19px !important;
-    font-weight: 500 !important;
-    line-height: 1.45 !important;
-}
-
-/* --- V5: hr-sandwich, centered, section-break feel --- */
-html.single-blog .in-cta--v5 {
-    text-align: center !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.14) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.14) !important;
-    padding: 32px 0 !important;
-    margin: 64px 0 !important;
-}
-html.single-blog .in-cta--v5 .in-cta__head {
-    font-size: 22px !important;
-    line-height: 1.4 !important;
-    font-weight: 500 !important;
-    margin-bottom: 18px !important;
-}
-html.single-blog .in-cta--v5 .in-cta__eyebrow {
-    color: #2D40AE !important;
-}
-
-/* ============================================================
-   ITERATION 10 (revised): persistent pulsing "live" indicator
-   No more fade-from-nowhere on scroll. Each eyebrow gets a small
-   green dot that pulses indefinitely, signalling "active CTA".
-   ============================================================ */
-
-/* Pulsing live dot before every CTA eyebrow */
-html.single-blog .in-cta .in-cta__eyebrow {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 9px !important;
-    position: relative !important;
-}
-html.single-blog .in-cta .in-cta__eyebrow::before {
-    content: "" !important;
-    display: inline-block !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 0 !important;
-    background: #10B981 !important;
-    flex-shrink: 0 !important;
-    box-shadow: none !important;
-    animation: ctaSquareBlink 1.2s steps(1, end) infinite !important;
-    position: relative !important;
-    top: -1px !important;
-}
 @keyframes ctaSquareBlink {
     0%, 49%   { opacity: 1; }
     50%, 99%  { opacity: 0.18; }
     100%      { opacity: 1; }
-}
-
-/* Arrow: nudge up to optically align with text x-height; slide right on hover */
-html.single-blog .in-cta__arrow {
-    display: inline-block !important;
-    transform: translateY(-2px) !important;
-    transition: transform 0.25s ease !important;
-    font-size: 16px !important;
-    line-height: 1 !important;
-}
-html.single-blog .in-cta__link:hover .in-cta__arrow {
-    transform: translateY(-2px) translateX(5px) !important;
-}
-
-/* V4 bordered card: subtle hover lift (border + soft shadow) */
-html.single-blog .in-cta--v4 {
-    transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
-}
-html.single-blog .in-cta--v4:hover {
-    border-color: #2D40AE !important;
-    box-shadow: 0 4px 24px rgba(45, 64, 174, 0.08) !important;
-}
-
-/* Respect prefers-reduced-motion: kill the pulse */
-@media (prefers-reduced-motion: reduce) {
-    html.single-blog .in-cta .in-cta__eyebrow::before {
-        animation: none !important;
-        opacity: 1 !important;
-    }
-    html.single-blog .in-cta__arrow {
-        transition: none !important;
-    }
-}
-
-
-
-
-
-
-
-
-
-html.single-blog .article-page__content figure.wp-block-table td::before,
-html.single-blog .article-page__content figure.wp-block-table td::after,
-html.single-blog .article-page__content figure.wp-block-table th::before,
-html.single-blog .article-page__content figure.wp-block-table th::after,
-html.single-blog .article-page__content table td::before,
-html.single-blog .article-page__content table td::after,
-html.single-blog .article-page__content table th::before,
-html.single-blog .article-page__content table th::after {
-    content: none !important;
-    display: none !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-
-/* Also kill the theme's accent-blue background on first row (header) */
-html.single-blog .article-page__content figure.wp-block-table tbody tr:first-child td {
-    background: transparent !important;
-    background-color: transparent !important;
-    color: #000 !important;
-}
-
-/* Kill theme's outer border + radius on the figure wrapper */
-html.single-blog .article-page__content figure.wp-block-table {
-    border: none !important;
-    border-radius: 0 !important;
-}
-
-/* Re-apply OUR borders cleanly */
-html.single-blog .article-page__content table tbody tr td {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-html.single-blog .article-page__content table tbody tr:first-child td {
-    border-bottom: 2px solid #000 !important;
-    font-weight: 700 !important;
-    color: #000 !important;
-    text-transform: none !important;
-}
-html.single-blog .article-page__content table tbody tr:last-child td {
-    border-bottom: 0 none transparent !important;
-}
-
-
-/* =========================================================
-   MOBILE FIX (2026-06-08): redesign broke the < 1024px layout.
-   - TOC sidebar must be a fixed bottom drawer, not a full-height
-     inline block (base .article-page__sticky{position:sticky} was
-     winning over the mobile .js-sidebar{position:fixed} by cascade
-     order, so the TOC dumped to the bottom of the page).
-   - The "Contents" toggle must stay visible + fixed + clickable.
-   - Bottom breadcrumbs must keep side padding (were clipping left).
-   ========================================================= */
-@media (max-width: 1023px) {
-    html.single-blog .article-page__aside--left .article-page__sticky.js-sidebar,
-    html.single-blog div.article-page__sticky.js-sidebar {
-        position: fixed !important;
-        top: auto !important;
-        right: auto !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        bottom: -60px !important;
-        width: min(92vw, 440px) !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: 0 !important;
-        overflow: hidden !important;
-        background: #fff !important;
-        border-radius: 1px !important;
-        z-index: 1200 !important;
-        box-sizing: border-box !important;
-        transition: max-height 0.35s ease, bottom 0.35s ease, padding 0.35s ease !important;
-    }
-
-    html.single-blog .article-page__aside--left .article-page__sticky.js-sidebar.opened,
-    html.single-blog div.article-page__sticky.js-sidebar.opened {
-        bottom: 70px !important;
-        max-height: 70vh !important;
-        overflow-y: auto !important;
-        padding: 16px !important;
-    }
-
-    html.single-blog .article-page__toggle.js-sidebar-toggle {
-        display: inline-flex !important;
-        position: fixed !important;
-        bottom: 15px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        z-index: 1201 !important;
-        border-radius: 1px !important;
-        cursor: pointer !important;
-    }
-
-    /* Bottom breadcrumbs: keep them inside the viewport with side padding,
-       clip any horizontal overflow, and kill the js-reveal transform that
-       made them slide left/right on scroll. */
-    html.single-blog .article-page__breadcrumbs-bottom {
-        overflow-x: hidden !important;
-    }
-    html.single-blog .article-page__breadcrumbs-bottom .container {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-        overflow-x: hidden !important;
-    }
-    html.single-blog .article-page__breadcrumbs-bottom #breadcrumb,
-    html.single-blog .article-page__breadcrumbs-bottom .hero-block__breadcrumbs,
-    html.single-blog .article-page__breadcrumbs-wrap > * {
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
-        transition: none !important;
-        will-change: auto !important;
-        flex-wrap: wrap !important;
-        max-width: 100% !important;
-    }
 }
