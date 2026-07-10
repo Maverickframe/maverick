@@ -8,17 +8,6 @@
         }
     }
 
-    &.theme-white {
-        .hero-block__breadcrumbs {
-            color: var(--black-color);
-
-            li {
-                &::after {
-                    filter: brightness(1) invert(1);
-                }
-            }
-        }
-    }
 }
 
 .template-blog {
@@ -191,29 +180,6 @@
                 @media (min-width: $lg) {
                     padding: toRem(18);
                 }
-            }
-        }
-    }
-
-    &.theme-white {
-        .header {
-            background-color: var(--black-color);
-        }
-
-        .hero-block {
-            color: var(--black-color);
-
-            .metabox__item--link {
-                color: var(--accent-color);
-            }
-        }
-    }
-
-    &.remove-gradient {
-        .hero-block {
-            &::before,
-            &::after {
-                content: none !important;
             }
         }
     }

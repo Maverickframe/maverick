@@ -3,8 +3,6 @@ $classes = str_replace(".php", "", get_page_template_slug());
 $classes = str_replace("templates/", "", $classes);
 $classes .= is_single() ? ' single-' . get_post_type() : '';
 $classes .= (is_page() && !is_page_template() || is_404()) ? ' single-page' : '';
-$classes .= get_field('theme_white') ? ' theme-white' : '';
-$classes .= get_field('remove_gradient') ? ' remove-gradient' : '';
 $classes = trim($classes);
 ?>
 <!DOCTYPE html>
