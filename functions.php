@@ -956,17 +956,11 @@ function form_shortcode($atts)
 
 // End Shortcode
 
-// Seo title
-
-add_filter('document_title', 'document_title_filter');
-function document_title_filter($title)
-{
-    global $post;
-    if ((!empty($post->ID) && get_field('title', $post->ID)))
-        return get_field('title');
-    return $title;
-}
-
+// Seo title — RETIRED 2026-07-10. Custom ACF `title` + document_title filter
+// was dead code: Rank Math short-circuits pre_get_document_title, so this
+// end-of-chain document_title filter never affected the live <title>. Titles
+// are now sourced solely from Rank Math. ACF field `title` (field_655a4d86a7e52)
+// removed from group_64ea0fc4ddc43.json in the same change.
 // End Seo title
 
 // Images Sizes; Menu
