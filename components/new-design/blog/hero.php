@@ -16,6 +16,7 @@ $heroPosts = get_field('hero_posts');
 				<?php foreach ($heroPosts as $i => $heroPost) {
 					echo get_template_part('components/new-design/blog/articles-item', null, [
 						'id' => $heroPost->ID,
+						'eager' => ($i === 0), // first featured card = mobile LCP
 						'class' => $i == 0 ? ' --hero-blog --featured' : ' --hero-blog',
 						'title_tag' => 'p', // hero cards sit above the first H2 — keep heading order sequential
 					]);

@@ -1116,6 +1116,17 @@ function get_title_trim($id, $num_words = '7', $more = '...')
 
 add_filter('rocket_lrc_optimization', '__return_false', 999);
 
+// Take LCP optimization off WP Rocket's ATF beacon (wpr-beacon.js). That beacon ran
+// getBoundingClientRect over hundreds of elements (img, video, p, div, li, section…)
+// on load to auto-detect the LCP element → a post-paint forced reflow (PSI "forced
+// reflow": ~60ms beacon JS + ~190ms unattributed layout it forces). We now set
+// fetchpriority=high on the real LCP image per template ourselves (hero video posters,
+// first blog-listing card, first gallery cell; text heroes need none), so the
+// auto-detection is redundant. Both filter names are covered across WP Rocket
+// versions — the one that isn't used in this version is simply a no-op.
+add_filter('rocket_atf_optimization', '__return_false');
+add_filter('rocket_lcp_optimization', '__return_false');
+
 // End Fix wp rocket optimization for dynamic content
 
 // WP Rocket "Remove Unused CSS" builds the inline Used CSS by scanning the STATIC

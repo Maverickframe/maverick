@@ -23,7 +23,15 @@ $articleTitleTag = $args['title_tag'] ?? 'h3'; // 'p' for cards rendered above t
 <article class="case-item<?= $args['class'] ?? null; ?>">
     <a class="case-item__link" href="<?= $articlePermalink; ?>">
         <span class="case-item__img">
-            <?php lazy_attachment(get_post_thumbnail_id($args['id']), 'large'); ?>
+            <?php
+                // The first hero card on the blog listing is the mobile LCP → eager +
+                // fetchpriority (we took LCP off WP Rocket's ATF beacon). Others stay lazy.
+                if (!empty($args['eager'])) {
+                    eager_attachment(get_post_thumbnail_id($args['id']), 'large', null, true);
+                } else {
+                    lazy_attachment(get_post_thumbnail_id($args['id']), 'large');
+                }
+            ?>
         </span>
 
         <div class="case-item__info">

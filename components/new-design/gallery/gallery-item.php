@@ -90,7 +90,18 @@
 
     <?php elseif ($isImage): ?>
 
-        <?php echo lazy_attachment($media['id'], 'full'); ?>
+        <?php
+            // The first image cell on the page (the "All" tab renders first) is the
+            // gallery's LCP candidate → eager + fetchpriority (LCP taken off WP Rocket's
+            // ATF beacon). Global guard so exactly ONE image is eager; the rest stay lazy.
+            global $mfs_gallery_lcp_done;
+            if (empty($mfs_gallery_lcp_done)) {
+                $mfs_gallery_lcp_done = true;
+                eager_attachment($media['id'], 'full', null, true);
+            } else {
+                echo lazy_attachment($media['id'], 'full');
+            }
+        ?>
 
     <?php elseif ($isVideo): ?>
 
