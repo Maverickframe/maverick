@@ -1196,23 +1196,16 @@ function blog_v2_is_active() {
    Loads blog-v1-overrides.css on every single-blog post (no toggle).
    Real enqueued stylesheet (not inline <style>) so WP Rocket's
    Used-CSS / inline-cleanup optimizations don't strip it. */
-/* Book-a-call CALENDAR modal JS — header CTA, loaded site-wide. */
+/* Book-a-call CALENDAR: the builder JS is now a lazy Vite chunk, imported by
+   bundle.js on first open of the bookcall modal (it used to be a site-wide
+   classic <script> sitting on the critical request chain). Only the AJAX config
+   stays global so the calendar's step-2 submit keeps its nonce/ajaxurl — attached
+   to 'main' (always enqueued) so mfsBookCfg is defined whenever the chunk loads. */
 add_action('wp_enqueue_scripts', function () {
-    $jsRel = '/book-calendar.js';
-    $jsAbs = get_template_directory() . $jsRel;
-    if (file_exists($jsAbs)) {
-        wp_enqueue_script(
-            'book-calendar',
-            get_template_directory_uri() . $jsRel,
-            array(),
-            filemtime($jsAbs),
-            true
-        );
-        wp_localize_script('book-calendar', 'mfsBookCfg', array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce('pld-ajax-nonce'),
-        ));
-    }
+    wp_localize_script('main', 'mfsBookCfg', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('pld-ajax-nonce'),
+    ));
 }, 200);
 
 add_action('wp_enqueue_scripts', function () {

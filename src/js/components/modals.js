@@ -290,8 +290,10 @@ function setModalContent(modal, serviceIndex, source = 'design-services-json') {
   });
 }
 
-function openModal(e) {
-  const btn = e.target.closest('.js-modal-open');
+// Open a modal from its trigger button. Exported so bundle.js can open the modal
+// for the very first click that triggered this chunk's lazy load (the body
+// listener below only catches clicks fired AFTER the chunk evaluates).
+export function openFor(btn) {
   if (!btn) return;
 
   const modalName = btn.dataset.modal;
@@ -309,6 +311,10 @@ function openModal(e) {
 
   modal.classList.add('is-opened');
   lockUI('modal');
+}
+
+function openModal(e) {
+  openFor(e.target.closest('.js-modal-open'));
 }
 
 function closeModal(e) {

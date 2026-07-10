@@ -52,8 +52,6 @@ const lazyModules = [
   ['.mfs-snap', () => import('./components/scroll-snap')],
   // Reviews thumbnail ↔ main sync (rides on top of the .mfs-snap main slider)
   ['.js-reviews-slider', () => import('./components/reviews-sync')],
-  // Modals (book-a-call is site-wide; What-We-Do modal carousels are now .mfs-snap)
-  ['.modal, .js-modal-open', () => import('./components/modals')],
   // Reveal-on-enter animations — vanilla IntersectionObserver + CSS transitions,
   // no GSAP. Own tiny chunk; loads on every page that has reveals (i.e. almost
   // all of them) but without pulling in GSAP+ScrollTrigger.
@@ -69,6 +67,41 @@ const lazyModules = [
 
 lazyModules.forEach(([selector, load]) => {
   if (document.querySelector(selector)) load();
+});
+
+// --- Interaction-gated modules: loaded on first CLICK, not on presence ---------
+// The modal system and the book-a-call calendar have their trigger buttons /
+// hidden shells on almost every page, so presence-gating loaded them site-wide on
+// initial load — putting them on PSI's critical request chain even though nothing
+// opens until the visitor clicks. Both are pure interaction: load them on the
+// first relevant click instead. A lightweight always-on delegated listener catches
+// that first click, imports the chunk, then hands the click off to the chunk.
+
+// Popups (Book-a-call, Download catalog, What-We-Do). modals.js registers its own
+// body listener on import for every SUBSEQUENT click; openFor() handles this first
+// one (which fired before the chunk's listener existed).
+let modalsLoaded = false;
+document.body.addEventListener('click', (e) => {
+  if (modalsLoaded) return;
+  const opener = e.target.closest('.js-modal-open');
+  if (!opener && !e.target.closest('.js-modal-close')) return;
+  modalsLoaded = true;
+  import('./components/modals').then((m) => {
+    if (opener && m.openFor) m.openFor(opener);
+  });
+});
+
+// Book-a-call CALENDAR builder. The book_call_click funnel event must fire on
+// EVERY open (incl. the first, before the chunk loads), so it stays here in the
+// static bundle; only the heavy calendar UI is lazy-imported once.
+let bookcalLoaded = false;
+document.body.addEventListener('click', (e) => {
+  if (!(e.target.closest && e.target.closest('[data-modal="bookcall"]'))) return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'book_call_click', form_name: 'book_call_calendar' });
+  if (bookcalLoaded) return;
+  bookcalLoaded = true;
+  import('../../book-calendar.js').then((m) => m.initBookCalendar());
 });
 
 // --- Below-the-fold modules: loaded when their block approaches the viewport --

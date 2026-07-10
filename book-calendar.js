@@ -6,10 +6,14 @@
  * (auto-detected, switchable). Slots already in the past are disabled.
  * STUDIO_TZ is kept only to show the studio-local time on submit.
  */
-(function () {
-    'use strict';
+// book-calendar.js — Book-a-call CALENDAR builder. Lazy Vite chunk: bundle.js
+// imports this and calls initBookCalendar() on the FIRST open of the bookcall
+// modal (was a site-wide classic <script> on the critical request chain). The
+// book_call_click funnel event now lives in bundle.js so it fires on every open,
+// including before this chunk has loaded. mfsBookCfg (nonce/ajaxurl for the
+// step-2 submit) is localized onto the 'main' handle in functions.php.
 
-    var STUDIO_TZ = 'Europe/London';            // studio reference tz (studio-time on submit)
+var STUDIO_TZ = 'Europe/London';            // studio reference tz (studio-time on submit)
     var DAY_START = 0;                           // 00:00 — full-day slots in visitor tz
     var DAY_END = 24 * 60;                       // 24:00
     var SLOT_STEP = 30;                          // minutes
@@ -268,22 +272,6 @@
         return WD[(dt.getDay() + 6) % 7] + ', ' + MONTHS[dt.getMonth()] + ' ' + dt.getDate();
     }
 
-    // Restore calendar-funnel measurement: push "book_call_click" when the
-    // scheduler modal is opened (header CTA). The booking completion is tracked
-    // separately as the direct "book_call" event (form_name: book_call) on submit.
-    function trackOpen() {
-        document.addEventListener('click', function (e) {
-            var trigger = e.target && e.target.closest && e.target.closest('[data-modal="bookcall"]');
-            if (!trigger) return;
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({ event: 'book_call_click', form_name: 'book_call_calendar' });
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-    trackOpen();
-})();
+export function initBookCalendar() {
+    init();
+}
