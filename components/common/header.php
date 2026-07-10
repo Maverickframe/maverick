@@ -6,16 +6,17 @@
 <header class="header <?php if (isset($args['class']))
     echo $args['class']; ?>">
     <div class="container container_small header__container">
-        <?php // No fetchpriority on the logo (it competed with the hero LCP image for
-              // early bandwidth), BUT it must carry data-no-lazy + skip-lazy: it turned
-              // out fetchpriority="high" was what kept WP Rocket LazyLoad away — once
-              // removed, Rocket rewrote the logo to data-lazy-src and PSI mobile picked
-              // the late-swapping logo as the LCP element (report r0rjsv2f68, 07-02). ?>
+        <?php // Logo carries skip-lazy + data-no-lazy so WP Rocket LazyLoad never rewrites it
+              // to data-lazy-src (that late swap once made PSI mobile pick the logo as a
+              // late LCP — report r0rjsv2f68). On the FRONT PAGE the hero marquee sits below
+              // the fold on mobile, so the (tiny SVG) logo IS the mobile LCP → give it
+              // fetchpriority=high. It's ~a few KB, so sharing high priority with the desktop
+              // hero LCP slide is negligible. Inner pages keep no hint (their LCP is a hero image). ?>
         <?php if (is_front_page()): ?>
             <span class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
                     alt="Maverick Frame Studio logo" width="44" height="44"
-                    class="skip-lazy" data-no-lazy="1">
+                    class="skip-lazy" data-no-lazy="1" fetchpriority="high">
             </span>
         <?php else: ?>
             <a href="<?php echo home_url(); ?>" class="header__logo logo">
