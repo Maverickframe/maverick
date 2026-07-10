@@ -101,7 +101,7 @@ document.body.addEventListener('click', (e) => {
   window.dataLayer.push({ event: 'book_call_click', form_name: 'book_call_calendar' });
   if (bookcalLoaded) return;
   bookcalLoaded = true;
-  import('../../book-calendar.js').then((m) => m.initBookCalendar());
+  import('./components/book-calendar').then((m) => m.initBookCalendar());
 });
 
 // --- Below-the-fold modules: loaded when their block approaches the viewport --
