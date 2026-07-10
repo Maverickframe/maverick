@@ -90,7 +90,7 @@
         color: inherit;
         font-weight: 400;
         text-decoration: none;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--black-color);
         transition: border-color 0.3s ease;
 
         &:hover {
@@ -111,7 +111,7 @@
             height: toRem(3);
             display: block;
 
-            background: #000;
+            background: var(--black-color);
             border-radius: 50%;
 
             position: absolute;

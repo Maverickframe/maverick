@@ -30,7 +30,7 @@
 
     @media (min-width: $md) {
         &:not(:last-child) {
-            border-right: 1px solid #dcdcdc;
+            border-right: 1px solid var(--stroke-light-grey-color);
         }
     }
 }

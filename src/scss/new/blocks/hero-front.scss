@@ -172,12 +172,12 @@
 
         &::before {
             top: 0;
-            background: linear-gradient(180deg, #000000 16.35%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(180deg, var(--black-color) 16.35%, rgba(0, 0, 0, 0) 100%);
         }
 
         &::after {
             bottom: 0;
-            background: linear-gradient(0deg, #000000 16.35%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(0deg, var(--black-color) 16.35%, rgba(0, 0, 0, 0) 100%);
         }
     }
 

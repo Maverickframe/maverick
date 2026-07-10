@@ -2,7 +2,7 @@
 
 .sol-cap {
     padding: toRem(40) 0;
-    background: #f6f6f6;
+    background: var(--fill-grey-color);
 
     @media (min-width: $md) {
         padding: toRem(100) 0;
@@ -95,7 +95,7 @@
     padding: toRem(24);
     border-radius: toRem(4);
     overflow: hidden;
-    background-color: #1a1a1a;
+    background-color: var(--grey-900-color);
     background-size: cover;
     background-position: center;
     color: var(--white-color);
@@ -119,8 +119,8 @@
     -webkit-backdrop-filter: blur(2.5px);
     // Feather the blur edge so it doesn't cut sharply into the unblurred image —
     // the mask fades the whole layer (gradient + backdrop blur) out toward the top.
-    -webkit-mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, 0) 100%);
-    mask-image: linear-gradient(to top, #000 30%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to top, var(--black-color) 30%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to top, var(--black-color) 30%, rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -144,8 +144,8 @@
     justify-content: center;
     padding: toRem(8) toRem(16);
     border-radius: toRem(100);
-    background: #c9d7fb;
-    color: #3c4059;
+    background: var(--purple-color);
+    color: var(--purple-color-dark);
     font-size: toRem(12);
     line-height: 1.4;
     text-transform: uppercase;

@@ -360,7 +360,7 @@
         position: relative;
         align-self: flex-start;
         padding-right: toRem(15);
-        background-color: #fff;
+        background-color: var(--white-color);
         transition: color 0.3s 0.6s ease;
     }
 

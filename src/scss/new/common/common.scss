@@ -31,6 +31,15 @@
     --line: #e6e8ee;
     --alt: #f5f7fb;
 
+    // Raw palette tokenised in R3 (10.07.2026) — previously hardcoded orphans.
+    --navy-color: #0d1126;
+    --blue-bright-color: #2a4bff;
+    --grey-900-color: #1a1a1a;
+    --grey-850-color: #2a2a2a;
+    --grey-600-color: #575757;
+    --grey-550-color: #5f5e5a;
+    --grey-500-color: #888;
+
     --container: #{toRem(1240)};
     --container-small: #{toRem(1140)};
     --header-height: #{toRem(64)};
@@ -520,7 +529,7 @@ button {
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.35);
     background: rgba(10, 20, 40, 0.35);
-    color: #fff;
+    color: var(--white-color);
     font-size: 12px;
     font-weight: 700;
     backdrop-filter: blur(6px);

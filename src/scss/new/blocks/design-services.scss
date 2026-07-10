@@ -429,7 +429,7 @@
             display: block;
             height: toRem(238);
 
-            background: linear-gradient(360deg, #000000 12.98%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(360deg, var(--black-color) 12.98%, rgba(0, 0, 0, 0) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }

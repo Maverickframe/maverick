@@ -13,7 +13,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: var(--black-color, #000);
+  background: var(--black-color, var(--black-color));
   border-radius: 1px; /* site-wide radius */
 
   video {
@@ -21,7 +21,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: var(--black-color, #000);
+    background: var(--black-color, var(--black-color));
   }
 }
 
@@ -39,7 +39,7 @@
   height: 64px;
   padding: 0;
   padding-left: 4px; /* optically centre the play glyph */
-  color: #fff;
+  color: var(--white-color);
   cursor: pointer;
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.85);
@@ -47,7 +47,7 @@
   transition: background 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    background: var(--accent-color, #2d40ae);
+    background: var(--accent-color, var(--accent-color));
     transform: translate(-50%, -50%) scale(1.06);
   }
 }
@@ -84,7 +84,7 @@
   width: 34px;
   height: 34px;
   padding: 0;
-  color: #fff;
+  color: var(--white-color);
   cursor: pointer;
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -124,7 +124,7 @@
   font-size: 13px;
   line-height: 1;
   text-align: left;
-  color: #fff;
+  color: var(--white-color);
   cursor: pointer;
   background: transparent;
   border: 0;
@@ -135,7 +135,7 @@
     background: rgba(255, 255, 255, 0.12);
   }
   &.is-active {
-    color: var(--accent-color, #2d40ae);
+    color: var(--accent-color, var(--accent-color));
     font-weight: 600;
     background: rgba(255, 255, 255, 0.06);
   }

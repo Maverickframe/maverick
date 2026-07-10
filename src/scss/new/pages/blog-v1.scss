@@ -118,7 +118,7 @@ html.single-blog {
         .article-page__sticky .toc__title {
             font-size: 11px;
             font-weight: 400;
-            color: #888;
+            color: var(--grey-500-color);
             text-transform: uppercase;
             letter-spacing: 0.12em;
             margin-bottom: 10px;
@@ -142,7 +142,7 @@ html.single-blog {
     .article-page__content p,
     .article-page__content li,
     .article-page__content blockquote {
-        color: #2A2A2A;
+        color: var(--grey-850-color);
     }
     .article-page__content h1,
     .article-page__content h2,
@@ -150,23 +150,23 @@ html.single-blog {
     .article-page__content h4,
     .article-page__content h5,
     .article-page__content h6 {
-        color: #000;
+        color: var(--black-color);
     }
     .article-page__content a {
-        color: #2D40AE;
+        color: var(--accent-color);
         text-decoration: underline;
         text-underline-offset: 3px;
     }
     .article-page__aside--left .toc a,
     .article-page__aside--left .toc__list a,
     .article-page__aside--left .toc__item a {
-        color: #000;
+        color: var(--black-color);
     }
     .article-page__aside--left .toc a.is-active,
     .article-page__aside--left .toc a.active,
     .article-page__aside--left .toc__item.is-active a,
     .article-page__aside--left .toc__item.active a {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
 
 
@@ -188,7 +188,7 @@ html.single-blog {
     .blog-progress-bar__fill {
         width: 100%;
         height: 100%;
-        background: #2D40AE;
+        background: var(--accent-color);
         transform-origin: left;
         transform: scaleX(0);
         transition: transform 80ms linear;
@@ -199,7 +199,7 @@ html.single-blog {
     .article-page__aside--left .toc__list a.is-active,
     .article-page__aside--left .toc__item a.is-active,
     .article-page__aside--left .toc__item.is-active > a {
-        color: #2D40AE;
+        color: var(--accent-color);
         font-weight: 500;
     }
 
@@ -212,7 +212,7 @@ html.single-blog {
         margin-top: 12px;
         font-size: 14px;
         line-height: 1.5;
-        color: #575757;
+        color: var(--grey-600-color);
         text-align: center;
         font-style: italic;
     }
@@ -264,7 +264,7 @@ html.single-blog {
         border-radius: 1px;
         border: 1px solid rgba(255, 255, 255, 0.25);
         background: rgba(255, 255, 255, 0.08);
-        color: #fff;
+        color: var(--white-color);
         font: 28px/1 sans-serif;
         cursor: pointer;
         display: flex;
@@ -278,7 +278,7 @@ html.single-blog {
 
     /* Updated date pill: white on the dark hero image */
     .metabox__item--updated {
-        color: #FFFFFF;
+        color: var(--white-color);
         opacity: 0.92;
     }
 
@@ -322,7 +322,7 @@ html.single-blog {
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        color: #888;
+        color: var(--grey-500-color);
         font-weight: 500;
         flex-shrink: 0;
     }
@@ -360,12 +360,12 @@ html.single-blog {
     .article-page__breadcrumbs-wrap > * > span {
         display: inline-flex;
         align-items: center;
-        color: #575757;
+        color: var(--grey-600-color);
         text-decoration: none;
         font-weight: 500;
     }
     .article-page__breadcrumbs-wrap a:hover {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
 
     /* Insert "/" separator BEFORE every item except the first */
@@ -418,10 +418,10 @@ html.single-blog {
         object-fit: cover;
     }
     .author-mini__avatar-fallback {
-        color: #fff;
+        color: var(--white-color);
         font-weight: 500;
         font-size: 18px;
-        background: #2D40AE;
+        background: var(--accent-color);
         width: 100%;
         height: 100%;
         display: flex;
@@ -438,23 +438,23 @@ html.single-blog {
     .author-mini__name {
         font-size: 14px;
         font-weight: 500;
-        color: #000;
+        color: var(--black-color);
         text-decoration: none;
         line-height: 1.3;
     }
     .author-mini__name:hover {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
     .author-mini__role {
         font-size: 12px;
-        color: #575757;
+        color: var(--grey-600-color);
         line-height: 1.3;
     }
     .author-mini__linkedin {
         flex-shrink: 0;
         width: 28px;
         height: 28px;
-        color: #2D40AE;
+        color: var(--accent-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -477,13 +477,13 @@ html.single-blog {
         gap: 6px;
         margin-bottom: 16px;
         font-size: 12px;
-        color: #575757;
+        color: var(--grey-600-color);
         line-height: 1.3;
         flex-wrap: wrap;
     }
     .reading-status__time {
         font-weight: 500;
-        color: #2D40AE;
+        color: var(--accent-color);
     }
     .reading-status__sep {
         color: rgba(0, 0, 0, 0.25);
@@ -500,7 +500,7 @@ html.single-blog {
     .feedback__title {
         font-size: 13px;
         font-weight: 500;
-        color: #000;
+        color: var(--black-color);
         margin: 0 0 10px;
         line-height: 1.3;
     }
@@ -512,7 +512,7 @@ html.single-blog {
         appearance: none;
         -webkit-appearance: none;
         cursor: pointer;
-        background: #fff;
+        background: var(--white-color);
         border: 1px solid rgba(0, 0, 0, 0.12);
         border-radius: 1px;
         padding: 8px 14px;
@@ -520,7 +520,7 @@ html.single-blog {
         align-items: center;
         gap: 6px;
         font-size: 13px;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
         transition: background 150ms, border-color 150ms, color 150ms;
         font-family: inherit;
     }
@@ -529,12 +529,12 @@ html.single-blog {
         height: 16px;
     }
     .feedback__btn:hover {
-        background: #fff;
-        border-color: #2D40AE;
-        color: #2D40AE;
+        background: var(--white-color);
+        border-color: var(--accent-color);
+        color: var(--accent-color);
     }
     .feedback__thanks .feedback__title {
-        color: #2D40AE;
+        color: var(--accent-color);
         margin: 0;
     }
 
@@ -623,7 +623,7 @@ html.single-blog {
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.25);
         border-radius: 100px;
-        color: #fff;
+        color: var(--white-color);
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.06em;
@@ -648,7 +648,7 @@ html.single-blog {
         font-size: clamp(32px, 4.2vw, 56px);
         line-height: 1.1;
         font-weight: 500;
-        color: #fff;
+        color: var(--white-color);
         letter-spacing: -0.01em;
     }
     @media (min-width: 1024px) {
@@ -701,8 +701,8 @@ html.single-blog {
        SIDEBAR CTA (right sticky widget) — dark, conversion-focused
        ========================================================= */
     .sidebar-cta {
-        background: #1A1A1A;
-        color: #fff;
+        background: var(--grey-900-color);
+        color: var(--white-color);
         padding: 24px;
         display: flex;
         flex-direction: column;
@@ -739,7 +739,7 @@ html.single-blog {
     /* Headline + sub */
     .sidebar-cta__head {
         margin: 0;
-        color: #fff;
+        color: var(--white-color);
         font-size: 18px;
         font-weight: 500;
         line-height: 1.3;
@@ -759,8 +759,8 @@ html.single-blog {
         justify-content: space-between;
         gap: 8px;
         padding: 12px 18px;
-        background: #2D40AE;
-        color: #fff;
+        background: var(--accent-color);
+        color: var(--white-color);
         font-size: 14px;
         font-weight: 500;
         line-height: 1.4;
@@ -821,7 +821,7 @@ html.single-blog {
     .article-page__content {
         font-size: 17px;
         line-height: 1.7;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
         font-weight: 400;
         letter-spacing: -0.003em;
         /* Modern wrapping: prevents lonely orphans on the last line */
@@ -837,7 +837,7 @@ html.single-blog {
     /* === Paragraphs === */
     .article-page__content p {
         margin: 0 0 24px 0;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
     }
 
     /* All paragraphs same size — consistent body, no "lead" variation. */
@@ -848,7 +848,7 @@ html.single-blog {
         font-size: 30px;
         line-height: 1.2;
         font-weight: 700;
-        color: #000;
+        color: var(--black-color);
         letter-spacing: -0.02em;
         margin: 64px 0 18px 0;
         padding-top: 20px;
@@ -862,7 +862,7 @@ html.single-blog {
         left: 0;
         width: 48px;
         height: 3px;
-        background: #2D40AE;
+        background: var(--accent-color);
         border-radius: 1px;
         display: block;
         transform: none;
@@ -886,7 +886,7 @@ html.single-blog {
         font-size: 23px;
         line-height: 1.3;
         font-weight: 600;
-        color: #000;
+        color: var(--black-color);
         letter-spacing: -0.012em;
         margin: 44px 0 12px 0;
         padding-top: 14px;
@@ -899,7 +899,7 @@ html.single-blog {
         left: 0;
         width: 28px;
         height: 2px;
-        background: #2D40AE;
+        background: var(--accent-color);
         border-radius: 1px;
         display: block;
         opacity: 0.75;
@@ -919,7 +919,7 @@ html.single-blog {
         font-size: 19px;
         line-height: 1.35;
         font-weight: 600;
-        color: #000;
+        color: var(--black-color);
         margin: 32px 0 10px 0;
     }
     @media (min-width: 1024px) {
@@ -945,7 +945,7 @@ html.single-blog {
     .article-page__content ol {
         margin: 0 0 24px 0;
         padding-left: 24px;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
     }
     .article-page__content li {
         margin-bottom: 8px;
@@ -955,18 +955,18 @@ html.single-blog {
         margin-bottom: 0;
     }
     .article-page__content li::marker {
-        color: #888;
+        color: var(--grey-500-color);
     }
 
     /* === Blockquote === */
     .article-page__content blockquote {
         margin: 32px 0;
         padding: 4px 0 4px 24px;
-        border-left: 3px solid #2D40AE;
+        border-left: 3px solid var(--accent-color);
         font-size: 1.1em;
         line-height: 1.55;
         font-style: italic;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
     }
     .article-page__content blockquote p {
         margin-bottom: 12px;
@@ -979,7 +979,7 @@ html.single-blog {
     .article-page__content strong,
     .article-page__content b {
         font-weight: 600;
-        color: #1A1A1A;
+        color: var(--grey-900-color);
     }
     .article-page__content em,
     .article-page__content i {
@@ -993,7 +993,7 @@ html.single-blog {
         background: rgba(0, 0, 0, 0.05);
         padding: 2px 6px;
         border-radius: 1px;
-        color: #1A1A1A;
+        color: var(--grey-900-color);
     }
 
     /* === Horizontal rule === */
@@ -1011,7 +1011,7 @@ html.single-blog {
         margin-top: 12px;
         font-size: 14px;
         line-height: 1.5;
-        color: #888;
+        color: var(--grey-500-color);
         text-align: center;
         font-style: italic;
     }
@@ -1061,7 +1061,7 @@ html.single-blog {
         border-spacing: 0;
         font-size: 15px;
         line-height: 1.55;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
         table-layout: auto;
     }
     @media (min-width: 1024px) {
@@ -1074,7 +1074,7 @@ html.single-blog {
     .article-page__content table thead tr th,
     .article-page__content table > thead > tr > th,
     .article-page__content thead th {
-        color: #000;
+        color: var(--black-color);
         font-weight: 700;
         font-size: 11px;
         text-transform: uppercase;
@@ -1083,7 +1083,7 @@ html.single-blog {
         padding: 14px 18px 14px 0;
         border-bottom-width: 2px;
         border-bottom-style: solid;
-        border-bottom-color: #000;
+        border-bottom-color: var(--black-color);
         vertical-align: bottom;
     }
     @media (min-width: 1024px) {
@@ -1104,7 +1104,7 @@ html.single-blog {
         border-bottom-color: rgba(0, 0, 0, 0.08);
         text-align: left;
         vertical-align: top;
-        color: #2A2A2A;
+        color: var(--grey-850-color);
     }
     @media (min-width: 1024px) {
         .article-page__content table tbody tr td,
@@ -1127,7 +1127,7 @@ html.single-blog {
     /* First column — bold label */
     .article-page__content table tbody tr td:first-child {
         font-weight: 600;
-        color: #000;
+        color: var(--black-color);
         width: 22%;
     }
 
@@ -1171,7 +1171,7 @@ html.single-blog {
     .article-page__content figure.wp-block-table table thead tr th {
         border-bottom-width: 2px;
         border-bottom-style: solid;
-        border-bottom-color: #000;
+        border-bottom-color: var(--black-color);
         border-top: 0;
         border-left: 0;
         border-right: 0;
@@ -1193,7 +1193,7 @@ html.single-blog {
     .article-page__sticky .toc a.is-active {
         position: relative;
         padding-left: 16px;
-        color: #2D40AE;
+        color: var(--accent-color);
         font-weight: 600;
     }
     .article-page__sticky .toc a.is-active::before {
@@ -1203,7 +1203,7 @@ html.single-blog {
         top: 50%;
         width: 7px;
         height: 7px;
-        background: #2D40AE;
+        background: var(--accent-color);
         border-radius: 1px;
         transform: translateY(-50%);
         display: block;
@@ -1229,7 +1229,7 @@ html.single-blog {
 
     /* Active state: just blue color, no bold weight */
     .article-page__sticky .toc a.is-active {
-        color: #2D40AE;
+        color: var(--accent-color);
         font-weight: 400;
         padding-left: 16px;
         position: relative;
@@ -1243,7 +1243,7 @@ html.single-blog {
         top: 50%;
         width: 7px;
         height: 7px;
-        background: #2D40AE;
+        background: var(--accent-color);
         border-radius: 1px;
         transform: translateY(-50%);
         display: block;
@@ -1374,11 +1374,11 @@ html.single-blog {
        not have a real <thead>): bold, slightly more padding, thick bottom */
     .article-page__content table tbody tr:first-child td {
         font-weight: 700;
-        color: #000;
+        color: var(--black-color);
         padding-top: 8px;
         padding-bottom: 14px;
         border-bottom-width: 2px;
-        border-bottom-color: #000;
+        border-bottom-color: var(--black-color);
     }
 
     /* Last row — clean bottom */
@@ -1391,18 +1391,18 @@ html.single-blog {
 
     /* Subtle near-black border around the whole left sidebar */
     .article-page__aside--left .article-page__sticky {
-        border: 1px solid #0A0A0A;
+        border: 1px solid var(--black-color);
         border-radius: 1px;
     }
 
     /* Divider between author-mini and reading status — same near-black tone */
     .author-mini {
-        border-bottom-color: #0A0A0A;
+        border-bottom-color: var(--black-color);
     }
 
     /* Divider above feedback widget */
     .feedback {
-        border-top-color: #0A0A0A;
+        border-top-color: var(--black-color);
     }
 
     /* TOC scrollbar — brand tinted thumb */
@@ -1431,16 +1431,16 @@ html.single-blog {
     .article-page__content h3::before,
     .article-page__content > h2::before,
     .article-page__content > h3::before {
-        background: var(--accent-color, #2A4BFF);
-        background-color: var(--accent-color, #2A4BFF);
-        border-color: var(--accent-color, #2A4BFF);
+        background: var(--accent-color, var(--blue-bright-color));
+        background-color: var(--accent-color, var(--blue-bright-color));
+        border-color: var(--accent-color, var(--blue-bright-color));
     }
     .article-page__content h2,
     .article-page__content h3 {
-        border-top-color: var(--accent-color, #2A4BFF);
+        border-top-color: var(--accent-color, var(--blue-bright-color));
     }
 
-    /* TOC borders — match dark CTA sidebar color (#0A0A0A) */
+    /* TOC borders — match dark CTA sidebar color (var(--black-color)) */
     .article-aside,
     .article-aside__contents,
     .article-aside__contents-inner,
@@ -1450,21 +1450,21 @@ html.single-blog {
     .article-aside .feedback,
     .article-aside__inner,
     .article-aside__sticky {
-        border-color: #0A0A0A;
+        border-color: var(--black-color);
     }
 
     .article-aside *,
     .article-aside *::before,
     .article-aside *::after {
-        border-color: #0A0A0A;
+        border-color: var(--black-color);
     }
 
     /* Internal separators inside TOC card (between author / status / contents / feedback) */
     .article-aside__contents-inner > *,
     .article-aside__contents > *,
     .article-aside .contents > * {
-        border-top-color: #0A0A0A;
-        border-bottom-color: #0A0A0A;
+        border-top-color: var(--black-color);
+        border-bottom-color: var(--black-color);
     }
 
     /* Keep TOC inner scroll container smooth-scroll capable */
@@ -1487,13 +1487,13 @@ html.single-blog {
         background-color: transparent;
         border: 0;
         border-radius: 0;
-        border-left: 3px solid #0A0A0A;
+        border-left: 3px solid var(--black-color);
         padding: 4px 0 4px 28px;
         margin: 56px 0;
         display: block;
         overflow: visible;
         min-height: 0;
-        color: #0A0A0A;
+        color: var(--black-color);
         box-shadow: none;
     }
     .article-page__cta-img {
@@ -1502,7 +1502,7 @@ html.single-blog {
     .article-page__cta-content {
         padding: 0;
         background: transparent;
-        color: #0A0A0A;
+        color: var(--black-color);
         width: auto;
         max-width: 100%;
         position: static;
@@ -1523,7 +1523,7 @@ html.single-blog {
         line-height: 1.55;
         font-weight: 400;
         font-style: italic;
-        color: #0A0A0A;
+        color: var(--black-color);
         margin: 0 0 18px 0;
         font-family: inherit;
     }
@@ -1539,10 +1539,10 @@ html.single-blog {
         gap: 6px;
         background: transparent;
         border: 0;
-        border-bottom: 1px solid #0A0A0A;
+        border-bottom: 1px solid var(--black-color);
         border-radius: 0;
         padding: 2px 0 4px 0;
-        color: #0A0A0A;
+        color: var(--black-color);
         font-size: 15px;
         line-height: 1.3;
         font-weight: 500;
@@ -1563,8 +1563,8 @@ html.single-blog {
     }
     .article-page__cta-button:hover {
         background: transparent;
-        color: #2D40AE;
-        border-bottom-color: #2D40AE;
+        color: var(--accent-color);
+        border-bottom-color: var(--accent-color);
     }
 
     /* --- Compact FAQ: tight, editorial, single column --- */
@@ -1639,7 +1639,7 @@ html.single-blog {
         background: transparent;
         border: 0;
         border-radius: 0;
-        color: #0A0A0A;
+        color: var(--black-color);
         font-size: 16px;
         line-height: 1.45;
         font-weight: 500;
@@ -1723,12 +1723,12 @@ html.single-blog {
 
     /* --- Plus indicator -> brand blue --- */
     .article-page__faq .faq-item__btn::after {
-        color: #2D40AE;
+        color: var(--accent-color);
         font-weight: 500;
     }
     .article-page__faq .faq-item.active .faq-item__btn::after,
     .article-page__faq .js-faq-item.active .faq-item__btn::after {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
 
     /* --- CTA: full rebuild as a quiet light card --- */
@@ -1736,14 +1736,14 @@ html.single-blog {
         background: #FAFAF7;
         background-image: none;
         background-color: #FAFAF7;
-        border: 1px solid #0A0A0A;
+        border: 1px solid var(--black-color);
         border-radius: 1px;
-        border-left: 1px solid #0A0A0A;
+        border-left: 1px solid var(--black-color);
         padding: 32px 36px;
         margin: 56px 0;
         display: block;
         overflow: visible;
-        color: #0A0A0A;
+        color: var(--black-color);
         box-shadow: none;
         position: relative;
         min-height: 0;
@@ -1760,7 +1760,7 @@ html.single-blog {
     .article-page__cta-content {
         padding: 0;
         background: transparent;
-        color: #0A0A0A;
+        color: var(--black-color);
         width: auto;
         max-width: 100%;
         position: static;
@@ -1789,7 +1789,7 @@ html.single-blog {
         line-height: 1.5;
         font-weight: 400;
         font-style: normal;
-        color: #0A0A0A;
+        color: var(--black-color);
         margin: 0 0 22px 0;
         font-family: inherit;
         max-width: 62ch;
@@ -1806,13 +1806,13 @@ html.single-blog {
         align-items: center;
         justify-content: center;
         gap: 10px;
-        background: #0A0A0A;
-        background-color: #0A0A0A;
+        background: var(--black-color);
+        background-color: var(--black-color);
         background-image: none;
-        border: 1px solid #0A0A0A;
+        border: 1px solid var(--black-color);
         border-radius: 1px;
         padding: 12px 22px;
-        color: #FFFFFF;
+        color: var(--white-color);
         font-size: 14px;
         line-height: 1;
         font-weight: 500;
@@ -1840,10 +1840,10 @@ html.single-blog {
         font-size: 14px;
     }
     .article-page__cta-button:hover {
-        background: #2D40AE;
-        background-color: #2D40AE;
-        border-color: #2D40AE;
-        color: #FFFFFF;
+        background: var(--accent-color);
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        color: var(--white-color);
     }
 
     /* ============================================================
@@ -1917,7 +1917,7 @@ html.single-blog {
     }
     .article-page__breadcrumbs-bottom #breadcrumb a,
     .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a {
-        color: #0A0A0A;
+        color: var(--black-color);
         text-decoration: underline;
         text-decoration-color: rgba(0, 0, 0, 0.3);
         text-underline-offset: 3px;
@@ -1938,7 +1938,7 @@ html.single-blog {
     }
     .article-page__breadcrumbs-bottom #breadcrumb a:hover,
     .article-page__breadcrumbs-bottom .hero-block__breadcrumbs a:hover {
-        color: #2D40AE;
+        color: var(--accent-color);
         text-decoration: underline;
     }
     .article-page__breadcrumbs-bottom #breadcrumb span,
@@ -2001,7 +2001,7 @@ html.single-blog {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0;
-        border-top: 1px solid #0A0A0A;
+        border-top: 1px solid var(--black-color);
         /* long words in card titles must never widen the 1fr tracks past the
            viewport (that gave the whole page a horizontal scroll on phones) */
         min-width: 0;
@@ -2074,7 +2074,7 @@ html.single-blog {
         font-size: 19px;
         line-height: 1.3;
         font-weight: 500;
-        color: #0A0A0A;
+        color: var(--black-color);
         margin: 0 0 12px 0;
         padding: 0;
         display: -webkit-box;
@@ -2111,12 +2111,12 @@ html.single-blog {
         gap: 6px;
         font-size: 14px;
         font-weight: 500;
-        color: #0A0A0A;
+        color: var(--black-color);
         text-transform: none;
         letter-spacing: 0;
         background: transparent;
         border: 0;
-        border-bottom: 1px solid #0A0A0A;
+        border-bottom: 1px solid var(--black-color);
         padding: 2px 0 4px 0;
         border-radius: 0;
     }
@@ -2125,11 +2125,11 @@ html.single-blog {
         height: 14px;
     }
     .section-related .case-item.--related:hover .case-item__title {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
     .section-related .case-item.--related:hover .case-item__arrow {
-        color: #2D40AE;
-        border-bottom-color: #2D40AE;
+        color: var(--accent-color);
+        border-bottom-color: var(--accent-color);
     }
 
     /* --- Sidebar CTA rotator: stack stages, fade between them --- */
@@ -2251,7 +2251,7 @@ html.single-blog {
     .article-page__cta-title,
     .article-page__faq .faq__info h2,
     .section-related .section__title::before {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
 
     /* ============================================================
@@ -2271,7 +2271,7 @@ html.single-blog {
         background: transparent;
         border: 0;
         box-shadow: none;
-        color: #0A0A0A;
+        color: var(--black-color);
     }
     .in-cta__eyebrow {
         display: block;
@@ -2280,12 +2280,12 @@ html.single-blog {
         font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: #2D40AE;
+        color: var(--accent-color);
         margin: 0 0 12px 0;
     }
     .in-cta__head {
         margin: 0 0 16px 0;
-        color: #0A0A0A;
+        color: var(--black-color);
         font-size: 19px;
         line-height: 1.5;
         font-weight: 400;
@@ -2299,7 +2299,7 @@ html.single-blog {
         font-size: 15px;
         line-height: 1.3;
         font-weight: 500;
-        color: #2D40AE;
+        color: var(--accent-color);
         text-decoration: none;
         text-decoration-line: none;
         text-decoration-color: transparent;
@@ -2328,7 +2328,7 @@ html.single-blog {
     }
     .in-cta__link:hover,
     .article-page__content .in-cta__link:hover {
-        color: #0A0A0A;
+        color: var(--black-color);
     }
     .in-cta__arrow {
         display: inline-block;
@@ -2351,7 +2351,7 @@ html.single-blog {
         font-size: 56px;
         line-height: 0.9;
         font-weight: 700;
-        color: #2D40AE;
+        color: var(--accent-color);
         letter-spacing: -0.04em;
         display: block;
         background: transparent;
@@ -2368,13 +2368,13 @@ html.single-blog {
         line-height: 1.5;
         font-style: normal;
         font-weight: 400;
-        color: #0A0A0A;
+        color: var(--black-color);
         margin: 0 0 14px 0;
     }
 
     /* --- V2: left-border editor's note --- */
     .in-cta--v2 {
-        border-left: 3px solid #2D40AE;
+        border-left: 3px solid var(--accent-color);
         padding-left: 24px;
     }
     .in-cta--v2 .in-cta__head {
@@ -2410,7 +2410,7 @@ html.single-blog {
         font-style: italic;
         font-weight: 400;
         margin: 0 0 20px 0;
-        color: #0A0A0A;
+        color: var(--black-color);
     }
 
     /* --- V4: bordered card, transparent fill, link not button --- */
@@ -2441,7 +2441,7 @@ html.single-blog {
         margin-bottom: 18px;
     }
     .in-cta--v5 .in-cta__eyebrow {
-        color: #2D40AE;
+        color: var(--accent-color);
     }
 
     /* ============================================================
@@ -2488,7 +2488,7 @@ html.single-blog {
         transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .in-cta--v4:hover {
-        border-color: #2D40AE;
+        border-color: var(--accent-color);
         box-shadow: 0 4px 24px rgba(45, 64, 174, 0.08);
     }
 
@@ -2531,7 +2531,7 @@ html.single-blog {
     .article-page__content figure.wp-block-table tbody tr:first-child td {
         background: transparent;
         background-color: transparent;
-        color: #000;
+        color: var(--black-color);
     }
 
     /* Kill theme's outer border + radius on the figure wrapper */
@@ -2545,9 +2545,9 @@ html.single-blog {
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
     .article-page__content table tbody tr:first-child td {
-        border-bottom: 2px solid #000;
+        border-bottom: 2px solid var(--black-color);
         font-weight: 700;
-        color: #000;
+        color: var(--black-color);
         text-transform: none;
     }
     .article-page__content table tbody tr:last-child td {
@@ -2578,7 +2578,7 @@ html.single-blog {
             min-height: 0;
             max-height: 0;
             overflow: hidden;
-            background: #fff;
+            background: var(--white-color);
             border-radius: 1px;
             z-index: 1200;
             box-sizing: border-box;

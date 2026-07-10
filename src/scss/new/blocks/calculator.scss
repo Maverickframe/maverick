@@ -4,11 +4,11 @@
    hardcoded so it renders regardless of which CSS bundle a page loads.
    Distinct from the (all-black, centered) Lead Quiz. */
 
-$mfc-blue: #2d40ae;
+$mfc-blue: var(--accent-color);
 
 .mfcalc {
     padding: toRem(52) 0;
-    background: #f6f6f6;
+    background: var(--fill-grey-color);
 
     @media (min-width: $sm) {
         padding: toRem(72) 0;
@@ -38,12 +38,12 @@ $mfc-blue: #2d40ae;
 .mfcalc__sub {
     font-size: toRem(14);
     line-height: 1.55;
-    color: #404040;
+    color: var(--text-grey-color);
     margin-top: toRem(8);
 }
 
 .mfcalc__card {
-    background: #fff;
+    background: var(--white-color);
     border: 1px solid #e7e7e7;
     border-radius: 1px;
     padding: toRem(22) toRem(20);
@@ -67,7 +67,7 @@ $mfc-blue: #2d40ae;
 
     label {
         font-size: toRem(14);
-        color: #404040;
+        color: var(--text-grey-color);
     }
 }
 
@@ -79,7 +79,7 @@ $mfc-blue: #2d40ae;
 
 .mfcalc__field-label {
     font-size: toRem(14);
-    color: #404040;
+    color: var(--text-grey-color);
     margin-bottom: toRem(10);
 }
 
@@ -156,7 +156,7 @@ $mfc-blue: #2d40ae;
 .mfcalc__addon-name {
     flex: 1;
     font-size: toRem(13);
-    color: #1a1a1a;
+    color: var(--grey-900-color);
 }
 
 .mfcalc__addon-price {
@@ -174,8 +174,8 @@ $mfc-blue: #2d40ae;
     padding: toRem(10) toRem(12);
     font-family: inherit;
     font-size: toRem(13);
-    color: #1a1a1a;
-    background: #fff;
+    color: var(--grey-900-color);
+    background: var(--white-color);
     border: 1px solid #e7e7e7;
     border-radius: 1px;
     cursor: pointer;
@@ -188,7 +188,7 @@ $mfc-blue: #2d40ae;
     &.is-on {
         background: $mfc-blue;
         border-color: $mfc-blue;
-        color: #fff;
+        color: var(--white-color);
     }
 }
 
@@ -197,7 +197,7 @@ $mfc-blue: #2d40ae;
     padding: toRem(16) toRem(18);
     background: $mfc-blue;
     border-radius: 1px;
-    color: #fff;
+    color: var(--white-color);
 }
 
 .mfcalc__result-label {
@@ -232,7 +232,7 @@ $mfc-blue: #2d40ae;
     border-bottom: 1px dashed rgba(255, 255, 255, .5);
     cursor: pointer;
 
-    &:hover { color: #fff; }
+    &:hover { color: var(--white-color); }
 }
 
 .mfcalc__breakdown {
@@ -249,7 +249,7 @@ $mfc-blue: #2d40ae;
     gap: toRem(12);
     padding: toRem(3) 0;
 
-    span:last-child { color: #fff; white-space: nowrap; }
+    span:last-child { color: var(--white-color); white-space: nowrap; }
 }
 
 .mfcalc__row--total {
@@ -258,7 +258,7 @@ $mfc-blue: #2d40ae;
     border-top: 1px solid rgba(255, 255, 255, .2);
     font-weight: 500;
 
-    span { color: #fff; }
+    span { color: var(--white-color); }
 }
 
 .mfcalc__capture {
@@ -275,11 +275,11 @@ $mfc-blue: #2d40ae;
     font-family: inherit;
     font-size: toRem(14);
     color: #111;
-    background: #fff;
+    background: var(--white-color);
     border: 1px solid #d8d8d8;
     border-radius: 1px;
 
-    &.is-error { border-color: #d8453c; }
+    &.is-error { border-color: var(--error-red-color); }
 }
 
 .mfcalc__submit {
@@ -288,9 +288,9 @@ $mfc-blue: #2d40ae;
     font-family: inherit;
     font-size: toRem(14);
     font-weight: 500;
-    color: #fff;
-    background: #000;
-    border: 1px solid #000;
+    color: var(--white-color);
+    background: var(--black-color);
+    border: 1px solid var(--black-color);
     border-radius: 1px;
     cursor: pointer;
     transition: opacity .15s;
@@ -298,7 +298,7 @@ $mfc-blue: #2d40ae;
     &:hover { opacity: .85; }
 
     &:disabled {
-        background: #fff;
+        background: var(--white-color);
         color: #6f6f6f;
         border-color: #d8d8d8;
         cursor: default;
@@ -312,6 +312,6 @@ $mfc-blue: #2d40ae;
     color: #8a8a8a;
     margin: 0;
 
-    &.is-error { color: #d8453c; }
+    &.is-error { color: var(--error-red-color); }
     &.is-ok { color: #1d9e75; }
 }

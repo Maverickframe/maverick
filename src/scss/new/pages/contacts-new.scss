@@ -90,7 +90,7 @@
 
 /* ---------- Lead form ---------- */
 .contacts-form-card {
-    background: var(--bg-light-color, #f6f6f6);
+    background: var(--bg-light-color, var(--fill-grey-color));
     border-radius: toRem(2);
     padding: toRem(24);
 
@@ -155,7 +155,7 @@
     }
 
     &.error input {
-        border-color: #d23b3b;
+        border-color: var(--error-red-color);
     }
 }
 
@@ -163,12 +163,12 @@
     display: none;
     margin-top: toRem(6);
     font-size: toRem(13);
-    color: #d23b3b;
+    color: var(--error-red-color);
 }
 
 .cform__input.error .cform__error { display: block; }
 .cform__phone-field.error .cform__error { display: block; }
-.cform__phone-field.error .cform__phone-num { border-color: #d23b3b; }
+.cform__phone-field.error .cform__phone-num { border-color: var(--error-red-color); }
 .cform__check.error .cform__error { display: block; }
 .cform__upload-row.error .cform__error { display: block; }
 
@@ -189,7 +189,7 @@
     font-size: toRem(12);
     color: var(--text-grey-color);
 
-    &.is-max { color: #d23b3b; }
+    &.is-max { color: var(--error-red-color); }
 }
 
 .cform__phone {
@@ -297,7 +297,7 @@
     font-size: toRem(14);
     color: var(--black-color);
 
-    &:hover { background: #f6f6f6; }
+    &:hover { background: var(--fill-grey-color); }
 
     &[hidden] { display: none; }
 }
@@ -479,7 +479,7 @@
         width: toRem(8);
         height: toRem(8);
         border-radius: 50%;
-        background: #c9d7fb;
+        background: var(--purple-color);
         transform: translate(-50%, -50%);
     }
 

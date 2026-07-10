@@ -18,7 +18,7 @@
     .blur-overlay {
         --z-index-blur: -1;
         pointer-events: all;
-        background: rgba(#000000, 0.1);
+        background: rgba(var(--black-color), 0.1);
     }
 }
 
@@ -117,7 +117,7 @@
     a {
         color: inherit;
         text-decoration: none;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--black-color);
         transition: border-color 0.3s ease;
 
         &:hover {
@@ -518,7 +518,7 @@
             width: 100%;
             height: toRem(87);
 
-            background: linear-gradient(0deg, #ffffff 16.35%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(0deg, var(--white-color) 16.35%, rgba(255, 255, 255, 0) 100%);
         }
 
         @media (min-width: $md) {
@@ -1429,5 +1429,5 @@
 
 // Book-a-call form sits on a blue panel — use light text like its privacy note
 .modal-book .modal-form__reassure {
-    color: #dcdcdc;
+    color: var(--text-light-grey-color);
 }
