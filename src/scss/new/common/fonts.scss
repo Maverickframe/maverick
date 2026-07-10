@@ -1,5 +1,12 @@
+// font-display: optional — the font never swaps in AFTER the ~100ms block period,
+// so a late-arriving web font can't reflow text (this drove CLS ~1.0 on the
+// text-only /success-stories hero; GTmetrix root cause: "WEB FONT LOADED"). With the
+// <head> preload the font is usually ready within the block period on real
+// connections → brand font shows immediately; on slow first loads the metric-matched
+// "Inter Tight Fallback" is used for that pageview (visually near-identical, zero
+// shift) and the real font is cached for subsequent navigations.
 @font-face {
-    font-display: swap;
+    font-display: optional;
     font-family: "Inter Tight";
     font-style: normal;
     font-weight: 400;
@@ -7,7 +14,7 @@
 }
 
 @font-face {
-    font-display: swap;
+    font-display: optional;
     font-family: "Inter Tight";
     font-style: normal;
     font-weight: 500;
