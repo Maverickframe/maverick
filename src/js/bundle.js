@@ -103,10 +103,22 @@ if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
       fired = true;
       loadReveal();
     };
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(once, { timeout: 1500 });
+    // Wait for the load event BEFORE idle so the chunk is requested after the
+    // initial render burst — that's what keeps it out of Lighthouse's critical
+    // request chain (requestIdleCallback alone can fire before `load` on a fast
+    // page, landing the request back inside the critical window). First scroll /
+    // pointer still triggers it earlier if the visitor engages.
+    const afterLoad = () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(once, { timeout: 2000 });
+      } else {
+        setTimeout(once, 200);
+      }
+    };
+    if (document.readyState === 'complete') {
+      afterLoad();
     } else {
-      setTimeout(once, 500);
+      addEventListener('load', afterLoad, { once: true });
     }
     addEventListener('scroll', once, { once: true, passive: true });
     addEventListener('pointerdown', once, { once: true, passive: true });
