@@ -12,11 +12,11 @@ import './components/animated-scroll';
 import './components/svg-sprite';
 
 import './components/accordeon';
-import './components/blogFilter';
+// blogFilter → lazy (blog listing only, gated on .js-articles-items)
 import './components/contacts';
 import './components/contacts-phone';
 import './components/counters';
-import './components/filters';
+// filters → lazy (portfolio grids only, gated on .js-portfolio-items/.js-portfolio-front-item)
 import './components/header';
 import './components/intersectionObserver';
 import './components/menu';
@@ -25,9 +25,9 @@ import './components/scrollTop';
 import './components/services';
 import './components/showMore';
 import './components/tabs';
-import './components/toc';
+// toc → lazy (article/blog singles only, gated on .js-toc-item; DCL-guarded)
 import './components/videoPlay';
-import './components/mfs-video';
+// mfs-video → lazy (pages with Bunny video only, gated on .js-mfs-video)
 import './components/visualResultsGallery';
 import './components/select';
 
@@ -64,7 +64,22 @@ const lazyModules = [
   // Fancybox gallery page
   ['.js-gallery-tab-btn, .js-gallery-mobile, [data-fancybox]', () => import('./components/gallery')],
   // SimpleLightbox for picture-in-post links
-  ['.js-pip a', () => import('./components/lightbox')]
+  ['.js-pip a', () => import('./components/lightbox')],
+  // --- Page-specific modules moved out of the static entry (JS-split phase) ---
+  // Each queries the DOM at top level (or is readyState-guarded), so a late
+  // chunk is safe; each no-ops without its markup. Selectors verified against
+  // the theme templates, not guessed.
+  // Blog listing filter/search/loadmore — only the blog archive.
+  ['.js-articles-items', () => import('./components/blogFilter')],
+  // Article table-of-contents scroll-spy — blog/article singles (refactored off
+  // DOMContentLoaded to a readyState guard so lazy import is safe).
+  ['.js-toc-item', () => import('./components/toc')],
+  // Portfolio grid filter + front loadmore — portfolio/archive pages only.
+  ['.js-portfolio-items, .js-portfolio-front-item', () => import('./components/filters')],
+  // Native <video>+hls.js hydrator for Bunny placeholders — pages with video
+  // only. Self-guards on readyState + top-level .js-mfs-video query; hls.js is a
+  // further lazy chunk fetched only when a player actually plays.
+  ['.js-mfs-video', () => import('./components/mfs-video')]
 ];
 
 lazyModules.forEach(([selector, load]) => {

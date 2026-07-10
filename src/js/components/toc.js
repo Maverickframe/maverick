@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Init runs immediately when lazy-imported (the entry bundle is a deferred
+// module, so by the time this chunk evaluates the DOM is already parsed). The
+// readyState guard below still handles the theoretical "still loading" case.
+function initToc() {
   const tocItems = Array.from(document.getElementsByClassName('js-toc-item'));
   const tocLinks = Array.from(document.querySelectorAll('.js-toc-item .toc__link'));
 
@@ -119,4 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
     measure();
     applyTocHighlight();
   }, 40);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initToc);
+} else {
+  initToc();
+}
