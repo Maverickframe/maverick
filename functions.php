@@ -1124,8 +1124,9 @@ add_filter('rocket_lrc_optimization', '__return_false', 999);
 // first blog-listing card, first gallery cell; text heroes need none), so the
 // auto-detection is redundant. Both filter names are covered across WP Rocket
 // versions — the one that isn't used in this version is simply a no-op.
-add_filter('rocket_atf_optimization', '__return_false');
-add_filter('rocket_lcp_optimization', '__return_false');
+// Verified filter name from the plugin source (WP Rocket 3.23,
+// Engine/Media/AboveTheFold/Context/Context.php → is_allowed()).
+add_filter('rocket_above_the_fold_optimization', '__return_false');
 
 // End Fix wp rocket optimization for dynamic content
 
