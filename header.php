@@ -37,6 +37,18 @@ $classes = trim($classes);
     <link rel="icon" href="<?= get_template_directory_uri_vite(); ?>/img/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="<?= get_template_directory_uri_vite(); ?>/img/apple-touch-icon.png">
 
+    <?php // Preload the above-the-fold web font (Inter Tight) so text paints in the
+          // real font on first render. Without this the hero rendered in the system
+          // fallback first, then swapped to Inter Tight — the metric change reflowed
+          // text-only heroes (e.g. /success-stories, where the header is deferred so
+          // the title sits at the very top) and drove CLS ~1.0 on mobile. Paired with
+          // the metric-matched "Inter Tight Fallback" @font-face (src/scss/new/common/
+          // fonts.scss) so any residual swap is metric-neutral (zero layout shift). ?>
+    <link rel="preload" as="font" type="font/woff2"
+        href="<?= get_template_directory_uri_vite(); ?>/fonts/inter-tight-v9-latin-500.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2"
+        href="<?= get_template_directory_uri_vite(); ?>/fonts/inter-tight-v9-latin-regular.woff2" crossorigin>
+
     <?php if (!isNewDesign()): ?>
         <?php
         $img_id = (wp_is_mobile()

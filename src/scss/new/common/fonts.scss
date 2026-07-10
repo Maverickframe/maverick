@@ -13,3 +13,20 @@
     font-weight: 500;
     src: url("/fonts/inter-tight-v9-latin-500.woff2") format("woff2");
 }
+
+// Metric-matched fallback for Inter Tight. Renders a locally-available face (Arial)
+// with Inter Tight's line-box metrics + horizontal advance, so the fallback→web-font
+// swap causes ZERO reflow. Overrides generated with fontpie against Arial from
+// inter-tight-v9-latin-500.woff2. Used in the base font stack as the second family;
+// combined with the <head> font preload (header.php) this eliminates the FOUT layout
+// shift that drove CLS ~1.0 on text-only heroes (e.g. /success-stories) on mobile.
+@font-face {
+    font-family: "Inter Tight Fallback";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Arial");
+    ascent-override: 97.32%;
+    descent-override: 24.23%;
+    line-gap-override: 0%;
+    size-adjust: 99.54%;
+}

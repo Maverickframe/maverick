@@ -1,7 +1,7 @@
 @import "_vars";
 
 body :where(.editor-styles-wrapper) {
-    font-family: "Inter Tight", sans-serif !important;
+    font-family: "Inter Tight", "Inter Tight Fallback", sans-serif !important;
     font-size: 16px !important;
     font-weight: normal;
     line-height: 1.4 !important;

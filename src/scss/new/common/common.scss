@@ -84,7 +84,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 
-    font-family: "Inter Tight", sans-serif;
+    font-family: "Inter Tight", "Inter Tight Fallback", sans-serif;
     font-size: 16px;
     font-weight: normal;
     line-height: 1.4;

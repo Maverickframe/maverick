@@ -53,7 +53,7 @@
 
     &__title {
         margin: 0;
-        font-family: "Inter Tight", sans-serif;
+        font-family: "Inter Tight", "Inter Tight Fallback", sans-serif;
         font-weight: 500;
         font-size: toRem(34);
         line-height: 1.15;
@@ -76,7 +76,7 @@
         max-width: toRem(820);
         margin-top: toRem(36);
 
-        font-family: "Inter Tight", sans-serif;
+        font-family: "Inter Tight", "Inter Tight Fallback", sans-serif;
         font-size: toRem(17);
         line-height: 1.7;
         color: var(--text-middle-grey-color);
