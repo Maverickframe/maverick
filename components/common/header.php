@@ -1,5 +1,10 @@
-<header class="js-reveal header <?php if (isset($args['class']))
-    echo $args['class']; ?>" data-anim="down">
+<?php // The site header must NEVER be hidden-by-default: it used to be a `.js-reveal`
+      // (opacity:0 until reveal.js adds `.is-in`). WP Rocket Remove-Unused-CSS strips
+      // runtime classes like `.is-in` from the inline Used CSS, so the reveal-visible
+      // rule could vanish and leave the whole nav invisible ("menu disappeared"). The
+      // primary navigation is now always visible; entrance animation intentionally dropped. ?>
+<header class="header <?php if (isset($args['class']))
+    echo $args['class']; ?>">
     <div class="container container_small header__container">
         <?php // No fetchpriority on the logo (it competed with the hero LCP image for
               // early bandwidth), BUT it must carry data-no-lazy + skip-lazy: it turned
