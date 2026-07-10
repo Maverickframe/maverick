@@ -54,13 +54,9 @@ const lazyModules = [
   ['.mfs-snap', () => import('./components/scroll-snap')],
   // Reviews thumbnail ↔ main sync (rides on top of the .mfs-snap main slider)
   ['.js-reviews-slider', () => import('./components/reviews-sync')],
-  // Reveal-on-enter animations — vanilla IntersectionObserver + CSS transitions,
-  // no GSAP. Own tiny chunk; loads on every page that has reveals (i.e. almost
-  // all of them) but without pulling in GSAP+ScrollTrigger.
-  [
-    '.js-reveal, .js-reveal-group, .js-highlight',
-    () => import('./components/reveal')
-  ],
+  // (reveal-on-enter moved out of this presence-gated list — see the dedicated
+  //  reveal loader below the loop, which defers it off the critical path on pages
+  //  whose above-the-fold content doesn't depend on it.)
   // Fancybox gallery page
   ['.js-gallery-tab-btn, .js-gallery-mobile, [data-fancybox]', () => import('./components/gallery')],
   // SimpleLightbox for picture-in-post links
@@ -85,6 +81,39 @@ const lazyModules = [
 lazyModules.forEach(([selector, load]) => {
   if (document.querySelector(selector)) load();
 });
+
+// --- Reveal-on-enter loader (vanilla IntersectionObserver + CSS transitions) ---
+// Reveal must download before an above-the-fold `.js-reveal` paints, or that
+// content stays opacity:0 until the chunk lands. Inner-page heroes ARE `.js-reveal`
+// (opacity:0) above the fold, so there reveal stays EAGER. The HOMEPAGE hero uses a
+// CSS-only reveal (`.hero-front__reveal`, added only when is_front_page) and its
+// first opacity:0 `.js-reveal` sits ~1000px down — nothing above the fold needs the
+// chunk. So on the homepage we load reveal OFF the critical request chain (on idle
+// or first scroll/pointer) instead of during this synchronous pass. The only
+// above-the-fold dependant is the hero H1's decorative `.js-highlight` sweep, whose
+// text is fully readable before the sweep plays. Pilot = homepage only (via the
+// front-page-only `.hero-front__reveal` marker); extend to other page types once
+// their heroes are CSS-revealed too.
+if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
+  const loadReveal = () => import('./components/reveal');
+  if (document.querySelector('.hero-front__reveal')) {
+    let fired = false;
+    const once = () => {
+      if (fired) return;
+      fired = true;
+      loadReveal();
+    };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(once, { timeout: 1500 });
+    } else {
+      setTimeout(once, 500);
+    }
+    addEventListener('scroll', once, { once: true, passive: true });
+    addEventListener('pointerdown', once, { once: true, passive: true });
+  } else {
+    loadReveal();
+  }
+}
 
 // --- Interaction-gated modules: loaded on first CLICK, not on presence ---------
 // The modal system and the book-a-call calendar have their trigger buttons /
