@@ -1,5 +1,7 @@
-import 'lazysizes';
-import 'lazysizes/plugins/unveilhooks/ls.unveilhooks';
+// Native-IntersectionObserver lazy media (replaces lazysizes + unveilhooks; the
+// only markup still using .lazyload/data-src is hover reels, a panorama iframe and
+// a few portfolio images). Images are native loading="lazy" site-wide.
+import './components/lazy-media';
 
 // --- Always-on, lightweight modules (vanilla JS, no heavy deps) ---------------
 // NOTE: modules that wait for DOMContentLoaded (videoPlay, visualResultsGallery,
