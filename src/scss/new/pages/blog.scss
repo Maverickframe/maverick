@@ -2,3 +2,15 @@
 @import url("../blocks/hero-blog.scss");
 @import url("../blocks/trending.scss");
 @import url("../blocks/articles.scss");
+
+// Blog hub breadcrumbs sit on a WHITE background, but the shared breadcrumbs
+// component (blocks/breadcrumbs.scss) uses the default arrow separator with
+// stroke="white" — invisible here, leaving a blank 24px gap between crumbs.
+// Same fix as gallery-hero/team/contacts: swap in the dark arrow variant.
+// Scope: the theme puts template classes on <html> (html.template-blog),
+// NOT on <body> — see CLAUDE.md §6.
+html.template-blog ul.hero-block__breadcrumbs {
+    li:not(:last-child)::after {
+        background-image: url("/img/icons/arrow-right-breadcrumbs-black.svg");
+    }
+}
