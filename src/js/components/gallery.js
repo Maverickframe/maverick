@@ -1,3 +1,7 @@
+// Fancybox CSS travels with this lazy chunk (was globally glued into base.scss →
+// every page's bundle carried ~32 KB of gallery lightbox CSS it never used). Now
+// it loads only when this chunk does — the gallery page and any [data-fancybox].
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/';
 
 const tabs = document.querySelectorAll('.js-gallery-tab-btn');
