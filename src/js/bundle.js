@@ -11,6 +11,15 @@ import './components/lazy-media';
 import './components/animated-scroll';
 import './components/svg-sprite';
 
+// reveal-on-enter (vanilla IntersectionObserver + CSS). Kept in the STATIC entry,
+// not a lazy chunk: it runs on almost every page (nearly all have `.js-reveal`
+// sections), so splitting it never skipped a download — it only added a separate
+// request that Lighthouse's network-dependency tree drew as a child of main.js
+// (and deferring it just made that branch the longest). Inlined here it costs
+// ~0.4 KB gz on main and disappears from the tree. It no longer gates the hero
+// (heroes now use the CSS-only `.reveal-css`), so its load time doesn't touch LCP.
+import './components/reveal';
+
 import './components/accordeon';
 // blogFilter → lazy (blog listing only, gated on .js-articles-items)
 import './components/contacts';
@@ -82,57 +91,8 @@ lazyModules.forEach(([selector, load]) => {
   if (document.querySelector(selector)) load();
 });
 
-// --- Reveal-on-enter loader (vanilla IntersectionObserver + CSS transitions) ---
-// A `.js-reveal` element is opacity:0 until reveal.js adds `.is-in`, so the chunk
-// must arrive before any such element that is ALREADY on-screen at load — otherwise
-// it flashes empty. So the rule is purely positional:
-//   • Any `.js-reveal`/`.js-reveal-group` in the first viewport  → load EAGER.
-//   • None above the fold (heroes use the CSS-only `.reveal-css`, real reveals sit
-//     below the fold where being opacity:0 is invisible anyway) → load OFF the
-//     critical request chain: after the load event (idle) or on first scroll/pointer.
-// This auto-adapts per page as heroes move to `.reveal-css`, and degrades safely —
-// a hero left as `.js-reveal` simply keeps the eager load (no flash). The hero H1
-// `.js-highlight` sweep is excluded from the check: its text is readable before the
-// sweep, so it never forces eager.
-if (document.querySelector('.js-reveal, .js-reveal-group, .js-highlight')) {
-  const loadReveal = () => import('./components/reveal');
-  const vh = window.innerHeight || document.documentElement.clientHeight;
-  const revealAboveFold = Array.prototype.some.call(
-    document.querySelectorAll('.js-reveal, .js-reveal-group'),
-    (el) => {
-      const r = el.getBoundingClientRect();
-      return r.top < vh && r.bottom > 0;
-    }
-  );
-  if (revealAboveFold) {
-    loadReveal();
-  } else {
-    let fired = false;
-    const once = () => {
-      if (fired) return;
-      fired = true;
-      loadReveal();
-    };
-    // Wait for the load event BEFORE idle so the chunk is requested after the
-    // initial render burst — that's what keeps it out of Lighthouse's critical
-    // request chain (requestIdleCallback alone can fire before `load` on a fast
-    // page, landing the request back inside the critical window).
-    const afterLoad = () => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(once, { timeout: 2000 });
-      } else {
-        setTimeout(once, 200);
-      }
-    };
-    if (document.readyState === 'complete') {
-      afterLoad();
-    } else {
-      addEventListener('load', afterLoad, { once: true });
-    }
-    addEventListener('scroll', once, { once: true, passive: true });
-    addEventListener('pointerdown', once, { once: true, passive: true });
-  }
-}
+// (reveal-on-enter is now a static import at the top of this entry — see the note
+//  there. It is no longer a lazy chunk, so it doesn't appear in the network tree.)
 
 // --- Interaction-gated modules: loaded on first CLICK, not on presence ---------
 // The modal system and the book-a-call calendar have their trigger buttons /
