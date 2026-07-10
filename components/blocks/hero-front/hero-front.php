@@ -99,17 +99,17 @@
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
                                             if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 1270px) 150px, 300px',
+                                                    'sizes'   => '(max-width: 1270px) 123px, 300px',
                                                 ]);
                                             }
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 150px, 300px'); ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 123px, 300px'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
@@ -166,17 +166,17 @@
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
                                             if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 150px, 300px', $i === 0);
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
-                                                    'sizes'   => '(max-width: 1270px) 150px, 300px',
+                                                    'sizes'   => '(max-width: 1270px) 123px, 300px',
                                                 ]);
                                             }
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 150px, 300px'); ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 123px, 300px'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
