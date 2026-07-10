@@ -1,22 +1,22 @@
 @import "../common/_vars";
 
 .key-insight {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .key-insight__info {
-    padding: toRem(30) toRem(15);
+    padding: 30px 15px;
 
-    border: toRem(1) solid var(--stroke-light-grey-color);
-    --size: #{toRem(20)};
+    border: 1px solid var(--stroke-light-grey-color);
+    --size: #{20px};
 
     position: relative;
     text-align: center;
@@ -39,8 +39,8 @@
     }
 
     @media (min-width: $md) {
-        --size-x: #{toRem(55)};
-        padding: toRem(78) var(--size-x);
+        --size-x: #{55px};
+        padding: 78px var(--size-x);
         margin-left: calc(-1 * var(--size-x));
         width: calc(100% + var(--size-x) * 2);
     }
@@ -48,7 +48,7 @@
 
 .key-insight__main {
     display: inline;
-    font-size: toRem(22);
+    font-size: 22px;
 
     background: linear-gradient(90deg, var(--black-color) 0% 50%, var(--text-grey-color) 50%);
 
@@ -62,10 +62,10 @@
     color: transparent;
 
     @media (min-width: $md) {
-        font-size: toRem(42);
+        font-size: 42px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(58);
+        font-size: 58px;
     }
 }

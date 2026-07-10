@@ -1,19 +1,19 @@
 @import "../common/_vars";
 
 .visual-results {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(100) 0 toRem(180);
+        margin: 100px 0 180px;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 }
 
 .visual-results__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
 
     text-align: center;
 
@@ -22,28 +22,28 @@
     }
 
     h2 {
-        margin-bottom: toRem(15);
+        margin-bottom: 15px;
     }
 
     .p1 {
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
     }
 
     @media (min-width: $md) {
         h2 {
-            max-width: toRem(700);
-            margin: 0 auto toRem(15);
+            max-width: 700px;
+            margin: 0 auto 15px;
         }
 
         .p1 {
-            max-width: toRem(600);
+            max-width: 600px;
             margin: 0 auto;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
     }
 }
 
@@ -62,17 +62,17 @@
     }
 
     .mfs-snap__arrows {
-        margin-top: toRem(30);
+        margin-top: 30px;
 
         display: flex;
         justify-content: center;
-        gap: toRem(15);
+        gap: 15px;
     }
 
     .mfs-snap__arrow {
         @include btn;
-        width: toRem(40);
-        height: toRem(40);
+        width: 40px;
+        height: 40px;
         flex: 0 0 auto;
 
         display: flex;
@@ -83,8 +83,8 @@
         transition: background-color 0.3s ease;
 
         svg {
-            width: toRem(23);
-            height: toRem(23);
+            width: 23px;
+            height: 23px;
         }
 
         &--prev {
@@ -104,12 +104,12 @@
         }
 
         @media (min-width: $md) {
-            width: toRem(80);
-            height: toRem(80);
+            width: 80px;
+            height: 80px;
 
             svg {
-                width: toRem(46);
-                height: toRem(46);
+                width: 46px;
+                height: 46px;
             }
         }
     }
@@ -117,26 +117,26 @@
 
 .visual-results__items {
     display: grid;
-    gap: toRem(4);
+    gap: 4px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(3, 1fr);
-        gap: toRem(10);
+        gap: 10px;
     }
 }
 
 .visual-results__btn.btn-secondary-black {
     display: block;
-    margin: toRem(40) auto 0;
+    margin: 40px auto 0;
 
     @media (min-width: $lg) {
-        margin-top: toRem(60);
+        margin-top: 60px;
     }
 }
 
 .visual-results-item {
-    height: toRem(450);
-    --extra-height: #{toRem(250)};
+    height: 450px;
+    --extra-height: #{250px};
 
     position: relative;
     overflow: hidden;
@@ -168,7 +168,7 @@
     }
 
     @media (min-width: $md) {
-        --extra-height: #{toRem(450)};
+        --extra-height: #{450px};
 
         iframe,
         img,
@@ -190,11 +190,11 @@
     }
 
     @media (min-width: $lg) {
-        height: toRem(700);
-        --extra-height: #{toRem(700)};
+        height: 700px;
+        --extra-height: #{700px};
 
         &.is-slider {
-            height: toRem(789);
+            height: 789px;
         }
     }
 }
@@ -204,8 +204,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    padding: toRem(20);
-    min-height: toRem(200);
+    padding: 20px;
+    min-height: 200px;
 
     display: flex;
     align-items: flex-end;
@@ -213,7 +213,7 @@
     opacity: 0;
     transition: opacity 0.3s ease;
 
-    font-size: toRem(24);
+    font-size: 24px;
     font-weight: 500;
     color: var(--white-color);
 

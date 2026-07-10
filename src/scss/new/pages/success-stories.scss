@@ -3,11 +3,11 @@
 .success-stories-page {
     .hero__main {
         @media (min-width: $md) {
-            max-width: toRem(930);
+            max-width: 930px;
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(1280);
+            max-width: 1280px;
         }
     }
 
@@ -19,13 +19,13 @@
         color: var(--text-grey-color);
 
         @media (min-width: $md) {
-            max-width: toRem(550);
+            max-width: 550px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
 
-            max-width: toRem(590);
+            max-width: 590px;
         }
     }
 
@@ -54,7 +54,7 @@
     .hero-block__breadcrumbs {
         // sat too tight under the fixed header (~8px); match the standard
         // inner-page top gap (~110px from top, like the team page).
-        margin-top: toRem(36);
+        margin-top: 36px;
         opacity: 1 !important;
         color: var(--text-grey-color);
 

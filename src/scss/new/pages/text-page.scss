@@ -7,31 +7,31 @@
 // styles come from base.scss, consistent with every other new-design page.
 
 .text-page {
-    margin-bottom: toRem(96);
+    margin-bottom: 96px;
 
     @media all and (min-width: $sm) {
-        margin-bottom: toRem(136);
+        margin-bottom: 136px;
     }
 }
 
 .text-page__title {
-    margin-bottom: toRem(24);
+    margin-bottom: 24px;
 
-    font-size: toRem(24);
+    font-size: 24px;
     line-height: 1.33;
     font-weight: 400;
 
     @media all and (min-width: $sm) {
-        margin-bottom: toRem(56);
+        margin-bottom: 56px;
 
-        font-size: toRem(48);
+        font-size: 48px;
         line-height: 1.166667;
     }
 }
 
 .text-page__content {
     font-weight: 300;
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.42587;
 
     p + p {
@@ -45,21 +45,21 @@
 
     h2 {
         font-weight: 400;
-        font-size: toRem(16);
+        font-size: 16px;
 
-        margin-bottom: toRem(16);
+        margin-bottom: 16px;
 
         @media all and (min-width: $sm) {
-            font-size: toRem(24);
+            font-size: 24px;
             line-height: 1.5;
         }
     }
 
     p + h2 {
-        margin-top: toRem(32);
+        margin-top: 32px;
 
         @media all and (min-width: $sm) {
-            margin-top: toRem(48);
+            margin-top: 48px;
         }
     }
 
@@ -68,7 +68,7 @@
     h5,
     h6 {
         font-weight: 400;
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     p + h3,
@@ -79,7 +79,7 @@
     }
 
     img {
-        margin: toRem(16) 0;
+        margin: 16px 0;
 
         display: block;
         width: 100%;
@@ -99,7 +99,7 @@
     }
 
     ul {
-        padding-left: toRem(24);
+        padding-left: 24px;
 
         li {
             position: relative;
@@ -107,25 +107,25 @@
 
         li::before {
             content: "";
-            width: toRem(3);
-            height: toRem(3);
+            width: 3px;
+            height: 3px;
             display: block;
 
             background: var(--black-color);
             border-radius: 50%;
 
             position: absolute;
-            top: toRem(8);
-            left: calc(-1 * #{toRem(13.5)});
+            top: 8px;
+            left: calc(-1 * #{13.5px});
         }
     }
 
     @media all and (min-width: $sm) {
-        font-size: toRem(16);
+        font-size: 16px;
         line-height: 1.5;
 
         ul li::before {
-            top: toRem(11);
+            top: 11px;
         }
     }
 }

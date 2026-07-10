@@ -1,9 +1,9 @@
 @import "../common/_vars";
 
 .hero-front {
-    padding: calc(var(--header-height) + #{toRem(30)}) 0 toRem(20);
+    padding: calc(var(--header-height) + #{30px}) 0 20px;
     height: 100dvh;
-    min-height: toRem(900);
+    min-height: 900px;
 
     background: var(--black-color);
     color: var(--white-color);
@@ -15,23 +15,23 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        gap: toRem(30);
+        gap: 30px;
     }
 
     @media (min-width: $md) {
         padding: 0;
-        min-height: toRem(600);
+        min-height: 600px;
 
         .container {
             flex-direction: row;
             align-items: center;
-            gap: toRem(40);
+            gap: 40px;
         }
     }
 
     @media (min-width: $lg) {
         .container {
-            gap: toRem(29);
+            gap: 29px;
         }
     }
 }
@@ -41,11 +41,11 @@
 // desktop (flex row) are they pulled out as absolute so the hero content keeps
 // its left edge.
 .hero-front .hero-block__breadcrumbs {
-    margin: 0 0 toRem(16);
+    margin: 0 0 16px;
 
     @media (min-width: $md) {
         position: absolute;
-        top: calc(var(--header-height) + #{toRem(16)});
+        top: calc(var(--header-height) + #{16px});
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
@@ -67,20 +67,20 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: toRem(20);
+    gap: 20px;
 }
 
 .hero-front__subtitle {
-    font-size: toRem(14);
+    font-size: 14px;
 
     @media (min-width: $md) {
-        font-size: toRem(12);
+        font-size: 12px;
 
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: toRem(6) toRem(12);
-        gap: toRem(8);
+        padding: 6px 12px;
+        gap: 8px;
 
         background: #151515;
 
@@ -90,8 +90,8 @@
         &::before {
             content: '';
             display: block;
-            width: toRem(7);
-            height: toRem(7);
+            width: 7px;
+            height: 7px;
     
             background: var(--accent-color);
             border-radius: 1px;
@@ -101,7 +101,7 @@
 }
 
 .hero-front__desc {
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--stroke-light-grey-color);
 
     ul {
@@ -110,12 +110,12 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: toRem(12);
+        gap: 12px;
     }
 
     li {
         position: relative;
-        padding-left: toRem(16);
+        padding-left: 16px;
     }
 
     li::before {
@@ -124,36 +124,36 @@
         left: 0;
         top: 0.62em;
         transform: translateY(-50%);
-        width: toRem(7);
-        height: toRem(7);
+        width: 7px;
+        height: 7px;
         background: var(--accent-color);
         border-radius: 1px;
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(549);
-        font-size: toRem(18);
+        max-width: 549px;
+        font-size: 18px;
     }
 }
 
 .hero-front__sliders {
     display: flex;
     flex-direction: column;
-    gap: toRem(10);
+    gap: 10px;
     margin-left: calc(-1 * var(--padding));
     width: calc(100% + var(--padding) * 2);
 
     @media (min-width: $md) {
         margin: 0;
-        margin-right: toRem(-55);
+        margin-right: -55px;
         align-self: stretch;
         flex: 0 0 auto;
-        width: toRem(595);
+        width: 595px;
 
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: minmax(0, 1fr); // bound rows to hero height so marquee columns get a clipping window (Splide used to set column height inline)
-        gap: toRem(20);
+        gap: 20px;
 
         position: relative;
 
@@ -166,7 +166,7 @@
             z-index: 2;
 
             display: block;
-            height: toRem(90);
+            height: 90px;
             pointer-events: none;
         }
 
@@ -182,9 +182,9 @@
     }
 
     @media (min-width: $lg) {
-        margin-right: toRem(-140);
-        width: toRem(848);
-        gap: toRem(30);
+        margin-right: -140px;
+        width: 848px;
+        gap: 30px;
     }
 }
 
@@ -206,8 +206,8 @@
     // mobile: every tile the SAME height (177); width follows the image aspect ratio
     // (landscape = wider, portrait = narrower) — uniform height across mixed orientations.
     .mfs-marquee__item {
-        height: toRem(177);
-        margin-right: toRem(10);
+        height: 177px;
+        margin-right: 10px;
     }
 
     .hero-front__slider-item,
@@ -231,7 +231,7 @@
             width: 100%;
             height: auto;
             margin-right: 0;
-            margin-bottom: toRem(30);
+            margin-bottom: 30px;
         }
 
         // desktop: image spans the column width, natural height
@@ -255,7 +255,7 @@
         height: auto;
 
         object-fit: cover;
-        border-radius: toRem(1);
+        border-radius: 1px;
 
         @media (min-width: $md) {
             border-radius: 1px;

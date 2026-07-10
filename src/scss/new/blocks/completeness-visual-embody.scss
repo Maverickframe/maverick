@@ -1,62 +1,62 @@
 @import "../common/_vars";
 
 .completeness-visual-embody {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .completeness-visual-embody__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     & > p {
         color: var(--text-grey-color);
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $md) {
         gap: 0;
 
         h2 {
-            max-width: toRem(605);
+            max-width: 605px;
         }
 
         & > p {
             align-self: flex-end;
-            max-width: toRem(500);
-            margin-right: toRem(106);
+            max-width: 500px;
+            margin-right: 106px;
 
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
 
         h2 {
-            max-width: toRem(845);
+            max-width: 845px;
         }
 
         & > p {
-            max-width: toRem(694);
-            margin-right: toRem(150);
-            font-size: toRem(18);
+            max-width: 694px;
+            margin-right: 150px;
+            font-size: 18px;
         }
     }
 }
 
 .completeness-visual-embody__items {
     display: grid;
-    gap: toRem(30);
+    gap: 30px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(2, 1fr);
@@ -64,18 +64,18 @@
 }
 
 .completeness-visual-embody-item__more-btn {
-    margin-top: toRem(8);
+    margin-top: 8px;
 
     font-weight: 400;
-    font-size: toRem(14);
-    line-height: toRem(17);
+    font-size: 14px;
+    line-height: 17px;
     text-align: left;
 
     letter-spacing: -0.02em;
     text-decoration: none;
 
     color: var(--white-color);
-    border-bottom: toRem(1) solid currentColor;
+    border-bottom: 1px solid currentColor;
     cursor: pointer;
     transition:
         border-color 0.3s ease,
@@ -115,16 +115,16 @@
 }
 
 .completeness-visual-embody-item__media {
-    height: toRem(450);
+    height: 450px;
     overflow: hidden;
     object-fit: cover;
 
     @media (min-width: $md) {
-        height: toRem(350);
+        height: 350px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(420);
+        height: 420px;
     }
 
     img,
@@ -141,26 +141,26 @@
 }
 
 .completeness-visual-embody-item__info {
-    padding: toRem(20);
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     h3 {
         font-weight: 500;
-        font-size: toRem(18);
+        font-size: 18px;
         text-transform: capitalize;
     }
 
     @media (min-width: $md) {
         h3 {
-            font-size: toRem(24);
+            font-size: 24px;
         }
     }
 
     @media (min-width: $lg) {
         h3 {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 }
@@ -172,7 +172,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
@@ -183,23 +183,23 @@
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .completeness-visual-embody-item__more-btn {
-    margin-top: toRem(10);
+    margin-top: 10px;
 
     font-weight: 400;
-    font-size: toRem(16);
-    line-height: toRem(17);
+    font-size: 16px;
+    line-height: 17px;
     text-align: left;
 
     letter-spacing: -0.02em;
     text-decoration: none;
 
     color: var(--accent-color);
-    border-bottom: toRem(1) solid currentColor;
+    border-bottom: 1px solid currentColor;
     cursor: pointer;
     transition: border-color 0.3s ease;
 

@@ -1,15 +1,15 @@
 @import "../common/_vars";
 
 .start-way {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     .container {
         display: grid;
-        gap: toRem(40);
+        gap: 40px;
     }
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
 
         .container {
             grid-template-columns: 451fr 649fr;
@@ -18,7 +18,7 @@
 
     @media (min-width: $lg) {
         .container {
-            gap: toRem(60);
+            gap: 60px;
             grid-template-columns: repeat(2, 1fr);
         }
     }
@@ -29,16 +29,16 @@
     flex-direction: column;
 
     h2 {
-        margin-bottom: toRem(30);
+        margin-bottom: 30px;
     }
 }
 
 .start-way__desc {
-    padding-bottom: toRem(20);
-    margin-bottom: toRem(20);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--stroke-light-grey-color);
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
 
     p + p {
@@ -46,24 +46,24 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
 .start-way__check-title {
     display: flex;
     align-items: center;
-    gap: toRem(8);
+    gap: 8px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
     color: var(--accent-color);
 
-    --size: #{toRem(20)};
+    --size: #{20px};
 
     svg {
         display: block;
@@ -73,13 +73,13 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
 
-        --size: #{toRem(24)};
+        --size: #{24px};
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
@@ -87,7 +87,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: toRem(16);
+    gap: 16px;
 
     @media (min-width: $md) {
         grid-column: 2;
@@ -95,22 +95,22 @@
     }
 
     @media (min-width: $lg) {
-        gap: toRem(20);
+        gap: 20px;
     }
 }
 
 .start-way__marked-title {
-    font-size: toRem(16);
+    font-size: 16px;
     font-weight: 500;
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
 .start-way__items {
     display: grid;
-    gap: toRem(16);
+    gap: 16px;
 
     counter-reset: start-way-items;
 
@@ -119,12 +119,12 @@
     }
 
     @media (min-width: $lg) {
-        gap: toRem(20);
+        gap: 20px;
     }
 }
 
 .start-way-item {
-    padding: toRem(20);
+    padding: 20px;
     border-radius: 1px;
     background-color: var(--fill-grey-color);
 
@@ -141,8 +141,8 @@
 }
 
 .start-way-item__title {
-    margin-bottom: toRem(15);
-    font-size: toRem(20);
+    margin-bottom: 15px;
+    font-size: 20px;
     font-weight: 500;
     color: var(--black-color);
 
@@ -151,32 +151,32 @@
         content: "0" counter(start-way-items);
 
         display: block;
-        margin-bottom: toRem(10);
+        margin-bottom: 10px;
 
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
         color: var(--accent-color);
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 }
 
 .start-way-item__desc {
-    font-size: toRem(14);
+    font-size: 14px;
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .start-way__cta {
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
-    padding: toRem(24);
-    padding-top: toRem(165);
+    gap: 30px;
+    padding: 24px;
+    padding-top: 165px;
 
     border-radius: 1px;
     position: relative;
@@ -213,12 +213,12 @@
     }
 
     @media (min-width: $md) {
-        padding-top: toRem(67);
+        padding-top: 67px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(30);
-        padding-top: toRem(152);
+        padding: 30px;
+        padding-top: 152px;
     }
 }
 
@@ -228,26 +228,26 @@
     margin-top: auto;
 
     h3 {
-        margin-bottom: toRem(10);
+        margin-bottom: 10px;
 
-        font-size: toRem(24);
+        font-size: 24px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(28);
+            font-size: 28px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 
     & > div {
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-light-grey-color);
 
         @media (min-width: $lg) {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
@@ -261,20 +261,20 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     @media (min-width: $md) {
         flex-direction: row;
-        gap: toRem(15);
+        gap: 15px;
     }
 
     .btn-main {
         width: 100%;
-        padding: toRem(13) toRem(20);
+        padding: 13px 20px;
 
         line-height: 1.42857;
         text-align: center;
-        font-size: toRem(14);
+        font-size: 14px;
 
         display: flex;
         align-items: center;
@@ -282,13 +282,13 @@
 
         @media (min-width: $md) {
             flex: 0 0 50%;
-            padding: toRem(16) toRem(30);
+            padding: 16px 30px;
         }
 
         @media (min-width: $lg) {
-            padding: toRem(20.5) toRem(30);
+            padding: 20.5px 30px;
 
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 
@@ -296,7 +296,7 @@
         width: 100%;
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }

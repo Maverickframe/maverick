@@ -4,7 +4,7 @@
 .single-blog {
     .hero-block__breadcrumbs {
         @media (max-width: 1269px) {
-            margin-bottom: toRem(30);
+            margin-bottom: 30px;
         }
     }
 
@@ -12,20 +12,20 @@
 
 .template-blog {
     .hero-blog {
-        margin-bottom: toRem(175);
+        margin-bottom: 175px;
 
         @media (min-width: $md) {
-            margin-bottom: toRem(105);
+            margin-bottom: 105px;
         }
 
         @media (min-width: $lg) {
-            margin-bottom: toRem(150);
+            margin-bottom: 150px;
         }
 
         &__grid {
             @media (min-width: $md) {
                 grid-template-columns: 40.6% 1fr 1fr;
-                gap: toRem(30);
+                gap: 30px;
             }
         }
         &__title {
@@ -37,17 +37,17 @@
 
             @media (min-width: $md) {
                 font-size: 48px;
-                max-width: toRem(920);
+                max-width: 920px;
             }
 
             @media (min-width: $lg) {
                 font-size: 64px;
-                max-width: toRem(1280);
+                max-width: 1280px;
             }
         }
         &__text {
-            margin: toRem(20) 0 toRem(60);
-            max-width: toRem(610);
+            margin: 20px 0 60px;
+            max-width: 610px;
             letter-spacing: 0;
             color: var(--text-grey-color);
 
@@ -58,30 +58,30 @@
 
         .case-item {
             .case-item__img {
-                height: toRem(190);
+                height: 190px;
 
                 @media (min-width: $lg) {
-                    height: toRem(265);
+                    height: 265px;
                 }
             }
 
             &:not(.--featured) {
                 @media (min-width: $md) {
-                    max-height: toRem(500);
+                    max-height: 500px;
                 }
                 @media (min-width: $lg) {
-                    max-height: toRem(730);
+                    max-height: 730px;
                 }
             }
 
             &.--featured {
                 .case-item__img {
                     @media (min-width: $md) {
-                        max-height: toRem(275);
+                        max-height: 275px;
                     }
 
                     @media (min-width: $lg) {
-                        max-height: toRem(385);
+                        max-height: 385px;
                     }
                 }
 
@@ -100,8 +100,8 @@
 
                 .author__avatar {
                     @media (min-width: $lg) {
-                        width: toRem(64);
-                        height: toRem(64);
+                        width: 64px;
+                        height: 64px;
                     }
                 }
                 .author__name {
@@ -139,21 +139,21 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: toRem(4);
+            gap: 4px;
 
-            margin-bottom: toRem(20);
+            margin-bottom: 20px;
 
             @media (min-width: $md) {
-                gap: toRem(20);
+                gap: 20px;
             }
 
             @media (min-width: $lg) {
-                margin-bottom: toRem(30);
+                margin-bottom: 30px;
             }
 
             &__item {
                 @media (max-width: 1269px) {
-                    padding: toRem(4) toRem(10);
+                    padding: 4px 10px;
                     color: var(--text-grey-color);
                     background-color: var(--fill-grey-color);
                 }
@@ -178,7 +178,7 @@
         .share {
             a {
                 @media (min-width: $lg) {
-                    padding: toRem(18);
+                    padding: 18px;
                 }
             }
         }
@@ -187,7 +187,7 @@
     @media (max-width: 1269px) {
         .hero-block {
             flex-direction: column-reverse;
-            gap: toRem(40);
+            gap: 40px;
 
             height: auto;
             padding-bottom: 0;
@@ -201,7 +201,7 @@
 
         .hero-block__media {
             position: relative;
-            height: toRem(400);
+            height: 400px;
         }
 
         .hero-block__main {

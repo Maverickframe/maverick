@@ -12,14 +12,14 @@
         position: fixed;
         z-index: var(--z-index-sticky-cta);
         right: calc(50% - var(--container-small) / 2);
-        bottom: toRem(80);
+        bottom: 80px;
 
-        width: toRem(225);
-        padding: toRem(10);
+        width: 225px;
+        padding: 10px;
 
         display: grid;
         grid-template-columns: 1fr;
-        gap: toRem(8);
+        gap: 8px;
 
         border: 1px solid var(--stroke-light-grey-color);
         border-radius: 1px;
@@ -31,7 +31,7 @@
     }
 
     @media (min-width: $lg) {
-        bottom: toRem(100);
+        bottom: 100px;
     }
 
     // Hidden while a full-width form section (Free Test Render) is on screen.
@@ -73,31 +73,31 @@
     }
 
     &__btn.btn-main {
-        padding: toRem(8) toRem(15);
-        line-height: toRem(24);
+        padding: 8px 15px;
+        line-height: 24px;
 
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: toRem(10);
+        gap: 10px;
 
         text-align: left;
 
         svg {
             flex: 0 0 auto;
-            width: toRem(16);
-            height: toRem(16);
+            width: 16px;
+            height: 16px;
         }
     }
 
     &__close {
         position: absolute;
-        top: toRem(6);
-        right: toRem(6);
+        top: 6px;
+        right: 6px;
         z-index: 2;
 
-        width: toRem(22);
-        height: toRem(22);
+        width: 22px;
+        height: 22px;
         padding: 0;
 
         display: flex;
@@ -120,8 +120,8 @@
 
         svg {
             display: block;
-            width: toRem(10);
-            height: toRem(10);
+            width: 10px;
+            height: 10px;
         }
     }
 
@@ -133,7 +133,7 @@
 @keyframes mfs-sticky-cta-in {
     from {
         opacity: 0;
-        transform: translateY(toRem(10));
+        transform: translateY(10px);
     }
 
     to {

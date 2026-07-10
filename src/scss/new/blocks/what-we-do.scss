@@ -1,21 +1,21 @@
 @import "../common/_vars";
 
 .what-we-do {
-    --margin: #{toRem(100)};
+    --margin: #{100px};
     margin-top: var(--margin);
     margin-bottom: var(--margin);
 
     @media (min-width: $md) {
-        --margin: #{toRem(180)};
+        --margin: #{180px};
     }
 
     .container {
         display: flex;
         flex-direction: column;
-        gap: toRem(40);
+        gap: 40px;
 
         @media (min-width: $lg) {
-            gap: toRem(60);
+            gap: 60px;
         }
     }
 }
@@ -23,7 +23,7 @@
 .what-we-do__info {
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     text-align: center;
 
@@ -35,7 +35,7 @@
         text-align: left;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: toRem(20);
+        gap: 20px;
         align-items: end;
 
         .section-subtitle {
@@ -45,7 +45,7 @@
 
     @media (min-width: $lg) {
         grid-template-columns: 711fr auto;
-        gap: toRem(15);
+        gap: 15px;
 
         .section-subtitle {
             justify-content: flex-start;
@@ -55,22 +55,22 @@
 
 .what-we-do__desc {
     color: var(--text-grey-color);
-    font-size: toRem(14);
+    font-size: 14px;
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
-        max-width: toRem(694);
+        font-size: 18px;
+        max-width: 694px;
     }
 }
 
 .what-we-do__items {
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
+    gap: 30px;
 
     @media (min-width: $md) {
         position: relative;
@@ -80,7 +80,7 @@
 ul.what-we-do__tabs {
     display: flex;
     align-items: center;
-    gap: toRem(4);
+    gap: 4px;
 
     width: 100%;
     overflow-x: auto;
@@ -93,7 +93,7 @@ ul.what-we-do__tabs {
         flex: 0 0 auto;
         white-space: nowrap;
 
-        padding: toRem(12) toRem(16);
+        padding: 12px 16px;
         margin-bottom: -1px;
 
         background: transparent;
@@ -103,7 +103,7 @@ ul.what-we-do__tabs {
             color 0.3s,
             border-color 0.3s;
 
-        font-size: toRem(15);
+        font-size: 15px;
         font-weight: 500;
         text-align: center;
 
@@ -141,8 +141,8 @@ ul.what-we-do__tabs {
 
     @media (min-width: $lg) {
         button {
-            padding: toRem(14) toRem(18);
-            font-size: toRem(16);
+            padding: 14px 18px;
+            font-size: 16px;
         }
     }
 }
@@ -169,16 +169,16 @@ ul.what-we-do__tabs {
     // Default round-dot pagination (was Splide pagination:true) — mobile only; the desktop
     // grid hides it. Generated into .mfs-snap__dots by components/scroll-snap.js.
     .mfs-snap__dots {
-        margin-top: toRem(20);
+        margin-top: 20px;
         display: flex;
         justify-content: center;
-        gap: toRem(8);
+        gap: 8px;
 
         .mfs-snap__dot {
             @include btn;
 
-            width: toRem(8);
-            height: toRem(8);
+            width: 8px;
+            height: 8px;
 
             border-radius: 50%;
             background-color: var(--stroke-light-grey-color);
@@ -198,7 +198,7 @@ ul.what-we-do__tabs {
         .mfs-snap__track {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: toRem(20);
+            gap: 20px;
             width: 100%;
 
             overflow: visible;
@@ -213,7 +213,7 @@ ul.what-we-do__tabs {
                     grid-row: span 1;
 
                     .what-we-do-item {
-                        height: toRem(190);
+                        height: 190px;
                     }
                 }
 
@@ -221,7 +221,7 @@ ul.what-we-do__tabs {
                     grid-row: span 2;
 
                     .what-we-do-item {
-                        height: toRem(400);
+                        height: 400px;
                     }
                 }
 
@@ -250,13 +250,13 @@ ul.what-we-do__tabs {
             .mfs-snap__item {
                 &.row-1-2 {
                     .what-we-do-item {
-                        height: toRem(215);
+                        height: 215px;
                     }
                 }
 
                 &.row-2 {
                     .what-we-do-item {
-                        height: toRem(450);
+                        height: 450px;
                     }
                 }
             }
@@ -266,8 +266,8 @@ ul.what-we-do__tabs {
 
 .what-we-do-item {
     position: relative;
-    width: toRem(270);
-    height: toRem(330);
+    width: 270px;
+    height: 330px;
 
     border-radius: 1px;
     overflow: hidden;
@@ -292,7 +292,7 @@ ul.what-we-do__tabs {
     }
 
     @media (min-width: $lg) {
-        height: toRem(400);
+        height: 400px;
     }
 }
 
@@ -309,34 +309,34 @@ ul.what-we-do__tabs {
 
     color: var(--white-color);
 
-    padding: toRem(12) toRem(14);
+    padding: 12px 14px;
 
     & > div {
         display: flex;
         flex-direction: column;
-        gap: toRem(4);
+        gap: 4px;
     }
 
     h3 {
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     }
 
     @media (min-width: $lg) {
-        padding: toRem(14) toRem(16);
+        padding: 14px 16px;
 
         h3 {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }
 
 .what-we-do-item__desc {
-    font-size: toRem(14);
+    font-size: 14px;
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
@@ -344,14 +344,14 @@ ul.what-we-do__tabs {
     @include btn;
 
     position: absolute;
-    top: toRem(12);
-    right: toRem(12);
+    top: 12px;
+    right: 12px;
     z-index: 2;
 
     display: flex;
     align-items: center;
-    gap: toRem(6);
-    padding: toRem(7) toRem(10);
+    gap: 6px;
+    padding: 7px 10px;
 
     background: rgba(13, 17, 38, 0.45);
     -webkit-backdrop-filter: blur(14px) saturate(150%);
@@ -360,7 +360,7 @@ ul.what-we-do__tabs {
     border-radius: 1px;
 
     color: var(--white-color);
-    font-size: toRem(12);
+    font-size: 12px;
     font-weight: 500;
     line-height: 1;
     cursor: pointer;
@@ -386,8 +386,8 @@ ul.what-we-do__tabs {
     }
 
     svg {
-        width: toRem(13);
-        height: toRem(13);
+        width: 13px;
+        height: 13px;
     }
 
     &:disabled {
@@ -434,8 +434,8 @@ ul.what-we-do__tabs {
 .what-we-do__cta {
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
-    padding: toRem(20);
+    gap: 30px;
+    padding: 20px;
 
     border-radius: 1px;
     background: var(--fill-grey-color);
@@ -445,37 +445,37 @@ ul.what-we-do__tabs {
     @media (min-width: $md) {
         flex-direction: row;
         align-items: center;
-        gap: toRem(30);
-        padding: toRem(30);
+        gap: 30px;
+        padding: 30px;
 
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     & > svg {
-        --size: #{toRem(44)};
+        --size: #{44px};
         width: var(--size);
         height: var(--size);
 
         @media (min-width: $md) {
-            --size: #{toRem(54)};
+            --size: #{54px};
         }
 
         @media (min-width: $lg) {
-            --size: #{toRem(64)};
+            --size: #{64px};
         }
     }
 
     .btn-main {
         width: 100%;
-        padding: toRem(13) toRem(20);
+        padding: 13px 20px;
 
         line-height: 1.42857;
         text-align: left;
-        font-size: toRem(14);
+        font-size: 14px;
 
         display: flex;
         align-items: center;
@@ -483,39 +483,39 @@ ul.what-we-do__tabs {
 
         @media (min-width: $md) {
             margin-left: auto;
-            padding: toRem(18) toRem(40);
-            width: toRem(200);
+            padding: 18px 40px;
+            width: 200px;
         }
 
         @media (min-width: $lg) {
-            width: toRem(232);
+            width: 232px;
         }
     }
 }
 
 .what-we-do__cta-info {
     h3 {
-        margin-bottom: toRem(10);
+        margin-bottom: 10px;
 
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 
     p {
-        margin-bottom: toRem(20);
-        max-width: toRem(500);
+        margin-bottom: 20px;
+        max-width: 500px;
 
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
 
         @media (min-width: $lg) {
-            max-width: toRem(556);
+            max-width: 556px;
 
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }
@@ -526,43 +526,43 @@ ul.what-we-do__tabs {
 
     @media (min-width: $md) {
         flex-direction: row;
-        gap: toRem(20);
+        gap: 20px;
     }
 
     @media (min-width: $lg) {
-        gap: toRem(28);
+        gap: 28px;
     }
 
     li {
-        padding: toRem(4) 0;
+        padding: 4px 0;
         display: flex;
         align-items: center;
-        gap: toRem(4);
+        gap: 4px;
 
-        font-size: toRem(12);
+        font-size: 12px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            padding: toRem(10) 0;
+            padding: 10px 0;
         }
 
         @media (min-width: $lg) {
-            gap: toRem(8);
+            gap: 8px;
 
             font-size: toREm(14);
         }
 
         & > svg {
-            --size: #{toRem(16)};
+            --size: #{16px};
             width: var(--size);
             height: var(--size);
 
             @media (min-width: $md) {
-                --size: #{toRem(16)};
+                --size: #{16px};
             }
 
             @media (min-width: $lg) {
-                --size: #{toRem(24)};
+                --size: #{24px};
             }
         }
     }
@@ -570,13 +570,13 @@ ul.what-we-do__tabs {
 
 .what-we-do-item__service {
     width: fit-content;
-    margin-top: toRem(6);
+    margin-top: 6px;
 
     display: inline-flex;
     align-items: center;
-    gap: toRem(6);
+    gap: 6px;
 
-    font-size: toRem(13);
+    font-size: 13px;
     font-weight: 500;
     color: var(--white-color);
 
@@ -584,8 +584,8 @@ ul.what-we-do__tabs {
 
     &::after {
         content: "";
-        width: toRem(14);
-        height: toRem(14);
+        width: 14px;
+        height: 14px;
         flex: 0 0 auto;
 
         background-color: currentColor;

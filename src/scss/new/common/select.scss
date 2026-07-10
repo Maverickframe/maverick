@@ -41,7 +41,7 @@
     max-height: 200px;
     overflow-y: auto;
     display: none;
-    z-index: 1000;
+    z-index: var(--z-index-modal);
     min-width: 130px;
     text-align: start;
 

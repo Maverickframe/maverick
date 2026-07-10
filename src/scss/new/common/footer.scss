@@ -1,43 +1,43 @@
 @import "_vars";
 
 .footer {
-    padding: toRem(60) 0 toRem(42);
+    padding: 60px 0 42px;
 
     background: var(--black-color);
     color: var(--white-color);
 
     @media (min-width: $md) {
-        padding: toRem(30) 0 toRem(26);
+        padding: 30px 0 26px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(50) 0 toRem(38);
+        padding: 50px 0 38px;
     }
 }
 
 .footer__top {
-    margin-bottom: toRem(72.5);
+    margin-bottom: 72.5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: toRem(42);
+    gap: 42px;
 
     @media (min-width: $md) {
-        margin-bottom: toRem(80);
+        margin-bottom: 80px;
         flex-direction: row;
-        gap: toRem(132);
+        gap: 132px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(117.5);
-        gap: toRem(297);
+        margin-bottom: 117.5px;
+        gap: 297px;
     }
 }
 
 .footer__logo {
-    width: toRem(50);
-    height: toRem(50);
+    width: 50px;
+    height: 50px;
     flex: 0 0 auto;
 
     img {
@@ -49,16 +49,16 @@
     }
 
     @media (min-width: $md) {
-        width: toRem(120);
-        height: toRem(120);
+        width: 120px;
+        height: 120px;
     }
 }
 
 .footer__subtitle {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
     font-weight: 500;
-    font-size: toRem(18);
+    font-size: 18px;
     display: inline-block;
 
     &:last-child {
@@ -66,27 +66,27 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
 .footer__cta {
-    padding: toRem(75) toRem(25);
+    padding: 75px 25px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: toRem(30);
+    gap: 30px;
 
     text-align: center;
 
     position: relative;
-    border: toRem(1.2) solid var(--stroke-grey-color);
-    --size: #{toRem(20)};
+    border: 1.2px solid var(--stroke-grey-color);
+    --size: #{20px};
 
     &::after {
         content: "";
@@ -107,39 +107,39 @@
     }
 
     h2 {
-        font-size: toRem(28);
+        font-size: 28px;
         line-height: 1.2;
     }
 
     p {
-        font-size: toRem(14);
+        font-size: 14px;
     }
 
     @media (min-width: $md) {
-        margin-top: toRem(43);
-        max-width: toRem(736);
-        padding: toRem(63) toRem(80);
+        margin-top: 43px;
+        max-width: 736px;
+        padding: 63px 80px;
 
         h2 {
-            font-size: toRem(48);
+            font-size: 48px;
         }
 
         p {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
     @media (min-width: $lg) {
-        margin-top: toRem(32);
-        max-width: toRem(886);
-        padding: toRem(87) toRem(60);
+        margin-top: 32px;
+        max-width: 886px;
+        padding: 87px 60px;
 
         h2 {
-            font-size: toRem(64);
+            font-size: 64px;
         }
 
         p {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }
@@ -148,13 +148,13 @@
     @media (min-width: $md) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: toRem(30) toRem(83);
+        grid-gap: 30px 83px;
     }
 }
 
 .footer__links-item {
     border-top: 1px solid var(--stroke-grey-color);
-    padding: toRem(20) 0;
+    padding: 20px 0;
 
     &.active {
         .footer-links__btn::after {
@@ -166,7 +166,7 @@
         &:first-of-type {
             .footer-links__item {
                 column-count: 3;
-                column-gap: toRem(40);
+                column-gap: 40px;
             }
 
             .footer-links__subitem {
@@ -187,7 +187,7 @@
         &:nth-of-type(2) {
             .footer-links__item {
                 column-count: 2;
-                column-gap: toRem(40);
+                column-gap: 40px;
             }
 
             .footer-links__subitem {
@@ -205,16 +205,16 @@
 
     display: flex;
     align-items: center;
-    gap: toRem(5);
+    gap: 5px;
 
     font-weight: 500;
-    font-size: toRem(18);
+    font-size: 18px;
 
     &::after {
         content: "";
         flex: 0 0 auto;
-        width: toRem(24);
-        height: toRem(24);
+        width: 24px;
+        height: 24px;
 
         background-image: url("/img/icons/arrow-down-menu.svg");
         background-repeat: no-repeat;
@@ -225,12 +225,12 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(24);
-        gap: toRem(4);
+        font-size: 24px;
+        gap: 4px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
@@ -241,56 +241,56 @@
 }
 
 .footer-links__item {
-    margin-top: toRem(40);
+    margin-top: 40px;
 }
 
 .footer-links__subitem {
     &:not(:first-child) {
-        margin-top: toRem(40);
+        margin-top: 40px;
     }
 
     ul {
         display: flex;
         flex-direction: column;
-        gap: toRem(15);
+        gap: 15px;
 
         a {
-            font-size: toRem(16);
+            font-size: 16px;
             color: var(--text-light-grey-color);
         }
     }
 
     &.horizontal {
         @media (min-width: $md) {
-            margin-top: toRem(15);
+            margin-top: 15px;
 
             ul {
                 flex-direction: row;
-                gap: toRem(20);
+                gap: 20px;
             }
         }
     }
 }
 
 .footer__contacts {
-    margin-top: toRem(50);
-    margin-bottom: toRem(60);
+    margin-top: 50px;
+    margin-bottom: 60px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(50);
+    gap: 50px;
 
     @media (min-width: $md) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: toRem(83);
+        grid-gap: 83px;
     }
 }
 
 .footer__contacts-info ul {
     display: flex;
     flex-direction: column;
-    gap: toRem(10);
+    gap: 10px;
 
     font-weight: 500;
 
@@ -308,8 +308,8 @@
 
             &::after {
                 content: "";
-                margin: 0 toRem(15);
-                height: toRem(15);
+                margin: 0 15px;
+                height: 15px;
                 display: block;
 
                 border-left: 1px solid #b9b9b9;
@@ -323,7 +323,7 @@
     align-items: center;
 
     svg {
-        height: toRem(24);
+        height: 24px;
         width: 100%;
     }
 
@@ -333,8 +333,8 @@
 
         &::after {
             content: "";
-            margin: 0 toRem(15);
-            height: toRem(20);
+            margin: 0 15px;
+            height: 20px;
             display: block;
 
             border-left: 1px solid #b9b9b9;
@@ -346,7 +346,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: toRem(15);
+    gap: 15px;
 
     @media (min-width: $md) {
         flex-direction: row;
@@ -357,9 +357,9 @@
 .footer__copy {
     display: flex;
     align-items: center;
-    gap: toRem(10);
+    gap: 10px;
 
-    font-size: toRem(12);
+    font-size: 12px;
     color: var(--white-color);
 
     @media (min-width: $md) {
@@ -367,7 +367,7 @@
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(14);
+        font-size: 14px;
     }
 }
 
@@ -382,8 +382,8 @@
 
         &:not(:last-child)::after {
             content: "";
-            margin: 0 toRem(15);
-            height: toRem(20);
+            margin: 0 15px;
+            height: 20px;
             display: block;
 
             border-left: 1px solid var(--text-grey-color);
@@ -391,7 +391,7 @@
     }
 
     a {
-        font-size: toRem(14);
+        font-size: 14px;
         text-decoration: underline;
         color: var(--white-color);
         transition: color 0.3s ease;
@@ -406,7 +406,7 @@
 }
 
 .footer-socials {
-    padding-top: toRem(15);
+    padding-top: 15px;
 
     @media (min-width: $md) {
         padding-top: 0;
@@ -432,9 +432,9 @@
 
     display: inline-flex;
     align-items: center;
-    gap: toRem(9);
+    gap: 9px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-light-grey-color);
     transition: color 0.3s ease;
 
@@ -455,23 +455,23 @@
 .footer-lang__panel {
     position: absolute;
     left: 50%;
-    transform: translate(-50%, toRem(6));
-    bottom: calc(100% + #{toRem(12)});
-    min-width: toRem(230);
+    transform: translate(-50%, 6px);
+    bottom: calc(100% + #{12px});
+    min-width: 230px;
 
     background: var(--black-color);
     border: 1px solid var(--grey-600-color);
-    border-radius: toRem(2);
-    padding: toRem(6);
+    border-radius: 2px;
+    padding: 6px;
 
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
-    z-index: 30;
+    z-index: var(--z-index-dropdown);
 
     @media (min-width: $md) {
         left: 0;
-        transform: translate(0, toRem(6));
+        transform: translate(0, 6px);
     }
 }
 
@@ -488,15 +488,15 @@
 .footer-lang__panel ul {
     display: flex;
     flex-direction: column;
-    gap: toRem(1);
+    gap: 1px;
 }
 
 .footer-lang__opt {
     display: flex;
     align-items: center;
-    gap: toRem(12);
-    padding: toRem(9) toRem(10);
-    border-radius: toRem(2);
+    gap: 12px;
+    padding: 9px 10px;
+    border-radius: 2px;
 
     text-decoration: none;
     transition: background-color 0.15s ease;
@@ -511,8 +511,8 @@
 }
 
 .footer-lang__flag {
-    width: toRem(26);
-    height: toRem(17);
+    width: 26px;
+    height: 17px;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
@@ -520,7 +520,7 @@
     overflow: hidden;
 
     border: 0.5px solid var(--grey-600-color);
-    border-radius: toRem(2);
+    border-radius: 2px;
 
     svg {
         display: block;
@@ -533,8 +533,8 @@
         color: var(--text-light-grey-color);
 
         svg {
-            width: toRem(14);
-            height: toRem(14);
+            width: 14px;
+            height: 14px;
         }
     }
 }
@@ -547,19 +547,19 @@
 
     strong {
         font-weight: 500;
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--white-color);
     }
 
     span {
-        font-size: toRem(13);
+        font-size: 13px;
         color: var(--text-light-grey-color);
     }
 }
 
 .footer-lang__check {
-    width: toRem(16);
-    height: toRem(16);
+    width: 16px;
+    height: 16px;
     flex: 0 0 auto;
     color: var(--white-color);
     opacity: 0;

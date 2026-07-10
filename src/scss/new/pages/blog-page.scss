@@ -6,10 +6,10 @@
 
 .article-page {
     &-inner {
-        margin-top: toRem(80);
+        margin-top: 80px;
 
         @media (min-width: $md) {
-            margin-top: toRem(150);
+            margin-top: 150px;
         }
     }
     &__columns {
@@ -21,66 +21,66 @@
         }
 
         &--3 {
-            gap: toRem(40);
+            gap: 40px;
 
             @media (min-width: $md) {
-                grid-template-columns: 1fr toRem(510) 1fr;
-                gap: 0 toRem(75);
+                grid-template-columns: 1fr 510px 1fr;
+                gap: 0 75px;
             }
             @media (min-width: $lg) {
-                grid-template-columns: 1fr toRem(790) 1fr;
-                gap: 0 toRem(100);
+                grid-template-columns: 1fr 790px 1fr;
+                gap: 0 100px;
             }
         }
     }
     &__aside {
         &--left {
             .article-page__sticky {
-                padding: toRem(30) toRem(25);
+                padding: 30px 25px;
                 background-color: var(--fill-grey-color);
             }
         }
     }
     &__sticky {
         position: sticky;
-        top: toRem(120);
+        top: 120px;
 
         @media (min-width: $lg) {
-            top: toRem(140);
+            top: 140px;
         }
     }
     &__title {
-        font-size: toRem(32);
+        font-size: 32px;
         font-weight: 500;
         margin-top: 0;
 
         @media (min-width: $md) {
-            font-size: toRem(48);
+            font-size: 48px;
         }
     }
     &__content {
         * + *,
         * ~ * {
-            margin-top: toRem(15);
+            margin-top: 15px;
 
             @media (min-width: $lg) {
-                margin-top: toRem(30);
+                margin-top: 30px;
             }
 
             ~ h2 {
-                margin-top: toRem(80);
+                margin-top: 80px;
 
                 @media (min-width: $lg) {
-                    margin-top: toRem(100);
+                    margin-top: 100px;
                 }
             }
 
             ~ h3,
             ~ h4 {
-                margin-top: toRem(40);
+                margin-top: 40px;
 
                 @media (min-width: $lg) {
-                    margin-top: toRem(60);
+                    margin-top: 60px;
                 }
             }
         }
@@ -92,16 +92,16 @@
             font-weight: 600;
         }
         h2 {
-            font-size: toRem(32);
+            font-size: 32px;
         }
         h3 {
-            font-size: toRem(24);
+            font-size: 24px;
         }
         h4 {
-            font-size: toRem(20);
+            font-size: 20px;
         }
         ul {
-            margin-left: toRem(25);
+            margin-left: 25px;
             margin-bottom: 0;
             padding: 0;
 
@@ -118,7 +118,7 @@
                 }
 
                 + li {
-                    margin-top: toRem(15);
+                    margin-top: 15px;
                 }
             }
         }
@@ -133,23 +133,23 @@
                     position: relative;
                     display: flex;
                     align-items: center;
-                    font-size: toRem(18);
+                    font-size: 18px;
                     font-weight: 500;
 
-                    margin-bottom: toRem(15);
-                    padding-left: calc(toRem(30) + toRem(15));
+                    margin-bottom: 15px;
+                    padding-left: calc(30px + 15px);
 
                     &::before {
                         counter-increment: n;
                         content: counter(n);
-                        width: toRem(30);
+                        width: 30px;
                         height: 100%;
 
                         position: absolute;
                         left: 0;
                         top: 0;
 
-                        font-size: toRem(14);
+                        font-size: 14px;
                         color: var(--white-color);
                         background-color: var(--accent-color);
 
@@ -164,8 +164,8 @@
             color: var(--accent-color);
             // padding-bottom: 0;
             // background-image: linear-gradient(
-            //     transparent calc(100% - toRem(1)),
-            //     var(--black-color) toRem(1)
+            //     transparent calc(100% - 1px),
+            //     var(--black-color) 1px
             // );
             // background-repeat: no-repeat;
             // background-size: 100% 100%;
@@ -180,18 +180,18 @@
         }
         video {
             width: 100%;
-            max-height: toRem(400);
+            max-height: 400px;
             margin: 0 auto;
         }
         em {
             &.mark {
-                padding: toRem(3);
+                padding: 3px;
 
                 a {
                     color: var(--purple-color);
                     background-image: linear-gradient(
-                        transparent calc(100% - toRem(1)),
-                        var(--purple-color) toRem(1)
+                        transparent calc(100% - 1px),
+                        var(--purple-color) 1px
                     );
                 }
             }
@@ -202,7 +202,7 @@
                 text-align: center;
                 scroll-snap-type: x mandatory;
                 scrollbar-width: none;
-                border: toRem(1) solid var(--stroke-light-grey-color);
+                border: 1px solid var(--stroke-light-grey-color);
                 border-radius: 1px;
 
                 table {
@@ -243,7 +243,7 @@
                     z-index: 0;
 
                     border: none;
-                    padding: toRem(20);
+                    padding: 20px;
 
                     word-break: normal;
 
@@ -253,7 +253,7 @@
                         bottom: 0;
                         left: 0;
                         width: 100%;
-                        height: toRem(1);
+                        height: 1px;
                         background-color: var(--stroke-light-grey-color);
                         z-index: 2;
                     }
@@ -263,7 +263,7 @@
                         position: absolute;
                         right: 0;
                         top: 0;
-                        width: toRem(1);
+                        width: 1px;
                         height: 100%;
                         background-color: var(--stroke-light-grey-color);
                         z-index: 2;
@@ -283,13 +283,13 @@
                 }
 
                 th {
-                    font-size: toRem(12);
+                    font-size: 12px;
                     background-color: var(--fill-grey-color);
                     color: var(--text-grey-color);
                 }
 
                 td {
-                    font-size: toRem(14);
+                    font-size: 14px;
 
                     &:first-child {
                         font-weight: 500;
@@ -311,30 +311,30 @@
 
             &.wp-block-image,
             &.wp-block-video {
-                margin: toRem(80) 0;
+                margin: 80px 0;
 
                 @media (min-width: $lg) {
-                    margin: toRem(100) 0;
+                    margin: 100px 0;
                 }
             }
         }
         blockquote {
-            margin: toRem(80) 0;
+            margin: 80px 0;
 
             @media (min-width: $lg) {
-                margin: toRem(100) 0;
+                margin: 100px 0;
             }
         }
         .big-text {
-            font-size: toRem(20);
+            font-size: 20px;
             font-weight: 500;
 
             @media (min-width: $lg) {
-                font-size: toRem(24);
+                font-size: 24px;
             }
         }
         .text-muted {
-            font-size: toRem(14);
+            font-size: 14px;
             font-weight: 500;
 
             @media (min-width: $lg) {
@@ -345,7 +345,7 @@
     &__banner {
         position: relative;
         width: 100%;
-        max-width: toRem(400);
+        max-width: 400px;
         margin: 0 auto;
         aspect-ratio: 3 / 4;
         display: flex;
@@ -365,31 +365,31 @@
 
         &-content {
             position: relative;
-            padding: toRem(20);
+            padding: 20px;
         }
 
         &-title {
             color: var(--white-color);
-            margin-bottom: toRem(8);
+            margin-bottom: 8px;
 
             @media (min-width: $md) {
-                font-size: toRem(20);
+                font-size: 20px;
             }
 
             @media (min-width: $lg) {
-                font-size: toRem(24);
-                margin-bottom: toRem(10);
+                font-size: 24px;
+                margin-bottom: 10px;
             }
         }
 
         &-description {
-            font-size: toRem(14);
+            font-size: 14px;
             color: var(--white-color);
-            margin-bottom: toRem(16);
+            margin-bottom: 16px;
 
             @media (min-width: $lg) {
-                font-size: toRem(16);
-                margin-bottom: toRem(20);
+                font-size: 16px;
+                margin-bottom: 20px;
             }
         }
 
@@ -398,11 +398,11 @@
         }
     }
     &__cta {
-        max-width: toRem(345);
-        min-height: toRem(500);
+        max-width: 345px;
+        min-height: 500px;
         position: relative;
-        padding: toRem(20);
-        margin-top: toRem(60);
+        padding: 20px;
+        margin-top: 60px;
         margin-left: auto;
         margin-right: auto;
         border-radius: 1px;
@@ -412,15 +412,15 @@
 
         @media (min-width: $md) {
             max-width: none;
-            min-height: toRem(285);
-            padding: toRem(40) toRem(30);
+            min-height: 285px;
+            padding: 40px 30px;
             border-radius: 1px;
         }
 
         @media (min-width: $lg) {
-            min-height: toRem(345);
-            padding: toRem(60) toRem(40);
-            margin-top: toRem(80);
+            min-height: 345px;
+            padding: 60px 40px;
+            margin-top: 80px;
         }
 
         &::before {
@@ -448,29 +448,29 @@
             z-index: 2;
 
             @media (min-width: $md) {
-                max-width: toRem(380);
+                max-width: 380px;
             }
         }
 
         &-title {
-            font-size: toRem(18);
+            font-size: 18px;
             font-weight: 500;
             color: var(--white-color);
-            margin-bottom: toRem(15);
+            margin-bottom: 15px;
 
             @media (min-width: $md) {
-                font-size: toRem(24);
+                font-size: 24px;
             }
 
             @media (min-width: $lg) {
-                font-size: toRem(32);
+                font-size: 32px;
             }
         }
 
         &-text {
-            font-size: toRem(14);
+            font-size: 14px;
             color: var(--white-color);
-            margin-bottom: toRem(15);
+            margin-bottom: 15px;
 
             @media (min-width: $lg) {
                 font-weight: 500;
@@ -486,7 +486,7 @@
         }
     }
     &__faq {
-        margin: toRem(60) 0;
+        margin: 60px 0;
         padding: 0;
 
         h2 {
@@ -498,56 +498,56 @@
         }
     }
     &__author {
-        margin-top: toRem(80);
+        margin-top: 80px;
         width: 100%;
         background-color: var(--fill-grey-color);
         border-radius: 1px;
-        padding: toRem(30);
+        padding: 30px;
 
         @media (max-width: 1260px) {
-            padding: toRem(20) toRem(15);
+            padding: 20px 15px;
         }
 
         &-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: toRem(20);
+            margin-bottom: 20px;
         }
 
         &-profile {
             display: flex;
             align-items: center;
-            gap: toRem(15);
+            gap: 15px;
         }
 
         &-avatar {
-            width: toRem(64);
-            height: toRem(64);
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         &-name {
-            font-size: toRem(18);
+            font-size: 18px;
             font-weight: 500;
 
             @media (min-width: $md) {
-                font-size: toRem(24);
+                font-size: 24px;
             }
         }
 
         &-role {
-            font-size: toRem(14);
+            font-size: 14px;
             color: var(--text-grey-color);
-            margin-top: toRem(5);
+            margin-top: 5px;
 
             @media (min-width: $md) {
-                font-size: toRem(16);
+                font-size: 16px;
             }
 
             @media (min-width: $lg) {
-                font-size: toRem(18);
+                font-size: 18px;
             }
         }
 
@@ -558,18 +558,18 @@
         }
 
         &-body {
-            margin-bottom: toRem(20);
+            margin-bottom: 20px;
         }
 
         &-text {
-            font-size: toRem(14);
+            font-size: 14px;
 
             @media (min-width: $md) {
-                font-size: toRem(16);
+                font-size: 16px;
             }
 
             @media (min-width: $lg) {
-                font-size: toRem(18);
+                font-size: 18px;
             }
         }
 
@@ -579,11 +579,11 @@
 
         &-profile-link {
             color: var(--accent-color);
-            font-size: toRem(14);
+            font-size: 14px;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: toRem(4);
+            gap: 4px;
 
             @media (hover: hover) {
                 &:hover {
@@ -595,18 +595,18 @@
 }
 
 .section-related {
-    padding: toRem(100) 0;
+    padding: 100px 0;
 
     @media (min-width: $md) {
-        padding: toRem(180) 0;
+        padding: 180px 0;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(200) 0;
+        padding: 200px 0;
     }
 
     .section__title {
-        margin-bottom: toRem(35);
+        margin-bottom: 35px;
     }
 
     @media (max-width: 680px) {
@@ -620,10 +620,10 @@
 }
 
 .article-page__form {
-    margin-top: toRem(24);
-    margin-bottom: toRem(24);
-    padding: toRem(60) toRem(40) toRem(47);
-    min-height: toRem(302);
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 60px 40px 47px;
+    min-height: 302px;
     position: relative;
 
     color: var(--white-color);
@@ -656,46 +656,46 @@
     }
 
     &.last {
-        margin-top: toRem(32);
+        margin-top: 32px;
         margin-bottom: 0;
 
         @media all and (min-width: $sm) {
-            margin-top: toRem(40);
+            margin-top: 40px;
         }
     }
 
     @media all and (min-width: $sm) {
-        margin-top: toRem(32);
-        margin-bottom: toRem(32);
+        margin-top: 32px;
+        margin-bottom: 32px;
     }
 
     &-title {
-        margin-bottom: toRem(8);
+        margin-bottom: 8px;
 
         font-weight: 500;
-        font-size: toRem(16);
+        font-size: 16px;
         line-height: 1.5;
 
         @media all and (min-width: $sm) {
-            margin-bottom: toRem(18);
+            margin-bottom: 18px;
 
-            font-size: toRem(24);
+            font-size: 24px;
             line-height: 1.333;
             text-align: center;
         }
     }
 
     &-desc {
-        margin-bottom: toRem(35);
+        margin-bottom: 35px;
 
         font-weight: 400;
-        font-size: toRem(14);
+        font-size: 14px;
         line-height: 1.42587;
 
         @media all and (min-width: $sm) {
-            margin-bottom: toRem(24);
+            margin-bottom: 24px;
 
-            font-size: toRem(16);
+            font-size: 16px;
             line-height: 1.5;
             text-align: center;
         }

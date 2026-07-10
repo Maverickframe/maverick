@@ -1,22 +1,22 @@
 @import "../common/vars";
 
 .gallery-hero {
-    --padding-top: #{toRem(30)};
+    --padding-top: #{30px};
     padding-top: calc(var(--header-height) + var(--padding-top));
-    padding-bottom: toRem(20);
+    padding-bottom: 20px;
 
     position: relative;
 
     @media (min-width: $md) {
-        --padding-top: #{toRem(40)};
-        padding-bottom: toRem(50);
+        --padding-top: #{40px};
+        padding-bottom: 50px;
     }
 }
 
 .gallery-hero__main {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     .hero-block__breadcrumbs {
         margin: 0;
@@ -30,12 +30,12 @@
 
     @media (min-width: $md) {
         margin-bottom: 0;
-        max-width: toRem(711);
-        gap: toRem(30);
+        max-width: 711px;
+        gap: 30px;
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(991);
+        max-width: 991px;
     }
 }
 
@@ -52,9 +52,9 @@
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        max-width: toRem(583);
+        max-width: 583px;
 
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
@@ -65,34 +65,34 @@
     li {
         display: flex;
         flex-direction: column;
-        gap: toRem(20);
+        gap: 20px;
 
         &:nth-child(2) {
             border-left: 1px solid var(--stroke-light-grey-color);
-            padding-left: toRem(30);
+            padding-left: 30px;
         }
     }
 
     @media (min-width: $md) {
         align-self: flex-end;
-        flex: 0 0 toRem(452);
+        flex: 0 0 452px;
 
         li {
-            gap: toRem(30);
+            gap: 30px;
 
             &:first-child {
-                padding-right: toRem(30);
+                padding-right: 30px;
             }
         }
     }
 
     @media (min-width: $lg) {
-        flex: 0 0 toRem(542);
+        flex: 0 0 542px;
     }
 }
 
 .gallery-hero__numbers-num {
-    font-size: toRem(38);
+    font-size: 38px;
     font-weight: 500;
 
     span,
@@ -101,11 +101,11 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(80);
+        font-size: 80px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(100);
+        font-size: 100px;
     }
 }
 
@@ -113,16 +113,16 @@
     color: var(--text-grey-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
 .gallery-hero__btns {
     display: grid;
-    grid-template-columns: repeat(2, toRem(165));
-    grid-gap: toRem(15);
+    grid-template-columns: repeat(2, 165px);
+    grid-gap: 15px;
 
     @media (min-width: $md) {
-        grid-template-columns: repeat(2, toRem(182));
+        grid-template-columns: repeat(2, 182px);
     }
 }

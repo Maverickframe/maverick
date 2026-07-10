@@ -4,14 +4,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: toRem(8);
+    gap: 8px;
 
     a {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: toRem(42);
-        height: toRem(42);
+        width: 42px;
+        height: 42px;
 
         border-radius: 50%;
         transition: background-color 0.3s ease;

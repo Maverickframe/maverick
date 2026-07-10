@@ -1,24 +1,24 @@
 @import "../common/vars";
 
 .team-members {
-    margin-top: toRem(80);
-    margin-bottom: toRem(100);
+    margin-top: 80px;
+    margin-bottom: 100px;
 
     @media (min-width: $md) {
-        margin-top: toRem(100);
-        margin-bottom: toRem(180);
+        margin-top: 100px;
+        margin-bottom: 180px;
     }
 
     @media (min-width: $lg) {
-        margin-top: toRem(150);
-        margin-bottom: toRem(200);
+        margin-top: 150px;
+        margin-bottom: 200px;
     }
 }
 
 .team-members__items {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: toRem(10);
+    gap: 10px;
 
     .team-item {
         width: 100%;
@@ -26,7 +26,7 @@
 
     @media (min-width: $md) {
         grid-template-columns: repeat(4, 1fr);
-        gap: toRem(30);
+        gap: 30px;
     }
 }
 
@@ -45,41 +45,41 @@
 }
 
 .team-members__title {
-    margin-bottom: toRem(15);
+    margin-bottom: 15px;
 
     @media (min-width: $md) {
         margin-bottom: 0;
-        max-width: toRem(605);
+        max-width: 605px;
     }
 
     @media (min-width: $lg) {
         margin-bottom: 0;
-        max-width: toRem(845);
+        max-width: 845px;
     }
 }
 
 .team-members__description {
     margin-left: auto;
-    margin-bottom: toRem(57);
-    max-width: toRem(266);
+    margin-bottom: 57px;
+    max-width: 266px;
 
-    font-size: toRem(12);
+    font-size: 12px;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        margin-bottom: toRem(40);
-        margin-right: toRem(104);
-        max-width: toRem(530);
-        padding-left: toRem(30);
+        margin-bottom: 40px;
+        margin-right: 104px;
+        max-width: 530px;
+        padding-left: 30px;
 
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
-        margin-right: toRem(144);
-        max-width: toRem(730);
+        margin-bottom: 60px;
+        margin-right: 144px;
+        max-width: 730px;
 
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }

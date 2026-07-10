@@ -2,19 +2,19 @@
 
 .workflow {
     display: none;
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     &_mobile {
         display: block;
     }
 
     h2 {
-        margin-bottom: toRem(15);
+        margin-bottom: 15px;
     }
 
     @media (min-width: $md) {
         display: block;
-        margin: toRem(180) 0;
+        margin: 180px 0;
 
         h2 {
             margin-bottom: 0;
@@ -22,46 +22,46 @@
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .workflow__subtitle {
-    margin-bottom: toRem(15);
+    margin-bottom: 15px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--accent-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .workflow__start {
-    width: toRem(266);
+    width: 266px;
     margin-left: auto;
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
-    font-size: toRem(12);
+    font-size: 12px;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        width: toRem(500);
-        margin-right: toRem(105);
+        width: 500px;
+        margin-right: 105px;
         margin-bottom: 0;
 
-        font-size: toRem(16);
+        font-size: 16px;
 
         // Drop the intro text down to the curve's starting tip so the line
         // visually flows out of it (visual shift only — layout flow untouched).
-        transform: translateY(toRem(70));
+        transform: translateY(70px);
     }
 
     @media (min-width: $lg) {
-        width: toRem(694);
-        margin-right: toRem(146);
-        font-size: toRem(18);
-        transform: translateY(toRem(85));
+        width: 694px;
+        margin-right: 146px;
+        font-size: 18px;
+        transform: translateY(85px);
     }
 }
 
@@ -85,7 +85,7 @@
     }
 
     @media (min-width: $md) {
-        margin-top: toRem(-30);
+        margin-top: -30px;
 
         .mobile {
             display: none;
@@ -97,7 +97,7 @@
     }
 
     @media (min-width: $lg) {
-        margin-top: toRem(-25);
+        margin-top: -25px;
         .desktop {
             display: none;
         }
@@ -110,31 +110,31 @@
 
 .workflow__items {
     position: relative;
-    padding-top: toRem(40);
+    padding-top: 40px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(70);
-    width: toRem(345);
-    min-height: toRem(869);
+    gap: 70px;
+    width: 345px;
+    min-height: 869px;
 
     @media (min-width: $md) {
-        margin-top: toRem(50); // air between the h2 row and the curve start
-        padding-top: toRem(80);
+        margin-top: 50px; // air between the h2 row and the curve start
+        padding-top: 80px;
         width: 100%;
-        min-height: toRem(988);
+        min-height: 988px;
         gap: 0;
     }
 
     @media (min-width: $lg) {
-        margin-top: toRem(60);
-        padding-top: toRem(110);
-        min-height: toRem(1214);
+        margin-top: 60px;
+        padding-top: 110px;
+        min-height: 1214px;
     }
 }
 
 .workflow-item {
-    max-width: toRem(225);
+    max-width: 225px;
     width: 100%;
     position: relative;
 
@@ -153,8 +153,8 @@
     }
 
     .dot {
-        width: toRem(8);
-        height: toRem(8);
+        width: 8px;
+        height: 8px;
         background-color: var(--accent-color);
         border-radius: 50%;
         display: block;
@@ -163,29 +163,29 @@
         transform: scale(0);
 
         position: absolute;
-        top: toRem(10);
+        top: 10px;
         z-index: 2;
 
         @media (min-width: $md) {
-            width: toRem(14);
-            height: toRem(14);
-            top: toRem(11);
+            width: 14px;
+            height: 14px;
+            top: 11px;
         }
 
         @media (min-width: $lg) {
-            top: toRem(16);
+            top: 16px;
         }
     }
 
     .connector {
         display: block;
-        width: toRem(105);
-        height: toRem(1);
+        width: 105px;
+        height: 1px;
 
         overflow: hidden;
 
         position: absolute;
-        top: toRem(14);
+        top: 14px;
 
         &::before {
             content: "";
@@ -200,11 +200,11 @@
         }
 
         @media (min-width: $md) {
-            top: toRem(18);
+            top: 18px;
         }
 
         @media (min-width: $lg) {
-            top: toRem(23);
+            top: 23px;
         }
     }
 
@@ -286,7 +286,7 @@
 
         .dot,
         .connector {
-            left: toRem(-122);
+            left: -122px;
         }
 
         &:nth-child(2n) {
@@ -295,7 +295,7 @@
             .dot,
             .connector {
                 left: auto;
-                right: toRem(-39);
+                right: -39px;
             }
 
             .connector {
@@ -305,40 +305,40 @@
 
         &:nth-of-type(2) {
             .connector {
-                width: toRem(156);
+                width: 156px;
             }
         }
 
         &:nth-of-type(3) {
             .dot,
             .connector {
-                left: toRem(-105);
+                left: -105px;
             }
 
             .connector {
-                width: toRem(80);
+                width: 80px;
             }
         }
 
         &:nth-of-type(4) {
             .dot,
             .connector {
-                right: toRem(-103);
+                right: -103px;
             }
 
             .connector {
-                width: toRem(255);
+                width: 255px;
             }
         }
 
         &:nth-of-type(5) {
             .dot,
             .connector {
-                left: toRem(-55);
+                left: -55px;
             }
 
             .connector {
-                width: toRem(50);
+                width: 50px;
             }
         }
     }
@@ -347,40 +347,40 @@
 .workflow-item__content {
     display: flex;
     flex-direction: column;
-    gap: toRem(10);
+    gap: 10px;
 
     color: var(--text-grey-color);
     transition: color 0.3s 0.6s ease;
 
     p {
-        font-size: toRem(14);
+        font-size: 14px;
     }
 
     h3 {
         position: relative;
         align-self: flex-start;
-        padding-right: toRem(15);
+        padding-right: 15px;
         background-color: var(--white-color);
         transition: color 0.3s 0.6s ease;
     }
 
     @media (min-width: $md) {
-        gap: toRem(16);
+        gap: 16px;
 
         h3 {
-            font-size: toRem(24);
+            font-size: 24px;
         }
     }
 
     @media (min-width: $lg) {
-        gap: toRem(16);
+        gap: 16px;
 
         h3 {
-            font-size: toRem(32);
+            font-size: 32px;
         }
 
         p {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }

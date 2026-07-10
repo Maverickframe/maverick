@@ -1,82 +1,82 @@
 @import "../common/_vars";
 
 .our-work {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .our-work__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     & > p {
         align-self: flex-end;
-        max-width: toRem(266);
+        max-width: 266px;
 
         color: var(--text-grey-color);
-        font-size: toRem(12);
+        font-size: 12px;
     }
 
     @media (min-width: $md) {
-        min-height: toRem(221);
+        min-height: 221px;
 
         flex-direction: row;
         justify-content: flex-start;
-        gap: toRem(30);
+        gap: 30px;
 
         h2 {
-            max-width: toRem(605);
+            max-width: 605px;
         }
 
         & > p {
-            max-width: toRem(500);
-            font-size: toRem(16);
+            max-width: 500px;
+            font-size: 16px;
         }
     }
 
     @media (min-width: $lg) {
-        min-height: toRem(242);
+        min-height: 242px;
 
-        margin-bottom: toRem(60);
-        gap: toRem(35);
+        margin-bottom: 60px;
+        gap: 35px;
 
         h2 {
-            max-width: toRem(845);
+            max-width: 845px;
         }
 
         & > p {
-            max-width: toRem(694);
-            font-size: toRem(18);
+            max-width: 694px;
+            font-size: 18px;
         }
     }
 }
 
 .our-work__items {
     display: grid;
-    gap: toRem(20);
+    gap: 20px;
 
     @media (min-width: $md) {
         display: flex;
-        gap: toRem(30);
+        gap: 30px;
 
         & > * {
-            flex: 0 1 calc(33.33% - #{toRem(20)});
+            flex: 0 1 calc(33.33% - #{20px});
         }
 
         &:not(.no-stretch) > * {
             transition: flex-basis 0.3s ease;
 
             &:hover {
-                flex-basis: calc(35% - #{toRem(20)});
+                flex-basis: calc(35% - #{20px});
             }
         }
     }

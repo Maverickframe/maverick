@@ -1,14 +1,14 @@
 @import "../common/_vars";
 
 .services-provided {
-    margin: toRem(100) 0;
+    margin: 100px 0;
     margin-left: calc(-1 * var(--padding));
     width: calc(100% + var(--padding) * 2);
-    padding: toRem(40) var(--padding);
+    padding: 40px var(--padding);
 
     display: flex;
     flex-direction: column;
-    gap: toRem(40);
+    gap: 40px;
 
     background: var(--black-color);
     color: var(--white-color);
@@ -16,51 +16,51 @@
     text-align: center;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
-        padding: toRem(80) toRem(40);
+        margin: 180px 0;
+        padding: 80px 40px;
         width: 100%;
 
         border-radius: 1px;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .services-provided__info {
     .p1 {
-        margin-top: toRem(15);
+        margin-top: 15px;
 
         @media (min-width: $md) {
-            max-width: toRem(600);
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(800);
+            max-width: 800px;
         }
     }
 }
 
 .services-provided__links {
     display: grid;
-    grid-gap: toRem(20);
+    grid-gap: 20px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(6, 1fr);
     }
 
     a {
-        padding: toRem(16) toRem(20);
+        padding: 16px 20px;
 
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
         text-align: left;
 
@@ -73,8 +73,8 @@
 
         svg {
             flex: 0 0 auto;
-            width: toRem(24);
-            height: toRem(24);
+            width: 24px;
+            height: 24px;
 
             path {
                 stroke: var(--white-color);
@@ -84,9 +84,9 @@
 
         @media (min-width: $md) {
             grid-column: span 2;
-            padding: toRem(20);
+            padding: 20px;
 
-            font-size: toRem(20);
+            font-size: 20px;
 
             &:hover,
             &:active {
@@ -109,10 +109,10 @@
         }
 
         @media (min-width: $lg) {
-            padding: toRem(30);
+            padding: 30px;
             border-radius: 1px;
 
-            font-size: toRem(24);
+            font-size: 24px;
         }
     }
 }

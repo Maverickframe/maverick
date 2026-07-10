@@ -1,11 +1,11 @@
 @import "../common/_vars";
 
 .toc {
-    --toc-padding: #{toRem(300)};
-    margin-bottom: toRem(30);
+    --toc-padding: #{300px};
+    margin-bottom: 30px;
 
     @media (min-width: $lg) {
-        --toc-padding: #{toRem(370)};
+        --toc-padding: #{370px};
     }
 
     &__title {
@@ -13,11 +13,11 @@
         align-items: center;
         justify-content: space-between;
 
-        font-size: toRem(12);
+        font-size: 12px;
         font-weight: 600;
 
         color: var(--accent-color);
-        margin-bottom: toRem(20);
+        margin-bottom: 20px;
 
         @media (max-width: 1269px) {
             &::after {
@@ -39,11 +39,11 @@
     &__list {
         display: flex;
         flex-direction: column;
-        gap: toRem(15);
+        gap: 15px;
 
         max-height: calc(100dvh - var(--header-height) - var(--toc-padding));
         overflow-y: auto;
-        padding-bottom: toRem(1) !important; //Fix for scrollbar
+        padding-bottom: 1px !important; //Fix for scrollbar
     }
 
     &__item {
@@ -51,7 +51,7 @@
 
         &.active {
             position: relative;
-            padding-left: toRem(14);
+            padding-left: 14px;
 
             &::before {
                 content: "";
@@ -59,8 +59,8 @@
                 top: 50%;
                 left: 0;
                 transform: translateY(-50%);
-                width: toRem(6);
-                height: toRem(6);
+                width: 6px;
+                height: 6px;
                 background-color: var(--accent-color);
                 border-radius: 50%;
             }
@@ -73,7 +73,7 @@
     }
 
     &__link {
-        font-size: toRem(14);
+        font-size: 14px;
         display: block;
         transition: opacity 0.2s;
 

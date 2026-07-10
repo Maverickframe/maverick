@@ -1,43 +1,43 @@
 @import "../common/_vars";
 
 .trusted {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0 toRem(150);
+        margin: 180px 0 150px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(120);
+        margin-bottom: 120px;
     }
 }
 
 .container.trusted__container {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: toRem(30);
+    gap: 30px;
 
     h2 {
-        max-width: toRem(178);
+        max-width: 178px;
         flex: 0 0 auto;
     }
 
     @media (min-width: $md) {
-        gap: toRem(30);
-        margin-bottom: toRem(30);
+        gap: 30px;
+        margin-bottom: 30px;
 
         h2 {
-            max-width: toRem(463);
+            max-width: 463px;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(35);
-        gap: toRem(25);
+        margin-bottom: 35px;
+        gap: 25px;
 
         h2 {
-            max-width: toRem(710);
+            max-width: 710px;
         }
     }
 }
@@ -52,7 +52,7 @@
             content: "";
 
             position: absolute;
-            width: toRem(45);
+            width: 45px;
             height: 100%;
             left: 0;
             top: 0;
@@ -61,22 +61,22 @@
             background: linear-gradient(90deg, var(--white-color) 0%, rgba(255, 255, 255, 0) 100%);
 
             @media (min-width: $md) {
-                width: toRem(70);
+                width: 70px;
             }
 
             @media (min-width: $lg) {
-                width: toRem(97);
+                width: 97px;
             }
         }
 
         @media (min-width: $md) {
             position: absolute;
             right: 0;
-            max-width: toRem(773);
+            max-width: 773px;
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(945);
+            max-width: 945px;
         }
     }
 }
@@ -89,11 +89,11 @@
 
 .trusted__slider-item {
     transition: filter 0.3s ease;
-    margin-right: toRem(15); // was Splide gap:15 — margin so duplicated halves tile seamlessly
+    margin-right: 15px; // was Splide gap:15 — margin so duplicated halves tile seamlessly
 
     img {
-        width: toRem(120);
-        height: toRem(66);
+        width: 120px;
+        height: 66px;
         object-fit: cover;
         display: block;
     }
@@ -104,15 +104,15 @@
         }
 
         img {
-            width: toRem(182);
-            height: toRem(100);
+            width: 182px;
+            height: 100px;
         }
     }
 
     @media (min-width: $lg) {
         img {
-            width: toRem(220);
-            height: toRem(121);
+            width: 220px;
+            height: 121px;
         }
     }
 }

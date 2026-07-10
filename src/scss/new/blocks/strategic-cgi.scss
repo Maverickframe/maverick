@@ -1,35 +1,35 @@
 @import "../common/_vars";
 
 .strategic-cgi {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0 toRem(280);
+        margin: 180px 0 280px;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0 toRem(300);
+        margin: 200px 0 300px;
     }
 }
 
 .strategic-cgi__main {
-    margin-bottom: toRem(100);
+    margin-bottom: 100px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(40);
+    gap: 40px;
 
     @media (min-width: $md) {
-        margin-bottom: toRem(280);
+        margin-bottom: 280px;
 
         flex-direction: row;
         align-items: center;
-        gap: toRem(80);
+        gap: 80px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(300);
-        gap: toRem(30);
+        margin-bottom: 300px;
+        gap: 30px;
     }
 }
 
@@ -37,7 +37,7 @@
     flex: 1 1 auto;
 
     h2 {
-        margin-bottom: toRem(30);
+        margin-bottom: 30px;
     }
 
     .p1 {
@@ -46,11 +46,11 @@
 
     @media (min-width: $lg) {
         h2 {
-            max-width: toRem(800);
+            max-width: 800px;
         }
 
         .p1 {
-            max-width: toRem(698);
+            max-width: 698px;
         }
     }
 }
@@ -72,8 +72,8 @@
     }
 
     @media (min-width: $md) {
-        width: toRem(580);
-        height: toRem(400);
+        width: 580px;
+        height: 400px;
         aspect-ratio: auto;
 
         overflow: hidden;
@@ -86,18 +86,18 @@
     }
 
     @media (min-width: $lg) {
-        width: toRem(845);
-        height: toRem(501);
+        width: 845px;
+        height: 501px;
 
         border-radius: 1px;
     }
 }
 
 .strategic-cgi__quote {
-    padding: toRem(6) 0 toRem(12);
+    padding: 6px 0 12px;
 
     text-align: center;
-    font-size: toRem(22);
+    font-size: 22px;
 
     span {
         color: var(--text-grey-color);
@@ -106,10 +106,10 @@
     @media (min-width: $md) {
         padding: 0;
 
-        font-size: toRem(42);
+        font-size: 42px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(58);
+        font-size: 58px;
     }
 }

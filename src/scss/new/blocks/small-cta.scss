@@ -1,8 +1,8 @@
 @import "../common/_vars";
 
 .small-cta {
-    --margin: #{toRem(100)};
-    --padding: #{toRem(20)};
+    --margin: #{100px};
+    --padding: #{20px};
     margin: var(--margin) 0;
     padding: var(--padding);
 
@@ -12,7 +12,7 @@
 
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
+    gap: 30px;
 
     &.white {
         background-color: var(--fill-grey-color);
@@ -28,47 +28,47 @@
     }
 
     @media (min-width: $md) {
-        --margin: #{toRem(180)};
-        --padding: #{toRem(60)};
+        --margin: #{180px};
+        --padding: #{60px};
 
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         
         button {
-            width: toRem(182);
+            width: 182px;
             flex: 0 0 auto;
         }
     }
 
     @media (min-width: $lg) {
-        --margin: #{toRem(200)};
+        --margin: #{200px};
     }
 }
 
 .small-cta__info {
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     h2 {
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
     }
 
     .p1 {
-        font-size: toRem(14);
+        font-size: 14px;
     }
 
     @media (min-width: $md) {
-        max-width: toRem(461);
+        max-width: 461px;
 
         h2 {
-            font-size: toRem(32);
+            font-size: 32px;
         }
 
         .p1 {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }

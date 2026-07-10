@@ -3,10 +3,10 @@
 /* Cards */
 .cards {
     display: grid;
-    gap: toRem(40) toRem(30);
+    gap: 40px 30px;
 
     @media (min-width: $lg) {
-        row-gap: toRem(60);
+        row-gap: 60px;
     }
 
     &--4 {

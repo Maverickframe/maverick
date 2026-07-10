@@ -1,53 +1,53 @@
 @import "../common/_vars";
 
 .selective-works {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
 
         .container {
-            max-width: toRem(984);
+            max-width: 984px;
         }
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
 
         .container {
-            max-width: toRem(1197);
+            max-width: 1197px;
         }
     }
 }
 
 .selective-works__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     & > p {
         color: var(--text-grey-color);
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $md) {
-        max-width: toRem(710);
-        margin: 0 auto toRem(40);
+        max-width: 710px;
+        margin: 0 auto 40px;
 
         text-align: center;
 
         & > p {
-            max-width: toRem(500);
+            max-width: 500px;
             margin: 0 auto;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
 
         & > p {
-            max-width: toRem(600);
+            max-width: 600px;
         }
     }
 }
@@ -56,22 +56,22 @@
     position: relative;
 
     .mfs-snap__track {
-        --mfs-snap-gap: #{toRem(15)};
+        --mfs-snap-gap: #{15px};
 
         @media (min-width: $md) {
-            --mfs-snap-gap: #{toRem(20)};
+            --mfs-snap-gap: #{20px};
         }
 
         @media (min-width: $lg) {
-            --mfs-snap-gap: #{toRem(30)};
+            --mfs-snap-gap: #{30px};
         }
     }
 
     .mfs-snap__dots {
-        margin-top: toRem(20);
+        margin-top: 20px;
         display: flex;
-        gap: toRem(4);
-        height: toRem(6);
+        gap: 4px;
+        height: 6px;
 
         .mfs-snap__dot {
             @include btn;
@@ -80,24 +80,24 @@
             width: 100%;
             height: 100%;
 
-            border-radius: toRem(1);
+            border-radius: 1px;
             background-color: var(--stroke-light-grey-color);
 
             &[aria-current] {
-                min-width: toRem(100);
+                min-width: 100px;
                 background-color: var(--accent-color);
             }
         }
 
         @media (min-width: $md) {
-            margin-top: toRem(30);
+            margin-top: 30px;
 
             .mfs-snap__dot {
                 flex: 0 0 auto;
-                width: toRem(60);
+                width: 60px;
 
                 &[aria-current] {
-                    min-width: toRem(143);
+                    min-width: 143px;
                 }
             }
         }
@@ -108,18 +108,18 @@
 
         @media (min-width: $md) {
             position: absolute;
-            right: toRem(30);
-            top: toRem(30);
+            right: 30px;
+            top: 30px;
             display: flex;
             justify-content: center;
-            gap: toRem(10);
+            gap: 10px;
         }
     }
 
     .mfs-snap__arrow {
         @include btn;
-        width: toRem(34);
-        height: toRem(34);
+        width: 34px;
+        height: 34px;
         flex: 0 0 auto;
 
         display: flex;
@@ -130,8 +130,8 @@
         transition: background-color 0.3s ease;
 
         svg {
-            width: toRem(17);
-            height: toRem(13);
+            width: 17px;
+            height: 13px;
         }
 
         &--prev {
@@ -168,7 +168,7 @@
 
     img {
         width: 100%;
-        height: toRem(234);
+        height: 234px;
         display: block;
         object-fit: cover;
         object-position: center top;
@@ -177,7 +177,7 @@
     @media (min-width: $md) {
         display: flex;
         flex-direction: row;
-        height: toRem(500);
+        height: 500px;
 
         img {
             position: absolute;
@@ -189,8 +189,8 @@
 
         &.collapsed {
             .selective-works-item__info {
-                margin: toRem(30);
-                padding: toRem(15);
+                margin: 30px;
+                padding: 15px;
 
                 h3,
                 .selective-works-item__desc,
@@ -206,8 +206,8 @@
 
             .selective-works-item__link {
                 padding: 0;
-                width: toRem(24);
-                height: toRem(24);
+                width: 24px;
+                height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -216,59 +216,59 @@
     }
 
     @media (min-width: $lg) {
-        height: toRem(614);
+        height: 614px;
 
         &.collapsed {
             .selective-works-item__link {
-                width: toRem(34);
-                height: toRem(34);
+                width: 34px;
+                height: 34px;
             }
         }
     }
 }
 
 .selective-works-item__info {
-    margin-top: toRem(-72);
+    margin-top: -72px;
     position: relative;
     z-index: 2;
-    padding: toRem(20);
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: toRem(40);
+    gap: 40px;
 
     border-radius: 1px;
     background-color: var(--fill-grey-color);
 
     h3 {
-        margin-bottom: toRem(15);
-        font-size: toRem(18);
+        margin-bottom: 15px;
+        font-size: 18px;
     }
 
     @media (min-width: $md) {
         margin-top: 0;
-        padding: toRem(30);
+        padding: 30px;
         flex: 0 0 auto;
-        max-width: toRem(502);
+        max-width: 502px;
 
         h3 {
-            margin-bottom: toRem(15);
-            font-size: toRem(20);
+            margin-bottom: 15px;
+            font-size: 20px;
         }
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(586);
-        gap: toRem(60);
+        max-width: 586px;
+        gap: 60px;
 
         h3 {
-            max-width: toRem(462);
-            font-size: toRem(24);
+            max-width: 462px;
+            font-size: 24px;
         }
     }
 
     .selective-works-item__desc {
         color: var(--text-grey-color);
-        font-size: toRem(14);
+        font-size: 14px;
 
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -288,8 +288,8 @@
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(462);
-            font-size: toRem(16);
+            max-width: 462px;
+            font-size: 16px;
         }
     }
 }
@@ -300,9 +300,9 @@
     @media (min-width: $md) {
         display: block;
         margin-left: auto;
-        margin-bottom: toRem(16);
-        width: toRem(24);
-        height: toRem(24);
+        margin-bottom: 16px;
+        width: 24px;
+        height: 24px;
 
         svg {
             width: 100%;
@@ -311,25 +311,25 @@
     }
 
     @media (min-width: $lg) {
-        width: toRem(34);
-        height: toRem(34);
-        margin-bottom: toRem(36);
+        width: 34px;
+        height: 34px;
+        margin-bottom: 36px;
     }
 }
 
 .selective-works-item__more-btn {
-    margin-top: toRem(10);
+    margin-top: 10px;
 
     font-weight: 400;
-    font-size: toRem(16);
-    line-height: toRem(17);
+    font-size: 16px;
+    line-height: 17px;
     text-align: left;
 
     letter-spacing: -0.02em;
     text-decoration: none;
 
     color: var(--accent-color);
-    border-bottom: toRem(1) solid currentColor;
+    border-bottom: 1px solid currentColor;
     cursor: pointer;
     transition: border-color 0.3s ease;
 
@@ -345,12 +345,12 @@
 .selective-works-item__link {
     margin-top: auto;
     display: flex;
-    gap: toRem(10);
+    gap: 10px;
     align-items: center;
     justify-content: space-between;
 
-    padding: toRem(18) toRem(30);
+    padding: 18px 30px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.4;
 }

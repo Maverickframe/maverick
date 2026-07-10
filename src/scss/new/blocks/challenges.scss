@@ -1,20 +1,20 @@
 @import "../common/_vars";
 
 .challenges {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(120) 0 toRem(180);
+        margin: 120px 0 180px;
     }
 }
 
 .challenges__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
-    max-width: toRem(845);
+    gap: 15px;
+    max-width: 845px;
 
     .section-subtitle {
         margin-bottom: 0;
@@ -25,10 +25,10 @@
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
 
         .p1 {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }
@@ -46,7 +46,7 @@
     .mfs-snap__track {
         --peek: 0px;
         --per: 1;
-        --mfs-snap-gap: #{toRem(15)};
+        --mfs-snap-gap: #{15px};
 
         padding-inline: var(--peek);
         scroll-padding-inline: var(--peek);
@@ -55,7 +55,7 @@
         @media (min-width: $md) {
             --peek: 11%;
             --per: 3;
-            --mfs-snap-gap: #{toRem(20)};
+            --mfs-snap-gap: #{20px};
         }
 
         @media (min-width: 1441px) {
@@ -69,10 +69,10 @@
     }
 
     .mfs-snap__dots {
-        margin-top: toRem(20);
+        margin-top: 20px;
         display: flex;
-        gap: toRem(4);
-        height: toRem(6);
+        gap: 4px;
+        height: 6px;
 
         .mfs-snap__dot {
             @include btn;
@@ -81,11 +81,11 @@
             width: 100%;
             height: 100%;
 
-            border-radius: toRem(1);
+            border-radius: 1px;
             background-color: var(--stroke-light-grey-color);
 
             &[aria-current] {
-                min-width: toRem(100);
+                min-width: 100px;
                 background-color: var(--accent-color);
             }
         }
@@ -93,16 +93,16 @@
         @media (min-width: $md) {
             .mfs-snap__dot {
                 flex: 0 0 auto;
-                width: toRem(60);
+                width: 60px;
 
                 &[aria-current] {
-                    min-width: toRem(143);
+                    min-width: 143px;
                 }
             }
         }
 
         @media (min-width: $lg) {
-            margin-top: toRem(30);
+            margin-top: 30px;
         }
     }
 
@@ -112,22 +112,22 @@
         @media (min-width: $md) {
             position: absolute;
             right: calc(50% - var(--container-small) / 2);
-            top: toRem(-40);
+            top: -40px;
             transform: translateY(-100%);
             display: flex;
             justify-content: center;
-            gap: toRem(10);
+            gap: 10px;
         }
 
         @media (min-width: $lg) {
-            top: toRem(-60);
+            top: -60px;
         }
     }
 
     .mfs-snap__arrow {
         @include btn;
-        width: toRem(34);
-        height: toRem(34);
+        width: 34px;
+        height: 34px;
         flex: 0 0 auto;
 
         display: flex;
@@ -138,8 +138,8 @@
         transition: background-color 0.3s ease;
 
         svg {
-            width: toRem(17);
-            height: toRem(13);
+            width: 17px;
+            height: 13px;
         }
 
         &--prev {
@@ -162,15 +162,15 @@
 
 .challenges-item {
     height: 100%;
-    padding: toRem(20);
+    padding: 20px;
     border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
     display: flex;
     flex-direction: column;
-    gap: toRem(18);
+    gap: 18px;
 
-    --icon-size: #{toRem(28)};
+    --icon-size: #{28px};
 
     img,
     svg {
@@ -182,40 +182,40 @@
     }
 
     h3 {
-        min-height: toRem(50);
-        font-size: toRem(18);
+        min-height: 50px;
+        font-size: 18px;
         font-weight: 500;
         text-transform: capitalize;
     }
 
     @media (min-width: $md) {
-        padding: toRem(30);
+        padding: 30px;
 
-        --icon-size: #{toRem(38)};
+        --icon-size: #{38px};
 
         h3 {
-            min-height: toRem(56);
-            font-size: toRem(20);
+            min-height: 56px;
+            font-size: 20px;
         }
     }
 
     @media (min-width: $lg) {
-        gap: toRem(24);
-        --icon-size: #{toRem(48)};
+        gap: 24px;
+        --icon-size: #{48px};
 
         h3 {
-            min-height: toRem(58);
-            font-size: toRem(24);
+            min-height: 58px;
+            font-size: 24px;
             line-height: 1.2;
         }
     }
 }
 
 .challenges-item__desc {
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
 
-    padding: toRem(18) 0;
+    padding: 18px 0;
     display: flex;
     align-items: flex-start;
     border: 1px solid var(--stroke-light-grey-color);
@@ -225,45 +225,45 @@
     &::before {
         content: "";
         flex: 0 0 auto;
-        width: toRem(8.75);
-        margin-left: toRem(3);
-        margin-right: toRem(18);
-        margin-top: toRem(6);
+        width: 8.75px;
+        margin-left: 3px;
+        margin-right: 18px;
+        margin-top: 6px;
 
-        border: toRem(1.25) solid currentColor;
+        border: 1.25px solid currentColor;
     }
 
 
     @media (min-width: $lg) {
-        padding: toRem(24) 0;
+        padding: 24px 0;
 
-        font-size: toRem(16);
+        font-size: 16px;
 
         span {
-            max-width: toRem(288);
+            max-width: 288px;
         }
 
         &::before {
-            margin-top: toRem(8);
+            margin-top: 8px;
         }
     }
 }
 
 .challenges-item__quote {
     flex: 1 1 auto;
-    padding: toRem(15);
+    padding: 15px;
     display: flex;
     align-items: flex-start;
-    gap: toRem(8);
+    gap: 8px;
 
     background: rgba(45, 64, 174, 0.05);
     border: 1px solid rgba(45, 64, 174, 0.7);
     border-radius: 1px;
 
     color: var(--accent-color);
-    font-size: toRem(14);
+    font-size: 14px;
 
-    --icon-size: #{toRem(20)};
+    --icon-size: #{20px};
 
     svg {
         width: var(--icon-size);
@@ -272,12 +272,12 @@
     }
 
     @media (min-width: $md) {
-        padding: toRem(20);
+        padding: 20px;
 
-        --icon-size: #{toRem(24)};
+        --icon-size: #{24px};
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }

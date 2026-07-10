@@ -4,18 +4,18 @@
    block renders correctly regardless of which CSS bundle a page loads. */
 
 .mfsq {
-    padding: toRem(64) 0;
+    padding: 64px 0;
     background: var(--black-color);
 
     @media (min-width: $md) {
-        padding: toRem(90) 0;
+        padding: 90px 0;
     }
 }
 
 .mfsq__intro {
     text-align: center;
     color: var(--white-color);
-    margin-bottom: toRem(28);
+    margin-bottom: 28px;
 
     .section-subtitle {
         color: var(--white-color);
@@ -24,58 +24,58 @@
 
     h2 {
         color: var(--white-color);
-        font-size: toRem(26);
+        font-size: 26px;
         font-weight: 400;
-        margin: toRem(10) 0;
+        margin: 10px 0;
 
         @media (min-width: $md) {
-            font-size: toRem(40);
+            font-size: 40px;
         }
     }
 }
 
 .mfsq__sub {
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
-    max-width: toRem(520);
+    max-width: 520px;
     margin: 0 auto;
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .mfsq__card {
-    max-width: toRem(720);
+    max-width: 720px;
     margin: 0 auto;
-    padding: toRem(22);
+    padding: 22px;
 
     background: var(--white-color);
     border-radius: 1px;
 
     @media (min-width: $md) {
-        padding: toRem(36) toRem(40);
+        padding: 36px 40px;
     }
 }
 
 .mfsq__head {
-    margin-bottom: toRem(24);
+    margin-bottom: 24px;
 }
 
 .mfsq__count {
-    font-size: toRem(13);
+    font-size: 13px;
     color: var(--grey-550-color);
 }
 
 .mfsq__bar {
     display: flex;
-    gap: toRem(6);
-    margin-top: toRem(8);
+    gap: 6px;
+    margin-top: 8px;
 
     span {
         flex: 1;
-        height: toRem(4);
+        height: 4px;
         border-radius: 1px;
         background: #e6e6ea;
         transition: background 0.25s ease;
@@ -94,13 +94,13 @@
     }
 
     h3 {
-        font-size: toRem(19);
+        font-size: 19px;
         font-weight: 500;
         color: var(--navy-color);
-        margin: 0 0 toRem(16);
+        margin: 0 0 16px;
 
         @media (min-width: $md) {
-            font-size: toRem(22);
+            font-size: 22px;
         }
     }
 }
@@ -108,7 +108,7 @@
 .mfsq__opts {
     display: grid;
     grid-template-columns: 1fr;
-    gap: toRem(10);
+    gap: 10px;
 
     @media (min-width: $md) {
         grid-template-columns: 1fr 1fr;
@@ -117,7 +117,7 @@
 
 .mfsq__opt {
     width: 100%;
-    padding: toRem(15) toRem(18);
+    padding: 15px 18px;
 
     text-align: left;
     background: var(--white-color);
@@ -125,7 +125,7 @@
     border-radius: 1px;
 
     font-family: inherit;
-    font-size: toRem(15);
+    font-size: 15px;
     color: var(--navy-color);
     cursor: pointer;
     transition: border-color 0.2s ease, background 0.2s ease;
@@ -139,7 +139,7 @@
 .mfsq__looks {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: toRem(12);
+    gap: 12px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(4, 1fr);
@@ -169,37 +169,37 @@
 
         img {
             width: 100%;
-            height: toRem(104);
+            height: 104px;
             object-fit: cover;
             display: block;
         }
     }
 
     &-cap {
-        padding: toRem(10) toRem(6);
-        font-size: toRem(13);
+        padding: 10px 6px;
+        font-size: 13px;
         text-align: center;
         color: var(--navy-color);
     }
 }
 
 .mfsq__gate-sub {
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.6;
     color: var(--grey-550-color);
-    margin: 0 0 toRem(16);
+    margin: 0 0 16px;
 }
 
 .mfsq__input {
     width: 100%;
-    height: toRem(48);
-    padding: 0 toRem(16);
-    margin-bottom: toRem(10);
+    height: 48px;
+    padding: 0 16px;
+    margin-bottom: 10px;
 
     border: 1px solid #e6e6ea;
     border-radius: 1px;
     font-family: inherit;
-    font-size: toRem(15);
+    font-size: 15px;
     color: var(--navy-color);
 
     &:focus {
@@ -214,8 +214,8 @@
 
 .mfsq__submit {
     width: 100%;
-    height: toRem(52);
-    margin-top: toRem(4);
+    height: 52px;
+    margin-top: 4px;
 
     background: var(--accent-color);
     color: var(--white-color);
@@ -223,7 +223,7 @@
     border-radius: 1px;
 
     font-family: inherit;
-    font-size: toRem(15);
+    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s ease;
@@ -234,21 +234,21 @@
 }
 
 .mfsq__fine {
-    font-size: toRem(11);
+    font-size: 11px;
     color: #8a8a86;
-    margin: toRem(10) 0 0;
+    margin: 10px 0 0;
 }
 
 .mfsq__back {
     display: none;
-    margin-top: toRem(18);
+    margin-top: 18px;
     padding: 0;
 
     background: none;
     border: none;
     color: var(--grey-550-color);
     font-family: inherit;
-    font-size: toRem(13);
+    font-size: 13px;
     cursor: pointer;
 
     &.is-on {
@@ -263,26 +263,26 @@
 /* Result (injected by quiz.js) */
 .mfsq__result {
     &-eyebrow {
-        font-size: toRem(13);
+        font-size: 13px;
         color: var(--grey-550-color);
         margin: 0;
     }
 
     &-head {
-        font-size: toRem(22);
+        font-size: 22px;
         font-weight: 500;
         color: var(--navy-color);
-        margin: toRem(6) 0 toRem(14);
+        margin: 6px 0 14px;
         line-height: 1.25;
     }
 
     &-row {
         display: flex;
         align-items: flex-start;
-        gap: toRem(8);
-        padding: toRem(9) 0;
+        gap: 8px;
+        padding: 9px 0;
         border-top: 1px solid #ececed;
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--navy-color);
 
         b {
@@ -292,9 +292,9 @@
         &::before {
             content: "";
             flex: 0 0 auto;
-            width: toRem(7);
-            height: toRem(7);
-            margin-top: toRem(6);
+            width: 7px;
+            height: 7px;
+            margin-top: 6px;
             border-radius: 1px;
             background: var(--accent-color);
         }
@@ -302,20 +302,20 @@
 
     &-success {
         text-align: center;
-        padding: toRem(24) toRem(8);
+        padding: 24px 8px;
 
         p {
-            margin: toRem(6) 0;
+            margin: 6px 0;
         }
 
         .h {
-            font-size: toRem(17);
+            font-size: 17px;
             font-weight: 500;
             color: var(--navy-color);
         }
 
         .s {
-            font-size: toRem(14);
+            font-size: 14px;
             color: var(--grey-550-color);
             line-height: 1.5;
         }

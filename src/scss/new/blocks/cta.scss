@@ -1,53 +1,53 @@
 @import "../common/_vars";
 
 .cta {
-    background: var(--accent-color) url("/img/icons/cta-lines.svg") no-repeat toRem(-333) toRem(-48);
+    background: var(--accent-color) url("/img/icons/cta-lines.svg") no-repeat -333px -48px;
     color: var(--white-color);
 
     text-align: center;
 
-    --margin: #{toRem(100)};
+    --margin: #{100px};
     margin-top: var(--margin);
     margin-bottom: var(--margin);
     margin-left: calc(-1 * var(--padding));
     width: calc(100% + var(--padding) * 2);
 
-    padding: toRem(120) toRem(15);
+    padding: 120px 15px;
 
     h2 {
-        font-size: toRem(28);
+        font-size: 28px;
     }
 
     @media (min-width: $md) {
-        --margin: #{toRem(180)};
-        padding: toRem(108) 0;
+        --margin: #{180px};
+        padding: 108px 0;
         margin-left: 0;
         width: 100%;
 
         border-radius: 1px;
-        background-position: center toRem(-48);
+        background-position: center -48px;
 
         h2 {
-            font-size: toRem(50);
+            font-size: 50px;
         }
 
         p {
-            max-width: toRem(496);
+            max-width: 496px;
             margin: 0 auto;
         }
     }
 
     @media (min-width: $lg) {
-        padding: toRem(188.5) 0;
+        padding: 188.5px 0;
 
         background-position: center 0;
 
         h2 {
-            font-size: toRem(60);
+            font-size: 60px;
         }
 
         p {
-            max-width: toRem(600);
+            max-width: 600px;
         }
     }
 }
@@ -56,12 +56,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: toRem(30);
+    gap: 30px;
 
-    max-width: toRem(800);
+    max-width: 800px;
     margin: 0 auto;
 
     @media (min-width: $lg) {
-        max-width: toRem(1000);
+        max-width: 1000px;
     }
 }

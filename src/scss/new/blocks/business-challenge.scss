@@ -1,7 +1,7 @@
 @import "../common/_vars";
 
 .business-challenge {
-    margin-bottom: toRem(100);
+    margin-bottom: 100px;
     margin-left: calc(-1 * var(--padding));
     width: calc(100% + var(--padding) * 2);
 
@@ -11,33 +11,33 @@
     background: var(--fill-grey-color);
 
     @media (min-width: $md) {
-        margin-bottom: toRem(120);
+        margin-bottom: 120px;
         margin-left: 0;
         width: 100%;
 
         align-items: center;
         flex-direction: row;
-        gap: toRem(35);
+        gap: 35px;
 
         border-radius: 1px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(150);
+        margin-bottom: 150px;
 
-        gap: toRem(48);
+        gap: 48px;
     }
 }
 
 .business-challenge__info {
-    padding: toRem(40) var(--padding);
+    padding: 40px var(--padding);
 
     h2 {
-        margin-bottom: toRem(30);
+        margin-bottom: 30px;
     }
 
     .p1 {
-        margin-bottom: toRem(40);
+        margin-bottom: 40px;
 
         color: var(--text-grey-color);
 
@@ -45,7 +45,7 @@
             margin: 1em 0;
 
             li {
-                --padding: #{toRem(25)};
+                --padding: #{25px};
                 padding-left: var(--padding);
                 position: relative;
 
@@ -55,11 +55,11 @@
                     background-color: currentColor;
 
                     display: block;
-                    width: toRem(5);
-                    height: toRem(5);
+                    width: 5px;
+                    height: 5px;
 
                     position: absolute;
-                    top: toRem(9);
+                    top: 9px;
                     left: calc(var(--padding) / 2);
                     transform: translateX(-50%);
                 }
@@ -68,39 +68,39 @@
     }
 
     @media (min-width: $md) {
-        padding: toRem(40);
+        padding: 40px;
         padding-right: 0;
 
         h2 {
-            margin-bottom: toRem(40);
+            margin-bottom: 40px;
         }
     }
 
     @media (min-width: $lg) {
-        padding: toRem(65.5) toRem(60);
+        padding: 65.5px 60px;
         padding-right: 0;
 
         h2 {
-            margin-bottom: toRem(60);
+            margin-bottom: 60px;
         }
 
         .p1 {
-            margin-bottom: toRem(60);
+            margin-bottom: 60px;
         }
     }
 }
 
 .business-challenge__strong {
-    font-size: toRem(18);
+    font-size: 18px;
     font-weight: 500;
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 }
 
 .business-challenge__media {
-    height: toRem(300);
+    height: 300px;
     width: 100%;
 
     img,
@@ -116,7 +116,7 @@
 
     @media (min-width: $md) {
         height: auto;
-        width: toRem(600);
+        width: 600px;
         flex: 0 0 auto;
         align-self: stretch;
 
@@ -130,6 +130,6 @@
     }
 
     @media (min-width: $lg) {
-        width: toRem(875);
+        width: 875px;
     }
 }

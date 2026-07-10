@@ -1,8 +1,8 @@
 @import "../common/_vars";
 
 .hero-block {
-    padding: calc(var(--header-height) + #{toRem(30)}) 0 toRem(30);
-    height: toRem(667);
+    padding: calc(var(--header-height) + #{30px}) 0 30px;
+    height: 667px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -37,7 +37,7 @@
     }
 
     &::after {
-        height: toRem(490);
+        height: 490px;
 
         background: linear-gradient(
             0,
@@ -51,8 +51,8 @@
     }
 
     @media (min-width: $sm) {
-        padding: toRem(110) 0 toRem(75);
-        height: toRem(700);
+        padding: 110px 0 75px;
+        height: 700px;
 
         &::before {
             background: linear-gradient(
@@ -68,7 +68,7 @@
             bottom: 0;
 
             height: 100%;
-            width: toRem(911);
+            width: 911px;
 
             background: linear-gradient(
                 90deg,
@@ -84,11 +84,11 @@
     }
 
     @media (min-width: $lg) {
-        padding: toRem(140) 0 toRem(100);
-        min-height: toRem(900);
+        padding: 140px 0 100px;
+        min-height: 900px;
 
         &::after {
-            width: toRem(1040);
+            width: 1040px;
         }
     }
 }
@@ -134,20 +134,20 @@
     z-index: var(--z-index-main);
 
     height: 100%;
-    max-width: toRem(818);
+    max-width: 818px;
 
     display: flex;
     flex-direction: column;
 
     @media (min-width: $lg) {
-        max-width: toRem(990);
+        max-width: 990px;
     }
 }
 
 @import url("breadcrumbs.scss");
 
 .hero-block__title {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
     em {
         background: var(--accent-color);
@@ -156,26 +156,26 @@
     }
 
     @media (min-width: $md) {
-        margin-bottom: toRem(30);
+        margin-bottom: 30px;
     }
 }
 
 .hero-block__desc {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
     @media (min-width: $md) {
-        max-width: toRem(496);
+        max-width: 496px;
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(583);
+        max-width: 583px;
 
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
 .hero-block__cta.btn-main {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
 
     @media (min-width: $sm) {
         display: none;
@@ -184,30 +184,30 @@
 
 ul.hero-block__items {
     margin-top: auto;
-    max-width: toRem(531);
+    max-width: 531px;
     display: flex;
     flex-wrap: wrap;
-    gap: toRem(4);
+    gap: 4px;
 
     li {
         flex: 1 1 auto;
-        padding: toRem(10) toRem(15);
+        padding: 10px 15px;
         border: 1px solid var(--stroke-light-grey-color);
         border-radius: 1px;
         color: var(--text-light-grey-color);
 
-        font-size: toRem(12);
+        font-size: 12px;
         font-weight: 500;
         text-transform: capitalize;
         text-align: center;
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(708);
-        gap: toRem(8);
+        max-width: 708px;
+        gap: 8px;
 
         li {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }

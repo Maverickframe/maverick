@@ -182,7 +182,7 @@ html.single-blog {
         right: 0;
         height: 4px;
         background: rgba(0, 0, 0, 0.04);
-        z-index: 10000;
+        z-index: var(--z-index-progress);
         pointer-events: none;
     }
     .blog-progress-bar__fill {
@@ -231,7 +231,7 @@ html.single-blog {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.92);
-        z-index: 99999;
+        z-index: var(--z-index-lightbox);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -2580,7 +2580,7 @@ html.single-blog {
             overflow: hidden;
             background: var(--white-color);
             border-radius: 1px;
-            z-index: 1200;
+            z-index: var(--z-index-panel);
             box-sizing: border-box;
             transition: max-height 0.35s ease, bottom 0.35s ease, padding 0.35s ease;
         }
@@ -2599,7 +2599,7 @@ html.single-blog {
             bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1201;
+            z-index: var(--z-index-panel-toggle);
             border-radius: 1px;
             cursor: pointer;
         }

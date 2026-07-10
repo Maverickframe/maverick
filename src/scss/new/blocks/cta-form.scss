@@ -1,15 +1,15 @@
 @import "../common/_vars";
 
 .cta-form-section {
-    --size: #{toRem(32)};
+    --size: #{32px};
 
-    margin: toRem(100) 0;
-    padding: toRem(60) toRem(20);
+    margin: 100px 0;
+    padding: 60px 20px;
     position: relative;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(60);
+    gap: 60px;
 
     border-radius: 1px;
     overflow: hidden;
@@ -33,23 +33,23 @@
     }
 
     @media (min-width: $md) {
-        --size: #{toRem(44)};
+        --size: #{44px};
 
-        margin: toRem(180) 0;
-        padding: toRem(47);
-        padding-left: toRem(80);
+        margin: 180px 0;
+        padding: 47px;
+        padding-left: 80px;
 
         flex-direction: row;
-        gap: toRem(55);
+        gap: 55px;
 
         border-radius: 1px;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
-        padding: toRem(80);
+        margin: 200px 0;
+        padding: 80px;
 
-        gap: toRem(180);
+        gap: 180px;
 
         border-radius: 1px;
     }
@@ -75,38 +75,38 @@
 
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
+    gap: 30px;
 
     h2 {
-        font-size: toRem(22);
+        font-size: 22px;
         font-weight: 400;
 
         @media (min-width: $md) {
-            font-size: toRem(42);
-            max-width: toRem(500);
+            font-size: 42px;
+            max-width: 500px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(58);
-            max-width: toRem(623);
+            font-size: 58px;
+            max-width: 623px;
         }
     }
 }
 
 .cta-form-section__desc {
-    font-size: toRem(14);
+    font-size: 14px;
 
     @media (min-width: $md) {
-        font-size: toRem(16);
-        max-width: toRem(500);
+        font-size: 16px;
+        max-width: 500px;
     }
 
     @media (min-width: $lg) {
-        max-width: toRem(623);
+        max-width: 623px;
     }
 
     ul {
-        margin-left: toRem(20);
+        margin-left: 20px;
         list-style-type: disc;
     }
 
@@ -118,18 +118,18 @@
 
 .cta-form-section__clients {
     display: grid;
-    grid-template-columns: repeat(3, toRem(97));
-    gap: toRem(7);
+    grid-template-columns: repeat(3, 97px);
+    gap: 7px;
 
     @media (min-width: $md) {
         margin-top: auto;
-        grid-template-columns: repeat(4, toRem(130));
-        gap: toRem(10);
+        grid-template-columns: repeat(4, 130px);
+        gap: 10px;
     }
 
     @media (min-width: $lg) {
-        grid-template-columns: repeat(4, toRem(190));
-        gap: toRem(19.5);
+        grid-template-columns: repeat(4, 190px);
+        gap: 19.5px;
     }
 }
 
@@ -137,17 +137,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: toRem(59);
+    height: 59px;
     width: 100%;
 
     border: 0.5px solid var(--stroke-light-grey-color);
 
     @media (min-width: $md) {
-        height: toRem(80);
+        height: 80px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(117);
+        height: 117px;
     }
 
     &:last-child {
@@ -159,45 +159,45 @@
     }
 
     img {
-        max-width: toRem(65);
-        max-height: toRem(45);
+        max-width: 65px;
+        max-height: 45px;
         object-fit: contain;
 
         @media (min-width: $md) {
-            max-width: toRem(86);
-            max-height: toRem(39);
+            max-width: 86px;
+            max-height: 39px;
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(126);
-            max-height: toRem(56);
+            max-width: 126px;
+            max-height: 56px;
         }
     }
 }
 
 .cta-form-section__form {
-    padding: toRem(15);
+    padding: 15px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     background-color: var(--white-color);
     border-radius: 1px;
 
     @media (min-width: $md) {
-        padding: toRem(30);
+        padding: 30px;
 
-        width: toRem(500);
+        width: 500px;
         flex: 0 0 auto;
 
-        gap: toRem(30);
+        gap: 30px;
 
         border-radius: 1px;
     }
 
     @media (min-width: $lg) {
-        width: toRem(562);
+        width: 562px;
     }
 
     &.is-success {
@@ -216,35 +216,35 @@
 }
 
 .cta-form-section__form-title {
-    font-size: toRem(16);
+    font-size: 16px;
     font-weight: 500;
     text-align: center;
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
 .cta-form {
     display: flex;
     flex-direction: column;
-    gap: toRem(8);
+    gap: 8px;
 
     button {
-        margin-top: toRem(12);
+        margin-top: 12px;
     }
 
 
     @media (min-width: $md) {
-        gap: toRem(15);
+        gap: 15px;
 
         button {
-            margin-top: toRem(15);
-            height: toRem(61);
+            margin-top: 15px;
+            height: 61px;
         }
     }
 }
@@ -252,7 +252,7 @@
 .cta-form__input {
     display: flex;
     flex-direction: column;
-    gap: toRem(6);
+    gap: 6px;
 
     &.error {
         .cta-form__error {
@@ -276,11 +276,11 @@
     input,
     textarea {
         width: 100%;
-        height: toRem(44);
-        padding: 0 toRem(16);
+        height: 44px;
+        padding: 0 16px;
 
         background-color: var(--white-color);
-        border: toRem(1) solid var(--stroke-light-grey-color);
+        border: 1px solid var(--stroke-light-grey-color);
         border-radius: 1px;
         transition:
             border-color 0.3s ease,
@@ -288,7 +288,7 @@
 
         color: var(--black-color);
         font-family: inherit;
-        font-size: toRem(12);
+        font-size: 12px;
         line-height: 1.4;
 
         &::placeholder {
@@ -306,26 +306,26 @@
 
         @media (min-width: $md) {
             height: auto;
-            padding: toRem(16);
+            padding: 16px;
 
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
     textarea {
-        padding-top: toRem(13.5);
+        padding-top: 13.5px;
         resize: vertical;
 
 
         @media (min-width: $md) {
-            padding-top: toRem(16);
+            padding-top: 16px;
         }
     }
 }
 
 .cta-form__error {
     display: none;
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
     color: var(--error-red-color);
 }
@@ -333,7 +333,7 @@
 .cta-form__success {
     display: none;
 
-    font-size: toRem(14);
+    font-size: 14px;
     text-align: center;
     color: var(--text-grey-color);
 
@@ -354,12 +354,12 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .cta-form__privacy {
-    font-size: toRem(10);
+    font-size: 10px;
     font-weight: 500;
     text-align: center;
     color: var(--text-grey-color);
@@ -370,8 +370,8 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(14);
-        max-width: toRem(350);
+        font-size: 14px;
+        max-width: 350px;
         margin: 0 auto;
     }
 }

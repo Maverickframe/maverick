@@ -1,23 +1,23 @@
 @import "../common/vars";
 
 .gallery-items {
-    padding-bottom: toRem(100);
+    padding-bottom: 100px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
     @media (min-width: $md) {
-        padding-bottom: toRem(180);
+        padding-bottom: 180px;
 
         flex-direction: row;
-        gap: toRem(32);
+        gap: 32px;
     }
 
     @media (min-width: $lg) {
-        padding-bottom: toRem(200);
+        padding-bottom: 200px;
 
-        gap: toRem(30);
+        gap: 30px;
     }
 }
 
@@ -30,15 +30,15 @@
 .gallery-items__select-mob {
     position: sticky;
     top: var(--header-height);
-    padding: toRem(20) 0;
+    padding: 20px 0;
 
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: toRem(4);
+    gap: 4px;
     width: 100%;
 
-    font-size: toRem(14);
+    font-size: 14px;
     font-family: inherit;
     color: var(--black-color);
     background-color: var(--white-color);
@@ -46,8 +46,8 @@
     &::after {
         content: "";
         flex: 0 0 auto;
-        width: toRem(24);
-        height: toRem(24);
+        width: 24px;
+        height: 24px;
 
         background: url("/img/icons/arrow-down-menu-black.svg") no-repeat center / contain;
     }
@@ -81,33 +81,33 @@
 
     @media (min-width: $md) {
         position: sticky;
-        top: calc(#{toRem(20)} + var(--header-height));
+        top: calc(#{20px} + var(--header-height));
 
         display: flex;
         flex-direction: column;
-        gap: toRem(15);
-        flex: 0 0 toRem(182);
+        gap: 15px;
+        flex: 0 0 182px;
 
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: calc(100vh - #{toRem(20)} - var(--header-height));
+        max-height: calc(100vh - #{20px} - var(--header-height));
     }
 
     @media (min-width: $lg) {
-        flex: 0 0 toRem(262);
+        flex: 0 0 262px;
     }
 }
 
 .gallery-items__tabs li button {
     @include btn;
 
-    padding-bottom: toRem(10);
+    padding-bottom: 10px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    font-size: toRem(18);
+    font-size: 18px;
     color: var(--text-grey-color);
     text-align: left;
     border-bottom: 1px solid transparent;
@@ -120,13 +120,13 @@
     }
 
     &.has-sub {
-        padding-bottom: toRem(4);
+        padding-bottom: 4px;
 
         &::after {
             content: "";
             flex: 0 0 auto;
-            width: toRem(24);
-            height: toRem(24);
+            width: 24px;
+            height: 24px;
 
             background: url("/img/icons/arrow-down-menu-grey.svg") no-repeat center / contain;
             transition: transform 0.3s ease;
@@ -148,14 +148,14 @@
 
 .gallery-items__tabs li ul {
     display: none;
-    margin-bottom: toRem(15);
-    padding: toRem(16);
+    margin-bottom: 15px;
+    padding: 16px;
 
     background-color: var(--fill-grey-color);
     border-radius: 1px;
 
     button {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
@@ -171,15 +171,15 @@
     & > ul {
         display: flex;
         flex-direction: column;
-        gap: toRem(15);
+        gap: 15px;
     }
 }
 
 .gallery-items__items {
-    scroll-margin: calc(var(--header-height) + #{toRem(30)});
+    scroll-margin: calc(var(--header-height) + #{30px});
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: toRem(4);
+    gap: 4px;
 
     &:not(.active) {
         display: none;
@@ -187,7 +187,7 @@
 
     @media (min-width: $md) {
         grid-template-columns: repeat(6, 1fr);
-        gap: toRem(10);
+        gap: 10px;
     }
 }
 
@@ -196,18 +196,18 @@
     overflow: hidden;
 
     position: relative;
-    max-height: toRem(480);
+    max-height: 480px;
 
     &.is-video {
         &::after {
             content: "";
             flex: 0 0 auto;
-            width: toRem(24);
-            height: toRem(24);
+            width: 24px;
+            height: 24px;
 
             position: absolute;
-            right: toRem(20);
-            top: toRem(20);
+            right: 20px;
+            top: 20px;
 
             background: url("/img/icons/gallery-video.svg") no-repeat center / contain;
             pointer-events: nono;
@@ -225,7 +225,7 @@
         // the grid row height so they line up with taller image neighbours; the
         // player covers the cell. min-height floors the rare alone-in-a-row case.
         align-self: stretch;
-        min-height: toRem(200);
+        min-height: 200px;
 
         & > div {
             height: 100%;
@@ -239,7 +239,7 @@
     }
 
     @media (min-width: $md) {
-        max-height: toRem(575);
+        max-height: 575px;
 
         &.col-1-3 {
             grid-column: span 2;
@@ -258,15 +258,15 @@
         }
 
         &.is-video::after {
-            width: toRem(44);
-            height: toRem(44);
-            right: toRem(30);
-            top: toRem(30);
+            width: 44px;
+            height: 44px;
+            right: 30px;
+            top: 30px;
         }
     }
 
     @media (min-width: $lg) {
-        max-height: toRem(804);
+        max-height: 804px;
         border-radius: 1px;
     }
 
@@ -292,11 +292,11 @@
 
     color: var(--white-color);
     backdrop-filter: blur(2.5px);
-    padding: toRem(9) toRem(8);
+    padding: 9px 8px;
 
     @media (min-width: $md) {
         background: rgba(0, 0, 0, 0.5);
-        padding: toRem(30);
+        padding: 30px;
 
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -313,18 +313,18 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
 
         &:not(&_header) {
             display: flex;
         }
 
         &:nth-child(2) {
-            margin-top: toRem(15);
+            margin-top: 15px;
         }
 
         &:nth-child(3) {
-            margin-top: toRem(4);
+            margin-top: 4px;
         }
 
         span {
@@ -335,9 +335,9 @@
 
 .gallery-item__overlay-title {
     font-weight: 500;
-    font-size: toRem(16);
+    font-size: 16px;
 
     @media (min-width: $md) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }

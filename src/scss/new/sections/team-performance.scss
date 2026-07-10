@@ -1,19 +1,19 @@
 @import "../common/vars";
 
 .team-performance {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .team-performance__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
 
     text-align: center;
 
@@ -22,13 +22,13 @@
     }
 
     @media (min-width: $md) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
     }
 }
 
 .team-performance__items {
     display: grid;
-    gap: toRem(30);
+    gap: 30px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(3, 1fr);
@@ -37,11 +37,11 @@
 }
 
 .team-perf-item {
-    padding-bottom: toRem(30);
+    padding-bottom: 30px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     text-align: center;
 
@@ -50,8 +50,8 @@
     }
 
     @media (min-width: $md) {
-        padding-bottom: toRem(25);
-        gap: toRem(30);
+        padding-bottom: 25px;
+        gap: 30px;
 
         &:not(:last-child) {
             border-bottom: 0;
@@ -61,7 +61,7 @@
 }
 
 .team-perf-item__num {
-    font-size: toRem(80);
+    font-size: 80px;
     font-weight: 500;
 
     span {
@@ -69,12 +69,12 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(100);
+        font-size: 100px;
     }
 }
 
 .team-perf-item__desc {
     @media (min-width: $md) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }

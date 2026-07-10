@@ -1,39 +1,39 @@
 @import "../common/_vars";
 
 .key-visuals {
-    margin: toRem(100) 0;
-    padding: toRem(40) 0;
+    margin: 100px 0;
+    padding: 40px 0;
 
     background: var(--fill-grey-color);
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
-        padding: toRem(100) 0;
+        margin: 180px 0;
+        padding: 100px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .key-visuals__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
 }
 
 .key-visuals__rows {
     display: flex;
     flex-direction: column;
-    gap: toRem(40);
+    gap: 40px;
 
     @media (min-width: $md) {
-        gap: toRem(30);
+        gap: 30px;
     }
 }
 
 .key-visuals__row {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     &:nth-child(2n - 1) {
         .key-visuals__row-header {
@@ -48,47 +48,47 @@
     justify-content: space-between;
 
     span {
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
     }
 
     h3 {
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
     }
 
     @media (min-width: $md) {
         h3 {
-            font-size: toRem(24);
+            font-size: 24px;
         }
     }
 
     @media (min-width: $lg) {
         span {
-            font-size: toRem(16);
+            font-size: 16px;
         }
 
         h3 {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 }
 
 .key-visuals__items {
     display: flex;
-    gap: toRem(15);
+    gap: 15px;
 
     &:not(.has-featured) {
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         width: calc(100% + var(--padding));
-        padding-right: toRem(15);
+        padding-right: 15px;
     }
 
     &.has-featured {
         flex-direction: column;
-        gap: toRem(30);
+        gap: 30px;
     }
 
     @media (min-width: $md) {
@@ -98,7 +98,7 @@
             overflow: initial;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: toRem(30);
+            gap: 30px;
             width: 100%;
             padding-right: 0;
         }
@@ -110,25 +110,25 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     width: calc(100% + var(--padding));
-    padding-right: toRem(15);
+    padding-right: 15px;
     display: flex;
-    gap: toRem(15);
+    gap: 15px;
 
     @media (min-width: $md) {
         overflow: initial;
         padding-right: 0;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: toRem(30);
+        gap: 30px;
         width: 100%;
     }
 }
 
 .key-visuals-item {
     border-radius: 1px;
-    border: toRem(1) solid var(--stroke-light-grey-color);
+    border: 1px solid var(--stroke-light-grey-color);
 
-    padding: toRem(20);
+    padding: 20px;
 
     &.is-featured {
         display: flex;
@@ -145,7 +145,7 @@
             border-radius: 1px;
             margin-bottom: 0;
 
-            height: toRem(400);
+            height: 400px;
             width: 100%;
         }
 
@@ -162,13 +162,13 @@
 
             .key-visuals-item__img {
                 border-radius: 1px;
-                height: toRem(451);
+                height: 451px;
             }
         }
 
         @media (min-width: $lg) {
             .key-visuals-item__img {
-                height: toRem(532);
+                height: 532px;
             }
         }
     }
@@ -210,32 +210,32 @@
 
 .key-visuals-item__title {
     font-weight: 500;
-    font-size: toRem(16);
+    font-size: 16px;
 
     @media (min-width: $md) {
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 }
 
 .key-visuals-item__desc {
-    margin-top: toRem(15);
+    margin-top: 15px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .key-visuals-item__img {
-    margin-bottom: toRem(20);
-    width: toRem(216);
-    height: toRem(162);
+    margin-bottom: 20px;
+    width: 216px;
+    height: 162px;
 
     background-color: var(--black-color);
     overflow: hidden;
@@ -257,11 +257,11 @@
 
     @media (min-width: $md) {
         width: 100%;
-        height: toRem(240);
+        height: 240px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(30);
-        height: toRem(295);
+        margin-bottom: 30px;
+        height: 295px;
     }
 }

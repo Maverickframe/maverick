@@ -1,8 +1,8 @@
 @import "_vars";
 
 .case-item {
-    padding-bottom: toRem(20);
-    border-bottom: toRem(1) solid var(--stroke-light-grey-color);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--stroke-light-grey-color);
 
     &:hover {
         .case-item__hover {
@@ -11,7 +11,7 @@
     }
 
     @media (min-width: $md) {
-        padding-bottom: toRem(30);
+        padding-bottom: 30px;
     }
 
     &.--blog,
@@ -61,17 +61,17 @@
 .case-item__link {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
     height: 100%;
 
     @media (min-width: $lg) {
-        gap: toRem(30);
+        gap: 30px;
     }
 }
 
 .case-item__img {
     width: 100%;
-    height: toRem(187);
+    height: 187px;
     display: block;
     position: relative;
 
@@ -83,11 +83,11 @@
     }
 
     @media (min-width: $md) {
-        height: toRem(213.2);
+        height: 213.2px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(300);
+        height: 300px;
     }
 }
 
@@ -103,59 +103,59 @@
     opacity: 0;
     transition: opacity 0.3s ease;
 
-    padding: toRem(16);
+    padding: 16px;
     display: flex;
     align-items: flex-end;
 
     color: var(--white-color);
-    font-size: toRem(18);
+    font-size: 18px;
     font-weight: 500;
 
     @media (min-width: $md) {
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 }
 
 .case-item__info {
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
     flex-grow: 1;
 }
 
 .case-item__tags {
     display: flex;
-    gap: toRem(10);
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .case-item__tag {
-    padding: toRem(8) toRem(16);
+    padding: 8px 16px;
 
-    border-radius: toRem(100);
+    border-radius: 100px;
     color: var(--purple-color-dark);
     background-color: var(--purple-color);
 
-    font-size: toRem(10);
+    font-size: 10px;
     text-transform: uppercase;
     white-space: nowrap;
 }
 
 .case-item__date {
-    font-size: toRem(14);
+    font-size: 14px;
     color: #585858;
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .case-item__title {
-    font-size: toRem(24);
+    font-size: 24px;
 
     em {
         background-color: var(--accent-color);
@@ -164,12 +164,12 @@
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
 .case-item__excerpt {
-    font-size: toRem(16);
+    font-size: 16px;
     color: var(--text-grey-color);
 
     // flex-grow: 1;
@@ -178,7 +178,7 @@
 .case-item__footer {
     display: flex;
     align-items: end;
-    gap: toRem(12);
+    gap: 12px;
 
     margin-top: auto;
 }
@@ -186,20 +186,20 @@
 .case-item__arrow {
     color: var(--accent-color);
     font-weight: 500;
-    font-size: toRem(14);
+    font-size: 14px;
     white-space: nowrap;
     margin-left: auto;
 
     display: inline-flex;
     align-items: center;
-    gap: toRem(5);
+    gap: 5px;
 
     margin-top: auto; // pin arrow to the bottom so it aligns across equal-height cards
 
     // align-self: flex-end;
 
-    // width: toRem(24);
-    // height: toRem(24);
+    // width: 24px;
+    // height: 24px;
 
     svg {
         width: 100%;

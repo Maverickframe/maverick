@@ -1,31 +1,31 @@
 @import "../common/_vars";
 
 .client-context {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     .container {
         display: flex;
         flex-direction: column;
-        gap: toRem(40);
+        gap: 40px;
     }
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
 
         .container {
             flex-direction: row-reverse;
-            gap: toRem(30);
+            gap: 30px;
         }
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .client-context__info {
     h2 {
-        margin-bottom: toRem(20);
+        margin-bottom: 20px;
     }
 
     .p1 {
@@ -37,16 +37,16 @@
     }
 
     @media (min-width: $md) {
-        flex: 0 0 calc(50% - #{toRem(15)});
+        flex: 0 0 calc(50% - #{15px});
 
         h2 {
-            margin-bottom: toRem(40);
+            margin-bottom: 40px;
         }
     }
 
     @media (min-width: $lg) {
         h2 {
-            margin-bottom: toRem(60);
+            margin-bottom: 60px;
         }
     }
 }
@@ -54,12 +54,12 @@
 .client-context__images {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     img {
         display: block;
         width: 100%;
-        height: toRem(425);
+        height: 425px;
 
         object-fit: cover;
         object-position: center;
@@ -71,7 +71,7 @@
         flex: 1 1 auto;
         flex-direction: row;
         align-items: flex-start;
-        gap: toRem(30);
+        gap: 30px;
 
         img {
             height: 100%;
@@ -83,11 +83,11 @@
         & > picture {
             border-radius: 1px;
             overflow: hidden;
-            height: toRem(355);
-            width: toRem(288);
+            height: 355px;
+            width: 288px;
 
             &:first-child {
-                margin-top: toRem(80);
+                margin-top: 80px;
             }
 
             &:hover {
@@ -100,11 +100,11 @@
 
     @media (min-width: $lg) {
         & > picture {
-            height: toRem(501);
-            width: toRem(407);
+            height: 501px;
+            width: 407px;
 
             &:first-child {
-                margin-top: toRem(90);
+                margin-top: 90px;
             }
         }
     }

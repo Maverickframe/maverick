@@ -40,10 +40,10 @@
     --grey-550-color: #5f5e5a;
     --grey-500-color: #888;
 
-    --container: #{toRem(1240)};
-    --container-small: #{toRem(1140)};
-    --header-height: #{toRem(64)};
-    --padding: #{toRem(15)};
+    --container: #{1240px};
+    --container-small: #{1140px};
+    --header-height: #{64px};
+    --padding: #{15px};
 
     --radius: 14px;
     --radius-sm: 4px;
@@ -59,16 +59,21 @@
     --z-index-menu: 100;
     --z-index-blur: 999;
     --z-index-modal: 1000;
+    --z-index-dropdown: 20; // absolute field/lang popovers (country, footer-lang)
+    --z-index-panel: 1010; // mobile fixed bottom-sheet (blog TOC)
+    --z-index-panel-toggle: 1011; // its toggle, one above the panel
+    --z-index-progress: 1020; // fixed reading-progress bar
+    --z-index-lightbox: 1030; // fullscreen image lightbox (top)
 
-    --scroll-width: #{toRem(4)};
+    --scroll-width: #{4px};
 
     @media (min-width: $md) {
-        --header-height: #{toRem(70)};
+        --header-height: #{70px};
     }
 
     @media (min-width: $lg) {
-        --container: #{toRem(1720)};
-        --container-small: #{toRem(1440)};
+        --container: #{1720px};
+        --container-small: #{1440px};
     }
 }
 
@@ -139,7 +144,7 @@ body {
     flex: 0 0 auto;
 
     &-socials {
-        padding-top: toRem(15);
+        padding-top: 15px;
 
         @media (min-width: $md) {
             padding-top: 0;
@@ -171,7 +176,7 @@ body {
 
 .inner-page {
     margin-top: var(--header-height);
-    padding-top: toRem(8);
+    padding-top: 8px;
 }
 
 img {
@@ -199,59 +204,59 @@ p {
 
 h1,
 .h1 {
-    font-size: toRem(28);
+    font-size: 28px;
     font-weight: 400;
     line-height: 1.2;
 
     @media (min-width: $md) {
-        font-size: toRem(50);
+        font-size: 50px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(60);
+        font-size: 60px;
     }
 }
 
 h2,
 .h2 {
-    font-size: toRem(22);
+    font-size: 22px;
     font-weight: 500;
     line-height: 1.4;
 
     @media (min-width: $md) {
-        font-size: toRem(40);
+        font-size: 40px;
         font-weight: 500;
         line-height: 1.2;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(48);
+        font-size: 48px;
     }
 }
 
 h3,
 .h3 {
-    font-size: toRem(18);
+    font-size: 18px;
     font-weight: 500;
     line-height: 1.4;
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
 h4,
 .h4 {
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.4;
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
         font-weight: 500;
     }
 }
@@ -260,28 +265,28 @@ h5,
 h6,
 .h5,
 .h6 {
-    font-size: toRem(12);
+    font-size: 12px;
     font-weight: 400;
     line-height: 1.4;
 
     @media (min-width: $md) {
-        font-size: toRem(14);
+        font-size: 14px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .section-subtitle {
-    margin-bottom: toRem(15);
+    margin-bottom: 15px;
 
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: toRem(8);
+    gap: 8px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 400;
     color: var(--accent-color);
 
@@ -292,10 +297,10 @@ h6,
     &::before {
         content: '';
 
-        margin-left: toRem(8);
+        margin-left: 8px;
         display: block;
-        width: toRem(8);
-        height: toRem(8);
+        width: 8px;
+        height: 8px;
         flex: 0 0 auto;
 
         background: currentColor;
@@ -304,15 +309,15 @@ h6,
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .p1 {
-    font-size: toRem(16);
+    font-size: 16px;
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
@@ -359,7 +364,7 @@ button {
 .blur-overlay {
     position: fixed;
     inset: 0;
-    backdrop-filter: blur(toRem(5));
+    backdrop-filter: blur(5px);
     background: rgba(0, 0, 0, 0.1);
     z-index: var(--z-index-blur);
     pointer-events: none;
@@ -551,11 +556,11 @@ button {
 .author {
     display: inline-flex;
     align-items: center;
-    gap: toRem(12);
+    gap: 12px;
 
     &__avatar {
-        width: toRem(42);
-        height: toRem(42);
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         background: linear-gradient(135deg, #d7dbff, #f2f4ff);
         border: 1px solid var(--line);
@@ -566,19 +571,19 @@ button {
         flex-direction: column;
     }
     &__name {
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
     &__text {
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
 
         @media (min-width: $lg) {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }

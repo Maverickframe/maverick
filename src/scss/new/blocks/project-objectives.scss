@@ -1,27 +1,27 @@
 @import "../common/_vars";
 
 .project-objectives {
-    margin: toRem(100) 0 toRem(90);
+    margin: 100px 0 90px;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
     }
 }
 
 .project-objectives__info {
-    margin-bottom: toRem(30);
+    margin-bottom: 30px;
 
     @media (min-width: $md) {
-        margin-bottom: toRem(40);
+        margin-bottom: 40px;
         text-align: center;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
+        margin-bottom: 60px;
     }
 }
 
@@ -29,25 +29,25 @@ ul.project-objectives__items {
     overflow-y: hidden;
     overflow-x: auto;
     width: calc(100% + var(--padding));
-    padding: toRem(10) 0;
+    padding: 10px 0;
 
     display: grid;
-    --size: #{toRem(288)};
+    --size: #{288px};
     grid-template-columns: repeat(4, var(--size));
-    gap: toRem(15);
+    gap: 15px;
 
     counter-reset: project-objectives-items;
 
     @media (min-width: $md) {
         overflow: initial;
         padding: 0;
-        gap: toRem(30);
+        gap: 30px;
         --size: 1fr;
     }
 
     li {
-        min-height: toRem(355);
-        padding: toRem(20);
+        min-height: 355px;
+        padding: 20px;
         border-radius: 1px;
 
         position: relative;
@@ -65,7 +65,7 @@ ul.project-objectives__items {
 
             display: block;
 
-            font-size: toRem(80);
+            font-size: 80px;
             line-height: 1.4;
             color: var(--text-light-grey-color);
         }
@@ -84,8 +84,8 @@ ul.project-objectives__items {
         }
 
         &:nth-child(3) {
-            border: toRem(1) solid var(--stroke-light-grey-color);
-            --size: #{toRem(20)};
+            border: 1px solid var(--stroke-light-grey-color);
+            --size: #{20px};
 
             &::after {
                 content: "";
@@ -114,30 +114,30 @@ ul.project-objectives__items {
         }
 
         @media (min-width: $md) {
-            font-size: toRem(20);
+            font-size: 20px;
 
-            flex: 0 1 calc(25% - #{toRem(90)} / 4);
+            flex: 0 1 calc(25% - #{90px} / 4);
 
             &::before {
-                font-size: toRem(80);
+                font-size: 80px;
             }
 
             p {
-                max-width: toRem(248);
+                max-width: 248px;
             }
         }
 
         @media (min-width: $lg) {
-            min-height: toRem(501);
-            font-size: toRem(24);
+            min-height: 501px;
+            font-size: 24px;
             border-radius: 1px;
 
             &::before {
-                font-size: toRem(100);
+                font-size: 100px;
             }
 
             p {
-                max-width: toRem(367);
+                max-width: 367px;
             }
         }
     }

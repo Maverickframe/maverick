@@ -26,7 +26,7 @@
     max-width: 100%;
     margin: 0 auto;
 
-    border-radius: toRem(1);
+    border-radius: 1px;
     overflow: hidden;
 
     position: relative;
@@ -37,11 +37,11 @@
     @include btn;
 
     position: absolute;
-    top: toRem(16);
-    right: toRem(16);
+    top: 16px;
+    right: 16px;
 
-    width: toRem(24);
-    height: toRem(24);
+    width: 24px;
+    height: 24px;
 
     svg {
         display: block;
@@ -54,12 +54,12 @@
     }
 
     @media (min-width: $md) {
-        top: toRem(20.5);
-        right: toRem(30);
+        top: 20.5px;
+        right: 30px;
     }
 
     @media (min-width: $lg) {
-        top: toRem(30);
+        top: 30px;
     }
 }
 
@@ -68,24 +68,24 @@
 }
 
 .modal__desc {
-    font-size: toRem(14);
+    font-size: 14px;
     text-align: center;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
 .modal__btns {
     display: flex;
     flex-wrap: wrap;
-    gap: toRem(15);
-    max-width: toRem(379);
+    gap: 15px;
+    max-width: 379px;
 }
 
 .modal.is-success {
@@ -105,7 +105,7 @@
 .modal__success {
     display: none;
 
-    font-size: toRem(14);
+    font-size: 14px;
     text-align: center;
     color: var(--text-grey-color);
 
@@ -126,20 +126,20 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .modal-form {
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 }
 
 .modal-form__input {
     display: flex;
     flex-direction: column;
-    gap: toRem(6);
+    gap: 6px;
 
     &.error {
         .modal-form__error {
@@ -162,19 +162,19 @@
 
     input {
         width: 100%;
-        height: toRem(54);
-        padding: toRem(16);
+        height: 54px;
+        padding: 16px;
 
         background-color: var(--white-color);
-        border: toRem(1) solid var(--stroke-light-grey-color);
-        border-radius: toRem(1);
+        border: 1px solid var(--stroke-light-grey-color);
+        border-radius: 1px;
         transition:
             border-color 0.3s ease,
             color 0.3s ease;
 
         color: var(--black-color);
         font-family: inherit;
-        font-size: toRem(16);
+        font-size: 16px;
         line-height: 1.4;
 
         &::placeholder {
@@ -194,13 +194,13 @@
 
 .modal-form__error {
     display: none;
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
     color: var(--error-red-color);
 }
 
 .modal-form__label {
-    font-size: toRem(16);
+    font-size: 16px;
     line-height: 1.4;
     color: var(--text-grey-color);
 }
@@ -224,7 +224,7 @@
         display: block;
         flex: 0 0 auto;
 
-        width: toRem(712);
+        width: 712px;
 
         img {
             display: block;
@@ -232,37 +232,37 @@
             height: 100%;
             object-fit: cover;
 
-            border-radius: toRem(1) 0 0 toRem(1);
+            border-radius: 1px 0 0 1px;
         }
     }
 
     @media (min-width: $lg) {
-        width: toRem(1000);
+        width: 1000px;
     }
 }
 
 .modal-download__main {
-    padding: toRem(20);
+    padding: 20px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
+    gap: 30px;
 
-    max-width: toRem(345);
+    max-width: 345px;
     width: 100%;
 
     background: var(--white-color);
-    border-radius: toRem(1);
+    border-radius: 1px;
 
     @media (min-width: $md) {
-        padding: toRem(40);
-        max-width: toRem(478);
-        margin-left: toRem(-5);
+        padding: 40px;
+        max-width: 478px;
+        margin-left: -5px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(60);
-        max-width: toRem(620);
+        padding: 60px;
+        max-width: 620px;
     }
 }
 
@@ -283,34 +283,34 @@
 
     .modal__inner {
         background-color: var(--white-color);
-        padding: toRem(20);
-        max-width: toRem(345);
+        padding: 20px;
+        max-width: 345px;
         width: 100%;
 
         display: flex;
         flex-direction: column;
-        gap: toRem(20);
+        gap: 20px;
 
         @media (min-width: $md) {
-            max-width: toRem(1222);
-            padding: toRem(60);
+            max-width: 1222px;
+            padding: 60px;
             flex-direction: row;
-            gap: toRem(40);
+            gap: 40px;
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(1242);
-            gap: toRem(60);
+            max-width: 1242px;
+            gap: 60px;
         }
     }
 
     .modal__close {
-        top: toRem(10);
-        right: toRem(10);
+        top: 10px;
+        right: 10px;
 
         @media (min-width: $md) {
-            top: toRem(30);
-            right: toRem(30);
+            top: 30px;
+            right: 30px;
         }
     }
 }
@@ -318,24 +318,24 @@
 .modal-book__main {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     @media (min-width: $md) {
-        max-width: toRem(500);
-        gap: toRem(40);
+        max-width: 500px;
+        gap: 40px;
     }
 
     @media (min-width: $lg) {
-        gap: toRem(60);
+        gap: 60px;
     }
 
     .modal__title {
         text-align: left;
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 
@@ -344,28 +344,28 @@
 
         & > p > strong {
             display: inline-block;
-            margin-bottom: toRem(20);
+            margin-bottom: 20px;
 
-            font-size: toRem(18);
+            font-size: 18px;
             font-weight: 500;
             color: var(--black-color);
 
             @media (min-width: $md) {
-                font-size: toRem(20);
+                font-size: 20px;
             }
 
             @media (min-width: $lg) {
-                font-size: toRem(24);
+                font-size: 24px;
             }
         }
 
         ul {
-            font-size: toRem(12);
+            font-size: 12px;
             list-style: disc;
-            padding-left: toRem(20);
+            padding-left: 20px;
 
             @media (min-width: $md) {
-                font-size: toRem(16);
+                font-size: 16px;
             }
         }
     }
@@ -377,39 +377,39 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    border-radius: toRem(1);
+    border-radius: 1px;
     color: var(--white-color);
 
-    padding: toRem(15);
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: toRem(10);
+    gap: 10px;
 
     @media (min-width: $md) {
         background-image: url("/img/common/modal-book/looper.svg");
 
-        padding: toRem(30);
-        width: toRem(562);
+        padding: 30px;
+        width: 562px;
         flex: 0 0 auto;
-        gap: toRem(30);
+        gap: 30px;
     }
 
     &-title {
         text-align: center;
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(24);
+            font-size: 24px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 
     &-privacy {
-        font-size: toRem(10);
+        font-size: 10px;
         font-weight: 500;
         text-align: center;
         color: var(--text-light-grey-color);
@@ -420,17 +420,17 @@
         }
 
         @media (min-width: $md) {
-            font-size: toRem(14);
-            max-width: toRem(350);
+            font-size: 14px;
+            max-width: 350px;
             margin: 0 auto;
         }
     }
 
     .modal-form {
-        gap: toRem(8);
+        gap: 8px;
 
         @media (min-width: $md) {
-            gap: toRem(15);
+            gap: 15px;
         }
 
         .modal-form__input {
@@ -446,12 +446,12 @@
             }
 
             input {
-                height: toRem(44);
+                height: 44px;
                 background: rgba(255, 255, 255, 0.01);
                 border: 1px solid var(--stroke-light-grey-color);
                 backdrop-filter: blur(2.5px);
 
-                font-size: toRem(12);
+                font-size: 12px;
                 color: var(--white-color);
 
                 &::placeholder {
@@ -459,18 +459,18 @@
                 }
 
                 @media (min-width: $md) {
-                    height: toRem(54);
-                    font-size: toRem(16);
+                    height: 54px;
+                    font-size: 16px;
                 }
             }
         }
 
         .btn-cta {
-            margin-top: toRem(2);
+            margin-top: 2px;
 
             @media (min-width: $md) {
-                margin-top: toRem(15);
-                line-height: toRem(61);
+                margin-top: 15px;
+                line-height: 61px;
             }
         }
     }
@@ -482,14 +482,14 @@
 
 .modal-design-services {
     .modal__inner {
-        margin: toRem(121) 0 0;
+        margin: 121px 0 0;
         overflow-y: auto;
         height: 100%;
         width: 100%;
-        padding: toRem(54) toRem(15) toRem(140);
+        padding: 54px 15px 140px;
 
         background: var(--white-color);
-        border-radius: toRem(8) toRem(8) 0px 0px;
+        border-radius: 8px 8px 0px 0px;
 
         position: relative;
 
@@ -497,10 +497,10 @@
             content: "";
 
             position: absolute;
-            width: toRem(40);
-            height: toRem(4);
+            width: 40px;
+            height: 4px;
             left: 50%;
-            top: toRem(8);
+            top: 8px;
 
             transform: translateX(-50%);
 
@@ -516,7 +516,7 @@
             right: 0;
             bottom: 0;
             width: 100%;
-            height: toRem(87);
+            height: 87px;
 
             background: linear-gradient(0deg, var(--white-color) 16.35%, rgba(255, 255, 255, 0) 100%);
         }
@@ -524,14 +524,14 @@
         @media (min-width: $md) {
             overflow: hidden;
             margin: 0 auto;
-            max-width: toRem(1030);
-            max-height: toRem(641);
+            max-width: 1030px;
+            max-height: 641px;
             height: auto;
-            padding: toRem(40) 0;
+            padding: 40px 0;
             display: flex;
             flex-direction: column;
 
-            border-radius: toRem(8);
+            border-radius: 8px;
 
             &::before,
             &::after {
@@ -540,28 +540,28 @@
         }
 
         @media (min-width: $lg) {
-            max-width: toRem(1440);
-            max-height: toRem(919);
-            padding: toRem(60) toRem(10);
+            max-width: 1440px;
+            max-height: 919px;
+            padding: 60px 10px;
         }
     }
 
     .modal__close {
-        top: toRem(40);
-        right: toRem(40);
+        top: 40px;
+        right: 40px;
     }
 
     .modal__title {
         text-align: left;
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(24);
+            font-size: 24px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(32);
+            font-size: 32px;
         }
     }
 
@@ -575,7 +575,7 @@
 
     display: flex;
     flex-direction: column;
-    gap: toRem(40);
+    gap: 40px;
 
     @media (min-width: $md) {
         flex: 1 1 auto;
@@ -584,98 +584,98 @@
         height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
-        gap: toRem(40) toRem(80);
+        gap: 40px 80px;
     }
 
     @media (min-width: $lg) {
-        gap: toRem(60) toRem(80);
+        gap: 60px 80px;
     }
 }
 
 .modal-design-services__main-info {
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     @media (min-width: $md) {
-        padding-left: toRem(40);
-        max-width: toRem(423);
+        padding-left: 40px;
+        max-width: 423px;
         flex: 0 0 auto;
-        gap: toRem(20);
+        gap: 20px;
 
         .btn-main {
-            width: toRem(182);
+            width: 182px;
         }
     }
 
     @media (min-width: $lg) {
-        padding-left: toRem(50);
-        max-width: toRem(645);
-        gap: toRem(30);
+        padding-left: 50px;
+        max-width: 645px;
+        gap: 30px;
     }
 }
 
 .modal-design-services__how {
-    margin: toRem(12) 0;
+    margin: 12px 0;
     display: flex;
     flex-direction: column;
-    gap: toRem(20);
+    gap: 20px;
 
     @media (min-width: $md) {
         flex: 0 0 auto;
-        gap: toRem(20);
-        max-width: toRem(423);
+        gap: 20px;
+        max-width: 423px;
     }
 
     @media (min-width: $lg) {
-        gap: toRem(30);
-        max-width: toRem(431);
+        gap: 30px;
+        max-width: 431px;
     }
 }
 
 .modal-design-services__how-title {
-    font-size: toRem(16);
+    font-size: 16px;
     font-weight: 500;
 
     @media (min-width: $md) {
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 }
 
 .modal-design-services__how-items {
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     li {
         display: flex;
         align-items: flex-start;
-        gap: toRem(8);
+        gap: 8px;
 
-        font-size: toRem(14);
+        font-size: 14px;
 
         &::before {
             content: "";
 
             background: url("/img/icons/checkbox.svg") no-repeat center / contain;
 
-            width: toRem(24);
-            height: toRem(24);
+            width: 24px;
+            height: 24px;
             flex: 0 0 auto;
 
-            margin-top: toRem(-2);
+            margin-top: -2px;
         }
 
         @media (min-width: $md) {
-            font-size: toRem(16);
+            font-size: 16px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }
@@ -685,10 +685,10 @@
     overflow-x: auto;
 
     display: flex;
-    gap: toRem(10);
+    gap: 10px;
 
     @media (min-width: $md) {
-        --products-height-cap: #{toRem(280)};
+        --products-height-cap: #{280px};
         flex: 1 1 auto;
         min-height: 0;
         width: 100%;
@@ -699,7 +699,7 @@
     }
 
     @media (min-width: $lg) {
-        --products-height-cap: #{toRem(445)};
+        --products-height-cap: #{445px};
     }
 
     // Migrated Splide + AutoScroll → pure-CSS .mfs-marquee. Constrain the marquee to
@@ -718,22 +718,22 @@
     }
 
     .mfs-marquee__item {
-        margin-right: toRem(15);
+        margin-right: 15px;
     }
 }
 
 .modal-design-services__product {
-    border-radius: toRem(2);
+    border-radius: 2px;
     overflow: hidden;
 
     position: relative;
-    height: toRem(400);
+    height: 400px;
     flex: 0 0 auto;
 
     @media (min-width: $md) {
         height: 100%;
         min-height: 0;
-        border-radius: toRem(4);
+        border-radius: 4px;
 
         &:hover {
             img {
@@ -764,12 +764,12 @@
     z-index: 2;
 
     color: var(--white-color);
-    padding: toRem(9) toRem(8);
+    padding: 9px 8px;
 
     @media (min-width: $md) {
         backdrop-filter: blur(2.5px);
         background: rgba(0, 0, 0, 0.5);
-        padding: toRem(30);
+        padding: 30px;
     }
 }
 
@@ -783,18 +783,18 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
 
         &:not(&_header) {
             display: flex;
         }
 
         &:nth-child(2) {
-            margin-top: toRem(15);
+            margin-top: 15px;
         }
 
         &:nth-child(3) {
-            margin-top: toRem(4);
+            margin-top: 4px;
         }
 
         span {
@@ -805,10 +805,10 @@
 
 .modal-design-services__product-overlay-title {
     font-weight: 500;
-    font-size: toRem(16);
+    font-size: 16px;
 
     @media (min-width: $md) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
@@ -820,51 +820,51 @@
     @media (min-width: $md) {
         align-items: flex-start;
         overflow-y: auto;
-        padding-top: toRem(60);
-        padding-bottom: toRem(60);
+        padding-top: 60px;
+        padding-bottom: 60px;
 
         .modal__inner {
-            max-width: toRem(1210);
+            max-width: 1210px;
             margin: 0 auto;
             max-height: none;
             overflow-y: visible;
             overflow-x: hidden;
-            padding: toRem(60);
+            padding: 60px;
 
             background-color: var(--fill-grey-color);
         }
 
         .modal-design-services__main {
-            gap: toRem(60);
+            gap: 60px;
         }
 
         .modal-design-services__main-info {
             padding: 0;
-            max-width: toRem(568);
-            gap: toRem(30);
+            max-width: 568px;
+            gap: 30px;
         }
 
         .modal-design-services__how {
-            max-width: toRem(338);
+            max-width: 338px;
         }
     }
 
     @media (min-width: $lg) {
         .modal__inner {
-            max-width: toRem(1440);
+            max-width: 1440px;
         }
 
         .modal-design-services__main {
-            gap: toRem(60) toRem(80);
+            gap: 60px 80px;
         }
 
         .modal-design-services__main-info {
             padding: 0;
-            max-width: toRem(645);
+            max-width: 645px;
         }
 
         .modal-design-services__how {
-            max-width: toRem(431);
+            max-width: 431px;
         }
     }
 }
@@ -879,11 +879,11 @@
     @media (min-width: $md) {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: toRem(20);
+        gap: 20px;
     }
 
     @media (min-width: $lg) {
-        gap: toRem(30);
+        gap: 30px;
     }
 }
 
@@ -896,23 +896,23 @@
 .modal-what-we-do__stats-slider {
     // Migrated Splide → CSS scroll-snap (.mfs-snap). Progress-bar dots are generated by
     // the helper as .mfs-snap__dot buttons; the active one carries [aria-current].
-    --mfs-snap-gap: #{toRem(15)};
+    --mfs-snap-gap: #{15px};
 
     .mfs-snap__dots {
-        margin-top: toRem(15);
+        margin-top: 15px;
 
         display: flex;
-        gap: toRem(4);
+        gap: 4px;
     }
 
     .mfs-snap__dot {
         @include btn;
 
-        width: toRem(5);
-        height: toRem(5);
+        width: 5px;
+        height: 5px;
         flex: 0 0 auto;
 
-        border-radius: toRem(50);
+        border-radius: 50px;
         background-color: var(--fill-grey-color);
         transition:
             background-color 0.3s ease,
@@ -920,13 +920,13 @@
 
         &[aria-current] {
             background-color: var(--accent-color);
-            width: toRem(24);
+            width: 24px;
         }
     }
 }
 
 .modal-what-we-do__media {
-    height: toRem(385);
+    height: 385px;
     width: 100%;
 
     & > div {
@@ -938,17 +938,17 @@
         display: block;
         width: 100%;
         height: 100%;
-        border-radius: toRem(4);
+        border-radius: 4px;
         object-fit: cover;
     }
 
     @media (min-width: $md) {
         grid-column: span 2;
-        height: toRem(300);
+        height: 300px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(385);
+        height: 385px;
     }
 }
 
@@ -957,24 +957,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: toRem(15);
-    height: toRem(385);
-    padding: toRem(30);
+    gap: 15px;
+    height: 385px;
+    padding: 30px;
 
-    border-radius: toRem(4);
+    border-radius: 4px;
     position: relative;
     overflow: visible;
 
     @media (min-width: $md) {
-        height: toRem(300);
+        height: 300px;
 
-        gap: toRem(8);
+        gap: 8px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(385);
+        height: 385px;
 
-        gap: toRem(15);
+        gap: 15px;
     }
 
     &.num-1 {
@@ -983,9 +983,9 @@
     }
 
     &.num-2 {
-        border: toRem(1) solid var(--stroke-light-grey-color);
+        border: 1px solid var(--stroke-light-grey-color);
         background-color: var(--white-color);
-        --size: #{toRem(20)};
+        --size: #{20px};
 
         &::after {
             content: "";
@@ -1024,7 +1024,7 @@
     }
 
     &-value {
-        font-size: toRem(100);
+        font-size: 100px;
         font-weight: 500;
         text-align: center;
 
@@ -1033,24 +1033,24 @@
         }
 
         @media (min-width: $md) {
-            font-size: toRem(80);
+            font-size: 80px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(100);
+            font-size: 100px;
         }
     }
 
     &-title {
-        font-size: toRem(18);
+        font-size: 18px;
         text-align: center;
 
         @media (min-width: $md) {
-            font-size: toRem(16);
+            font-size: 16px;
         }
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }
@@ -1062,28 +1062,28 @@
 .modal-book-calendar {
     .modal__inner {
         background-color: var(--white-color);
-        padding: toRem(20);
-        max-width: toRem(345);
+        padding: 20px;
+        max-width: 345px;
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: toRem(20);
+        gap: 20px;
 
         @media (min-width: $md) {
-            max-width: toRem(900);
-            padding: toRem(40);
+            max-width: 900px;
+            padding: 40px;
             flex-direction: row;
-            gap: toRem(40);
+            gap: 40px;
         }
     }
 
     .modal__close {
-        top: toRem(10);
-        right: toRem(10);
+        top: 10px;
+        right: 10px;
 
         @media (min-width: $md) {
-            top: toRem(20);
-            right: toRem(20);
+            top: 20px;
+            right: 20px;
         }
     }
 }
@@ -1091,30 +1091,30 @@
 .bookcal__intro {
     display: flex;
     flex-direction: column;
-    gap: toRem(16);
+    gap: 16px;
 
     &[hidden] {
         display: none;
     }
 
     @media (min-width: $md) {
-        max-width: toRem(320);
+        max-width: 320px;
         flex: 0 0 auto;
     }
 
     .modal__title {
         text-align: left;
-        font-size: toRem(18);
+        font-size: 18px;
         font-weight: 500;
 
         @media (min-width: $md) {
-            font-size: toRem(26);
+            font-size: 26px;
         }
     }
 }
 
 .bookcal__intro-lead {
-    font-size: toRem(13);
+    font-size: 13px;
     line-height: 1.5;
     color: var(--text-grey-color);
 }
@@ -1123,52 +1123,52 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: toRem(8);
-    font-size: toRem(13);
+    gap: 8px;
+    font-size: 13px;
     color: var(--black-color);
 
     li {
         position: relative;
-        padding-left: toRem(22);
+        padding-left: 22px;
 
         &::before {
             content: "";
             position: absolute;
             left: 0;
-            top: toRem(6);
-            width: toRem(6);
-            height: toRem(6);
+            top: 6px;
+            width: 6px;
+            height: 6px;
             background: var(--accent-color);
         }
     }
 }
 
 .bookcal__intro-note {
-    font-size: toRem(12);
+    font-size: 12px;
     font-weight: 500;
     color: var(--accent-color);
-    margin-top: toRem(4);
+    margin-top: 4px;
 }
 
 .bookcal__panel {
     background-color: var(--accent-color);
     color: var(--white-color);
-    border-radius: toRem(1);
-    padding: toRem(16);
+    border-radius: 1px;
+    padding: 16px;
     flex: 1;
 
     @media (min-width: $md) {
-        padding: toRem(28);
+        padding: 28px;
     }
 }
 
 .bookcal__heading {
-    font-size: toRem(16);
+    font-size: 16px;
     font-weight: 500;
-    margin-bottom: toRem(14);
+    margin-bottom: 14px;
 
     @media (min-width: $md) {
-        font-size: toRem(20);
+        font-size: 20px;
     }
 }
 
@@ -1176,22 +1176,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: toRem(10);
+    margin-bottom: 10px;
 }
 
 .bookcal__month {
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
 }
 
 .bookcal__nav {
-    width: toRem(28);
-    height: toRem(28);
+    width: 28px;
+    height: 28px;
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: toRem(1);
+    border-radius: 1px;
     color: var(--white-color);
-    font-size: toRem(16);
+    font-size: 16px;
     line-height: 1;
     cursor: pointer;
 }
@@ -1199,26 +1199,26 @@
 .bookcal__weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: toRem(3);
+    gap: 3px;
     text-align: center;
-    font-size: toRem(11);
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: toRem(4);
+    margin-bottom: 4px;
 }
 
 .bookcal__grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: toRem(3);
+    gap: 3px;
 }
 
 .bookcal__day {
-    height: toRem(34);
+    height: 34px;
     border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: toRem(1);
+    border-radius: 1px;
     background: transparent;
     color: var(--white-color);
-    font-size: toRem(13);
+    font-size: 13px;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
 
@@ -1240,28 +1240,28 @@
 }
 
 .bookcal__slots-wrap {
-    margin-top: toRem(16);
+    margin-top: 16px;
 }
 
 .bookcal__slots-label {
-    font-size: toRem(12);
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: toRem(8);
+    margin-bottom: 8px;
 }
 
 .bookcal__slots {
     display: flex;
     flex-wrap: wrap;
-    gap: toRem(6);
+    gap: 6px;
 }
 
 .bookcal__slot {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: toRem(1);
+    border-radius: 1px;
     color: var(--white-color);
-    padding: toRem(8) toRem(12);
-    font-size: toRem(13);
+    padding: 8px 12px;
+    font-size: 13px;
     cursor: pointer;
 
     &.is-selected {
@@ -1283,25 +1283,25 @@
 .bookcal__tzrow {
     display: flex;
     align-items: center;
-    gap: toRem(6);
-    margin-top: toRem(16);
+    gap: 6px;
+    margin-top: 16px;
 }
 
 .bookcal__tz-ico {
     font-style: normal;
-    font-size: toRem(14);
+    font-size: 14px;
     opacity: 0.8;
 }
 
 .bookcal__tz {
     flex: 1;
-    height: toRem(34);
+    height: 34px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: toRem(1);
+    border-radius: 1px;
     color: var(--white-color);
-    font-size: toRem(12);
-    padding: 0 toRem(8);
+    font-size: 12px;
+    padding: 0 8px;
 
     option {
         color: var(--black-color);
@@ -1309,14 +1309,14 @@
 }
 
 .bookcal__actions {
-    margin-top: toRem(18);
+    margin-top: 18px;
     display: flex;
     justify-content: flex-end;
 }
 
 .bookcal__continue,
 .bookcal__confirm {
-    line-height: toRem(44);
+    line-height: 44px;
 
     &:disabled {
         opacity: 0.45;
@@ -1327,19 +1327,19 @@
 .bookcal__summary {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: toRem(1);
-    padding: toRem(10) toRem(12);
-    font-size: toRem(13);
-    margin-bottom: toRem(14);
+    border-radius: 1px;
+    padding: 10px 12px;
+    font-size: 13px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: toRem(10);
+    gap: 10px;
 }
 
 .bookcal__change {
     color: var(--white-color);
-    font-size: toRem(12);
+    font-size: 12px;
     text-decoration: underline;
     flex: 0 0 auto;
 }
@@ -1347,19 +1347,19 @@
 .bookcal__form {
     display: flex;
     flex-direction: column;
-    gap: toRem(8);
+    gap: 8px;
 }
 
 .bookcal__field input {
     width: 100%;
-    height: toRem(44);
+    height: 44px;
     box-sizing: border-box;
-    padding: 0 toRem(14);
+    padding: 0 14px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: toRem(1);
+    border-radius: 1px;
     color: var(--white-color);
-    font-size: toRem(14);
+    font-size: 14px;
 
     &::placeholder {
         color: rgba(255, 255, 255, 0.7);
@@ -1368,22 +1368,22 @@
 
 .bookcal__confirm {
     width: 100%;
-    margin-top: toRem(6);
+    margin-top: 6px;
 }
 
 .bookcal__error {
-    font-size: toRem(12);
+    font-size: 12px;
     color: #ffd2d2;
     text-align: center;
-    margin-top: toRem(8);
-    min-height: toRem(14);
+    margin-top: 8px;
+    min-height: 14px;
 }
 
 .bookcal__privacy {
-    font-size: toRem(10);
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.55);
     text-align: center;
-    margin-top: toRem(8);
+    margin-top: 8px;
 
     a {
         color: var(--white-color);
@@ -1393,27 +1393,27 @@
 
 .bookcal__step--done {
     text-align: center;
-    padding-top: toRem(20);
+    padding-top: 20px;
 }
 
 .bookcal__check {
-    width: toRem(54);
-    height: toRem(54);
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     background: var(--white-color);
     color: var(--accent-color);
-    font-size: toRem(28);
-    line-height: toRem(54);
-    margin: 0 auto toRem(16);
+    font-size: 28px;
+    line-height: 54px;
+    margin: 0 auto 16px;
 }
 
 .bookcal__done-text {
-    font-size: toRem(14);
-    margin-bottom: toRem(6);
+    font-size: 14px;
+    margin-bottom: 6px;
 }
 
 .bookcal__done-sub {
-    font-size: toRem(12);
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -1421,8 +1421,8 @@
 
 // Reassurance microcopy under modal form CTAs (added 2026-06-10)
 .modal-form__reassure {
-    margin-top: toRem(10);
-    font-size: toRem(13);
+    margin-top: 10px;
+    font-size: 13px;
     line-height: 1.4;
     color: var(--text-grey-color);
 }

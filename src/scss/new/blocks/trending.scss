@@ -2,48 +2,48 @@
 
 .trending {
     background: var(--fill-grey-color);
-    padding: toRem(60) 0;
-    margin-bottom: toRem(110);
+    padding: 60px 0;
+    margin-bottom: 110px;
 
     @media (min-width: $md) {
-        padding: toRem(80) 0;
-        margin-bottom: toRem(105);
+        padding: 80px 0;
+        margin-bottom: 105px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(100) 0;
-        margin-bottom: toRem(100);
+        padding: 100px 0;
+        margin-bottom: 100px;
     }
 
     .cards--4 {
         @media (max-width: 1269px) {
             grid-template-columns: repeat(4, 1fr);
-            margin: 0 toRem(-15);
-            padding: 0 toRem(15);
+            margin: 0 -15px;
+            padding: 0 15px;
 
             .card {
-                min-width: toRem(290);
+                min-width: 290px;
             }
         }
     }
 
     .case-item {
         .case-item__img {
-            height: toRem(160);
+            height: 160px;
 
             @media (min-width: $lg) {
-                height: toRem(224);
+                height: 224px;
             }
         }
 
         &.--featured {
-            padding-bottom: toRem(60);
-            margin-bottom: toRem(60);
+            padding-bottom: 60px;
+            margin-bottom: 60px;
             border-bottom: 1px solid var(--stroke-light-grey-color);
 
             @media (min-width: $lg) {
-                padding-bottom: toRem(80);
-                margin-bottom: toRem(80);
+                padding-bottom: 80px;
+                margin-bottom: 80px;
             }
 
             .case-item__link {

@@ -1,22 +1,22 @@
 @import "../common/_vars";
 
 .performance-scale {
-    margin: toRem(80) 0;
-    padding: toRem(64) 0;
+    margin: 80px 0;
+    padding: 64px 0;
 
     background-color: var(--black-color);
 
     @media (min-width: $md) {
-        margin: toRem(120) 0;
+        margin: 120px 0;
     }
 }
 
 .performance-scale__info {
-    margin-bottom: toRem(30);
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: toRem(15);
+    gap: 15px;
 
     color: var(--white-color);
 
@@ -36,8 +36,8 @@
     }
 
     @media (min-width: $md) {
-        margin-bottom: toRem(40);
-        max-width: toRem(700);
+        margin-bottom: 40px;
+        max-width: 700px;
         justify-content: flex-start;
 
         h2,
@@ -51,8 +51,8 @@
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
-        max-width: toRem(900);
+        margin-bottom: 60px;
+        max-width: 900px;
         justify-content: flex-start;
     }
 }
@@ -60,11 +60,11 @@
 .performance-scale__items {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: toRem(10);
+    gap: 10px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(4, 1fr);
-        gap: toRem(20);
+        gap: 20px;
     }
 }
 
@@ -73,10 +73,10 @@
     background-color: var(--white-color);
     position: relative;
 
-    padding: toRem(15) toRem(15) toRem(39);
+    padding: 15px 15px 39px;
 
     @media (min-width: $md) {
-        padding: toRem(30);
+        padding: 30px;
     }
 }
 
@@ -88,8 +88,8 @@
     display: block;
 
     img {
-        width: toRem(32);
-        height: toRem(32);
+        width: 32px;
+        height: 32px;
         display: block;
 
         object-fit: contain;
@@ -98,8 +98,8 @@
 
     @media (min-width: $md) {
         img {
-            width: toRem(44);
-            height: toRem(44);
+            width: 44px;
+            height: 44px;
         }
     }
 }
@@ -116,7 +116,7 @@
 }
 
 .performance-scale-item__num {
-    font-size: toRem(44);
+    font-size: 44px;
     font-weight: 500;
 
     span,
@@ -125,21 +125,21 @@
     }
 
     @media (min-width: $md) {
-        font-size: toRem(60);
+        font-size: 60px;
     }
 }
 
 .performance-scale-item__title {
     color: var(--text-middle-grey-color);
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
@@ -147,7 +147,7 @@
     border-radius: 1px;
     overflow: hidden;
     position: relative;
-    height: toRem(220);
+    height: 220px;
 
     &:nth-child(5) {
         grid-row: 2;
@@ -174,7 +174,7 @@
     }
 
     @media (min-width: $lg) {
-        height: toRem(260);
+        height: 260px;
     }
 }
 
@@ -209,19 +209,19 @@
 .performance-scale-case__info {
     position: relative;
     z-index: 2;
-    padding: toRem(30);
+    padding: 30px;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .performance-scale-case__title {
-    font-size: toRem(15);
+    font-size: 15px;
     font-weight: 500;
     color: var(--white-color);
 
-    max-width: toRem(196);
-    margin-bottom: toRem(28);
+    max-width: 196px;
+    margin-bottom: 28px;
 
     em {
         background-color: var(--accent-color);
@@ -230,9 +230,9 @@
     }
 
     @media (min-width: $md) {
-        max-width: toRem(407);
-        margin-bottom: toRem(30);
-        font-size: toRem(24);
+        max-width: 407px;
+        margin-bottom: 30px;
+        font-size: 24px;
     }
 }
 
@@ -240,9 +240,9 @@
     margin-top: auto;
     display: flex;
     align-items: center;
-    gap: toRem(4);
+    gap: 4px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--white-color);
 
     svg path {

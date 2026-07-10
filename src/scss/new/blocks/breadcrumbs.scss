@@ -6,9 +6,9 @@ ul.hero-block__breadcrumbs {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: toRem(4);
+    gap: 4px;
 
-    font-size: toRem(16);
+    font-size: 16px;
     color: var(--text-light-grey-color);
 
     a {
@@ -18,7 +18,7 @@ ul.hero-block__breadcrumbs {
     li {
         display: flex;
         align-items: center;
-        gap: toRem(4);
+        gap: 4px;
 
         &:not(:last-child) {
             &::after {
@@ -28,18 +28,18 @@ ul.hero-block__breadcrumbs {
                 background-size: contain;
                 background-position: center;
 
-                width: toRem(24);
-                height: toRem(24);
+                width: 24px;
+                height: 24px;
                 flex: 0 0 auto;
             }
         }
     }
 
     @media (min-width: $md) {
-        margin-bottom: toRem(40);
+        margin-bottom: 40px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(70);
+        margin-bottom: 70px;
     }
 }

@@ -1,70 +1,70 @@
 @import "../common/_vars";
 
 .team-items {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     .section-subtitle {
-        margin-bottom: toRem(40);
+        margin-bottom: 40px;
     }
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
+        margin: 180px 0;
     }
 
     @media (min-width: $lg) {
-        margin: toRem(200) 0;
+        margin: 200px 0;
 
         .section-subtitle {
-            margin-bottom: toRem(15);
+            margin-bottom: 15px;
         }
     }
 }
 
 .team-items__info {
-    margin-bottom: toRem(40);
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
-    gap: toRem(15);
+    gap: 15px;
 
     p {
         align-self: flex-end;
-        max-width: toRem(266);
+        max-width: 266px;
 
-        font-size: toRem(12);
+        font-size: 12px;
         color: var(--text-grey-color);
     }
 
     @media (min-width: $md) {
-        margin-bottom: toRem(40);
-        min-height: toRem(162);
+        margin-bottom: 40px;
+        min-height: 162px;
 
         flex-direction: row;
         justify-content: flex-start;
-        gap: toRem(30);
+        gap: 30px;
 
         h2 {
-            max-width: toRem(605);
+            max-width: 605px;
         }
 
         p {
-            max-width: toRem(500);
+            max-width: 500px;
 
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
-        min-height: toRem(193);
+        margin-bottom: 60px;
+        min-height: 193px;
 
         h2 {
-            max-width: toRem(845);
+            max-width: 845px;
         }
 
         p {
-            max-width: toRem(699);
+            max-width: 699px;
 
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 }
@@ -81,11 +81,11 @@
     // when it overflows (the old .splide:not(.is-overflow) behaviour), so the first
     // card is never clipped/unreachable. Item width comes from .team-item below.
     .mfs-snap__track {
-        --mfs-snap-gap: #{toRem(15)};
+        --mfs-snap-gap: #{15px};
         justify-content: safe center;
 
         @media (min-width: $md) {
-            --mfs-snap-gap: #{toRem(30)};
+            --mfs-snap-gap: #{30px};
         }
     }
 
@@ -97,14 +97,14 @@
 
 .team-item {
     display: block;
-    width: toRem(168);
+    width: 168px;
 
     background-color: var(--fill-grey-color);
     border-radius: 1px;
     overflow: hidden;
 
     @media (min-width: $md) {
-        width: toRem(287);
+        width: 287px;
         border-radius: 1px;
 
         &:hover {
@@ -116,12 +116,12 @@
     }
 
     @media (min-width: $lg) {
-        width: toRem(407);
+        width: 407px;
     }
 }
 
 .team-item__img {
-    height: toRem(190);
+    height: 190px;
     position: relative;
 
     img {
@@ -146,54 +146,54 @@
     }
 
     @media (min-width: $md) {
-        height: toRem(321);
+        height: 321px;
     }
 
     @media (min-width: $lg) {
-        height: toRem(478);
+        height: 478px;
     }
 }
 
 .team-item__info {
-    padding: toRem(16);
+    padding: 16px;
 
     display: flex;
     flex-direction: column;
-    gap: toRem(8);
+    gap: 8px;
 
     @media (min-width: $md) {
-        padding: toRem(20);
-        gap: toRem(10);
+        padding: 20px;
+        gap: 10px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(30);
+        padding: 30px;
     }
 }
 
 .team-item__name {
     font-weight: 500;
-    font-size: toRem(16);
+    font-size: 16px;
 
     @media (min-width: $md) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(32);
+        font-size: 32px;
     }
 }
 
 .team-item__position {
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(18);
+        font-size: 18px;
     }
 }
 
@@ -205,12 +205,12 @@
     @media (min-width: $md) {
         display: flex;
         justify-content: space-between;
-        gap: toRem(20);
+        gap: 20px;
 
         svg {
             display: block;
-            width: toRem(24);
-            height: toRem(24);
+            width: 24px;
+            height: 24px;
             flex: 0 0 auto;
 
             opacity: 0;

@@ -1,26 +1,26 @@
 @import "../common/_vars";
 
 .price {
-    margin: toRem(100) 0;
+    margin: 100px 0;
 
     @media (min-width: $md) {
-        margin: toRem(180) 0;
-        --container-small: #{toRem(984)};
+        margin: 180px 0;
+        --container-small: #{984px};
     }
 
     @media (min-width: $lg) {
-        --container-small: #{toRem(1197)};
+        --container-small: #{1197px};
     }
 }
 
 .price__info {
-    margin: 0 auto toRem(40);
+    margin: 0 auto 40px;
 
     display: flex;
     flex-direction: column;
     text-align: center;
-    gap: toRem(15);
-    max-width: toRem(700);
+    gap: 15px;
+    max-width: 700px;
 
     .section-subtitle {
         justify-content: center;
@@ -29,30 +29,30 @@
 
     .p1 {
         color: var(--text-grey-color);
-        max-width: toRem(550);
+        max-width: 550px;
         margin: 0 auto;
     }
 
     @media (min-width: $md) {
         .p1 {
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(60);
-        max-width: toRem(800);
+        margin-bottom: 60px;
+        max-width: 800px;
 
         .p1 {
-            max-width: toRem(650);
+            max-width: 650px;
         }
     }
 }
 
 .price__items {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
     display: grid;
-    gap: toRem(16);
+    gap: 16px;
 
     @media (min-width: $md) {
         grid-template-columns: repeat(3, 1fr);
@@ -60,7 +60,7 @@
 }
 
 .price-item {
-    padding: toRem(20);
+    padding: 20px;
     border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
@@ -88,7 +88,7 @@
     }
 
     .btn-main {
-        line-height: toRem(58);
+        line-height: 58px;
         border: 1px solid var(--accent-color);
     }
 
@@ -105,23 +105,23 @@
     }
 
     @media (min-width: $md) {
-        padding: toRem(24);
+        padding: 24px;
     }
 
     @media (min-width: $lg) {
-        padding: toRem(30);
+        padding: 30px;
     }
 }
 
 .price-item__header {
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: toRem(10);
+    gap: 10px;
 
-    --icon-size: #{toRem(24)};
+    --icon-size: #{24px};
 
     img,
     svg {
@@ -133,133 +133,133 @@
     }
 
     @media (min-width: $md) {
-        --icon-size: #{toRem(38)};
+        --icon-size: #{38px};
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(30);
+        margin-bottom: 30px;
         align-items: flex-start;
-        --icon-size: #{toRem(48)};
+        --icon-size: #{48px};
     }
 }
 
 .price-item__badge {
-    padding: toRem(8);
+    padding: 8px;
     border-radius: 1px;
     background-color: var(--accent-color);
     color: var(--white-color);
 
-    font-size: toRem(8);
+    font-size: 8px;
     text-transform: uppercase;
     font-weight: 600;
 
     @media (min-width: $md) {
-        padding: toRem(10) toRem(15);
+        padding: 10px 15px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(10);
+        font-size: 10px;
     }
 }
 
 .price-item__title {
-    margin-bottom: toRem(4);
-    font-size: toRem(18);
+    margin-bottom: 4px;
+    font-size: 18px;
     font-weight: 500;
     color: var(--black-color);
 
     @media (min-width: $md) {
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(10);
-        font-size: toRem(24);
+        margin-bottom: 10px;
+        font-size: 24px;
     }
 }
 
 .price-item__price {
-    padding-bottom: toRem(20);
-    margin-bottom: toRem(20);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--stroke-light-grey-color);
 
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
 
     .custom {
         display: block;
-        padding-top: toRem(11);
-        min-height: toRem(45);
+        padding-top: 11px;
+        min-height: 45px;
 
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     .price {
-        margin: 0 toRem(15);
+        margin: 0 15px;
         font-weight: 600;
-        font-size: toRem(28);
+        font-size: 28px;
         color: var(--black-color);
     }
 
     @media (min-width: $md) {
-        padding-bottom: toRem(38);
+        padding-bottom: 38px;
 
-        font-size: toRem(16);
+        font-size: 16px;
 
         .price {
-            font-size: toRem(36);
+            font-size: 36px;
         }
     }
 
     @media (min-width: $lg) {
-        padding-bottom: toRem(30);
-        margin-bottom: toRem(30);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
 
-        font-size: toRem(18);
+        font-size: 18px;
 
         .custom {
-            font-size: toRem(24);
-            padding-top: toRem(20);
-            padding-bottom: toRem(7);
+            font-size: 24px;
+            padding-top: 20px;
+            padding-bottom: 7px;
         }
 
         .price {
-            font-size: toRem(42);
+            font-size: 42px;
         }
     }
 }
 
 .price-item__desc,
 .price-item__best-for {
-    margin-bottom: toRem(30);
-    font-size: toRem(14);
+    margin-bottom: 30px;
+    font-size: 14px;
     font-weight: 500;
 
     @media (min-width: $lg) {
-        margin-bottom: toRem(40);
-        font-size: toRem(16);
+        margin-bottom: 40px;
+        font-size: 16px;
     }
 }
 
 .price-item__best-for-title {
     margin-top: auto;
-    margin-bottom: toRem(20);
+    margin-bottom: 20px;
 
     font-weight: 600;
-    font-size: toRem(14);
+    font-size: 14px;
     text-transform: uppercase;
     color: var(--accent-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
 .price__cta {
     display: flex;
     flex-direction: column;
-    gap: toRem(30);
-    padding: toRem(20);
+    gap: 30px;
+    padding: 20px;
 
     border-radius: 1px;
     background: var(--fill-grey-color);
@@ -269,37 +269,37 @@
     @media (min-width: $md) {
         flex-direction: row;
         align-items: center;
-        gap: toRem(30);
-        padding: toRem(30);
+        gap: 30px;
+        padding: 30px;
 
-        font-size: toRem(20);
+        font-size: 20px;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(24);
+        font-size: 24px;
     }
 
     & > svg {
-        --size: #{toRem(44)};
+        --size: #{44px};
         width: var(--size);
         height: var(--size);
 
         @media (min-width: $md) {
-            --size: #{toRem(54)};
+            --size: #{54px};
         }
 
         @media (min-width: $lg) {
-            --size: #{toRem(64)};
+            --size: #{64px};
         }
     }
 
     .btn-main {
         width: 100%;
-        padding: toRem(13) toRem(20);
+        padding: 13px 20px;
 
         line-height: 1.42857;
         text-align: left;
-        font-size: toRem(14);
+        font-size: 14px;
 
         display: flex;
         align-items: center;
@@ -307,14 +307,14 @@
 
         @media (min-width: $md) {
             margin-left: auto;
-            padding: toRem(18) toRem(40);
-            gap: toRem(16);
-            min-width: toRem(200);
+            padding: 18px 40px;
+            gap: 16px;
+            min-width: 200px;
             width: fit-content;
         }
 
         @media (min-width: $lg) {
-            min-width: toRem(300);
+            min-width: 300px;
             width: fit-content;
         }
     }
@@ -322,26 +322,26 @@
 
 .price__cta-info {
     h3 {
-        margin-bottom: toRem(10);
+        margin-bottom: 10px;
 
-        font-size: toRem(16);
+        font-size: 16px;
         font-weight: 500;
 
         @media (min-width: $lg) {
-            font-size: toRem(18);
+            font-size: 18px;
         }
     }
 
     p {
-        max-width: toRem(500);
+        max-width: 500px;
 
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
 
         @media (min-width: $lg) {
-            max-width: toRem(608);
+            max-width: 608px;
 
-            font-size: toRem(16);
+            font-size: 16px;
         }
     }
 }
@@ -351,39 +351,39 @@
    Reads as a continuation of the same block, visually distinct from the
    tariff cards (bordered light panel, term–price rows, no second CTA). */
 .price__cost-answer {
-    margin-bottom: toRem(20);
-    padding: toRem(24);
+    margin-bottom: 20px;
+    padding: 24px;
 
     border-radius: 1px;
     border: 1px solid var(--stroke-light-grey-color);
 
     @media (min-width: $md) {
-        padding: toRem(32) toRem(36);
+        padding: 32px 36px;
     }
 }
 
 .price__cost-q {
-    margin-bottom: toRem(12);
+    margin-bottom: 12px;
 
-    font-size: toRem(18);
+    font-size: 18px;
     font-weight: 500;
     color: var(--black-color);
 
     @media (min-width: $lg) {
-        font-size: toRem(22);
+        font-size: 22px;
     }
 }
 
 .price__cost-answer-text {
-    margin-bottom: toRem(20);
-    max-width: toRem(720);
+    margin-bottom: 20px;
+    max-width: 720px;
 
-    font-size: toRem(15);
+    font-size: 15px;
     line-height: 1.55;
     color: var(--black-color);
 
     @media (min-width: $md) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 }
 
@@ -393,31 +393,31 @@
     list-style: none;
 
     display: grid;
-    gap: toRem(12);
+    gap: 12px;
 
-    max-width: toRem(640);
+    max-width: 640px;
 }
 
 .price__cost-row {
     position: relative;
-    padding-left: toRem(20);
+    padding-left: 20px;
 
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.5;
     color: var(--text-grey-color);
 
     @media (min-width: $md) {
-        font-size: toRem(15);
+        font-size: 15px;
     }
 
     &::before {
         content: "";
         position: absolute;
         left: 0;
-        top: toRem(8);
+        top: 8px;
 
-        width: toRem(6);
-        height: toRem(6);
+        width: 6px;
+        height: 6px;
 
         background: var(--accent-color);
     }
@@ -427,7 +427,7 @@
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: toRem(16);
+    gap: 16px;
 
     color: inherit;
     text-decoration: none;
@@ -458,8 +458,8 @@ a.price__cost-line {
 }
 
 .price__cost-note {
-    margin-top: toRem(14);
+    margin-top: 14px;
 
-    font-size: toRem(13);
+    font-size: 13px;
     color: var(--text-grey-color);
 }

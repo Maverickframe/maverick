@@ -7,55 +7,55 @@
 $mfc-blue: var(--accent-color);
 
 .mfcalc {
-    padding: toRem(52) 0;
+    padding: 52px 0;
     background: var(--fill-grey-color);
 
     @media (min-width: $sm) {
-        padding: toRem(72) 0;
+        padding: 72px 0;
     }
 }
 
 .mfcalc__inner {
-    max-width: toRem(640);
+    max-width: 640px;
     margin: 0 auto;
 }
 
 .mfcalc__intro {
-    margin-bottom: toRem(22);
+    margin-bottom: 22px;
 
     h2 {
-        font-size: toRem(24);
+        font-size: 24px;
         font-weight: 500;
         color: #111;
-        margin: toRem(8) 0 0;
+        margin: 8px 0 0;
 
         @media (min-width: $sm) {
-            font-size: toRem(30);
+            font-size: 30px;
         }
     }
 }
 
 .mfcalc__sub {
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.55;
     color: var(--text-grey-color);
-    margin-top: toRem(8);
+    margin-top: 8px;
 }
 
 .mfcalc__card {
     background: var(--white-color);
     border: 1px solid #e7e7e7;
     border-radius: 1px;
-    padding: toRem(22) toRem(20);
+    padding: 22px 20px;
 
     @media (min-width: $sm) {
-        padding: toRem(28) toRem(28);
+        padding: 28px 28px;
     }
 }
 
 .mfcalc__field {
     & + & {
-        margin-top: toRem(20);
+        margin-top: 20px;
     }
 }
 
@@ -63,30 +63,30 @@ $mfc-blue: var(--accent-color);
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: toRem(10);
+    margin-bottom: 10px;
 
     label {
-        font-size: toRem(14);
+        font-size: 14px;
         color: var(--text-grey-color);
     }
 }
 
 .mfcalc__views {
-    font-size: toRem(18);
+    font-size: 18px;
     font-weight: 500;
     color: $mfc-blue;
 }
 
 .mfcalc__field-label {
-    font-size: toRem(14);
+    font-size: 14px;
     color: var(--text-grey-color);
-    margin-bottom: toRem(10);
+    margin-bottom: 10px;
 }
 
 .mfcalc__hint {
-    font-size: toRem(12);
+    font-size: 12px;
     color: #8a8a8a;
-    margin-top: toRem(7);
+    margin-top: 7px;
 }
 
 .mfcalc__range {
@@ -121,7 +121,7 @@ $mfc-blue: var(--accent-color);
 .mfcalc__addons {
     display: grid;
     grid-template-columns: 1fr;
-    gap: toRem(8);
+    gap: 8px;
 
     @media (min-width: $sm) {
         grid-template-columns: 1fr 1fr;
@@ -131,8 +131,8 @@ $mfc-blue: var(--accent-color);
 .mfcalc__addon {
     display: flex;
     align-items: center;
-    gap: toRem(9);
-    padding: toRem(9) toRem(11);
+    gap: 9px;
+    padding: 9px 11px;
     border: 1px solid #e7e7e7;
     border-radius: 1px;
     cursor: pointer;
@@ -155,25 +155,25 @@ $mfc-blue: var(--accent-color);
 
 .mfcalc__addon-name {
     flex: 1;
-    font-size: toRem(13);
+    font-size: 13px;
     color: var(--grey-900-color);
 }
 
 .mfcalc__addon-price {
-    font-size: toRem(12);
+    font-size: 12px;
     color: #6f6d66;
 }
 
 .mfcalc__model {
     display: flex;
-    gap: toRem(8);
+    gap: 8px;
 }
 
 .mfcalc__model-btn {
     flex: 1;
-    padding: toRem(10) toRem(12);
+    padding: 10px 12px;
     font-family: inherit;
-    font-size: toRem(13);
+    font-size: 13px;
     color: var(--grey-900-color);
     background: var(--white-color);
     border: 1px solid #e7e7e7;
@@ -181,7 +181,7 @@ $mfc-blue: var(--accent-color);
     cursor: pointer;
     transition: border-color .15s, background .15s, color .15s;
 
-    span { opacity: .7; font-size: toRem(12); }
+    span { opacity: .7; font-size: 12px; }
 
     &:hover { border-color: #bdbdbd; }
 
@@ -193,39 +193,39 @@ $mfc-blue: var(--accent-color);
 }
 
 .mfcalc__result {
-    margin-top: toRem(22);
-    padding: toRem(16) toRem(18);
+    margin-top: 22px;
+    padding: 16px 18px;
     background: $mfc-blue;
     border-radius: 1px;
     color: var(--white-color);
 }
 
 .mfcalc__result-label {
-    font-size: toRem(12);
+    font-size: 12px;
     color: rgba(255, 255, 255, .72);
 }
 
 .mfcalc__range-out {
-    font-size: toRem(26);
+    font-size: 26px;
     font-weight: 500;
     line-height: 1.1;
-    margin: toRem(3) 0 toRem(2);
+    margin: 3px 0 2px;
 
     @media (min-width: $sm) {
-        font-size: toRem(30);
+        font-size: 30px;
     }
 }
 
 .mfcalc__result-hours {
-    font-size: toRem(12);
+    font-size: 12px;
     color: rgba(255, 255, 255, .82);
 }
 
 .mfcalc__toggle {
-    margin-top: toRem(12);
+    margin-top: 12px;
     padding: 0;
     font-family: inherit;
-    font-size: toRem(12);
+    font-size: 12px;
     color: rgba(255, 255, 255, .85);
     background: none;
     border: none;
@@ -236,25 +236,25 @@ $mfc-blue: var(--accent-color);
 }
 
 .mfcalc__breakdown {
-    margin-top: toRem(12);
-    padding-top: toRem(12);
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid rgba(255, 255, 255, .2);
-    font-size: toRem(13);
+    font-size: 13px;
     color: rgba(255, 255, 255, .78);
 }
 
 .mfcalc__row {
     display: flex;
     justify-content: space-between;
-    gap: toRem(12);
-    padding: toRem(3) 0;
+    gap: 12px;
+    padding: 3px 0;
 
     span:last-child { color: var(--white-color); white-space: nowrap; }
 }
 
 .mfcalc__row--total {
-    margin-top: toRem(7);
-    padding-top: toRem(9);
+    margin-top: 7px;
+    padding-top: 9px;
     border-top: 1px solid rgba(255, 255, 255, .2);
     font-weight: 500;
 
@@ -262,18 +262,18 @@ $mfc-blue: var(--accent-color);
 }
 
 .mfcalc__capture {
-    margin-top: toRem(16);
+    margin-top: 16px;
     display: flex;
     flex-wrap: wrap;
-    gap: toRem(8);
+    gap: 8px;
 }
 
 .mfcalc__email {
-    flex: 1 1 toRem(200);
-    height: toRem(42);
-    padding: 0 toRem(13);
+    flex: 1 1 200px;
+    height: 42px;
+    padding: 0 13px;
     font-family: inherit;
-    font-size: toRem(14);
+    font-size: 14px;
     color: #111;
     background: var(--white-color);
     border: 1px solid #d8d8d8;
@@ -283,10 +283,10 @@ $mfc-blue: var(--accent-color);
 }
 
 .mfcalc__submit {
-    flex: 1 1 toRem(200);
-    height: toRem(42);
+    flex: 1 1 200px;
+    height: 42px;
     font-family: inherit;
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
     color: var(--white-color);
     background: var(--black-color);
@@ -307,7 +307,7 @@ $mfc-blue: var(--accent-color);
 
 .mfcalc__note {
     flex: 1 1 100%;
-    font-size: toRem(12);
+    font-size: 12px;
     line-height: 1.5;
     color: #8a8a8a;
     margin: 0;

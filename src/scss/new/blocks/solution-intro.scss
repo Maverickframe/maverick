@@ -1,22 +1,22 @@
 @import "../common/_vars";
 
 .solution-intro {
-    padding: toRem(40) 0;
+    padding: 40px 0;
 
     @media (min-width: $md) {
-        padding: toRem(100) 0;
+        padding: 100px 0;
     }
 }
 
 .solution-intro__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: toRem(40);
+    gap: 40px;
     align-items: center;
 
     @media (min-width: $md) {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        gap: toRem(20);
+        gap: 20px;
     }
 }
 
@@ -24,18 +24,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: toRem(40);
+    gap: 40px;
 }
 
 .solution-intro__eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: toRem(8);
-    padding: toRem(8) toRem(16);
+    gap: 8px;
+    padding: 8px 16px;
     border: 1px solid rgba(45, 64, 174, 0.6);
     background: rgba(45, 64, 174, 0.05);
-    border-radius: toRem(2);
-    font-size: toRem(12);
+    border-radius: 2px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1.4;
     color: var(--accent-color);
@@ -43,8 +43,8 @@
 
 .solution-intro__dot {
     flex: 0 0 auto;
-    width: toRem(8);
-    height: toRem(8);
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--accent-color);
 }
@@ -54,19 +54,19 @@
     font-weight: 500;
     line-height: 1.4;
     color: var(--black-color);
-    font-size: toRem(22);
+    font-size: 22px;
 
     @media (min-width: $md) {
-        font-size: toRem(40);
+        font-size: 40px;
         line-height: 1.2;
     }
 
     @media (min-width: $lg) {
-        font-size: toRem(48);
+        font-size: 48px;
     }
 
     mark {
-        padding: 0 toRem(2);
+        padding: 0 2px;
         background: var(--accent-color);
         color: var(--white-color);
         -webkit-box-decoration-break: clone;
@@ -76,17 +76,17 @@
 
 .solution-intro__desc {
     // Match the homepage showreel description (14 → 16 at $lg).
-    max-width: toRem(600);
+    max-width: 600px;
     color: var(--text-grey-color);
-    font-size: toRem(14);
+    font-size: 14px;
     line-height: 1.4;
 
     @media (min-width: $lg) {
-        font-size: toRem(16);
+        font-size: 16px;
     }
 
     p {
-        margin: 0 0 toRem(16);
+        margin: 0 0 16px;
 
         &:last-child {
             margin-bottom: 0;
@@ -98,11 +98,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: toRem(12) toRem(60);
-    border-radius: toRem(2);
+    padding: 12px 60px;
+    border-radius: 2px;
     background: var(--accent-color);
     color: var(--white-color);
-    font-size: toRem(14);
+    font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
     text-decoration: none;
@@ -115,7 +115,7 @@
 .solution-intro__media {
     position: relative;
     overflow: hidden;
-    border-radius: toRem(4);
+    border-radius: 4px;
     aspect-ratio: 710 / 500;
     background: var(--black-color);
 }
