@@ -1138,6 +1138,26 @@ add_filter('rocket_rucss_safelist', function ($safelist) {
     ]);
 });
 
+// Delay ALL theme JS until first user interaction (scroll/click/tap/key), so the
+// initial load / critical path carries zero theme JavaScript. WP Rocket's "Delay
+// JS" is already on globally, but the theme build folder was explicitly excluded
+// (setting `delay_js_exclusions` → `/wp-content/themes/maverickframe/build/`), which
+// left `main` + chunks merely deferred. Drop that one exclusion from the final list
+// so they get delayed too. Tour/panorama excludes (added in inc.tour.php) are kept —
+// they must run without interaction. Above-the-fold is unaffected: hero paints via
+// CSS (.reveal-css / .hero-front__reveal), marquees are CSS, LCP image is native.
+// Trade-off (accepted): hero showreel autoplays only after first interaction, and
+// header-scroll / counters / reveals trigger on first scroll. Kill-switch: define
+// MFS_DELAY_THEME_JS as false (e.g. in wp-config) to instantly restore the exclusion.
+add_filter('rocket_delay_js_exclusions', function ($exclusions) {
+    if (defined('MFS_DELAY_THEME_JS') && ! MFS_DELAY_THEME_JS) {
+        return $exclusions;
+    }
+    return array_values(array_filter((array) $exclusions, function ($entry) {
+        return strpos($entry, 'themes/maverickframe/build') === false;
+    }));
+}, 20);
+
 // Search Posts in ACF Fields
 
 add_filter('posts_search', function ($search, $wp_query) {
