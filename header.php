@@ -15,15 +15,14 @@ $classes = trim($classes);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#2d40ae">
 
-    <?php // Early-connect hints for the third-party origins loaded high in the page
-          // (GTM + HubSpot). PSI flagged "no origins were preconnected". preconnect for
-          // the two heaviest/earliest; dns-prefetch for the rest. No crossorigin — these
-          // are script origins fetched without CORS (crossorigin would open a 2nd unused
-          // socket). Fonts are first-party and already preloaded below. ?>
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://js-eu1.hs-scripts.com">
+    <?php // Connect hints for third-party origins. GTM + HubSpot are now DELAYED
+          // (WP Rocket "Delay JS" — they load on first user interaction, not at
+          // paint), so eager `preconnect` for them would sit unused and PSI would
+          // flag it — dropped. Keep cheap dns-prefetch (DNS only, no socket) for the
+          // HubSpot/Google origins the delayed scripts eventually hit. hs-banner
+          // removed: the cookie-consent banner is turned off in the HubSpot portal. ?>
+    <link rel="dns-prefetch" href="https://js-eu1.hs-scripts.com">
     <link rel="dns-prefetch" href="https://js-eu1.hs-analytics.net">
-    <link rel="dns-prefetch" href="https://js-eu1.hs-banner.com">
     <link rel="dns-prefetch" href="https://track-eu1.hubspot.com">
     <link rel="dns-prefetch" href="https://www.google.com">
 

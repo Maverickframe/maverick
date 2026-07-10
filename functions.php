@@ -460,34 +460,19 @@ require_once __DIR__ . '/forms/book-call-handler.php';
 require_once __DIR__ . '/inc.tour.php';
 require_once __DIR__ . '/inc.video.php';
 
-// HubSpot tracking (official leadin plugin, EU region) is now LEFT to WP Rocket's
-// "Delay JS execution" like every other third-party script (GTM/gtag/Ads already
-// are). Previously the theme force-EXCLUDED the HubSpot loader from delay/defer so
-// hubspotutk would be set on landing — but that made the whole HubSpot suite
-// (hs-scripts loader + its hs-analytics, the hs-banner cookie-consent script we
-// don't use, and hsadspixel) load eagerly on first paint, and it was the site's
-// last load-time "forced reflow" (~41ms in PSI, all unattributed 3rd-party JS).
-// Delaying it moves the suite off the critical path. WP Rocket's delay fires on
-// the FIRST user interaction (scroll / mousemove / touch / keydown), which always
-// precedes a form submit, so hubspotutk is still set before anyone can submit —
-// lead attribution is preserved in practice.
-// To force HubSpot eager again, re-add:
-//   add_filter('rocket_delay_js_exclusions', fn($e) => array_merge($e, ['hs-scripts.com','hs-analytics.net','hsforms']));
-//   add_filter('rocket_exclude_defer_js',   fn($e) => array_merge($e, ['hs-scripts.com']));
-// NOTE: the HubSpot cookie-consent banner (hs-banner) and ads pixel (hsadspixel)
-// are pulled by HubSpot's loader per PORTAL settings, not WP — to remove them
-// entirely (not just delay), turn them off in HubSpot Settings -> Privacy & Consent.
-//
-// The leadin (HubSpot) plugin re-adds its own tracking loader to WP Rocket's delay
-// exclusions, so simply not excluding it in the theme is not enough — it stays
-// eager. Strip HubSpot back OUT of the delay exclusions at a late priority (after
-// leadin) so WP Rocket delays it like every other third-party script.
-add_filter('rocket_delay_js_exclusions', function ($excluded) {
-    if (!is_array($excluded)) return $excluded;
-    return array_values(array_filter($excluded, function ($url) {
-        return !preg_match('#hs-scripts|hs-analytics|hs-banner|hsforms|hsadspixel|hubspot#i', (string) $url);
-    }));
-}, 99999);
+// HubSpot tracking — self-hosted loader. We dropped the bloated `leadin` plugin,
+// which also pulled the cookie-consent banner, ads pixel, forms JS and preconnect
+// hints, and force-loaded eagerly (it self-excluded from WP Rocket's delay). This
+// prints ONLY the HubSpot tracking code: page views, the hubspotutk cookie, and
+// behavioural events for workflow triggers. It's a plain external script (not
+// excluded), so WP Rocket's "Delay JS" defers it to the first user interaction
+// (scroll/move/touch/key) — off the critical path, still set before any form
+// submit. Forms are server-side (forms/hubspot.php) and independent of this.
+// The banner + ads pixel are portal-gated: keep them OFF in HubSpot Settings ->
+// Privacy & Consent so the loader does not pull them back in.
+add_action('wp_footer', function () {
+    echo '<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148670517.js"></script>' . "\n";
+}, 20);
 
 // End Enqueue Scripts and Styles
 
