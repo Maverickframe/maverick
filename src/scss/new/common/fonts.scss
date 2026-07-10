@@ -24,7 +24,12 @@
     font-family: "Inter Tight Fallback";
     font-style: normal;
     font-weight: 400;
-    src: local("Arial");
+    // Multiple locals so the metric face resolves on every OS: Arial (Win/mac/iOS),
+    // Liberation Sans (Linux — incl. the GTmetrix/Lighthouse test servers; metric-clone
+    // of Arial), Roboto (Android). Without a resolvable local the whole @font-face is
+    // dropped and the overrides never apply — which is why the earlier Arial-only
+    // version left CLS at 1.0 in GTmetrix (Linux, no Arial).
+    src: local("Arial"), local("Liberation Sans"), local("Helvetica Neue"), local("Roboto");
     ascent-override: 97.32%;
     descent-override: 24.23%;
     line-gap-override: 0%;
