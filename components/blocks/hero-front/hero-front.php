@@ -75,7 +75,7 @@
                             ?>
                                 <li class="mfs-marquee__item"<?php echo $dupe ? ' aria-hidden="true"' : ''; ?>>
                                     <?php if($link): ?>
-                                        <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>">
+                                        <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>"<?php echo $dupe ? ' tabindex="-1"' : ''; ?>>
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
@@ -109,7 +109,7 @@
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover'); ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 150px, 300px'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
@@ -142,7 +142,7 @@
                             ?>
                                 <li class="mfs-marquee__item"<?php echo $dupe ? ' aria-hidden="true"' : ''; ?>>
                                     <?php if($link): ?>
-                                        <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>">
+                                        <a class="hero-front__slider-item" href="<?php echo esc_url($link); ?>"<?php echo $dupe ? ' tabindex="-1"' : ''; ?>>
                                     <?php else: ?>
                                         <div class="hero-front__slider-item">
                                     <?php endif; ?>
@@ -176,7 +176,7 @@
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover'); ?>
+                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 150px, 300px'); ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
