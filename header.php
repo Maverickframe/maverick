@@ -28,7 +28,7 @@ $classes = trim($classes);
     $portfolioType = gettype(get_field('portfolio_type')) === 'array'
         ? get_field('portfolio_type')
         : array();
-    if (get_field('no_index') || $portfolioType === 'private' || (in_array('private', $portfolioType) && !in_array('common', $portfolioType))):
+    if ($portfolioType === 'private' || (in_array('private', $portfolioType) && !in_array('common', $portfolioType))):
         ?>
         <meta name="robots" content="noindex">
     <?php endif; ?>
