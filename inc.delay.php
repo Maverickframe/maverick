@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'MFS_GTM_ID' ) )            define( 'MFS_GTM_ID', 'GTM-T4JS5BJV' );
 if ( ! defined( 'MFS_HS_PORTAL_ID' ) )      define( 'MFS_HS_PORTAL_ID', '148670517' );
-if ( ! defined( 'MFS_DELAY_FALLBACK_MS' ) ) define( 'MFS_DELAY_FALLBACK_MS', 4000 );
+if ( ! defined( 'MFS_DELAY_FALLBACK_MS' ) ) define( 'MFS_DELAY_FALLBACK_MS', 10000 );
 
 add_action( 'wp_footer', 'mfs_print_delayed_thirdparty', 20 );
 
