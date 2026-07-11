@@ -1142,6 +1142,21 @@ add_filter('rocket_above_the_fold_optimization', '__return_false');
 //    auto_preload_fonts 0` (kept off in the WP Rocket UI: Media → Preload fonts).
 add_filter('rocket_preconnect_external_domains_optimization', '__return_false');
 
+// With every PerformanceHints job disabled above, WP Rocket still injects the beacon
+// into the HTML on every page: its Processor injects it whenever a factory has no
+// stored data for the URL, and our disabled factories never get data → the beacon is
+// re-injected forever as pure dead weight (an async request + inline JSON that now
+// measures nothing). It's injected into the output buffer (rocket_buffer, prio 17),
+// not via wp_enqueue, so strip it back out on the same filter at a later priority.
+add_filter('rocket_buffer', function ($html) {
+    if (! is_string($html) || strpos($html, 'wpr-beacon') === false) {
+        return $html;
+    }
+    $html = preg_replace('#<script>\s*var\s+rocket_beacon_data\s*=.*?</script>#is', '', $html, 1);
+    $html = preg_replace('#<script[^>]*wpr-beacon[^>]*>\s*</script>#i', '', $html, 1);
+    return $html;
+}, 20);
+
 // End Fix wp rocket optimization for dynamic content
 
 // WP Rocket "Remove Unused CSS" builds the inline Used CSS by scanning the STATIC
