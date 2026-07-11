@@ -1221,6 +1221,15 @@ add_filter('script_loader_tag', function ($tag, $handle, $src) {
     return preg_replace('/<script\s/', '<script defer ', $tag, 1);
 }, 20, 3);
 
+// ---- WP Rocket teardown: revision cap (replaces Rocket DB "revisions" cleanup) ----
+// Rocket's scheduled DB cleanup was OFF (schedule_automatic_cleanup=0) and never
+// pruned revisions here (1784 accumulated). Rather than mass-delete existing history
+// (our rollback net — see prod-content-write-safety), cap NEW revisions to 5 per post
+// so they stop piling up; WordPress prunes older ones on each subsequent save.
+add_filter('wp_revisions_to_keep', function ($num, $post) {
+    return 5;
+}, 10, 2);
+
 // Search Posts in ACF Fields
 
 add_filter('posts_search', function ($search, $wp_query) {
