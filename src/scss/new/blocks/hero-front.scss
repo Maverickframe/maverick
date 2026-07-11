@@ -194,14 +194,28 @@
 .hero-front__slider {
     min-height: 0;
     overflow: hidden;
+    container-type: inline-size; // mobile: width container → 100cqw for horizontal ping-pong
 
     @media (min-width: $md) {
         height: 100%;
+        container-type: size; // desktop: size container → 100cqh for vertical ping-pong
     }
 }
 
 .hero-front__marquee {
-    --mfs-marquee-dur: 40s;
+    --mfs-marquee-dur: 70s; // slow, gentle ping-pong
+
+    // Ping-pong (markup has no seamless dupe): scroll to the end, ease, reverse — forever.
+    // Travel = full track minus the visible window, via container-query units (100cqw/100cqh)
+    // measured by the browser — pure CSS, no JS, no per-frame layout reads.
+    .mfs-marquee__track {
+        animation-name: mfs-hero-pp-x;
+        animation-timing-function: ease-in-out;
+        animation-direction: alternate;
+    }
+    &.mfs-marquee--reverse .mfs-marquee__track {
+        animation-direction: alternate-reverse;
+    }
 
     // mobile: every tile the SAME height (177); width follows the image aspect ratio
     // (landscape = wider, portrait = narrower) — uniform height across mixed orientations.
@@ -224,7 +238,7 @@
             align-items: stretch;
             width: 100%;
             height: max-content;
-            animation-name: mfs-marquee-y;
+            animation-name: mfs-hero-pp-y;
         }
 
         .mfs-marquee__item {
@@ -354,4 +368,15 @@ html.single-solutions .hero-front__slider.js-reveal {
         animation: none;
         opacity: 1;
     }
+}
+
+// Ping-pong travel = -(full track − visible window). 100cqw/100cqh resolve to the
+// .hero-front__slider container size (set via container-type). animation-direction:alternate
+// bounces it back at each end; ease-in-out makes the turnaround gentle.
+@keyframes mfs-hero-pp-x {
+    to { transform: translateX(calc(-100% + 100cqw)); }
+}
+
+@keyframes mfs-hero-pp-y {
+    to { transform: translateY(calc(-100% + 100cqh)); }
 }

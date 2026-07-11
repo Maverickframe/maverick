@@ -63,7 +63,7 @@
                         <?php
                             // Rendered twice for a seamless pure-CSS marquee loop; 2nd pass hidden from AT.
                             // LCP eager/lazy runs on the 1st pass only (the visible originals).
-                            for ( $pass = 0; $pass < 2; $pass++ ) :
+                            for ( $pass = 0; $pass < 1; $pass++ ) : // single pass — ping-pong needs no seamless dupe
                                 $dupe = ( $pass === 1 );
                                 $i = 0;
                                 $hf_col = get_field('cases_left');
@@ -115,7 +115,7 @@
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 123px, 300px'); ?>
+                                        <?php // hover image removed — one render per slide ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
@@ -136,7 +136,7 @@
                     <ul class="mfs-marquee__track">
                         <?php
                             // Rendered twice for a seamless pure-CSS marquee loop; 2nd pass hidden from AT.
-                            for ( $pass = 0; $pass < 2; $pass++ ) :
+                            for ( $pass = 0; $pass < 1; $pass++ ) : // single pass — ping-pong needs no seamless dupe
                                 $dupe = ( $pass === 1 );
                                 $i = 0;
                                 $hf_col = get_field('cases_right');
@@ -188,7 +188,7 @@
                                         ?>
                                         <?php // Explicit class so the CSS overlay targets this image by class, not by
                                               // position — robust against sibling nodes WP Rocket injects for logged-out. ?>
-                                        <?php lazy_attachment($hover_image, 'large', 'lazy', 'hero-front__slider-hover', '(max-width: 1270px) 123px, 300px'); ?>
+                                        <?php // hover image removed — one render per slide ?>
                                         <?php $i++; ?>
                                     <?php if($link): ?>
                                         </a>
