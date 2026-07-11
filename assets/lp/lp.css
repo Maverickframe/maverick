@@ -129,3 +129,102 @@
   .mfs-lp .formcard{position:static;order:-1}
   .mfs-lp .steps2,.mfs-lp .cases2,.mfs-lp .faq2-grid{grid-template-columns:1fr}
 }
+
+/* ==========================================================================
+   V3 — Exterior + Interior service LP components (same tokens, dark hero)
+   ========================================================================== */
+.mfs-lp{--navy:#0e1017}
+.mfs-lp .eyebrow.on-dark{color:#8ea0ff}
+
+/* dark hero */
+.mfs-lp .h3hero{background:var(--navy);color:#fff;padding:34px 0 0}
+.mfs-lp .h3brand{display:flex;align-items:center;justify-content:space-between;padding-bottom:44px}
+.mfs-lp .h3logo{font-weight:500;letter-spacing:.16em;font-size:14px;color:#fff}
+.mfs-lp .h3brand .tag{font-size:13px;color:#aeb4c2}
+.mfs-lp .h3top{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-bottom:48px}
+.mfs-lp .h3hero h1{font-size:clamp(32px,4.4vw,52px);color:#fff}
+.mfs-lp .h3hero h1 .hl{color:#8ea0ff}
+.mfs-lp .h3sub{margin-top:20px;font-size:18.5px;max-width:40ch;color:#cfd3de}
+.mfs-lp .h3cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.mfs-lp .h3cta .btn{width:auto}
+.mfs-lp .h3split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mfs-lp .h3shot{aspect-ratio:3/4;border-radius:var(--radius);position:relative;overflow:hidden;background:#171a22}
+.mfs-lp .h3shot img{width:100%;height:100%;object-fit:cover;display:block}
+.mfs-lp .h3shot span{position:absolute;left:12px;bottom:12px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85);background:rgba(0,0,0,.35);padding:4px 8px;border-radius:1px}
+
+/* trust bar (dark) */
+.mfs-lp .trust{background:var(--navy);border-top:1px solid rgba(255,255,255,.08);padding:26px 0}
+.mfs-lp .trust .logos-cap{color:#8990a1;text-transform:uppercase;letter-spacing:.05em}
+.mfs-lp .trust .logo-box{background:#171a22;border:1px solid rgba(255,255,255,.1);color:#8990a1}
+.mfs-lp .trust .nums{display:flex;gap:36px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.mfs-lp .trust .num b{color:#fff;font-size:24px;font-weight:500;display:block}
+.mfs-lp .trust .num span{color:#8990a1;font-size:13px}
+
+/* what we do — dual */
+.mfs-lp .dual{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.mfs-lp .do-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mfs-lp .do-card .shot{aspect-ratio:16/10;position:relative;background:var(--fill);overflow:hidden}
+.mfs-lp .do-card .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.mfs-lp .do-card .b{padding:24px 24px 26px}
+.mfs-lp .do-card h3{font-size:20px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.mfs-lp .do-card p{font-size:15px}
+
+/* portfolio grid */
+.mfs-lp .grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mfs-lp .tile{aspect-ratio:4/3;border-radius:var(--radius);position:relative;overflow:hidden;border:1px solid var(--line);background:var(--fill)}
+.mfs-lp .tile img{width:100%;height:100%;object-fit:cover;display:block}
+.mfs-lp .tile span{position:absolute;left:12px;bottom:12px;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.4);padding:4px 8px;border-radius:1px}
+
+/* how we work — flow */
+.mfs-lp .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:f}
+.mfs-lp .fl{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px;counter-increment:f}
+.mfs-lp .fl::before{content:counter(f);font-size:14px;font-weight:500;color:#fff;width:32px;height:32px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--accent);margin-bottom:14px}
+.mfs-lp .fl h3{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:7px}
+.mfs-lp .fl p{font-size:14.5px}
+
+/* why us */
+.mfs-lp .why{background:#fff}
+.mfs-lp .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mfs-lp .wcard{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--wash)}
+.mfs-lp .wcard svg{margin-bottom:12px}
+.mfs-lp .wcard svg path{stroke:var(--accent)}
+.mfs-lp .wcard h3{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.mfs-lp .wcard p{font-size:14px}
+
+/* pricing */
+.mfs-lp .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mfs-lp .pcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;text-align:center}
+.mfs-lp .pcard .lbl{font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.mfs-lp .pcard .val{font-size:30px;font-weight:500;color:var(--ink);margin-top:10px}
+.mfs-lp .pcard .val small{font-size:15px;font-weight:400;color:var(--muted)}
+.mfs-lp .pcard p{font-size:13.5px;margin-top:8px}
+.mfs-lp .pnote{text-align:center;font-size:13.5px;color:var(--muted);margin-top:20px}
+
+/* faq3 */
+.mfs-lp .faq3{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mfs-lp .qa3{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff}
+.mfs-lp .qa3 h3{font-size:16.5px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.mfs-lp .qa3 p{font-size:14.5px}
+
+/* final quote form (dark) */
+.mfs-lp .quote-sec{background:var(--navy);color:#fff}
+.mfs-lp .quote-card{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;padding:56px 0}
+.mfs-lp .quote-card h2{color:#fff}
+.mfs-lp .quote-card .qsub{margin-top:14px;font-size:16.5px;color:#cfd3de}
+.mfs-lp .quote-card ul{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:11px}
+.mfs-lp .quote-card li{display:flex;gap:10px;font-size:15px;color:#cfd3de}
+.mfs-lp .quote-card li svg{flex:none;margin-top:3px}
+.mfs-lp .quote-card li svg path{stroke:#8ea0ff}
+.mfs-lp .qform{background:#161922;border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:30px}
+.mfs-lp .qform .field > span{color:#aeb4c2}
+.mfs-lp .qform input,.mfs-lp .qform select,.mfs-lp .qform textarea{font-family:inherit;font-size:16px;color:#fff;background:var(--navy);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:14px 15px;width:100%;outline:none}
+.mfs-lp .qform textarea{min-height:84px;resize:vertical}
+.mfs-lp .qform select{appearance:none}
+.mfs-lp .qform input:focus,.mfs-lp .qform select:focus,.mfs-lp .qform textarea:focus{border-color:#6f83ff}
+.mfs-lp .qform input::placeholder,.mfs-lp .qform textarea::placeholder{color:#6b7280}
+
+@media(max-width:880px){
+  .mfs-lp .h3top{grid-template-columns:1fr;gap:30px}
+  .mfs-lp .dual,.mfs-lp .grid6,.mfs-lp .flow,.mfs-lp .why-grid,.mfs-lp .prices,.mfs-lp .faq3,.mfs-lp .quote-card{grid-template-columns:1fr}
+  .mfs-lp .grid6{grid-template-columns:1fr 1fr}
+}
