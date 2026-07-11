@@ -460,6 +460,7 @@ require_once __DIR__ . '/forms/book-call-handler.php';
 require_once __DIR__ . '/inc.tour.php';
 require_once __DIR__ . '/inc.video.php';
 require_once __DIR__ . '/inc.prefetch.php';
+require_once __DIR__ . '/inc.lp.php';
 
 // HubSpot tracking — self-hosted loader. We dropped the bloated `leadin` plugin,
 // which also pulled the cookie-consent banner, ads pixel, forms JS and preconnect

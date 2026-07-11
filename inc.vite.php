@@ -28,6 +28,11 @@ function get_template_directory_uri_vite($path = '') {
 
 
 function mfs_page_bundle_key() {
+    // /lp/ ad landing pages: no per-type block bundle. The bare template ships a
+    // flat, self-contained assets/lp/lp.css (enqueued in inc.lp.php) instead of
+    // page.scss, so it stays lean and isolated. Returning a key absent from the
+    // manifest means no 'style' handle is enqueued for this template.
+    if (is_page_template('templates/page-lp-bare.php')) return 'src/scss/bundles/__lp_none__';
     if (is_front_page()) return 'src/scss/bundles/front.scss';
     if (is_singular('blog')) return 'src/scss/bundles/blog-single.scss';
     if (is_page_template('templates/template-blog.php')) return 'src/scss/bundles/blog.scss';
