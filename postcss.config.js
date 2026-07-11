@@ -1,6 +1,5 @@
-export default (ctx) => ({
+export default () => ({
     plugins: {
         autoprefixer: {},
-        cssnano: ctx.env === "production" ? {} : false,
     },
 });
