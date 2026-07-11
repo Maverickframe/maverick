@@ -98,8 +98,14 @@
                                             // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
-                                            if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', $i === 0);
+                                            // Dupe (pass-1) marquee clones are visually part of the seamless loop and
+                                            // can be the LCP too — a right-column dupe (slide 0, the speaker) was the PSI
+                                            // LCP with loading=lazy. Give dupes the SAME eager window as real slides: it's
+                                            // the identical image file (browser dedupes the URL → no extra bytes), it just
+                                            // drops the lazy attr PSI flags. Keep fetchpriority=high on exactly the real
+                                            // slide 0 only (one LCP hint per column).
+                                            if ($i < 4 || $i >= $hf_total - 2) {
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', !$dupe && $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
@@ -165,8 +171,14 @@
                                             // >1270px the vertical (ttb) slide column renders ~288px CSS (PSI-measured),
                                             // so desktop = 300px (NOT 420): DPR1 picks 400w instead of 768w (~80KB/slide),
                                             // DPR2 retina still picks 768w. 420px over-declared → forced the 768w file.
-                                            if (!$dupe && ($i < 4 || $i >= $hf_total - 2)) {
-                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', $i === 0);
+                                            // Dupe (pass-1) marquee clones are visually part of the seamless loop and
+                                            // can be the LCP too — a right-column dupe (slide 0, the speaker) was the PSI
+                                            // LCP with loading=lazy. Give dupes the SAME eager window as real slides: it's
+                                            // the identical image file (browser dedupes the URL → no extra bytes), it just
+                                            // drops the lazy attr PSI flags. Keep fetchpriority=high on exactly the real
+                                            // slide 0 only (one LCP hint per column).
+                                            if ($i < 4 || $i >= $hf_total - 2) {
+                                                eager_attachment($image, 'large', '(max-width: 1270px) 123px, 300px', !$dupe && $i === 0);
                                             } else {
                                                 echo wp_get_attachment_image($image, 'large', false, [
                                                     'loading' => 'lazy',
