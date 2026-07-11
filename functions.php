@@ -673,18 +673,19 @@ add_action('admin_init', 'df_disable_comments_admin_menu_redirect');
 // Load More
 function loadmore_ajax_handler()
 {
-    $cat = isset($_POST['cat']) && $_POST['cat'] != 'all' ? urlencode($_POST['cat']) : null;
+    $post_id = absint($_POST['post_id'] ?? 0);
+    $cat = isset($_POST['cat']) && $_POST['cat'] != 'all' ? urlencode(sanitize_text_field(wp_unslash($_POST['cat']))) : null;
 
     $args = array(
         'post_type' => 'portfolio',
         'posts_per_page' => 12,
-        'paged' => $_POST['page'] + 1,
+        'paged' => absint($_POST['page'] ?? 0) + 1,
         'post_status' => 'publish',
         'cat' => $cat,
         'meta_query' => array(
             array(
                 'key' => 'portfolio_type',
-                'value' => '"' . get_field('portfolio_type', $_POST['post_id']) . '"',
+                'value' => '"' . get_field('portfolio_type', $post_id) . '"',
                 'compare' => 'LIKE'
             )
         )
@@ -713,9 +714,9 @@ function loadmore_front_ajax_handler()
     $args = array(
         'post_type' => 'portfolio',
         'posts_per_page' => 6,
-        'paged' => $_POST['page'] + 1,
+        'paged' => absint($_POST['page'] ?? 0) + 1,
         'post_status' => 'publish',
-        'cat' => get_field('portfolio_cat', $_POST['post_id']) ?? null,
+        'cat' => get_field('portfolio_cat', absint($_POST['post_id'] ?? 0)) ?? null,
         'meta_query' => array(
             array(
                 'key' => 'portfolio_type',
@@ -803,13 +804,18 @@ function load_template_part($template_name, $part_name = null, $args = [])
 
 function loadmore_articles_ajax_handler()
 {
-    $post_type = $_POST['post_type'] ?? '';
-    $cat = isset($_POST['cat']) && $_POST['cat'] != 'all' ? urlencode($_POST['cat']) : null;
-    $subcat = isset($_POST['subcat']) && $_POST['subcat'] != 'all' ? urlencode($_POST['subcat']) : null;
-    $tag = isset($_POST['tag']) && $_POST['tag'] != 'all' ? urlencode($_POST['tag']) : null;
-    $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
-    $orderbyRaw = $_POST['orderby'] ?? 'latest';
-    $paged = $_POST['current_page'] ?? 1;
+    $post_type = isset($_POST['post_type']) ? sanitize_key($_POST['post_type']) : '';
+    // This handler only renders these two archive types; reject anything else so a
+    // crafted post_type can't drive an arbitrary query.
+    if (!in_array($post_type, ['blog', 'success-stories'], true)) {
+        wp_send_json(['max_page' => 0, 'data' => '']);
+    }
+    $cat = isset($_POST['cat']) && $_POST['cat'] != 'all' ? urlencode(sanitize_text_field(wp_unslash($_POST['cat']))) : null;
+    $subcat = isset($_POST['subcat']) && $_POST['subcat'] != 'all' ? urlencode(sanitize_text_field(wp_unslash($_POST['subcat']))) : null;
+    $tag = isset($_POST['tag']) && $_POST['tag'] != 'all' ? urlencode(sanitize_text_field(wp_unslash($_POST['tag']))) : null;
+    $search = isset($_POST['search']) ? sanitize_text_field(wp_unslash($_POST['search'])) : '';
+    $orderbyRaw = isset($_POST['orderby']) ? sanitize_key($_POST['orderby']) : 'latest';
+    $paged = absint($_POST['current_page'] ?? 1);
     // admin-ajax runs in is_admin() context where Polylang does NOT auto-filter
     // the query by language, so it returns posts from ALL languages and diverges
     // from the language-filtered front-end list (duplicates + cross-language leak).
