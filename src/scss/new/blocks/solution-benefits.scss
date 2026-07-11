@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 // Solutions page only. Keep the workflow at its default `.container` width (1720)
 // so the curve SVG and the per-step offsets match the proven yacht layout (forcing

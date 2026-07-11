@@ -1,4 +1,4 @@
-@import "../common/vars";
+@use "../common/vars" as *;
 
 /* 404 page — "scene failed to render" concept (new design).
    Font (Inter Tight), header, footer and tokens come from base.scss.

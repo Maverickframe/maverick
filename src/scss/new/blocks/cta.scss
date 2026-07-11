@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 .cta {
     background: var(--accent-color) url("/img/icons/cta-lines.svg") no-repeat -333px -48px;

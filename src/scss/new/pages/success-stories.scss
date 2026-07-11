@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 .success-stories-page {
     .hero__main {

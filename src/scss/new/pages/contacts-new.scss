@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 /* ---------- Top section: hero + form (2 columns) ---------- */
 .contacts-top {

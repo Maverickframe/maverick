@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 .what-we-do {
     --margin: #{100px};

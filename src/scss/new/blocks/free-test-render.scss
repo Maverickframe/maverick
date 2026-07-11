@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 /* Free Test Render — dark section (subtle glow) + white form card.
    Extends .cta-form-section; this file holds all the block-specific look. */

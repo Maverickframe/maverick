@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 .completeness-visual-embody {
     margin: 100px 0;

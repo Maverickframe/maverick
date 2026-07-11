@@ -2,7 +2,7 @@
 // These blocks render only on article/blog/legacy-video/listing pages, NEVER on the
 // slim homepage. Imported by base.scss (all non-home bundles) + blocks.scss (editor),
 // but NOT by base-slim.scss (homepage). Homepage-absence verified in live DOM.
-@import "_vars";
+@use "vars" as *;
 
 blockquote {
     font-size: 18px;

@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 ul.hero-block__breadcrumbs {
     margin-bottom: auto;

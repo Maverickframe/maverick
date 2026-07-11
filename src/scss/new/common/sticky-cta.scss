@@ -3,7 +3,7 @@
 // (components/common/sticky-cta.php). Mirrors the service-page .hero__cta look.
 // Mobile is intentionally hidden here — handled separately in the mobile pass (A4).
 
-@import "_vars";
+@use "vars" as *;
 
 .sticky-cta {
     display: none;

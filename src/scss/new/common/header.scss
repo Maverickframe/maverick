@@ -1,4 +1,4 @@
-@import "_vars";
+@use "vars" as *;
 
 .header {
     height: var(--header-height);

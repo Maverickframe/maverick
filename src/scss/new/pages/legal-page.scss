@@ -1,4 +1,4 @@
-@import "../common/vars";
+@use "../common/vars" as *;
 
 /* Legal / text pages (Privacy Policy, Terms, Cookies) — new design.
    Font (Inter Tight), header, footer and tokens come from base.scss. */

@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 /* Price Calculator — compact, brand blue accent on a light section. Colors
    hardcoded so it renders regardless of which CSS bundle a page loads.

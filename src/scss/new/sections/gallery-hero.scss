@@ -1,4 +1,4 @@
-@import "../common/vars";
+@use "../common/vars" as *;
 
 .gallery-hero {
     --padding-top: #{30px};

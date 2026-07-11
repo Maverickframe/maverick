@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 .hero-front {
     padding: calc(var(--header-height) + #{30px}) 0 20px;

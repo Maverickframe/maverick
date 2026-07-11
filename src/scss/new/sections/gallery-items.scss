@@ -1,4 +1,4 @@
-@import "../common/vars";
+@use "../common/vars" as *;
 
 .gallery-items {
     padding-bottom: 100px;

@@ -1,4 +1,4 @@
-@import "../common/vars";
+@use "../common/vars" as *;
 
 // Plain content pages rendered by the default template (page.php) — /app/, the DE
 // legal pages, and any future plain page. Migrated out of the retired old-design

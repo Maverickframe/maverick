@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 
 /* Lead Quiz — dark brand section + white quiz card. Colors hardcoded so the
    block renders correctly regardless of which CSS bundle a page loads. */

@@ -28,7 +28,6 @@ export default defineConfig(({ mode }) => {
             preprocessorOptions: {
                 scss: {
                     silenceDeprecations: [
-                        "import",
                         "global-builtin",
                         "legacy-js-api",
                     ],

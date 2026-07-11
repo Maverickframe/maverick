@@ -1,4 +1,4 @@
-@import "../common/_vars";
+@use "../common/vars" as *;
 @import url("../blocks/cards.scss");
 @import url("../blocks/hero-blog.scss");
 @import url("../blocks/share.scss");

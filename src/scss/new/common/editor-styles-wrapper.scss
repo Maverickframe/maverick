@@ -1,4 +1,4 @@
-@import "_vars";
+@use "vars" as *;
 
 body :where(.editor-styles-wrapper) {
     font-family: "Inter Tight", "Inter Tight Fallback", sans-serif !important;
