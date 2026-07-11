@@ -1,95 +1,78 @@
 <?php
 /**
- * Link prefetch — self-hosted replacement for WP Rocket "Preload Links".
+ * Link prefetch tuning + non-Chromium fallback.
  *
- * Goal: make internal navigation feel instant without shipping Rocket's inline
- * helper. Two tiers, chosen by the browser itself:
+ * WordPress core 6.8 ships native "Speculative Loading" (the Speculation Rules
+ * API), on by default: it emits a <script type="speculationrules"> prefetch
+ * block for Chromium with `conservative` eagerness. That already covers ~86% of
+ * our desktop traffic — so we do NOT re-emit our own rules block (that would be
+ * a redundant duplicate). Instead this file does two small things:
  *
- *   1. Chromium (~86% of our desktop traffic) → native Speculation Rules API.
- *      A declarative <script type="speculationrules"> JSON block. Zero JS runs;
- *      the browser prefetches same-origin links on hover/pointerdown (moderate
- *      eagerness). We use `prefetch`, NOT `prerender`: prerender executes the
- *      target page early and could double-fire GTM/HubSpot events. Prefetch only
- *      warms the browser cache — tracking stays clean. Upgrade to prerender later
- *      only after verifying analytics doesn't double-count.
+ *   1. Bump core's eagerness conservative -> moderate via the official
+ *      `wp_speculation_rules_configuration` filter, so prefetch fires on hover
+ *      (~200ms intent) instead of only on pointerdown. Mode stays `prefetch`,
+ *      NOT prerender: prerender executes the target page early and could
+ *      double-fire GTM/HubSpot events. Prefetch only warms the browser cache.
  *
- *   2. Non-Chromium desktop (Firefox ~7.5%, Safari ~5.6%) → tiny hover-prefetch
- *      fallback that injects <link rel=prefetch> on hover. Gated so Chromium
- *      never runs it (it has the declarative block) and touch devices never do
- *      (no hover / pointer:fine).
+ *   2. Add a tiny hover-prefetch fallback for non-Chromium desktop (Firefox
+ *      ~7.5%, Safari ~5.6%), which the native API does not reach. It bails on
+ *      any engine that supports Speculation Rules (core already handles those)
+ *      and on any device without a fine hover pointer (mobile gets nothing).
  *
- *   3. Mobile → nothing. Both tiers are gated out.
+ * This replaces WP Rocket "Preload Links" (disabled separately), which was a
+ * third, overlapping prefetch mechanism.
  *
- * Kill-switch: append ?mfs_prefetch=0 to any URL to disable on that request.
- * Global off: define('MFS_PREFETCH', false).
- *
- * Exclusions mirror the old Rocket Preload Links config (feeds, wp-json, embeds,
- * /go/ /refer/ /recommend redirects) plus wp-admin, login, query-string URLs,
- * rel=nofollow and any element tagged data-no-prefetch.
+ * Kill-switch: ?mfs_prefetch=0 disables BOTH core speculative loading and the
+ * fallback for that request. Global off: define('MFS_PREFETCH', false).
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('wp_footer', function () {
-
-    // Global off-switch + per-request kill-switch.
+/**
+ * True when prefetch should be suppressed (global constant or per-request kill).
+ */
+function mfs_prefetch_disabled() {
     if (defined('MFS_PREFETCH') && MFS_PREFETCH === false) {
-        return;
+        return true;
     }
     if (isset($_GET['mfs_prefetch']) && $_GET['mfs_prefetch'] === '0') {
+        return true;
+    }
+    return false;
+}
+
+// --- Tier 1: tune WordPress core native Speculative Loading -----------------
+// Return null to fully disable when the kill-switch is active; otherwise bump
+// eagerness to "moderate" (hover) while keeping the safe "prefetch" mode.
+add_filter('wp_speculation_rules_configuration', function ($config) {
+    if (mfs_prefetch_disabled()) {
+        return null; // disables core's speculation rules output entirely
+    }
+    if (is_array($config)) {
+        $config['mode']      = 'prefetch';   // never prerender (keeps tracking clean)
+        $config['eagerness'] = 'moderate';   // hover intent, not just pointerdown
+    }
+    return $config;
+});
+
+// --- Tier 2: hover-prefetch fallback for non-Chromium desktop ---------------
+add_action('wp_footer', function () {
+
+    if (mfs_prefetch_disabled()) {
         return;
     }
-
-    // Never in wp-admin, customizer preview, feeds, or for logged-in editors
-    // (they get the un-optimized page anyway and don't need speculative loads).
+    // Never in wp-admin, customizer preview, feeds, or for logged-in editors.
     if (is_admin() || is_feed() || is_preview() || is_user_logged_in()) {
         return;
     }
-
-    // --- Tier 1: declarative Speculation Rules (Chromium) --------------------
-    // source:"document" = watch the page's own links; moderate eagerness fires
-    // on hover / pointerdown. href_matches "/*" restricts to same-origin paths.
-    $rules = array(
-        'prefetch' => array(
-            array(
-                'source'    => 'document',
-                'eagerness' => 'moderate',
-                'where'     => array(
-                    'and' => array(
-                        array('href_matches' => '/*'),
-                        array('not' => array('href_matches' => '/wp-admin/*')),
-                        array('not' => array('href_matches' => '/wp-login.php*')),
-                        array('not' => array('href_matches' => '/wp-json/*')),
-                        array('not' => array('href_matches' => '/feed/*')),
-                        array('not' => array('href_matches' => '/*/feed/*')),
-                        array('not' => array('href_matches' => '/*/embed/*')),
-                        array('not' => array('href_matches' => '/go/*')),
-                        array('not' => array('href_matches' => '/refer/*')),
-                        array('not' => array('href_matches' => '/recommend*')),
-                        // No query-string URLs (calculator/quiz state, tracking).
-                        array('not' => array('href_matches' => '/*\?*')),
-                        array('not' => array('selector_matches' => '[rel~="nofollow"]')),
-                        array('not' => array('selector_matches' => '[data-no-prefetch]')),
-                    ),
-                ),
-            ),
-        ),
-    );
-    echo '<script type="speculationrules">'
-        . wp_json_encode($rules)
-        . '</script>' . "\n";
-
-    // --- Tier 2: hover-prefetch fallback (non-Chromium desktop only) ---------
-    // Bails immediately on any engine that supports Speculation Rules (Tier 1
-    // already covers it) and on any device without a fine hover pointer.
     ?>
 <script id="mfs-prefetch-fallback">
 (function(){
   try{
     if('HTMLScriptElement' in window && HTMLScriptElement.supports
-       && HTMLScriptElement.supports('speculationrules')) return; // Chromium: declarative
+       && HTMLScriptElement.supports('speculationrules')) return; // Chromium: core handles it
     if(!window.matchMedia || !matchMedia('(hover:hover) and (pointer:fine)').matches) return; // desktop only
   }catch(e){ return; }
 
@@ -118,7 +101,6 @@ add_action('wp_footer', function () {
     document.addEventListener('pointerout', function(){ clearTimeout(timer); }, {passive:true});
   };
 
-  // Attach off the critical path.
   if('requestIdleCallback' in window){ requestIdleCallback(start); }
   else { setTimeout(start, 1200); }
 })();
