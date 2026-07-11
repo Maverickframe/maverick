@@ -461,20 +461,11 @@ require_once __DIR__ . '/inc.tour.php';
 require_once __DIR__ . '/inc.video.php';
 require_once __DIR__ . '/inc.prefetch.php';
 require_once __DIR__ . '/inc.lp.php';
+require_once __DIR__ . '/inc.delay.php';
 
-// HubSpot tracking — self-hosted loader. We dropped the bloated `leadin` plugin,
-// which also pulled the cookie-consent banner, ads pixel, forms JS and preconnect
-// hints, and force-loaded eagerly (it self-excluded from WP Rocket's delay). This
-// prints ONLY the HubSpot tracking code: page views, the hubspotutk cookie, and
-// behavioural events for workflow triggers. It's a plain external script (not
-// excluded), so WP Rocket's "Delay JS" defers it to the first user interaction
-// (scroll/move/touch/key) — off the critical path, still set before any form
-// submit. Forms are server-side (forms/hubspot.php) and independent of this.
-// The banner + ads pixel are portal-gated: keep them OFF in HubSpot Settings ->
-// Privacy & Consent so the loader does not pull them back in.
-add_action('wp_footer', function () {
-    echo '<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148670517.js"></script>' . "\n";
-}, 20);
+// GTM + HubSpot tracking are loaded by the self-hosted delayed loader in
+// inc.delay.php (first-interaction gate + 4s timeout fallback), which replaced
+// WP Rocket's "Delay JS" for these two scripts. See mfs_print_delayed_thirdparty().
 
 // End Enqueue Scripts and Styles
 

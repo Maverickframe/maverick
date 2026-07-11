@@ -34,19 +34,8 @@
     </p>
 </footer>
 
-<?php // GTM (mirrors footer.php; footer.php is not called on LP so its modals /
-      // sticky-CTA stay out). Consent Mode v2 is handled inside the container. ?>
-<?php if ( ! defined( 'IS_VITE_DEVELOPMENT' ) || IS_VITE_DEVELOPMENT == false ) : ?>
-<script>
-window.addEventListener('load', function() {
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-T4JS5BJV');
-});
-</script>
-<?php endif; ?>
+<?php // GTM + HubSpot now load via inc.delay.php on wp_footer() below
+      // (self-hosted delayed loader) — no eager inline GTM mirror on LP anymore. ?>
 
 <?php mfs_defer_menu_flush(); // close the output buffer header.php opened (inert if disabled) ?>
 <?php wp_footer(); ?>
