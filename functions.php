@@ -1128,6 +1128,23 @@ add_filter('rocket_lrc_optimization', '__return_false', 999);
 // Engine/Media/AboveTheFold/Context/Context.php → is_allowed()).
 add_filter('rocket_above_the_fold_optimization', '__return_false');
 
+// Turn off the beacon's two remaining jobs so it stops loading entirely (kills the
+// last ~35ms post-paint forced reflow from its font/preconnect measurement):
+//  • Preconnect: it only preconnected the tracking domains (HubSpot/Google/GTM),
+//    whose JS is now delayed until interaction — eager preconnects to them are
+//    wasted TCP+TLS. Filter verified in the plugin (Preconnect/Context/Context.php).
+//  • Font preload: redundant — the theme already <link rel=preload>s both Inter
+//    Tight woff2 in <head> (header.php) with font-display:optional + a metric-matched
+//    fallback, so CLS/FCP are unaffected. PreloadFonts has no filter (it reads the
+//    `auto_preload_fonts` option), so force that option to 0 via the core option hook.
+add_filter('rocket_preconnect_external_domains_optimization', '__return_false');
+add_filter('option_wp_rocket_settings', function ($settings) {
+    if (is_array($settings)) {
+        $settings['auto_preload_fonts'] = 0;
+    }
+    return $settings;
+});
+
 // End Fix wp rocket optimization for dynamic content
 
 // WP Rocket "Remove Unused CSS" builds the inline Used CSS by scanning the STATIC
