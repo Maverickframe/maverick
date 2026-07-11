@@ -1,0 +1,21 @@
+// Homepage ATF (above-the-fold) bundle — RENDER-BLOCKING, kept minimal (~8 KB gz).
+// Only what paints the first screen: universal chrome essentials + hero + the
+// element-class deps the hero reuses (hero-services .hero__*, reviews .review-item)
+// + trusted logos. Everything else ships in front-btf.scss (async, non-blocking).
+// Split boundary is by first-screen visibility, NOT by block — modals/footer/
+// below-fold blocks live in BTF. If you add a block ABOVE the fold, add it here
+// AND remove it from front-btf.scss. Keep in sync with blocks-home.scss (the
+// combined kill-switch bundle front.scss still imports the full set).
+// common.scss carries the reveal base (.js-reveal { opacity:0 }) so BTF blocks
+// start hidden even before their async CSS lands — that's what makes this FOUC-safe.
+@import url("../new/common/fonts.scss");
+@import url("../new/common/common.scss");
+@import url("../new/common/btns.scss");
+@import url("../new/common/header.scss");
+@import url("../new/common/socials.scss"); // header social icons
+@import url("../new/common/marquee.scss"); // hero CSS marquee is above the fold
+@import url("../new/common/snap.scss");    // hero reviews/logos scroll-snap
+@import url("../new/blocks/hero-front.scss");
+@import url("../new/blocks/hero-services.scss"); // hero-front reuses .hero__* here
+@import url("../new/blocks/reviews.scss");        // hero Google/Trustpilot .review-item
+@import url("../new/blocks/trusted.scss");        // "Trusted by leading teams" logos

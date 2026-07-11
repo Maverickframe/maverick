@@ -49,6 +49,20 @@ function mfs_page_bundle_key() {
     return 'src/scss/bundles/fallback.scss';
 }
 
+// Rewrite the homepage BTF stylesheet <link> into a non-blocking load:
+// preload → swap to stylesheet onload, with a <noscript> fallback so it still
+// applies without JS. Only touches the 'style-btf' handle; every other sheet
+// is left blocking. Registered only on the homepage split path.
+function mfs_async_btf_style_tag($tag, $handle, $href, $media) {
+    if ($handle !== 'style-btf') {
+        return $tag;
+    }
+    $esc = esc_url($href);
+    return '<link rel="preload" as="style" href="' . $esc . '" '
+        . 'onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n"
+        . '<noscript><link rel="stylesheet" href="' . $esc . '"></noscript>' . "\n";
+}
+
 add_action( 'wp_enqueue_scripts', function() {
     if (defined('IS_VITE_DEVELOPMENT') && IS_VITE_DEVELOPMENT == true) {
         define('VITE_ENTRY_POINT', $_ENV["VITE_ENTRY_POINT"]);
@@ -103,17 +117,42 @@ add_action( 'wp_enqueue_scripts', function() {
                         }, 10, 2);
                     }
                 }
-                // Every page (including plain pages / DE legal / /app/, which now map to
-                // bundles/page.scss) loads its per-type bundle. The old-design main.scss
-                // branch is gone — the old-design CSS system was fully retired.
-                if($key == mfs_page_bundle_key())
-                {
-                    $css_file = $value['file'];
-                    if ( ! empty($css_file)) {
-                        wp_register_style('style', DIST_URI . '/' . $css_file, [], null);
-                        wp_enqueue_style('style');
-                    }
-                }
+            }
+
+            // CSS. Every page loads its per-type bundle (page.scss / cases.scss / …)
+            // as one render-blocking sheet. The homepage is the exception: it's split
+            // into front-atf.scss (render-blocking, first screen only) + front-btf.scss
+            // (async, everything below the fold — modals/footer/lower blocks). This cuts
+            // the blocking CSS on the homepage from ~22 KB to ~8 KB gz and clears the
+            // "render-blocking / unused CSS / critical-path" PageSpeed flags without
+            // inline critical CSS (which we deliberately avoid) or WP Rocket RUCSS
+            // (which stripped runtime reveal classes before). FOUC-safe: modals are
+            // display:none; below-fold blocks start reveal-hidden via common.scss (ATF).
+            // Kill-switch: ?mfs_split=0 or define('MFS_CSS_SPLIT', false) → combined
+            // front.scss, the old single-file behavior.
+            $mfs_split = is_front_page()
+                && (! defined('MFS_CSS_SPLIT') || MFS_CSS_SPLIT)
+                && (! isset($_GET['mfs_split']) || $_GET['mfs_split'] !== '0');
+
+            $mfs_atf = $mfs_split && ! empty($manifest['src/scss/bundles/front-atf.scss']['file'])
+                ? $manifest['src/scss/bundles/front-atf.scss']['file'] : null;
+            $mfs_btf = $mfs_split && ! empty($manifest['src/scss/bundles/front-btf.scss']['file'])
+                ? $manifest['src/scss/bundles/front-btf.scss']['file'] : null;
+
+            if ($mfs_atf && $mfs_btf) {
+                // ATF: normal blocking stylesheet (handle stays 'style' so any
+                // wp_add_inline_style('style', …) still targets it).
+                wp_register_style('style', DIST_URI . '/' . $mfs_atf, [], null);
+                wp_enqueue_style('style');
+                // BTF: enqueued here, rewritten to preload+onload by the filter below.
+                wp_register_style('style-btf', DIST_URI . '/' . $mfs_btf, [], null);
+                wp_enqueue_style('style-btf');
+                add_filter('style_loader_tag', 'mfs_async_btf_style_tag', 10, 4);
+            } elseif ( ! empty($manifest[mfs_page_bundle_key()]['file'])) {
+                // Non-homepage, or split disabled / build missing a split file: single
+                // combined sheet (front.scss on the homepage kill-switch path).
+                wp_register_style('style', DIST_URI . '/' . $manifest[mfs_page_bundle_key()]['file'], [], null);
+                wp_enqueue_style('style');
             }
         }
     }

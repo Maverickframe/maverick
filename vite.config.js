@@ -47,6 +47,8 @@ export default defineConfig(({ mode }) => {
                     blocks: resolve(__dirname, env.VITE_STYLES_BLOCKS),
                     page: resolve(__dirname, "src/scss/bundles/page.scss"),
                     front: resolve(__dirname, "src/scss/bundles/front.scss"),
+                    frontAtf: resolve(__dirname, "src/scss/bundles/front-atf.scss"),
+                    frontBtf: resolve(__dirname, "src/scss/bundles/front-btf.scss"),
                     fallback: resolve(__dirname, "src/scss/bundles/fallback.scss"),
                     services: resolve(__dirname, "src/scss/bundles/services.scss"),
                     presentation: resolve(__dirname, "src/scss/bundles/presentation.scss"),

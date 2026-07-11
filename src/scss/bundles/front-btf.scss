@@ -1,0 +1,24 @@
+// Homepage BTF (below-the-fold) bundle — loaded ASYNC (preload+onload swap),
+// NON-blocking. Hidden/scrolled chrome + every block below the first screen.
+// FOUC-safe: modals are display:none until opened; below-fold blocks start
+// reveal-hidden (opacity:0 via common.scss, which ships in ATF) until scrolled
+// into view, by which time this file is already loaded. Keep in sync with
+// front-atf.scss — no partial should appear in both.
+@import url("../new/common/footer.scss");
+@import url("../new/common/modals.scss");       // display:none popups (book/quiz/etc.)
+@import url("../new/common/select.scss");        // custom selects live inside forms/modals
+@import url("../new/common/case-item.scss");
+@import url("../new/common/sticky-cta.scss");    // appears on scroll
+@import url("../new/common/video-player.scss");
+@import url("../new/common/editor-styles-wrapper.scss");
+@import url("../new/blocks/what-we-do.scss");
+@import url("../new/blocks/showreel.scss");
+@import url("../new/blocks/performance-scale.scss");
+@import url("../new/blocks/cases-accordion.scss");
+@import url("../new/blocks/price.scss");
+@import url("../new/blocks/free-test-render.scss");
+@import url("../new/blocks/cta-form.scss");
+@import url("../new/blocks/quiz.scss");
+@import url("../new/blocks/faq.scss");
+@import url("../new/blocks/team-awards.scss");
+@import url("../new/blocks/worldwide-rendering.scss");
