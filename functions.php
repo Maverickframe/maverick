@@ -578,6 +578,20 @@ function wpassist_remove_block_library_css()
 }
 add_action('wp_enqueue_scripts', 'wpassist_remove_block_library_css');
 
+/**
+ * Kill the vibe-ai (WPVibe) "hover-to-edit" affordance on the frontend for everyone.
+ * It injects an Edit pencil into elements marked data-wpvibe-edit and links them
+ * into wp-admin — a human-editor convenience we don't use (all edits are done
+ * programmatically). Shipping it to visitors = 2 wasted requests + a site-wide
+ * MutationObserver for zero benefit. Priority 100 so it runs AFTER the plugin enqueues.
+ */
+function mfs_dequeue_wpvibe_edit_affordance()
+{
+    wp_dequeue_script('wpvibe-edit-affordance');
+    wp_dequeue_style('wpvibe-edit-affordance');
+}
+add_action('wp_enqueue_scripts', 'mfs_dequeue_wpvibe_edit_affordance', 100);
+
 function disable_emojis()
 {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
