@@ -1136,14 +1136,11 @@ add_filter('rocket_above_the_fold_optimization', '__return_false');
 //  • Font preload: redundant — the theme already <link rel=preload>s both Inter
 //    Tight woff2 in <head> (header.php) with font-display:optional + a metric-matched
 //    fallback, so CLS/FCP are unaffected. PreloadFonts has no filter (it reads the
-//    `auto_preload_fonts` option), so force that option to 0 via the core option hook.
+//    `auto_preload_fonts` option directly), and the option is read at plugins_loaded
+//    — before the theme — so a functions.php filter is too late. It is therefore
+//    turned off at the setting level: `wp option patch update wp_rocket_settings
+//    auto_preload_fonts 0` (kept off in the WP Rocket UI: Media → Preload fonts).
 add_filter('rocket_preconnect_external_domains_optimization', '__return_false');
-add_filter('option_wp_rocket_settings', function ($settings) {
-    if (is_array($settings)) {
-        $settings['auto_preload_fonts'] = 0;
-    }
-    return $settings;
-});
 
 // End Fix wp rocket optimization for dynamic content
 
