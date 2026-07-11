@@ -1198,6 +1198,29 @@ add_filter('rocket_delay_js_exclusions', function ($exclusions) {
     }));
 }, 20);
 
+// ---- WP Rocket teardown: self-hosted "Defer all JS" ----------------------
+// Replaces WP Rocket's `defer_all_js` so the plugin can be removed. Rocket
+// deferred EVERY external <script> site-wide (exclude_defer_js was empty); this
+// reproduces that natively. Deferred external scripts keep document order, so
+// dependency chains (jquery → svg-support/rank-math/etc.) still execute in order.
+// The theme entry `main` is already type="module" (deferred by spec) and is
+// skipped by the module check. Inline scripts are left untouched — identical to
+// Rocket's defer, which never touched inline. Idempotent: a script that already
+// carries defer/async (WP 6.3 native strategy, or Rocket while both are briefly
+// live) is not double-tagged. Kill-switch: ?mfs_scriptdefer=0 on any URL, or
+// define('MFS_SCRIPT_DEFER', false).
+if ( ! defined('MFS_SCRIPT_DEFER') ) { define('MFS_SCRIPT_DEFER', true); }
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+    if ( is_admin() ) { return $tag; }
+    if ( defined('MFS_SCRIPT_DEFER') && ! MFS_SCRIPT_DEFER ) { return $tag; }
+    if ( isset($_GET['mfs_scriptdefer']) && $_GET['mfs_scriptdefer'] === '0' ) { return $tag; }
+    if ( empty($src) ) { return $tag; }                                   // inline-only: skip
+    if ( strpos($tag, 'type="module"') !== false
+      || strpos($tag, "type='module'") !== false ) { return $tag; }       // ESM already deferred
+    if ( preg_match('/\s(defer|async)(\s|=|>|\/)/', $tag) ) { return $tag; } // already deferred/async
+    return preg_replace('/<script\s/', '<script defer ', $tag, 1);
+}, 20, 3);
+
 // Search Posts in ACF Fields
 
 add_filter('posts_search', function ($search, $wp_query) {
