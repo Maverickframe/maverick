@@ -67,11 +67,14 @@
 .mfs-lp .form-fine{font-size:12px;color:#8b91a0;text-align:center;margin-top:2px}
 
 /* success state (contacts.js toggles .is-success / .is-active) */
+/* contacts.js sets .is-success on the CONTAINER on submit success (the .is-active
+   on .contacts-form__success is a no-op here — the success node sits OUTSIDE the
+   <form>, matching the theme's own markup). Hide every other child, reveal the
+   thank-you. Reverts after contacts.js's 20s timeout removes .is-success. */
 .mfs-lp .contacts-form__success{display:none;text-align:center;padding:8px 4px}
 .mfs-lp .contacts-form__success h3{color:var(--accent);font-size:20px;font-weight:500;margin-bottom:8px}
-.mfs-lp .js-contacts-form-container.is-success form.js-contacts-form{display:none}
-.mfs-lp .js-contacts-form-container.is-success .risk-chips{display:none}
-.mfs-lp .contacts-form__success.is-active{display:block}
+.mfs-lp .js-contacts-form-container.is-success > *{display:none}
+.mfs-lp .js-contacts-form-container.is-success > .contacts-form__success{display:block}
 
 /* logo strip */
 .mfs-lp .strip{background:#fff;border-bottom:1px solid var(--line);padding:26px 0}
