@@ -24,14 +24,6 @@ $classes = trim($classes);
     <link rel="dns-prefetch" href="https://track-eu1.hubspot.com">
     <link rel="dns-prefetch" href="https://www.google.com">
 
-    <?php
-    $portfolioType = gettype(get_field('portfolio_type')) === 'array'
-        ? get_field('portfolio_type')
-        : array();
-    if ($portfolioType === 'private' || (in_array('private', $portfolioType) && !in_array('common', $portfolioType))):
-        ?>
-        <meta name="robots" content="noindex">
-    <?php endif; ?>
     <link rel="manifest" href="<?= get_template_directory_uri(); ?>/site.webmanifest">
     <link rel="icon" href="<?= get_template_directory_uri_vite(); ?>/img/favicon.ico" type="image/x-icon" sizes="any">
     <link rel="icon" href="<?= get_template_directory_uri_vite(); ?>/img/favicon.svg" type="image/svg+xml">
