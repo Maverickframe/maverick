@@ -592,6 +592,26 @@ function mfs_dequeue_wpvibe_edit_affordance()
 }
 add_action('wp_enqueue_scripts', 'mfs_dequeue_wpvibe_edit_affordance', 100);
 
+/**
+ * Hide the native "Posts" (post_type=post) admin menu item.
+ *
+ * We do NOT use WordPress core Posts — the blog runs on the custom post type
+ * `blog`, and native post categories redirect to the homepage (category sitemap
+ * is OFF). The default Posts UI only invited stray drafts in the wrong place.
+ * Cleared out on 2026-07-12; menu hidden here so nothing accidentally lands
+ * back in the unused `post` type.
+ *
+ * NOTE: this only hides the sidebar menu — the `post` type is WP core and stays
+ * registered (REST, wp-admin/edit.php still reachable by direct URL).
+ * KILL-SWITCH: to bring the menu back, delete this function + its add_action,
+ * or visit /wp-admin/edit.php directly.
+ */
+function mfs_hide_native_posts_menu()
+{
+    remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'mfs_hide_native_posts_menu', 999);
+
 function disable_emojis()
 {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
