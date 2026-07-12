@@ -82,6 +82,13 @@
 .mfs-lp .logos-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center}
 .mfs-lp .logo-box{height:38px;min-width:120px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;letter-spacing:.08em;background:var(--fill);border:1px solid var(--line);color:#9aa0ac}
 .mfs-lp .logo-box img{max-height:32px;max-width:150px;width:auto;height:auto;object-fit:contain;display:block}
+/* Typographic client wordmarks (variant A — uniform mono-grey, not logo art) */
+.mfs-lp .logo-word{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;height:38px;min-width:110px;padding:0 6px;font-family:inherit;font-size:15px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#8a90a0;white-space:nowrap;line-height:1;transition:color .15s}
+.mfs-lp .logo-word small{font-size:8.5px;font-weight:500;letter-spacing:.26em;margin-top:4px;color:#b4b9c4}
+.mfs-lp .logo-word:hover{color:var(--muted)}
+.mfs-lp .trust .logo-word{color:#9096a6}
+.mfs-lp .trust .logo-word small{color:#6d7382}
+.mfs-lp .trust .logo-word:hover{color:#c3c8d4}
 
 /* sections */
 .mfs-lp section.blk{padding:64px 0}
