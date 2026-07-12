@@ -1,6 +1,6 @@
 // Native-IntersectionObserver lazy media (replaces lazysizes + unveilhooks; the
-// only markup still using .lazyload/data-src is hover reels, a panorama iframe and
-// a few portfolio images). Images are native loading="lazy" site-wide.
+// only markup still using .lazyload/data-src is hover reels and a panorama
+// iframe). Images are native loading="lazy" site-wide.
 import './components/lazy-media';
 
 // --- Always-on, lightweight modules (vanilla JS, no heavy deps) ---------------
@@ -25,7 +25,6 @@ import './components/accordeon';
 import './components/contacts';
 import './components/contacts-phone';
 import './components/counters';
-// filters → lazy (portfolio grids only, gated on .js-portfolio-items/.js-portfolio-front-item)
 import './components/header';
 import './components/intersectionObserver';
 import './components/menu';
@@ -79,8 +78,6 @@ const lazyModules = [
   // Article table-of-contents scroll-spy — blog/article singles (refactored off
   // DOMContentLoaded to a readyState guard so lazy import is safe).
   ['.js-toc-item', () => import('./components/toc')],
-  // Portfolio grid filter + front loadmore — portfolio/archive pages only.
-  ['.js-portfolio-items, .js-portfolio-front-item', () => import('./components/filters')],
   // Native <video>+hls.js hydrator for Bunny placeholders — pages with video
   // only. Self-guards on readyState + top-level .js-mfs-video query; hls.js is a
   // further lazy chunk fetched only when a player actually plays.

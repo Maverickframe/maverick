@@ -696,79 +696,6 @@ add_action('admin_init', 'df_disable_comments_admin_menu_redirect');
 
 // End Remove unused
 
-// Load More
-function loadmore_ajax_handler()
-{
-    $post_id = absint($_POST['post_id'] ?? 0);
-    $cat = isset($_POST['cat']) && $_POST['cat'] != 'all' ? urlencode(sanitize_text_field(wp_unslash($_POST['cat']))) : null;
-
-    $args = array(
-        'post_type' => 'portfolio',
-        'posts_per_page' => 12,
-        'paged' => absint($_POST['page'] ?? 0) + 1,
-        'post_status' => 'publish',
-        'cat' => $cat,
-        'meta_query' => array(
-            array(
-                'key' => 'portfolio_type',
-                'value' => '"' . get_field('portfolio_type', $post_id) . '"',
-                'compare' => 'LIKE'
-            )
-        )
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            echo get_template_part('components/portfolio-item', null, array(
-                'class' => 'portfolio-item_page'
-            ));
-        }
-    }
-    wp_reset_query();
-    die; // here we exit the script and even no wp_reset_query() required!
-}
-
-add_action('wp_ajax_loadmore', 'loadmore_ajax_handler');
-add_action('wp_ajax_nopriv_loadmore', 'loadmore_ajax_handler');
-
-function loadmore_front_ajax_handler()
-{
-    $args = array(
-        'post_type' => 'portfolio',
-        'posts_per_page' => 6,
-        'paged' => absint($_POST['page'] ?? 0) + 1,
-        'post_status' => 'publish',
-        'cat' => get_field('portfolio_cat', absint($_POST['post_id'] ?? 0)) ?? null,
-        'meta_query' => array(
-            array(
-                'key' => 'portfolio_type',
-                'value' => '"common"',
-                'compare' => 'LIKE'
-            )
-        )
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            echo get_template_part('components/portfolio-front-item');
-        }
-    }
-    wp_reset_query();
-    die; // here we exit the script and even no wp_reset_query() required!
-}
-
-add_action('wp_ajax_loadmore_front', 'loadmore_front_ajax_handler');
-add_action('wp_ajax_nopriv_loadmore_front', 'loadmore_front_ajax_handler');
-
-// End Load More
 
 // Load More Articles
 
@@ -1021,49 +948,6 @@ add_action('template_redirect', 'rn_author_page_redirect');
 
 // End Remove category and author pages
 
-// Filter private & common portfolio
-
-function get_portfolio_item_join($join)
-{
-    if (is_singular('portfolio')) {
-        global $wpdb;
-        $new_join = $join . "INNER JOIN $wpdb->postmeta AS m ON p.ID = m.post_id ";
-        return $new_join;
-    }
-    return $join;
-}
-add_filter('get_previous_post_join', 'get_portfolio_item_join');
-add_filter('get_next_post_join', 'get_portfolio_item_join');
-
-function get_prev_portfolio_item($where)
-{
-    if (is_singular('portfolio')) {
-        global $wpdb;
-        $like = '%common%';
-
-        $prev_where = $wpdb->prepare("$where AND (m.meta_key = 'portfolio_type' AND (m.meta_key = 'portfolio_type' AND m.meta_value LIKE '%s'))", $like);
-
-        return $prev_where;
-    }
-    return $where;
-}
-add_filter('get_previous_post_where', 'get_prev_portfolio_item');
-
-function get_next_portfolio_item($where)
-{
-    if (is_singular('portfolio')) {
-        global $wpdb;
-        $like = '%common%';
-
-        $new_where = $wpdb->prepare("$where AND (m.meta_key = 'portfolio_type' AND (m.meta_key = 'portfolio_type' AND m.meta_value LIKE '%s'))", $like);
-
-        return $new_where;
-    }
-    return $where;
-}
-add_filter('get_next_post_where', 'get_next_portfolio_item');
-
-// End Filter private & common portfolio
 
 // Leading zero pagination
 
