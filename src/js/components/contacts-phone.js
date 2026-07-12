@@ -159,7 +159,10 @@ function initValidation(form) {
       if (!first) first = el;
     };
 
-    if (!name || name.value.trim().length < 2) fail(fieldOf(name), name);
+    // Name is validated only when the form actually has a Name field. Minimal
+    // landing-page forms (e.g. email-only /lp/ free-render) omit it on purpose;
+    // treating an absent field as a failure silently blocked their submit here.
+    if (name && name.value.trim().length < 2) fail(fieldOf(name), name);
     else setError(fieldOf(name), false);
 
     if (!email || !EMAIL_RE.test(email.value.trim())) fail(fieldOf(email), email);
