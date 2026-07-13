@@ -37,10 +37,20 @@ if ( $sc_enabled === null ) {
 
 $sc_video = trim( (string) get_field( 'sticky_cta_video', 'options' ) );
 
-// Fallback to the homepage showreel reel when the Options field is empty.
-// Editors can override it via Options → "Sticky CTA (Global)".
-if ( $sc_video === '' ) {
-    $sc_video = '<iframe src="https://iframe.mediadelivery.net/embed/655216/e3ddaf1f-eb40-4f5f-8b7d-5c529bf12265?autoplay=true&loop=true&muted=true&preload=true" loading="lazy" allow="autoplay; fullscreen" title="Maverick Frame showreel"></iframe>';
+// Fallback when the Options field is empty: render our native <video> player
+// DIRECTLY via the placeholder helper (no iframe for inc.video.php to convert),
+// homepage showreel reel, muted bg, plays ONCE to the end (no loop). If an editor
+// pastes a raw Bunny embed into Options instead, inc.video.php converts it the
+// usual way. Override via Options → "Sticky CTA (Global)".
+if ( $sc_video === '' && function_exists( 'mfs_video_placeholder' ) ) {
+    $sc_video = mfs_video_placeholder(
+        'e3ddaf1f-eb40-4f5f-8b7d-5c529bf12265',
+        array(
+            'mode'  => 'bg',
+            'loop'  => false,
+            'title' => 'Maverick Frame showreel',
+        )
+    );
 }
 
 if ( ! $sc_enabled || $sc_video === '' ) {
@@ -59,7 +69,7 @@ if ( ! $sc_label ) {
     $sc_label = mfs_t( 'Get In Touch', 'Contáctanos', 'Kontakt aufnehmen' );
 }
 ?>
-<div class="sticky-cta js-sticky-cta">
+<div class="sticky-cta js-sticky-cta is-armed">
     <div class="sticky-cta__media">
         <button class="sticky-cta__close js-sticky-cta-close" type="button" aria-label="Hide video">
             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false">

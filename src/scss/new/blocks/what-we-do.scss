@@ -171,22 +171,36 @@ ul.what-we-do__tabs {
     .mfs-snap__dots {
         margin-top: 20px;
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
 
+        // Tap target = 24×24 (PSI mobile / WCAG 2.2 target-size). The visible 8px dot
+        // is rendered via ::before, so the look is unchanged while the hit area is big
+        // enough and non-overlapping (24px targets + 8px gap → 32px pitch).
         .mfs-snap__dot {
             @include btn;
 
-            width: 8px;
-            height: 8px;
+            width: 24px;
+            height: 24px;
 
-            border-radius: 50%;
-            background-color: var(--stroke-light-grey-color);
-            transition:
-                background-color 0.3s ease,
-                transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            &[aria-current] {
+            &::before {
+                content: "";
+                width: 8px;
+                height: 8px;
+
+                border-radius: 50%;
+                background-color: var(--stroke-light-grey-color);
+                transition:
+                    background-color 0.3s ease,
+                    transform 0.3s ease;
+            }
+
+            &[aria-current]::before {
                 background-color: var(--accent-color);
                 transform: scale(1.3);
             }
