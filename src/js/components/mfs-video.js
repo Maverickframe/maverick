@@ -207,7 +207,9 @@ function attachTracking(video, title) {
 
 function initBg(root, video) {
   video.muted = true;
-  video.loop = true;
+  // Loop by default (homepage showreel), unless the placeholder opts out with
+  // data-loop="0" (sticky CTA) — then it plays once to the end and freezes.
+  video.loop = root.dataset.loop !== '0';
   video.setAttribute('muted', '');
   // Play only while visible; releases decode/network when scrolled away.
   const io = new IntersectionObserver(

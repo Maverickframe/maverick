@@ -32,6 +32,33 @@ function initStickyCta() {
     });
   }
 
+  // 1b) Keep the card hidden on the FIRST screen; arm it only once the visitor
+  //     has scrolled roughly one viewport down. A zero-size sentinel parked at
+  //     top:100vh triggers the reveal — no scroll listener, no per-frame reads.
+  //     Bonus: while the card is display:none the inner player's Intersection
+  //     Observer can't fire, so the Bunny stream + poster are NOT fetched on the
+  //     first screen (the card is position:fixed, so it would otherwise always
+  //     intersect and load immediately). Rendered with `is-armed` in PHP so it
+  //     never flashes before hydration.
+  if (card.classList.contains('is-armed') && 'IntersectionObserver' in window) {
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText =
+      'position:absolute;top:100vh;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.appendChild(sentinel);
+    const armIo = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        card.classList.remove('is-armed');
+        armIo.disconnect();
+        sentinel.remove();
+      }
+    });
+    armIo.observe(sentinel);
+  } else {
+    // No IO support (very old browsers): just show it.
+    card.classList.remove('is-armed');
+  }
+
   // 2) Suppress the card while the Free Test Render form OR the lead quiz is in
   //    view, so it never overlaps either. Scroll is native (no virtualised /
   //    transform-based scroll — GSAP/Lenis were removed), so IntersectionObserver
