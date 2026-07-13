@@ -84,6 +84,10 @@ if ( ! $sc_label ) {
     $sc_label = mfs_t( 'Get In Touch', 'Contáctanos', 'Kontakt aufnehmen' );
 }
 ?>
+<?php // Critical (render-blocking) hide for the armed state. The sticky-cta stylesheet
+      // lives in the async BTF bundle, so without this the card would flash — and its
+      // inner player IO would fetch the video — before BTF applies on the first screen. ?>
+<style>.sticky-cta.is-armed{display:none!important}</style>
 <div class="sticky-cta js-sticky-cta is-armed">
     <div class="sticky-cta__media">
         <button class="sticky-cta__close js-sticky-cta-close" type="button" aria-label="Hide video">
