@@ -46,11 +46,19 @@ function initStickyCta() {
     sentinel.style.cssText =
       'position:absolute;top:100vh;left:0;width:1px;height:1px;pointer-events:none;';
     document.body.appendChild(sentinel);
+    const reveal = () => {
+      card.classList.remove('is-armed');
+      armIo.disconnect();
+      sentinel.remove();
+    };
     const armIo = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        card.classList.remove('is-armed');
-        armIo.disconnect();
-        sentinel.remove();
+      // Reveal when the sentinel is in view OR already scrolled past it. A fast
+      // scroll / Page Down can jump the sentinel above the viewport in a single
+      // frame — then IO fires once with isIntersecting:false, so a plain
+      // isIntersecting check would miss it and the card would never appear.
+      // boundingClientRect.top < 0 catches "already scrolled past".
+      if (entries.some((e) => e.isIntersecting || e.boundingClientRect.top < 0)) {
+        reveal();
       }
     });
     armIo.observe(sentinel);

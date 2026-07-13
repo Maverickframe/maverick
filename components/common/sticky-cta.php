@@ -53,6 +53,21 @@ if ( $sc_video === '' && function_exists( 'mfs_video_placeholder' ) ) {
     );
 }
 
+// Sticky-CTA video always plays once (never loops), whatever the source. The
+// helper fallback already sets loop=false; if the embed came from ACF Options as
+// a raw Bunny iframe instead, force &mfsloop=0 into its URL so inc.video.php emits
+// data-loop="0" on the converted <video>.
+if ( $sc_video !== '' && strpos( $sc_video, 'mediadelivery.net/embed/' ) !== false && strpos( $sc_video, 'mfsloop' ) === false ) {
+    $sc_video = preg_replace_callback(
+        '#(//(?:iframe|player)\.mediadelivery\.net/embed/[0-9]+/[0-9a-fA-F-]{36})([^"\']*)#i',
+        static function ( $m ) {
+            $sep = ( strpos( $m[2], '?' ) === false ) ? '?' : '&';
+            return $m[1] . $m[2] . $sep . 'mfsloop=0';
+        },
+        $sc_video
+    );
+}
+
 if ( ! $sc_enabled || $sc_video === '' ) {
     return;
 }
