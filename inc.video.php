@@ -172,24 +172,29 @@ if ( ! function_exists( 'mfs_video_replace_iframe' ) ) {
 			$mode     = ( $autoplay && $muted ) ? 'bg' : 'click';
 		}
 
-		// Loop: on by default; a Bunny embed with loop=false (or &mfsloop=0) plays
-		// once to the end and freezes. Only bg/hover actually loop — click never does.
-		$loop = ! isset( $q['loop'] ) || filter_var( $q['loop'], FILTER_VALIDATE_BOOLEAN );
-		if ( isset( $q['mfsloop'] ) ) {
-			$loop = filter_var( $q['mfsloop'], FILTER_VALIDATE_BOOLEAN );
-		}
-
 		// Title (a11y + GA4 label) from the iframe's own title attribute, if any.
 		$title = '';
 		if ( preg_match( '#title\s*=\s*(["\'])(.*?)\1#i', $attrs, $t ) ) {
 			$title = trim( $t[2] );
 		}
 
-		// Poster override: only a CLICK hero borrows the page's featured image
-		// (crisp, hand-picked). For hover/bg — and especially the gallery, where
-		// many videos share one page — each keeps its OWN thumbnail (the helper
-		// defaults to the static thumbnail_1.jpg), else every tile shows the cover.
-		$poster = '';
+		$pz  = MFS_BUNNY_PULLZONE;
+		$src = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
+
+		// Poster: STATIC per-video thumbnail_1.jpg (2026-07-13). Bunny's default
+		// thumbnail.jpg 404s for this library, but thumbnail_1.jpg IS generated
+		// (full-res JPEG, 224-274 KB — verified on 3 GUIDs incl. both gallery
+		// heavies). The previously-used animated preview.webp weighs 1.5-3 MB per
+		// video (a 2.5 MB one on /gallery/) and was downloaded in full just so
+		// mfs-video.js could canvas-freeze frame one. It stays only as the
+		// fallback: setPoster() probes the static poster and swaps to the preview
+		// (frozen via canvas) if thumbnail_1.jpg is ever missing for a video.
+		// Only a CLICK hero video borrows the page's featured image (crisp,
+		// hand-picked). For hover/bg — and especially the gallery, where many
+		// videos share one page — each keeps its OWN thumbnail, otherwise every
+		// tile shows the page cover.
+		$poster_fallback = 'https://' . $pz . '/' . $guid . '/preview.webp';
+		$poster          = 'https://' . $pz . '/' . $guid . '/thumbnail_1.jpg';
 		if ( $mode === 'click' && is_singular() ) {
 			$qid = get_queried_object_id();
 			if ( $qid && has_post_thumbnail( $qid ) ) {
@@ -200,59 +205,13 @@ if ( ! function_exists( 'mfs_video_replace_iframe' ) ) {
 			}
 		}
 
-		return mfs_video_placeholder(
-			$guid,
-			array(
-				'mode'   => $mode,
-				'loop'   => $loop,
-				'title'  => $title,
-				'poster' => $poster,
-			)
-		);
-	}
-}
-
-if ( ! function_exists( 'mfs_video_placeholder' ) ) {
-	/**
-	 * Build the <div class="mfs-video"> placeholder that mfs-video.js hydrates —
-	 * directly from a Bunny GUID, so a component can render our native player
-	 * WITHOUT ever printing a Bunny <iframe> for the output-buffer to catch back.
-	 * Same markup the iframe converter emits, single source of truth for both.
-	 *
-	 * @param string $guid Bunny video GUID (36-char).
-	 * @param array  $args {
-	 *     @type string $mode   bg|click|hover. Default bg.
-	 *     @type bool   $loop   Loop playback. Default true. bg/hover only.
-	 *     @type string $title  a11y + GA4 label. Default ''.
-	 *     @type string $poster Poster URL override. Default static thumbnail_1.jpg.
-	 * }
-	 * @return string Placeholder HTML, or '' if the GUID is unusable.
-	 */
-	function mfs_video_placeholder( $guid, $args = array() ) {
-		$guid = strtolower( preg_replace( '/[^0-9a-fA-F-]/', '', (string) $guid ) );
-		if ( strlen( $guid ) !== 36 ) {
-			return '';
-		}
-
-		$mode  = ( isset( $args['mode'] ) && in_array( $args['mode'], array( 'bg', 'click', 'hover' ), true ) ) ? $args['mode'] : 'bg';
-		$loop  = ! array_key_exists( 'loop', $args ) || (bool) $args['loop'];
-		$title = isset( $args['title'] ) ? trim( (string) $args['title'] ) : '';
-
-		$pz              = MFS_BUNNY_PULLZONE;
-		$src             = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
-		$poster_fallback = 'https://' . $pz . '/' . $guid . '/preview.webp';
-		// Static thumbnail_1.jpg by default (~250 KB); the animated preview.webp
-		// (1.5-3 MB) stays only as the canvas-frozen fallback in setPoster().
-		$poster = ( ! empty( $args['poster'] ) ) ? $args['poster'] : 'https://' . $pz . '/' . $guid . '/thumbnail_1.jpg';
-
 		return sprintf(
-			'<div class="mfs-video js-mfs-video mfs-video--%1$s" data-guid="%2$s" data-src="%3$s" data-poster="%4$s" data-poster-fallback="%5$s" data-mode="%1$s" data-loop="%6$s"%7$s></div>',
+			'<div class="mfs-video js-mfs-video mfs-video--%1$s" data-guid="%2$s" data-src="%3$s" data-poster="%4$s" data-poster-fallback="%5$s" data-mode="%1$s"%6$s></div>',
 			esc_attr( $mode ),
 			esc_attr( $guid ),
 			esc_url( $src ),
 			esc_url( $poster ),
 			esc_url( $poster_fallback ),
-			$loop ? '1' : '0',
 			$title !== '' ? ' data-title="' . esc_attr( $title ) . '"' : ''
 		);
 	}

@@ -41,13 +41,6 @@
         display: none;
     }
 
-    // Armed = hidden until the visitor scrolls past the first screen (sticky-cta.js
-    // removes it). Rendered in PHP so the card never shows on the first screen, and
-    // display:none also stops the inner player's IO from fetching video up-front.
-    &.is-armed {
-        display: none;
-    }
-
     &__media {
         position: relative;
         overflow: hidden;
