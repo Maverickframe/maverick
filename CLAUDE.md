@@ -19,20 +19,19 @@ Anything in this folder: `.php`, `.scss`, `.js`, `.css`, `.json` (incl.
 
 ```
 LocalWP (mfs-local.local) → Claude Code edits files locally
-        → git commit + git push origin main
-        → GitHub (Maverickframe/maverick)
-        → GitHub Action (.github/workflows/deploy-staging.yml)
-        → Rocket Staging (e2i1j0xyf5-staging.onrocket.site)
-        → manual Rocket "Publish to Production" button
-        → Production (maverickframe.com)
+        → branch fix/<task> → git push → PR to main
+        → Dima merges + runs manual "Deploy theme to PRODUCTION" Action
+        → Production (maverickframe.com) — deploy auto-purges caches
 ```
+
+(Full process: `WORKFLOW.md`. Staging was decommissioned 2026-06-24.)
 
 ### Cycle 2 — CONTENT (rows in the WP database)
 Anything edited through WP-admin: post bodies, **values** of ACF/SCF fields,
 media library, menus, taxonomies, options, SEO meta.
 
 ```
-Cowork + Vibe AI MCP (WPVibe)  → Staging or Production directly
+Cowork + Vibe AI MCP (WPVibe)  → Production directly
 ```
 
 No git. No LocalWP roundtrip. The local DB is just a snapshot frozen at
@@ -67,8 +66,10 @@ migration time and intentionally drifts from prod.
 |---|---|---|---|
 | **Local** | `http://mfs-local.local/` | `~/Local Sites/mfs-local/app/public/wp-content/themes/maverickframe/` | Cowork / Claude Code on local files |
 | **GitHub** | `github.com/Maverickframe/maverick` | (cloud, branch `main`) | `git push` from local |
-| **Staging** | `https://e2i1j0xyf5-staging.onrocket.site/` | Rocket server, path `/e2i1j0xyf5-staging.onrocket.site/wp-content/themes/maverickframe/` | GitHub Action (auto on push) + Vibe AI MCP for content |
-| **Production** | `https://maverickframe.com/` | Rocket server, path `/wp-content/themes/maverickframe/` (root) | Rocket "Publish to Production" button + Vibe AI MCP for content |
+| **Production** | `https://maverickframe.com/` | Rocket server, path `/wp-content/themes/maverickframe/` (root) | manual "Deploy theme to PRODUCTION" GitHub Action + Vibe AI MCP for content |
+
+**Staging is GONE** (decommissioned 2026-06-24, workflow deleted). Any
+`e2i1j0xyf5-staging.onrocket.site` references in old docs/branches are dead.
 
 **LocalWP** is the local dev environment (formerly Local by Flywheel). Site
 name is `mfs-local`. Live Link is **off by default** — when on, WordPress
@@ -76,8 +77,8 @@ rewrites siteurl to `bouncy-subway.localsite.io` and `http://mfs-local.local/`
 starts redirecting. Toggle off in LocalWP UI; if `siteurl` got stuck, fix in
 Site Shell: `wp option update siteurl http://mfs-local.local && wp option update home http://mfs-local.local`.
 
-The **Vibe AI MCP** (WPVibe) is connected to both staging and prod. Default
-rule: content goes through it; code does not.
+The **Vibe AI MCP** (WPVibe) is connected to prod. Default rule: content
+goes through it; code does not.
 
 ---
 
@@ -109,7 +110,7 @@ maverickframe/
 ├── acf-json/                       # ACF field group definitions (CODE, not content)
 ├── blog-v1-overrides.css           # blog single-post override (see §8)
 ├── blog-v1-enhancements.js         # blog single-post enhancements (see §8)
-├── .github/workflows/deploy-staging.yml  # CI: main → staging via FTPS
+├── .github/workflows/deploy-production.yml  # manual Action: main → prod via FTPS + cache purge
 └── package.json, vite.config.js    # build config
 ```
 
@@ -121,11 +122,24 @@ maverickframe/
 - **Vite 6** for asset build (`npm start` dev, `npm run build` prod)
 - **Sass** (dart-sass)
 - **ACF/SCF Pro** with JSON sync to `acf-json/`
-- **Rank Math** for SEO
-- **WP Rocket** for caching — CSS delivery runs in **"Load CSS
-  asynchronously"** mode (critical CSS inline + async front.css); do NOT
-  switch to Remove Unused CSS: **Used CSS** mode strips inline
-  `<style>` tags, so all CSS must be enqueued, not inlined.
+- **Rank Math** for SEO — since 2026-07-10 the ONLY source of SEO meta:
+  legacy ACF fields `title` (SEO Title), `no_index`, `meta_description`
+  and the `document_title` filter are retired.
+- **No JS animation/slider libraries** (since 2026-07-09): GSAP, Splide
+  and three.js are removed from the runtime entirely. Sliders are CSS
+  scroll-snap (`.mfs-snap`) or pure-CSS marquees (`.mfs-marquee`); reveals
+  are vanilla IntersectionObserver + CSS. Don't reintroduce libraries.
+- **Video: native `<video>` + hls.js** (`mfs-video.js`), NOT the Bunny
+  iframe player (removed 2026-07-05). hls.js is a lazy chunk loaded on
+  first play; Bunny manifests load cross-origin (CSP `blob:` allowed via
+  `.htaccess` — LiteSpeed `Header set` beats PHP header overrides).
+- **WP Rocket** for caching — CSS delivery runs in **Remove Unused CSS
+  (RUCSS)** mode since 2026-07-10. Any class toggled at runtime by JS
+  (reveal states, menu open, etc.) is invisible to RUCSS generation and
+  gets stripped — it MUST be added to the `rocket_rucss_safelist` filter
+  in the theme (incident: `.is-in` stripped → header invisible).
+- **HubSpot tracking is self-hosted** in the theme (`wp_footer`, loader
+  only) — the `leadin` plugin is deactivated, don't reactivate it.
 - Hosting: **Rocket.net** (managed WP, Cloudflare Enterprise edge)
 - Local dev: **LocalWP** (formerly Local by Flywheel)
 
@@ -162,9 +176,13 @@ maverickframe/
   arrow `<span>` inherits and gets a third. Pick **one** of the two and
   kill the rest on `*` inside the link.
 
-- **WP Rocket "Used CSS" strips inline `<style>`.** Anything you put in
-  `wp_head` as an inline tag will disappear on cached pages. Enqueue real
-  files.
+- **WP Rocket RUCSS strips runtime-toggled classes.** RUCSS keeps only
+  selectors present in the HTML at generation time — classes added later
+  by JS (`.is-in`, open/active states) vanish from Used CSS. Safelist them
+  via the `rocket_rucss_safelist` filter in the theme (10.07 incident:
+  header was js-reveal `opacity:0`, `.is-in` stripped → "menu
+  disappeared"; header is now always-visible, not a reveal element).
+  Inline `<style>` in `wp_head` also gets stripped — enqueue real files.
 
 - **WP Rocket cache lives between deploys (T46 2026-07-08).** A deploy changes
   rendered HTML without firing any WP save-hook, so WP Rocket's **origin file
@@ -191,13 +209,12 @@ maverickframe/
   orchestrate git plumbing on the mounted path.
 
 - **`build/` is gitignored.** Don't commit compiled assets. They're
-  regenerated by `npm run build` (locally) or by the GitHub Action on
-  every push to `main`.
+  regenerated by `npm run build` (locally) or by the deploy Action.
 
 - **Vite needs env vars at build time.** `vite.config.js` reads
   `VITE_ENTRY_POINT`, `VITE_STYLES`, `VITE_STYLES_NEW`,
   `VITE_STYLES_BLOCKS` from `.env` locally. In CI (GitHub Action) they are
-  hard-coded in `deploy-staging.yml`. If you change paths in
+  hard-coded in `deploy-production.yml`. If you change paths in
   `vite.config.js`, update **both** `.env` and the Action's env block.
 
 - **HSTS cache in browser after Live Link.** If LocalWP Live Link was on,
@@ -217,21 +234,18 @@ maverickframe/
   `eager_attachment()` adds them. (Removing fetchpriority from the logo made
   Rocket lazyload it → the logo became the mobile LCP element.)
 
-- **Splide v4 puts `role="group|tabpanel"` on every slide** — invalid on
-  `<li>` (axe aria-allowed-role), fails PSI's Agentic Browsing
-  "accessibility tree" audit. Fixed by `src/js/components/splide-a11y.js`
-  (patches `Splide.prototype.mount`); it MUST be imported in every file
-  that creates Splide instances (currently sliders.js, modals.js).
+- **Splide is GONE (2026-07-09)** — so are GSAP and three.js, and with
+  them the whole family of Splide gotchas (role="group" a11y patch,
+  delayAutoScrollStart, clones seams). Sliders are `.mfs-snap` (CSS
+  scroll-snap, `initSnap`) or `.mfs-marquee` (pure-CSS, track rendered
+  twice, second pass aria-hidden). A dynamically injected `.mfs-snap`
+  must be `initSnap`'d **synchronously right after innerHTML**, not in
+  rAF (modal stats dots never built otherwise).
 
-- **Hero marquee loops both ways:** one column auto-scrolls backwards and
-  shows clones of the TAIL slides within seconds. Eager-load first 4 AND
-  last 2 slides per column in hero-front.php — eager-ing only the head
-  leaves the real LCP slide lazy.
-
-- **AutoScroll marquees start delayed** (~3s or first interaction,
-  `delayAutoScrollStart()` in sliders.js, `autoStart: false` in configs):
-  an immediately-moving marquee pins lab Speed Index at ~6s forever. Keep
-  this when touching sliders.
+- **Hero marquee shows TAIL slides early:** the CSS marquee track is
+  duplicated and one column runs backwards, so tail slides are visible
+  within seconds. Eager-load first 4 AND last 2 slides per column in
+  hero-front.php — eager-ing only the head leaves the real LCP slide lazy.
 
 - **Code-split bundle = `type="module"` + Rocket JS-minify exclusion.**
   The entry has `import.meta`/dynamic `import()` (SyntaxError as a classic
@@ -245,6 +259,21 @@ maverickframe/
 - **Purge order after changing WP Rocket settings:** Rocket clear → open a
   page logged-out once (regenerates page cache) → THEN Cloudflare "Purge
   Everything". Purging CDN first re-caches the stale HTML at the edge.
+
+- **Kill-switches for output-buffer tricks:** WP-core CSS
+  (`global-styles` + `wp-block-library`) is dequeued on front/services/
+  solutions (content-based rule — pages with real core Gutenberg blocks
+  keep it) — disable via `?mfs_dequeue=0`. The mega-menu is moved to the
+  end of `<body>` for GEO readability — disable via `?mfs_defer=0`.
+
+- **WP 6.7 core auto-sizes is disabled** (`wp_img_tag_add_auto_sizes` →
+  `__return_false`): it prepended `auto,` to sizes of every lazy image and
+  made the hero marquee pull the full 818w candidate instead of 300/600w.
+  Intermediate sizes 300w/600w exist so DPR1 fits containers.
+
+- **ESM entry must be enqueued with version `null`** — a `?ver=` query on
+  the module script caused the entry to load twice (every "Load more"
+  click = 2 fetches).
 
 ---
 
@@ -274,68 +303,21 @@ that they're loading.
 
 ## 9. Deploy mechanics — how code reaches each environment
 
-> **SUPERSEDED (2026-07-02): the current process lives in `WORKFLOW.md`.**
-> Short version: branch `fix/<task>` off fresh `main` per task → PR to
-> `main` → Dima merges and runs the manual "Deploy theme to PRODUCTION"
-> Action → CDN Purge Everything + WP Rocket Clear. `multilang` is retired
-> (it accumulated rebase-duplicate commits → false PR conflicts) and was
-> reset to main. Batch small fixes into one branch instead of deploying
-> one-liners. The staging pipeline below no longer exists.
+> **The current process lives in `WORKFLOW.md`.** Short version: branch
+> `fix/<task>` off fresh `main` per task → PR to `main` → Dima merges and
+> runs the manual **"Deploy theme to PRODUCTION"** Action
+> (`deploy-production.yml`: npm ci → vite build → FTPS to prod → cache
+> auto-purge, see §7 T46). Batch small fixes into one branch instead of
+> deploying one-liners. `multilang` is retired (rebase-duplicate commits →
+> false PR conflicts) and was reset to main.
+>
+> **Staging and its pipeline were decommissioned 2026-06-24** —
+> `deploy-staging.yml` is deleted, the staging site/FTP creds are dead.
+> History (FTPS setup, reviewer gating): git log of this file.
 
 ### Local → GitHub
 Standard git. `main` is the only long-lived branch. Feature branches OK,
-merge via PR (or fast-forward for solo work). Auth via `gh auth login`
-(GitHub CLI) or PAT.
-
-### GitHub → Staging (gated by required reviewer)
-`.github/workflows/deploy-staging.yml` runs on every push to `main`, but
-the job uses `environment: staging` — it **pauses before checkout/build/
-deploy** and waits for a required reviewer (Dima) to click "Approve" in
-GitHub Actions → Environments → staging. Reject → nothing deploys.
-Configure reviewers in repo Settings → Environments → staging.
-
-Required reviewers on private repos requires GitHub Team plan (or
-public repo). If the org is on free private — either upgrade or change
-the workflow to `workflow_dispatch`-only.
-
-Once approved, the job:
-
-1. Checkout repo
-2. Setup Node.js 20
-3. `npm ci` (clean install)
-4. `npm run build` (Vite compiles SCSS/JS into `build/`)
-5. FTPS upload to staging via `SamKirkland/FTP-Deploy-Action@v4.3.5`
-
-**Required secrets** in GitHub repo Settings → Secrets and variables →
-Actions:
-
-- `STAGING_FTP_HOST` = `65.181.120.39`
-- `STAGING_FTP_USER` = `dim-staging@e2i1j0xyf5-staging.onrocket.site`
-- `STAGING_FTP_PASSWORD` = (set when creating the FTP account in Rocket
-  dashboard while in Staging environment context)
-
-**Deploy target path** on Rocket server:
-`/e2i1j0xyf5-staging.onrocket.site/wp-content/themes/maverickframe/`
-
-**How Rocket separates environments via SFTP**: FTP accounts created
-while the Rocket dashboard is in Staging context are namespaced to a
-separate filesystem prefix (`e2i1j0xyf5-staging.onrocket.site/`). FTP
-accounts created in Production context land at the server root (which IS
-production's `public_html/`). The `dim-staging` FTP user sees both
-environments from the SFTP root, but the deploy path explicitly targets
-the staging subdirectory.
-
-State file `.ftp-deploy-state.json` lives on the server — Action uses it
-to incremental-deploy only changed files after first full push.
-
-Excludes: `.git/`, `node_modules/`, `.env*`, `.github/`, `CLAUDE.md`,
-`README.md`, `.DS_Store`. Everything else gets deployed including
-`build/` (regenerated fresh in CI).
-
-### Staging → Production
-**Manual** via Rocket dashboard → switch site env to **Staging** → click
-**"Publish to Production"** button. There is no automated path from
-staging to prod; this is intentional gate-keeping.
+merge via PR. Auth via `gh auth login` (GitHub CLI) or PAT.
 
 ### Vibe AI MCP (WPVibe) — for content only
 WPVibe has `edit_file`, `write_file`, `publish_draft_theme` tools. Since
@@ -447,8 +429,9 @@ codemode.rest_api({
 **What to put in the @graph for each post type:**
 - **Case page (success-stories):** WebPage + Article (or
   CollectionPage) + BreadcrumbList + ImageObject (featured image)
-  + VideoObject (only if a Bunny Stream iframe is embedded — include
-  `duration`) + FAQPage (only if a FAQ block is present).
+  + VideoObject (only if a Bunny video is embedded — native
+  `<video>`/mfs-video player; include `duration`) + FAQPage (only if a
+  FAQ block is present).
 - **Blog post:** WebPage + BlogPosting + BreadcrumbList +
   ImageObject (featured) + FAQPage if FAQ block.
 - **Front page (page ID 6):** uses the same field, same merge rule.
@@ -557,27 +540,32 @@ title via the WPVibe REST: `POST /wp/v2/media/<id>` with
 
 - **Code change?** → `git status` first. Edit file, commit, push, watch
   the Action in `github.com/Maverickframe/maverick/actions`.
-- **Content change?** → ask "staging or prod?" before writing via WPVibe.
+- **Content change?** → WPVibe writes to prod; double-check the target
+  post/field before saving.
 - **"Why is my change invisible?"** → check that you targeted
   `html.single-X` not `body.single-X`; clear WP Rocket cache; hard-refresh
   browser (Cmd+Shift+R).
 - **"WPVibe says File unchanged"** → vary the path string.
 - **"Local git won't commit from Cowork bash"** → run it in real Terminal.
 - **"GitHub Action failed at npm run build"** → check `vite.config.js`
-  for new env vars not set in `deploy-staging.yml`.
-- **"GitHub Action failed at FTPS deploy"** → secrets wrong, or
-  `dim-staging` FTP password rotated. Re-set in Rocket dashboard and
-  update `STAGING_FTP_PASSWORD` secret in GitHub.
-- **"Staging shows old version after deploy"** → clear Rocket CDN cache
-  via dashboard, plus WP Rocket via WP-admin or `wp rocket clean
-  --confirm`.
+  for new env vars not set in `deploy-production.yml`.
+- **"GitHub Action failed at FTPS deploy"** → secrets wrong or FTP
+  password rotated. Re-set in Rocket dashboard and update the secret in
+  GitHub.
+- **"Prod shows old version after deploy"** → the deploy Action
+  auto-purges (WP Rocket origin tree + Cloudflare); if it still looks
+  stale, see the T46 gotcha in §7 and verify canonical anonymously.
+- **"Styles randomly missing on prod"** → suspect RUCSS first: is the
+  affected class JS-toggled and missing from `rocket_rucss_safelist`? (§7)
 - **"Lighthouse in DevTools shows a disaster, PSI is fine"** → DevTools
   runs on your machine/network: right after a purge the first hit is a
-  cold cache (TTFB ~2.5s), and on a slow connection `splide.refresh()` on
-  window load produces phantom CLS on the hero columns. Absolute numbers:
-  PSI + field CrUX data only. Always measure logged-out.
+  cold cache (TTFB ~2.5s). Absolute numbers: PSI + field CrUX data only.
+  Always measure logged-out, from the second run after a purge.
 
 ---
 
-_Last updated: 2026-07-02. Edit in place when something changes — don't
-append "as of 2026-08" updates, just rewrite the relevant section._
+_Last updated: 2026-07-10 (synced with Dima's changelog 06-19→07-10:
+RUCSS on, Splide/GSAP/three.js removed, native video player, staging
+gone, SEO fields consolidated on Rank Math). Edit in place when something
+changes — don't append "as of 2026-08" updates, just rewrite the
+relevant section._
