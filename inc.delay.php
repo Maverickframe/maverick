@@ -53,7 +53,7 @@ function mfs_print_delayed_thirdparty() {
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});
     var g=document.createElement('script');
-    g.async=true;g.src='https://www.googletagmanager.com/gtm.js?id='+GTM;
+    g.async=true;g.src='https://mf.maverickframe.com/vrhggzyjki8iuon.js?awl='+GTM.replace(/^GTM-/,'');
     document.head.appendChild(g);
     var h=document.createElement('script');
     h.id='hs-script-loader';h.async=true;h.defer=true;
