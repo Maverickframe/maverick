@@ -181,17 +181,20 @@ if ( ! function_exists( 'mfs_video_replace_iframe' ) ) {
 		$pz  = MFS_BUNNY_PULLZONE;
 		$src = 'https://' . $pz . '/' . $guid . '/playlist.m3u8';
 
-		// Poster: Bunny's default thumbnail.jpg is NOT generated for this library
-		// (404); only the animated preview.webp exists, and it's a soft 320x180.
-		// So prefer the page's own featured image (crisp, static, hand-picked) on
-		// singular views, and fall back to Bunny's preview.webp elsewhere. The JS
-		// swaps to the preview if the featured image ever fails to load.
-		// Per-video poster = Bunny's own preview.webp for this GUID. Only a CLICK
-		// hero video borrows the page's featured image (crisp, hand-picked). For
-		// hover/bg — and especially the gallery, where many videos share one page —
-		// each keeps its OWN preview, otherwise every tile shows the page cover.
+		// Poster: STATIC per-video thumbnail_1.jpg (2026-07-13). Bunny's default
+		// thumbnail.jpg 404s for this library, but thumbnail_1.jpg IS generated
+		// (full-res JPEG, 224-274 KB — verified on 3 GUIDs incl. both gallery
+		// heavies). The previously-used animated preview.webp weighs 1.5-3 MB per
+		// video (a 2.5 MB one on /gallery/) and was downloaded in full just so
+		// mfs-video.js could canvas-freeze frame one. It stays only as the
+		// fallback: setPoster() probes the static poster and swaps to the preview
+		// (frozen via canvas) if thumbnail_1.jpg is ever missing for a video.
+		// Only a CLICK hero video borrows the page's featured image (crisp,
+		// hand-picked). For hover/bg — and especially the gallery, where many
+		// videos share one page — each keeps its OWN thumbnail, otherwise every
+		// tile shows the page cover.
 		$poster_fallback = 'https://' . $pz . '/' . $guid . '/preview.webp';
-		$poster          = $poster_fallback;
+		$poster          = 'https://' . $pz . '/' . $guid . '/thumbnail_1.jpg';
 		if ( $mode === 'click' && is_singular() ) {
 			$qid = get_queried_object_id();
 			if ( $qid && has_post_thumbnail( $qid ) ) {
