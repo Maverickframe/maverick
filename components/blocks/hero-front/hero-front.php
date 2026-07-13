@@ -6,6 +6,16 @@
     // images) paints immediately and GSAP never touches it. Inner-page heroes keep the
     // JS .js-reveal path (and the .single-solutions slider hack in hero-front.scss).
     $hf_reveal = is_front_page() ? 'hero-front__reveal' : 'reveal-css';
+
+    // TEMP (2026-07-13 — forced-reflow diagnosis). Hide the hero marquee on the front
+    // page (text-only black hero) to test whether the sliders cause the load-time
+    // forced reflow. `?mfs_hero=1` restores them for a side-by-side compare without a
+    // redeploy. FULL REVERT: `git revert` this commit + redeploy (or set the default
+    // back to true).
+    $hf_sliders = true;
+    if ( is_front_page() ) {
+        $hf_sliders = isset( $_GET['mfs_hero'] ) ? ( $_GET['mfs_hero'] === '1' ) : false;
+    }
 ?>
 <section class="hero-front">
     <div class="container container_small">
@@ -56,6 +66,7 @@
             </div>
         </div>
 
+        <?php if ( $hf_sliders ) : ?>
         <div class="hero-front__sliders">
             <div class="hero-front__slider <?php echo $hf_reveal; ?>">
                 <div class="mfs-marquee hero-front__marquee" role="group" aria-label="<?php the_title(); ?>">
@@ -204,5 +215,6 @@
                 </div>
             </div>
         </div>
+        <?php endif; // $hf_sliders ?>
     </div>
 </section>
