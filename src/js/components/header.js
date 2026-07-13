@@ -13,7 +13,14 @@ function updateHeaderScroll() {
 }
 
 if (header) {
-  updateHeaderScroll();
+  // `updateHeaderScroll` reads window.scrollY — a layout-forcing property. Calling
+  // it synchronously during module init (while the first layout is still pending)
+  // forces an immediate style+layout recalc: DevTools Performance attributed ~47ms
+  // of load-time "forced reflow" to this exact call. Defer the first read to after
+  // the first paint via rAF — the class still lands in frame 1, but the layout is
+  // already computed so scrollY is free. The scroll listener stays synchronous
+  // (by then layout is clean, so per-event scrollY reads don't force reflow).
+  requestAnimationFrame(updateHeaderScroll);
 
   window.addEventListener('scroll', updateHeaderScroll, { passive: true });
 }
