@@ -52,6 +52,10 @@ migration time and intentionally drifts from prod.
   - **New design** — selected via `isNewDesign()` in `functions.php`.
 - New design covers: front-page, blog, success-stories, team, gallery,
   service templates, presentation-design, 404. Everything else still uses legacy.
+- **CPT `portfolio` is DELETED (2026-07-12)** — 91 posts removed, URLs
+  301'd in Rank Math. The live `/gallery/` runs on the SEPARATE CPT
+  `gallery`. Native `post` type is hidden from admin — editorial content
+  lives only in CPT `blog`.
 - 404: "scene failed to render" concept, own `error.scss` bundle. The
   worldwide-rendering block uses `renderReveal.js` (canvas 2D tear-to-reveal,
   replaced the three.js particle sphere); it stays a static image while the
@@ -133,13 +137,35 @@ maverickframe/
   iframe player (removed 2026-07-05). hls.js is a lazy chunk loaded on
   first play; Bunny manifests load cross-origin (CSP `blob:` allowed via
   `.htaccess` — LiteSpeed `Header set` beats PHP header overrides).
-- **WP Rocket** for caching — CSS delivery runs in **Remove Unused CSS
-  (RUCSS)** mode since 2026-07-10. Any class toggled at runtime by JS
-  (reveal states, menu open, etc.) is invisible to RUCSS generation and
-  gets stripped — it MUST be added to the `rocket_rucss_safelist` filter
-  in the theme (incident: `.is-in` stripped → header invisible).
+- **NO caching plugin — WP Rocket was removed COMPLETELY 2026-07-12**
+  (plugin + advanced-cache.php dropin + options + tables). There is no
+  "Clear Cache" button anywhere — don't look for one. Page cache always
+  lived on the **Rocket.net edge (Cloudflare Enterprise) + host
+  mu-plugin** (`cdn-cache-management`); WP Rocket never wrote origin
+  files on prod. Rocket's useful features now live in the THEME, each
+  with a kill-switch:
+  - Defer all JS → `script_loader_tag` filter in functions.php
+    (`?mfs_scriptdefer=0`)
+  - Delay GTM + HubSpot until first interaction / 10s → `inc.delay.php`
+    (`?mfs_delay=0`)
+  - Front-page CSS → ATF/BTF split: `front-atf.scss` (blocking) +
+    `front-btf.scss` (async) (`?mfs_split=0`). A new above-the-fold
+    block goes INTO front-atf and OUT of front-btf.
+  - Prefetch → WP 6.8 native Speculation Rules site-wide + tuning in
+    `inc.prefetch.php` (grep HTML for `type="speculationrules"` before
+    "adding" prefetch — it's already there)
+  - Minification → Vite only (`/build/`); revisions cap → 5.
+- **Web fonts are GONE (2026-07-12):** Inter Tight + Red Hat Display
+  removed; site runs on the system font stack. Don't reintroduce fonts
+  or preloads. Zero font-CLS by construction.
+- **Plugins: 8 active, none loads front-end assets** (polylang-pro,
+  secure-custom-fields, rank-math + pro, vibe-ai + mcp-abilities-rankmath,
+  svg-support (temp), cdn-cache-management mu). **NEVER delete Polylang
+  Pro** — it runtimes /es/ /de/ routing, hreflang, translation links.
+  Backups = Rocket.net daily (~06:39 UTC), no backup plugin.
 - **HubSpot tracking is self-hosted** in the theme (`wp_footer`, loader
-  only) — the `leadin` plugin is deactivated, don't reactivate it.
+  only) — the `leadin` plugin is DELETED, don't reinstall it. Forms are
+  server-side; HubSpot "Collected Forms" must stay OFF (duplicates ours).
 - Hosting: **Rocket.net** (managed WP, Cloudflare Enterprise edge)
 - Local dev: **LocalWP** (formerly Local by Flywheel)
 
@@ -176,27 +202,24 @@ maverickframe/
   arrow `<span>` inherits and gets a third. Pick **one** of the two and
   kill the rest on `*` inside the link.
 
-- **WP Rocket RUCSS strips runtime-toggled classes.** RUCSS keeps only
-  selectors present in the HTML at generation time — classes added later
-  by JS (`.is-in`, open/active states) vanish from Used CSS. Safelist them
-  via the `rocket_rucss_safelist` filter in the theme (10.07 incident:
-  header was js-reveal `opacity:0`, `.is-in` stripped → "menu
-  disappeared"; header is now always-visible, not a reveal element).
-  Inline `<style>` in `wp_head` also gets stripped — enqueue real files.
+- **Cache purge rules (post-Rocket, 2026-07-12):**
+  - Editing a post via editor / ACF `savePost` **auto-purges** (save-hook
+    flushes origin + edge) — for normal content work touch nothing.
+  - Direct SQL writes and THEME DEPLOYS fire no save-hook → need the
+    two-layer flush: origin delete via Rocket file API FIRST, then
+    `purge_everything` (`rocket-purge.py`; the deploy Action's purge step
+    does the same — needs repo secrets `ROCKET_USER`/`ROCKET_PASS`).
+    A bare `purge_everything` alone re-caches the stale origin for up to
+    30 days (`s-maxage=2592000`).
+  - Some generated layers (e.g. old CSS baked into critical/min files)
+    survive everything except folder deletion via file API + purge +
+    anonymous warm-up.
 
-- **WP Rocket cache lives between deploys (T46 2026-07-08).** A deploy changes
-  rendered HTML without firing any WP save-hook, so WP Rocket's **origin file
-  cache** (`wp-content/cache/wp-rocket/maverickframe.com/<path>/index-https.html`)
-  is never invalidated. A bare Rocket.net purge does NOT clear it: targeted purge
-  clears nothing; `purge_everything` clears only the Cloudflare edge, which then
-  re-caches the stale origin file for up to 30 days (`s-maxage=2592000`).
-  **Prod deploy now auto-flushes** — the `Purge cache` step in
-  `deploy-production.yml` deletes the WP Rocket origin tree via the Rocket file
-  API then `purge_everything` (needs repo secrets `ROCKET_USER` / `ROCKET_PASS`).
-  Manual equivalent: `rocket-purge.py --all` (in Marketing Claude). LocalWP only:
-  `wp rocket clean --confirm`, `wp cache flush`. **Verify canonical anonymously**
-  (no query string; a logged-in browser bypasses all cache and shows a false
-  "fresh"). Full write-up: Marketing Claude/reports-inbox.md T46.
+- **Verify live results ANONYMOUSLY on the canonical URL, no query.**
+  A logged-in browser bypasses ALL cache and lies "fresh"; any `?query`
+  bypasses too. Reliable trick from a logged-in tab:
+  `fetch(url, {credentials:'omit'})` — real guest HTML + `cf-cache-status`
+  header. (`web_fetch` caches per-URL — vary with a unique `?x=N`.)
 
 - **`File unchanged since last read` from WPVibe.** The MCP caches reads
   per conversation. If you need to re-read, use a slightly different path
@@ -256,15 +279,11 @@ maverickframe/
   visualResultsGallery, sticky-cta) must stay statically imported — an
   async chunk can arrive after the event and never init.
 
-- **Purge order after changing WP Rocket settings:** Rocket clear → open a
-  page logged-out once (regenerates page cache) → THEN Cloudflare "Purge
-  Everything". Purging CDN first re-caches the stale HTML at the edge.
-
-- **Kill-switches for output-buffer tricks:** WP-core CSS
-  (`global-styles` + `wp-block-library`) is dequeued on front/services/
-  solutions (content-based rule — pages with real core Gutenberg blocks
-  keep it) — disable via `?mfs_dequeue=0`. The mega-menu is moved to the
-  end of `<body>` for GEO readability — disable via `?mfs_defer=0`.
+- **Kill-switches (all theme mechanisms have one):** `?mfs_dequeue=0`
+  (WP-core CSS dequeue on front/services/solutions — pages with real core
+  Gutenberg blocks keep it), `?mfs_defer=0` (mega-menu moved to end of
+  `<body>` for GEO), `?mfs_scriptdefer=0` (defer-all-JS), `?mfs_delay=0`
+  (GTM/HubSpot delay), `?mfs_split=0` (front ATF/BTF CSS split).
 
 - **WP 6.7 core auto-sizes is disabled** (`wp_img_tag_add_auto_sizes` →
   `__return_false`): it prepended `auto,` to sizes of every lazy image and
@@ -382,7 +401,15 @@ optional — a post without them is half-published.
 ### 11.4 Slug
 - Must contain the focus keyword.
 - No stop-words (`a`, `the`, `for`) unless they're part of the keyphrase.
+- **All URLs strictly lowercase** — uppercase creates duplicates
+  (200 + canonical).
 - Example: `private-padel-court-cgi`
+
+### 11.4a Writing blog ACF fields (since 2026-07-12)
+Blog ACF (hero, FAQ, schema, read_time) is written via plain REST:
+one `POST /wp/v2/blog/{id}` with body `{"acf":{…}}` — no browser, no
+nonce, no FormData. Do NOT touch `post_content` through this call.
+Rank Math meta is a separate path (not via ACF).
 
 ### 11.5 Schema markup — custom JSON-LD only, NEVER via Rank Math
 **Hard rule (from `maverickframe-publish` skill):**
@@ -543,8 +570,9 @@ title via the WPVibe REST: `POST /wp/v2/media/<id>` with
 - **Content change?** → WPVibe writes to prod; double-check the target
   post/field before saving.
 - **"Why is my change invisible?"** → check that you targeted
-  `html.single-X` not `body.single-X`; clear WP Rocket cache; hard-refresh
-  browser (Cmd+Shift+R).
+  `html.single-X` not `body.single-X`; verify ANONYMOUSLY on the
+  canonical URL (logged-in view lies, §7); content edits self-purge,
+  code/SQL changes need the two-layer flush (§7).
 - **"WPVibe says File unchanged"** → vary the path string.
 - **"Local git won't commit from Cowork bash"** → run it in real Terminal.
 - **"GitHub Action failed at npm run build"** → check `vite.config.js`
@@ -552,11 +580,14 @@ title via the WPVibe REST: `POST /wp/v2/media/<id>` with
 - **"GitHub Action failed at FTPS deploy"** → secrets wrong or FTP
   password rotated. Re-set in Rocket dashboard and update the secret in
   GitHub.
-- **"Prod shows old version after deploy"** → the deploy Action
-  auto-purges (WP Rocket origin tree + Cloudflare); if it still looks
-  stale, see the T46 gotcha in §7 and verify canonical anonymously.
-- **"Styles randomly missing on prod"** → suspect RUCSS first: is the
-  affected class JS-toggled and missing from `rocket_rucss_safelist`? (§7)
+- **"Prod shows old version after deploy"** → the deploy Action's purge
+  step does the two-layer flush (origin file API → purge_everything); if
+  it still looks stale, run `rocket-purge.py` manually and verify the
+  canonical anonymously (§7).
+- **"Styles randomly missing on prod"** → front page only: is the block
+  in `front-atf.scss` but still listed in `front-btf.scss` (or vice
+  versa)? Check the ATF/BTF split first; kill-switch `?mfs_split=0` for
+  A/B diagnosis.
 - **"Lighthouse in DevTools shows a disaster, PSI is fine"** → DevTools
   runs on your machine/network: right after a purge the first hit is a
   cold cache (TTFB ~2.5s). Absolute numbers: PSI + field CrUX data only.
@@ -564,8 +595,9 @@ title via the WPVibe REST: `POST /wp/v2/media/<id>` with
 
 ---
 
-_Last updated: 2026-07-10 (synced with Dima's changelog 06-19→07-10:
-RUCSS on, Splide/GSAP/three.js removed, native video player, staging
-gone, SEO fields consolidated on Rank Math). Edit in place when something
-changes — don't append "as of 2026-08" updates, just rewrite the
+_Last updated: 2026-07-13 (synced with Dima's handoff 07-10→07-12:
+WP Rocket removed entirely — cache is Rocket.net edge + theme features
+with kill-switches; plugins 23→8; web fonts → system stack; portfolio
+CPT deleted; blog ACF via plain REST; verify anonymously. Edit in place
+when something changes — don't append "as of" updates, just rewrite the
 relevant section._
