@@ -324,6 +324,28 @@ function setPoster(video, poster, posterFb) {
   }
 }
 
+// Posters are loaded lazily: Bunny's animated preview.webp weighs 1.5-3 MB per
+// video, and setPoster() downloads it in full just to freeze frame one. Setting
+// posters eagerly in build() made /gallery/ (10+ video tiles) pull ~21 MB on
+// page load (PSI "enormous network payloads"). One shared IO assigns the poster
+// only when the tile approaches the viewport; above-the-fold tiles still get
+// theirs immediately (IO fires right after observe()).
+const posterIo = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      posterIo.unobserve(entry.target);
+      const job = posterJobs.get(entry.target);
+      if (job) {
+        posterJobs.delete(entry.target);
+        job();
+      }
+    });
+  },
+  { rootMargin: '400px 0px' }
+);
+const posterJobs = new WeakMap();
+
 function build(root) {
   if (root.dataset.mfsInit) return;
   root.dataset.mfsInit = '1';
@@ -336,7 +358,8 @@ function build(root) {
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('disablepictureinpicture', '');
   video.setAttribute('disableremoteplayback', '');
-  setPoster(video, root.dataset.poster, root.dataset.posterFallback);
+  posterJobs.set(root, () => setPoster(video, root.dataset.poster, root.dataset.posterFallback));
+  posterIo.observe(root);
   if (root.dataset.title) video.setAttribute('title', root.dataset.title);
   // attachSource() reads the manifest from video.dataset.src; the data-* live on
   // the root placeholder, so copy the source onto the <video> we just created.

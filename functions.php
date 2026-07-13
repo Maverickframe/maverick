@@ -987,12 +987,20 @@ add_action('init', function () {
 
 function generateToC($content, $title)
 {
-    preg_match_all('/<h([2])*[^>]*>(.*?)<\/h[2]>/', $content, $matches);
+    // Match ONLY real <h2> headings, and use /s so a multi-line (or newline-less,
+    // e.g. programmatically built) $content can't make the match span into an <h3>
+    // sub-heading and swallow it. The previous pattern `<h([2])*[^>]*>...</h[2]>`
+    // also matched <h3> openings and, without newlines between blocks, concatenated
+    // whole H3 sections into one broken ToC entry.
+    preg_match_all('/<h2\b[^>]*>(.*?)<\/h2>/si', $content, $matches);
 
     $toc = "<ul class='toc__list scrollbar'>";
 
     foreach ($matches[0] as $i => $match) {
-        $text = strip_tags($match);
+        $text = trim(strip_tags($match));
+        if ($text === '') {
+            continue;
+        }
         $slug = strtolower(str_replace("--", "-", preg_replace('/[^\da-z]/i', '-', $text)));
 
         $anchor = "<a name='{$slug}' id='{$slug}' class='sr-only'>{$text}</a>{$match}";
