@@ -129,6 +129,8 @@
         display: block;
         width: 100%;
         height: 100%;
+        // match the reveal state so the corner doesn't "jump" when JS kicks in
+        border-radius: 1px;
 
         @media (min-width: $md) {
             position: static;
@@ -136,6 +138,8 @@
     }
 
     // render-reveal interactive (renderReveal.js)
+    // 1px corner radius = the site-wide standard for imagery (hero tiles,
+    // blog cards); --radius (14px) was a design-system outlier here.
     &.is-reveal {
         cursor: crosshair;
 
@@ -145,7 +149,7 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            border-radius: var(--radius);
+            border-radius: 1px;
         }
 
         canvas {
@@ -155,7 +159,7 @@
 
     // reduced motion / legacy svg value: static image only
     &.is-reveal-static img {
-        border-radius: var(--radius);
+        border-radius: 1px;
     }
 }
 
