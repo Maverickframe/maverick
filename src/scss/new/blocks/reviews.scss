@@ -37,20 +37,35 @@
     // active one carries [aria-current] (Splide used .is-active).
     .mfs-snap__dots {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 4px;
 
+        // Tap target = 24×24 (WCAG 2.2 target-size / PSI mobile). The visible 8px
+        // dot is rendered via ::before, so the look is unchanged while the hit area
+        // is large enough and non-overlapping (24px targets, 4px gap → 28px pitch).
         .mfs-snap__dot {
             @include btn;
 
-            width: 8px;
-            height: 8px;
+            width: 24px;
+            height: 24px;
             flex: 0 0 auto;
 
-            border-radius: 50px;
-            background-color: var(--purple-color);
-            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            &[aria-current] {
+            &::before {
+                content: "";
+                width: 8px;
+                height: 8px;
+
+                border-radius: 50px;
+                background-color: var(--purple-color);
+                transition: background-color 0.3s ease;
+            }
+
+            &[aria-current]::before {
                 background-color: var(--accent-color);
             }
         }
