@@ -6,7 +6,8 @@
 //
 //   <div class="mfs-video js-mfs-video mfs-video--{mode}"
 //        data-guid=".." data-src="https://{pz}/{guid}/playlist.m3u8"
-//        data-poster="https://{pz}/{guid}/thumbnail.jpg"
+//        data-poster="https://{pz}/{guid}/thumbnail_1.jpg" (static, ~250 KB)
+//        data-poster-fallback="https://{pz}/{guid}/preview.webp" (animated, 1.5-3 MB)
 //        data-mode="bg|click|hover" data-title=".."></div>
 //
 // This module hydrates those placeholders with a real <video> pointed at the
