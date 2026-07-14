@@ -73,6 +73,15 @@ function mfs_hs_props(array $contact) {
         'form_name'    => trim((string) ($contact['form_name'] ?? '')),
         'form_page'    => trim((string) ($contact['form_page'] ?? '')),
         'lead_event'   => trim((string) ($contact['lead_event'] ?? '')),
+        // UTM read straight from $_POST (contacts.js resolves URL → first-touch
+        // cookie and posts the 5 fields), so this works regardless of which
+        // handler called us — no dependency on amo.php. Empty values are skipped
+        // by the callers' loops. Targets 5 custom contact props utm_source/…/content.
+        'utm_source'   => trim((string) ($_POST['utm_source']   ?? ($contact['utm_source']   ?? ''))),
+        'utm_medium'   => trim((string) ($_POST['utm_medium']   ?? ($contact['utm_medium']   ?? ''))),
+        'utm_campaign' => trim((string) ($_POST['utm_campaign'] ?? ($contact['utm_campaign'] ?? ''))),
+        'utm_term'     => trim((string) ($_POST['utm_term']     ?? ($contact['utm_term']     ?? ''))),
+        'utm_content'  => trim((string) ($_POST['utm_content']  ?? ($contact['utm_content']  ?? ''))),
         'ga_client_id' => trim((string) ($_POST['ga_client_id'] ?? mfs_hs_ga_client_id())),
         'gclid'        => trim((string) mfs_hs_gclid()),
     ];

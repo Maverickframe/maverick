@@ -1,10 +1,56 @@
 const contactsForms = document.querySelectorAll('.js-contacts-form');
 
+// --- UTM capture --------------------------------------------------------------
+// contacts.js is a STATIC import in bundle.js, so this module runs on every page
+// load site-wide. We stash the acquisition UTM in a 90-day first-touch cookie the
+// first time a pageview carries them, then a submit on any later page reads the
+// URL first (last touch on that page), else this cookie. The 5 values are posted
+// as utm_source/…/content and land in the matching HubSpot contact properties
+// (forms/hubspot.php → mfs_hs_props reads them straight from $_POST).
+const MFS_UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+const MFS_UTM_COOKIE = 'mfs_utm';
+
+function mfsReadCookie(n) {
+  return (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || '';
+}
+
+function mfsUtmFromUrl() {
+  const q = new URLSearchParams(location.search);
+  const out = {};
+  MFS_UTM_KEYS.forEach((k) => {
+    const v = (q.get(k) || '').trim();
+    if (v) out[k] = v.slice(0, 500);
+  });
+  return out;
+}
+
+function mfsUtmFromCookie() {
+  try {
+    const raw = mfsReadCookie(MFS_UTM_COOKIE);
+    return raw ? JSON.parse(decodeURIComponent(raw)) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+// First-touch: write only when this pageview carries utm AND no cookie exists yet,
+// so the acquisition campaign wins over any later utm-tagged internal link.
+(function mfsCaptureFirstTouchUtm() {
+  try {
+    if (mfsReadCookie(MFS_UTM_COOKIE)) return;
+    const utm = mfsUtmFromUrl();
+    if (!Object.keys(utm).length) return;
+    const val = encodeURIComponent(JSON.stringify(utm));
+    const exp = new Date(Date.now() + 90 * 864e5).toUTCString();
+    document.cookie = `${MFS_UTM_COOKIE}=${val}; expires=${exp}; path=/; SameSite=Lax`;
+  } catch (e) {}
+})();
+
 // Read HubSpot/GA attribution from cookies + URL and attach to the POST so the
-// PHP handler can forward it to HubSpot (hutk, GA client_id, gclid).
+// PHP handler can forward it to HubSpot (hutk, GA client_id, gclid, utm_*).
 function mfsHsAttr(fd) {
   try {
-    const ck = (n) => (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || '';
+    const ck = mfsReadCookie;
     const m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
     if (m) fd.set('ga_client_id', m[1]);
     const utk = ck('hubspotutk');
@@ -13,6 +59,13 @@ function mfsHsAttr(fd) {
     const fromCk = (ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '';
     const gclid = fromUrl || fromCk;
     if (gclid) fd.set('gclid', gclid);
+    // UTM: current URL wins (last touch on this page), else the first-touch cookie.
+    const urlUtm = mfsUtmFromUrl();
+    const ckUtm = mfsUtmFromCookie();
+    MFS_UTM_KEYS.forEach((k) => {
+      const v = urlUtm[k] || ckUtm[k] || '';
+      if (v) fd.set(k, v);
+    });
   } catch (e) {}
 }
 
