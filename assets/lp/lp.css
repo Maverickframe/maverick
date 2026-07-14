@@ -114,6 +114,19 @@
 .mfs-lp .c2 h3{font-size:16px;font-weight:500;line-height:1.25;color:var(--ink)}
 .mfs-lp .c2 p{font-size:14px;margin-top:6px}
 
+/* portfolio — editorial asymmetric grid (compact port of site .visual-results:
+   3 cols, some tiles .stretch across 2 cols, cover images, hover title overlay) */
+.mfs-lp .vr-items{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.mfs-lp .vr-item{position:relative;overflow:hidden;border-radius:2px;height:clamp(150px,40vw,210px);background:var(--fill)}
+.mfs-lp .vr-item.stretch{grid-column:span 2}
+.mfs-lp .vr-item img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.mfs-lp .vr-title{position:absolute;left:0;right:0;bottom:0;padding:16px;min-height:110px;display:flex;align-items:flex-end;opacity:0;transition:opacity .3s ease;font-size:18px;font-weight:500;color:#fff;background:linear-gradient(360deg,rgba(0,0,0,.5) 13%,rgba(0,0,0,0) 100%)}
+.mfs-lp .vr-item:hover .vr-title{opacity:1}
+@media(min-width:760px){
+  .mfs-lp .vr-items{grid-template-columns:repeat(3,1fr);gap:10px}
+  .mfs-lp .vr-item{height:clamp(240px,26vw,340px)}
+}
+
 /* faq */
 .mfs-lp .faq2{background:#fff}
 .mfs-lp .faq2-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
