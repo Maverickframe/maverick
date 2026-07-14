@@ -40,6 +40,10 @@ if (!defined('MFS_HS_LOG_FILE'))        define('MFS_HS_LOG_FILE', __DIR__ . '/..
 if (!defined('MFS_HS_MAX_ATTEMPTS'))    define('MFS_HS_MAX_ATTEMPTS', 3);
 if (!defined('MFS_HS_CONNECT_TIMEOUT')) define('MFS_HS_CONNECT_TIMEOUT', 3);
 if (!defined('MFS_HS_TIMEOUT'))         define('MFS_HS_TIMEOUT', 6);
+// Seconds to let HubSpot materialise the form-created contact (with its real
+// analytics source) BEFORE the guaranteed-contact CRM upsert touches it. Runs in
+// the background after the response is flushed, so it never affects the visitor.
+if (!defined('MFS_HS_FORMS_SETTLE_SECS')) define('MFS_HS_FORMS_SETTLE_SECS', 6);
 // Seconds to wait BETWEEN attempts: after try 1 -> 2s, after try 2 -> 4s.
 $GLOBALS['mfs_hs_backoff'] = [2, 4];
 
@@ -235,12 +239,26 @@ function mfs_hubspot_do_submit(array $contact) {
     if ($email === '' && $phone === '') { return false; }
 
     if ($email !== '') {
+        // Forms API FIRST, carrying the visitor's hutk, so HubSpot creates the
+        // contact as a tracked form submission -> real Original Source (Paid Search
+        // / Organic / …) instead of OFFLINE/INTEGRATION.
         $forms = mfs_hubspot_forms_submit($contact);          // attribution + hutk
-        if (MFS_HS_PRIVATE_TOKEN !== '') {
-            $crm = mfs_hubspot_crm_upsert($contact);          // guaranteed contact
-            return $crm || $forms;
+        if (MFS_HS_PRIVATE_TOKEN === '') {
+            return $forms;                                    // no token -> Forms only
         }
-        return $forms;
+        // Guaranteed-contact CRM upsert stays as the safety net, but for a tracked
+        // visitor (hutk present) we let the form-created contact settle first, so the
+        // upsert finds it and only fills properties — it never claims the source as an
+        // INTEGRATION create. Without hutk there is no session to preserve, so the
+        // upsert runs immediately (and, as before, guarantees the contact).
+        $hutk = trim((string) ($_COOKIE['hubspotutk'] ?? ''));
+        if ($forms && $hutk !== '') {
+            mfs_hs_log(sprintf('forms-first settle %ds (hutk present) email=%s',
+                (int) MFS_HS_FORMS_SETTLE_SECS, trim((string) ($contact['email'] ?? ''))));
+            sleep((int) MFS_HS_FORMS_SETTLE_SECS);
+        }
+        $crm = mfs_hubspot_crm_upsert($contact);              // fill props / guarantee
+        return $crm || $forms;
     }
     return mfs_hubspot_crm_create($contact);                  // phone-only
 }
