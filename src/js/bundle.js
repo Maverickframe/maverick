@@ -153,6 +153,10 @@ function loadWhenNear(selector, load) {
 // Render-reveal interactive (canvas 2D, no deps) — worldwide-rendering block.
 // Replaced the THREE.js particle sphere (551 KB chunk).
 loadWhenNear('.js-render-reveal', () => import('./components/renderReveal'));
+// Image wheel (CSS 3D ring, no deps) — same block on DESIGN pages, where the
+// ACF image is still the legacy world.svg. Complementary to renderReveal:
+// that one bails on .svg values, this one only activates on them.
+loadWhenNear('.js-render-reveal[data-img$=".svg"]', () => import('./components/imageWheel'));
 // Lead quiz (branching stepper)
 loadWhenNear('.js-mfsq', () => import('./components/quiz'));
 // Price calculator

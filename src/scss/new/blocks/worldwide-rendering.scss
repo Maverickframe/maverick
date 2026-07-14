@@ -161,6 +161,84 @@
     &.is-reveal-static img {
         border-radius: 1px;
     }
+
+    // image wheel (imageWheel.js) — design pages, svg ACF value
+    &.is-wheel {
+        // the block's own ::after glow stays as the wheel's backdrop
+        > img {
+            display: none;
+        }
+
+        // the generic `.is-active img { display: none }` rule (meant for the
+        // static fallback image under the canvas) must NOT hide card images
+        .mfs-wheel img {
+            display: block;
+        }
+    }
+}
+
+// draggable rotating ring of design-work cards (imageWheel.js)
+.mfs-wheel {
+    position: absolute;
+    // wider stage than the block: the ring breathes past the square box the
+    // way the Framer demo fills its frame (the wrapper doesn't clip)
+    inset: -4% -18%;
+    z-index: 1;
+
+    touch-action: pan-y; // horizontal drag spins, vertical keeps scrolling
+    cursor: grab;
+    user-select: none;
+
+    &.is-dragging {
+        cursor: grabbing;
+    }
+}
+
+.mfs-wheel__tilt {
+    position: absolute;
+    inset: 0;
+    // no 3D: cards stay unskewed (Framer look) — the whole composition just
+    // leans a touch; depth comes from per-card scale + stacking in JS
+    transform: rotate(-9deg);
+}
+
+.mfs-wheel__card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: clamp(96px, 20%, 148px);
+    aspect-ratio: 5 / 6; // near-square rounded tiles, as in the Framer demo
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 36px rgba(16, 24, 40, 0.16);
+    will-change: transform;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 42%;
+        height: auto;
+        pointer-events: none;
+    }
+
+    // brand-palette variants
+    &--accent {
+        background: var(--accent-color);
+        color: var(--white-color);
+    }
+
+    &--light {
+        background: var(--alt);
+        color: var(--accent-color);
+    }
+
+    &--outline {
+        background: var(--white-color);
+        border: 1px solid var(--line);
+        color: var(--accent-color);
+    }
 }
 
 .worldwide-rendering__hint {
