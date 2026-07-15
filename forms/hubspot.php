@@ -264,9 +264,27 @@ function mfs_hubspot_do_submit(array $contact) {
 }
 
 /**
+ * Ends the HTTP response so the background dispatch cannot hold the visitor.
+ *
+ * PHP-FPM exposes fastcgi_finish_request(); LiteSpeed (lsphp) does NOT — its
+ * equivalent is litespeed_finish_request(). Only checking for the FPM one meant
+ * that on a LiteSpeed host the guard silently did nothing and the visitor sat
+ * through the whole "background" dispatch, sleep(SETTLE) included (measured
+ * 15.07.2026: a form submit answered in 7.2s — exactly the forms->upsert delta
+ * in mfs-hubspot.log).
+ *
+ * Returns which mechanism was used, so the log answers the question for good.
+ */
+function mfs_hs_finish_request() {
+    if (function_exists('fastcgi_finish_request'))  { @fastcgi_finish_request();  return 'fastcgi'; }
+    if (function_exists('litespeed_finish_request')) { @litespeed_finish_request(); return 'litespeed'; }
+    return 'none';
+}
+
+/**
  * Entry point (unchanged signature). Defers the HubSpot dispatch to request
- * shutdown and flushes the response first (fastcgi_finish_request), so the
- * retries never block the visitor or the amoCRM call. Fire-and-forget.
+ * shutdown and ends the response first, so the retries never block the visitor.
+ * Fire-and-forget.
  */
 function mfs_hubspot_submit(array $contact) {
     $email = trim((string) ($contact['email'] ?? ''));
@@ -274,9 +292,10 @@ function mfs_hubspot_submit(array $contact) {
     if ($email === '' && $phone === '') { return false; }
 
     register_shutdown_function(function () use ($contact) {
-        if (function_exists('fastcgi_finish_request')) { @fastcgi_finish_request(); }
+        $how = mfs_hs_finish_request();
         @ignore_user_abort(true);
         @set_time_limit(45);
+        if ($how === 'none') { mfs_hs_log('WARN: no finish_request() on this host - visitor is waiting for the dispatch'); }
         mfs_hubspot_do_submit($contact);
     });
     return true;
