@@ -351,6 +351,10 @@
     @media (min-width: $md) {
         flex-direction: row;
         justify-content: space-between;
+        // guaranteed breathing room between the four groups: with the longer
+        // ES strings space-between alone squeezed links against the language
+        // switcher while other gaps stayed wide
+        column-gap: clamp(24px, 3vw, 56px);
     }
 }
 
@@ -375,6 +379,17 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+
+    // Desktop: legal links must stay on ONE line even with the longer ES
+    // labels — the (already two-line) copyright text absorbs the shrink instead.
+    @media (min-width: $md) {
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+
+        a {
+            white-space: nowrap;
+        }
+    }
 
     li {
         display: flex;

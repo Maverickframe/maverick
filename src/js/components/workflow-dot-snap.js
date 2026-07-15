@@ -154,8 +154,72 @@ function scheduleSnap() {
   snapRaf = requestAnimationFrame(snapWorkflowDots);
 }
 
+// --- Scroll progress: curve drawing + step activation (vanilla) -------------
+// The old gsap.js ScrollTrigger drove two things the reveal.js rewrite didn't
+// pick up: drawing the curve via stroke-dashoffset and toggling `is-active` on
+// the steps (dots are scale(0), dashes hidden and headings grey until then).
+// Without it the whole block looks dead. Same maths as the old trigger:
+// progress 0 when the block's top crosses the viewport middle, 1 at its bottom.
+function initWorkflowProgress() {
+  document.querySelectorAll('.workflow').forEach((wf) => {
+    const itemsBox = wf.querySelector('.workflow__items');
+    const items = [...wf.querySelectorAll('.js-workflow-item')];
+    if (!itemsBox || !items.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let path = null;
+    let len = 0;
+
+    // The visible curve changes across breakpoints (mobile/desktop/desktop-big),
+    // so the path is re-picked on resize — NOT on every scroll frame: the
+    // querySelectorAll + getBoundingClientRect sweep below forces layout, and
+    // per-frame reflow is exactly what the GSAP removal was meant to kill.
+    const prepPath = () => {
+      const svg = [...wf.querySelectorAll('.workflow__line svg')].find(
+        (s) => s.getBoundingClientRect().width > 1
+      );
+      const p = svg ? (svg.querySelector('.path-anim') || svg.querySelector('path')) : null;
+      if (p !== path) {
+        path = p;
+        if (path) {
+          len = path.getTotalLength();
+          path.style.strokeDasharray = String(len);
+        }
+      }
+    };
+
+    const update = () => {
+      // self-heal: at init the svg may not be laid out yet (late CSS/fonts),
+      // so keep probing until a path is found — then stop until the next resize
+      if (!path) prepPath();
+      const r = itemsBox.getBoundingClientRect();
+      let progress = (window.innerHeight / 2 - r.top) / r.height;
+      progress = Math.max(0, Math.min(1, progress));
+      if (reduced) progress = 1;
+      if (path) path.style.strokeDashoffset = String(len * (1 - progress));
+      items.forEach((item, i) => {
+        const threshold = items.length > 1 ? i / (items.length - 1) : 0;
+        item.classList.toggle('is-active', progress >= threshold);
+      });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // breakpoint change swaps the visible svg → re-pick the path, then redraw
+    window.addEventListener('resize', () => { prepPath(); onScroll(); });
+    prepPath();
+    update();
+  });
+}
+
 const workflows = document.querySelectorAll('.workflow');
 if (workflows.length) {
+  initWorkflowProgress();
   window.addEventListener('load', scheduleSnap);
   window.addEventListener('resize', () => {
     clearTimeout(window.__wfSnapT);
