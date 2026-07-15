@@ -170,7 +170,10 @@ function initWorkflowProgress() {
     let path = null;
     let len = 0;
 
-    // The visible curve changes across breakpoints (mobile/desktop/desktop-big).
+    // The visible curve changes across breakpoints (mobile/desktop/desktop-big),
+    // so the path is re-picked on resize — NOT on every scroll frame: the
+    // querySelectorAll + getBoundingClientRect sweep below forces layout, and
+    // per-frame reflow is exactly what the GSAP removal was meant to kill.
     const prepPath = () => {
       const svg = [...wf.querySelectorAll('.workflow__line svg')].find(
         (s) => s.getBoundingClientRect().width > 1
@@ -186,7 +189,9 @@ function initWorkflowProgress() {
     };
 
     const update = () => {
-      prepPath();
+      // self-heal: at init the svg may not be laid out yet (late CSS/fonts),
+      // so keep probing until a path is found — then stop until the next resize
+      if (!path) prepPath();
       const r = itemsBox.getBoundingClientRect();
       let progress = (window.innerHeight / 2 - r.top) / r.height;
       progress = Math.max(0, Math.min(1, progress));
@@ -205,7 +210,9 @@ function initWorkflowProgress() {
       requestAnimationFrame(() => { update(); ticking = false; });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    // breakpoint change swaps the visible svg → re-pick the path, then redraw
+    window.addEventListener('resize', () => { prepPath(); onScroll(); });
+    prepPath();
     update();
   });
 }

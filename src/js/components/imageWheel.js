@@ -72,7 +72,16 @@ function initWheel(wrap) {
   let Rx = 220; // ellipse radii: wide and flat, Framer-style
   let Ry = 92;
   let raf = 0;
+  let inView = false;
   let visible = false;
+
+  // rAF runs only when the block is BOTH on screen and the tab is active.
+  // (Deriving it in one place: `visibilitychange` alone must not resurrect the
+  // loop for an off-screen wheel — the IO would not re-fire to stop it again.)
+  function syncVisible() {
+    visible = inView && !document.hidden;
+    if (visible && !raf) raf = requestAnimationFrame(frame);
+  }
 
   function resize() {
     const r = scene.getBoundingClientRect();
@@ -156,14 +165,11 @@ function initWheel(wrap) {
 
   if (!reduced) {
     new IntersectionObserver((entries) => {
-      visible = entries.some((e) => e.isIntersecting) && !document.hidden;
-      if (visible && !raf) raf = requestAnimationFrame(frame);
+      inView = entries.some((e) => e.isIntersecting);
+      syncVisible();
     }).observe(wrap);
 
-    document.addEventListener('visibilitychange', () => {
-      visible = !document.hidden;
-      if (visible && !raf) raf = requestAnimationFrame(frame);
-    });
+    document.addEventListener('visibilitychange', syncVisible);
   }
 
   resize();
