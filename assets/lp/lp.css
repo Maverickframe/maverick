@@ -114,17 +114,34 @@
 .mfs-lp .c2 h3{font-size:16px;font-weight:500;line-height:1.25;color:var(--ink)}
 .mfs-lp .c2 p{font-size:14px;margin-top:6px}
 
-/* portfolio — editorial asymmetric grid (compact port of site .visual-results:
-   3 cols, some tiles .stretch across 2 cols, cover images, hover title overlay) */
-.mfs-lp .vr-items{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-.mfs-lp .vr-item{position:relative;overflow:hidden;border-radius:2px;height:clamp(150px,40vw,210px);background:var(--fill)}
-.mfs-lp .vr-item.stretch{grid-column:span 2}
-.mfs-lp .vr-item img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.mfs-lp .vr-title{position:absolute;left:0;right:0;bottom:0;padding:16px;min-height:110px;display:flex;align-items:flex-end;opacity:0;transition:opacity .3s ease;font-size:18px;font-weight:500;color:#fff;background:linear-gradient(360deg,rgba(0,0,0,.5) 13%,rgba(0,0,0,0) 100%)}
-.mfs-lp .vr-item:hover .vr-title{opacity:1}
-@media(min-width:760px){
-  .mfs-lp .vr-items{grid-template-columns:repeat(3,1fr);gap:10px}
-  .mfs-lp .vr-item{height:clamp(240px,26vw,340px)}
+/* portfolio — .visual-results block ported 1:1 from the service pages.
+   Site breakpoints: sm 768 / md 1270 / lg 1750. Show More is driven by the theme's
+   visualResultsGallery.js (a STATIC bundle import → it already runs on the bare LP
+   template): .js-show-more-visuals-btn strips .extra-item off every .js-extra-item.
+   Block runs wider than the LP's 1080 wrap to match the service-page size. */
+.mfs-lp .visual-results__wrap{max-width:1750px;margin:0 auto;padding:0 15px}
+.mfs-lp .visual-results__items{display:grid;gap:4px}
+.mfs-lp .visual-results-item{height:450px;--extra-height:250px;position:relative;overflow:hidden}
+.mfs-lp .visual-results-item.extra-item{display:none}
+.mfs-lp .visual-results-item img{width:100%;height:100%;object-fit:cover;object-position:center;border-radius:1px;display:block}
+.mfs-lp .visual-results-item:nth-child(22n+1),
+.mfs-lp .visual-results-item:nth-child(22n+4),
+.mfs-lp .visual-results-item:nth-child(22n+6),
+.mfs-lp .visual-results-item:nth-child(22n+11),
+.mfs-lp .visual-results-item:nth-child(22n+20){height:var(--extra-height)}
+.mfs-lp .visual-results-item__title{position:absolute;left:0;right:0;bottom:0;padding:20px;min-height:200px;display:flex;align-items:flex-end;opacity:0;transition:opacity .3s ease;font-size:24px;font-weight:500;color:#fff;background:linear-gradient(360deg,rgba(0,0,0,.5) 12.98%,rgba(0,0,0,0) 100%);border-radius:1px}
+.mfs-lp .visual-results__btn{display:block;margin:40px auto 0;height:44px;padding:0 20px;font-family:inherit;font-size:14px;font-weight:500;color:#000;background:transparent;border:1px solid #000;border-radius:2px;cursor:pointer;transition:background .16s,color .16s}
+.mfs-lp .visual-results__btn:hover{background:#000;color:#fff}
+@media(min-width:1270px){
+  .mfs-lp .visual-results__items{grid-template-columns:repeat(3,1fr);gap:10px}
+  .mfs-lp .visual-results-item{--extra-height:450px}
+  .mfs-lp .visual-results-item img{object-position:left center}
+  .mfs-lp .visual-results-item.stretch{grid-column:span 2}
+  .mfs-lp .visual-results-item:hover .visual-results-item__title{opacity:1}
+  .mfs-lp .visual-results__btn{margin-top:60px}
+}
+@media(min-width:1750px){
+  .mfs-lp .visual-results-item{height:700px;--extra-height:700px}
 }
 
 /* faq */
