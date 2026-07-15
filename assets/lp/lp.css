@@ -143,6 +143,22 @@
 @media(min-width:1750px){
   .mfs-lp .visual-results-item{height:700px;--extra-height:700px}
 }
+/* Mobile/tablet: the service-page block collapses to ONE column of fixed 450px
+   tiles — that squeezed landscape renders into portrait crops and made ~6000px of
+   scroll out of 15 tiles. Here: two columns, real aspect ratios (portraits 3:4,
+   landscapes full-width 16:9 via .stretch), dense flow so no holes. Cuts the
+   portfolio to roughly a third of the scroll and keeps every render in its own
+   proportions. */
+@media(max-width:1269px){
+  .mfs-lp .visual-results__items{grid-template-columns:1fr 1fr;gap:6px;grid-auto-flow:dense}
+  .mfs-lp .visual-results-item,
+  .mfs-lp .visual-results-item:nth-child(22n+1),
+  .mfs-lp .visual-results-item:nth-child(22n+4),
+  .mfs-lp .visual-results-item:nth-child(22n+6),
+  .mfs-lp .visual-results-item:nth-child(22n+11),
+  .mfs-lp .visual-results-item:nth-child(22n+20){height:auto;aspect-ratio:3/4}
+  .mfs-lp .visual-results-item.stretch{grid-column:span 2;aspect-ratio:16/9}
+}
 
 /* faq */
 .mfs-lp .faq2{background:#fff}
@@ -159,6 +175,24 @@
 .mfs-lp .band p{color:#cfd3de;margin-top:12px;font-size:17px}
 .mfs-lp .band .btn{width:auto;background:var(--accent);color:#fff;margin-top:28px;padding:16px 42px;font-size:16px}
 .mfs-lp .band .btn:hover{background:var(--accent-hover)}
+/* Email capture right in the band. The old CTA was an anchor back to the hero
+   form — on mobile that threw the visitor back over the whole portfolio. */
+.mfs-lp .band__form{max-width:540px;margin:30px auto 0;text-align:left}
+.mfs-lp .band__form form{display:flex;flex-direction:row;gap:10px;align-items:flex-end}
+.mfs-lp .band__form .field{flex:1}
+.mfs-lp .band__form .field > span{color:#aeb4c2}
+.mfs-lp .band__form input{background:#161922;border-color:rgba(255,255,255,.16);color:#fff}
+.mfs-lp .band__form input::placeholder{color:#6b7280}
+.mfs-lp .band__form input:focus{border-color:#6f83ff}
+.mfs-lp .band__form .btn{width:auto;flex:0 0 auto;margin-top:0;height:49px;padding:0 28px;font-size:15px}
+.mfs-lp .band__form .form-fine{color:#8990a1;margin-top:12px;text-align:center}
+.mfs-lp .band .contacts-form__success{padding:8px 4px}
+.mfs-lp .band .contacts-form__success h3{color:#fff}
+.mfs-lp .band .contacts-form__success p{color:#cfd3de}
+@media(max-width:600px){
+  .mfs-lp .band__form form{flex-direction:column;align-items:stretch}
+  .mfs-lp .band__form .btn{width:100%}
+}
 
 /* privacy-only footer (shell-level) */
 .mfs-lp__foot{background:#fff;border-top:1px solid #e6e8ee;padding:24px 22px;text-align:center;font-family:-apple-system,"system-ui","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
@@ -167,9 +201,27 @@
 
 /* responsive */
 @media(max-width:880px){
-  .mfs-lp .h2grid{grid-template-columns:1fr;gap:34px}
-  .mfs-lp .formcard{position:static;order:-1}
-  .mfs-lp .steps2,.mfs-lp .cases2,.mfs-lp .faq2-grid{grid-template-columns:1fr}
+  /* Offer first, form after it — the pitch has to land before we ask for an email
+     (the old order:-1 put the form above the headline, which read backwards). */
+  .mfs-lp .h2grid{grid-template-columns:1fr;gap:28px}
+  .mfs-lp .formcard{position:static}
+  .mfs-lp .faq2-grid{grid-template-columns:1fr}
+  /* Logo sat too low: trim the hero's top padding and the brand row on mobile. */
+  .mfs-lp .h2hero{padding:22px 0 40px}
+  .mfs-lp .h2brand{padding-bottom:26px}
+  .mfs-lp .h2brand .tag{display:none}
+  .mfs-lp .h2sub{font-size:17px}
+
+  /* How it works + Cases → swipeable scroll-snap sliders (CSS only, no JS). */
+  .mfs-lp .steps2,.mfs-lp .cases2{
+    display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
+    gap:12px;margin-inline:-22px;padding-inline:22px;scroll-padding-inline:22px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .mfs-lp .steps2::-webkit-scrollbar,.mfs-lp .cases2::-webkit-scrollbar{display:none}
+  .mfs-lp .st,.mfs-lp .c2{flex:0 0 76%;scroll-snap-align:start}
+  .mfs-lp .cases2{gap:14px}
+  .mfs-lp .c2{flex:0 0 82%}
 }
 
 /* ==========================================================================
