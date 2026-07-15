@@ -1,13 +1,16 @@
 <?php
 /**
- * HubSpot Forms API v3 + CRM API — parallel lead capture (mirrors forms/amo.php).
+ * HubSpot Forms API v3 + CRM API — the site's only CRM since amoCRM was retired
+ * on 2026-07-15. Called from forms/amo.php (the lead endpoint, legacy filename)
+ * and forms/book-call-handler.php.
  *
  * Sends every site lead to HubSpot in PARALLEL with amoCRM. Lead type is carried
  * in form_name / lead_event / form_page FIELDS, so new site forms need zero setup.
  *
  * Hardened 2026-06-24:
- *  - ASYNC: dispatch runs after fastcgi_finish_request(), so the form/amoCRM
- *    response is flushed to the visitor first; HubSpot work never blocks them.
+ *  - ASYNC: the dispatch runs only after the response is ended (see
+ *    mfs_hs_finish_request — this host is LiteSpeed, NOT php-fpm), so HubSpot
+ *    work never blocks the visitor.
  *  - RETRIES: up to MFS_HS_MAX_ATTEMPTS on TRANSIENT failures (network/timeout/
  *    HTTP 429/5xx). A 4xx (bad payload) is logged once and NOT retried.
  *  - DURABLE LOG: every attempt -> wp-content/mfs-hubspot.log (email + HTTP code).

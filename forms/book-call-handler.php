@@ -60,19 +60,15 @@ function mfs_book_call_handler() {
         ]);
     }
 
-    // 1) Lead text (shared by the CRM paths below).
+    // 1) Lead text for the CRM (HubSpot — the only one since amoCRM was retired
+    //    on 2026-07-15).
     $crmText = "Requested call: {$slotSummary}";
     if ($studioStr) $crmText .= " | studio time: {$studioStr}";
     $crmText .= " | duration: {$duration} min";
     if ($pageUrl) $crmText .= " | page: {$pageUrl}";
-    // amoCRM retired 2026-07-15 — HubSpot only (see forms/amo.php for the switch).
-    // The .ics invite and the HubSpot dispatch below are untouched.
-    if (!defined('MFS_AMO_ENABLED')) define('MFS_AMO_ENABLED', false);
-    if (MFS_AMO_ENABLED) {
-        mfs_amo_create_booking($name, $email, $whatsapp, $crmText, $pageUrl);
-    }
 
-    // HubSpot (parallel to amoCRM, fire-and-forget).
+    // HubSpot — the CRM. Fire-and-forget: hubspot.php defers to shutdown and ends
+    // the response first, so the booking reply is not held by it.
     mfs_hubspot_submit([
         'email'      => $email,
         'phone'      => $whatsapp,
@@ -148,59 +144,3 @@ function mfs_build_ics($start, $end, $summary, $description, $organizer, $attend
     return implode("\r\n", $lines);
 }
 
-/**
- * Create an amoCRM lead (mirrors forms/amo.php, with the slot in the note).
- */
-function mfs_amo_create_booking($name, $email, $whatsapp, $noteText, $pageUrl = '') {
-    $creds = require __DIR__ . '/amo-credentials.php';
-
-    $contactFields = [];
-    if ($email) {
-        $contactFields[] = ['field_code' => 'EMAIL', 'values' => [['enum_code' => 'WORK', 'value' => $email]]];
-    }
-    if ($whatsapp) {
-        $contactFields[] = ['field_code' => 'PHONE', 'values' => [['enum_code' => 'WORK', 'value' => $whatsapp]]];
-    }
-    if ($noteText) {
-        $contactFields[] = ['field_id' => (int) $creds['message_field'], 'values' => [['value' => $noteText]]];
-    }
-
-    $dealName = 'maverickframe.com Book a Call (Calendar) – ' . $name . ' ' . $whatsapp . ' ' . $email;
-    $data = [[
-        'name'        => $dealName,
-        'tags'        => 'maverickframecom,book-call',
-        'pipeline_id' => (int) $creds['pipeline_id'],
-        '_embedded'   => [
-            'metadata' => [
-                'category'     => 'forms',
-                'form_id'      => 2,
-                'form_name'    => 'Book a Call (Calendar)',
-                'form_page'    => $pageUrl ?: 'Book a Call (Calendar)',
-                'form_sent_at' => time(),
-                'referer'      => $pageUrl ?: 'maverickframe.com',
-            ],
-            'contacts' => [[
-                'first_name'           => $name,
-                'custom_fields_values' => $contactFields,
-            ]],
-        ],
-    ]];
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'amoCRM-API-client/1.0');
-    curl_setopt($ch, CURLOPT_URL, 'https://' . $creds['subdomain'] . '.amocrm.ru/api/v4/leads/complex');
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Authorization: Bearer ' . $creds['access_token'],
-    ]);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-    curl_exec($ch);
-    $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    return $code >= 200 && $code <= 204;
-}
