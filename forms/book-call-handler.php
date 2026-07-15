@@ -60,12 +60,17 @@ function mfs_book_call_handler() {
         ]);
     }
 
-    // 1) amoCRM deal
+    // 1) Lead text (shared by the CRM paths below).
     $crmText = "Requested call: {$slotSummary}";
     if ($studioStr) $crmText .= " | studio time: {$studioStr}";
     $crmText .= " | duration: {$duration} min";
     if ($pageUrl) $crmText .= " | page: {$pageUrl}";
-    mfs_amo_create_booking($name, $email, $whatsapp, $crmText, $pageUrl);
+    // amoCRM retired 2026-07-15 — HubSpot only (see forms/amo.php for the switch).
+    // The .ics invite and the HubSpot dispatch below are untouched.
+    if (!defined('MFS_AMO_ENABLED')) define('MFS_AMO_ENABLED', false);
+    if (MFS_AMO_ENABLED) {
+        mfs_amo_create_booking($name, $email, $whatsapp, $crmText, $pageUrl);
+    }
 
     // HubSpot (parallel to amoCRM, fire-and-forget).
     mfs_hubspot_submit([

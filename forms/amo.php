@@ -1,11 +1,28 @@
 <?php
 require_once __DIR__ . '/hubspot.php';
-$creds = require __DIR__ . '/amo-credentials.php';
-$subdomain     = $creds['subdomain'];
-$client_secret = $creds['client_secret'];
-$client_id     = $creds['client_id'];
-$redirect_uri  = $creds['redirect_uri'];
-$access_token  = $creds['access_token'];
+
+/**
+ * amoCRM retired 2026-07-15 — HubSpot is the only CRM now.
+ *
+ * This endpoint still serves EVERY form on the site: it fires
+ * mfs_hubspot_submit() and echoes "Success", which is what drives the success UI
+ * and the lead_form dataLayer push (= the Google Ads conversion). So we keep the
+ * endpoint and skip ONLY the amoCRM dispatch. Set to true to re-enable.
+ *
+ * Side benefit: amoCRM can no longer take the forms down with it — the old code
+ * die()'d on a non-2xx from their API, before "Success" was ever echoed, so an
+ * expired token would have broken every form and stopped Ads conversions.
+ */
+if (!defined('MFS_AMO_ENABLED')) define('MFS_AMO_ENABLED', false);
+
+// Optional now: the endpoint must not fatal once these credentials are removed.
+$creds = @include __DIR__ . '/amo-credentials.php';
+if (!is_array($creds)) { $creds = []; }
+$subdomain     = $creds['subdomain']     ?? '';
+$client_secret = $creds['client_secret'] ?? '';
+$client_id     = $creds['client_id']     ?? '';
+$redirect_uri  = $creds['redirect_uri']  ?? '';
+$access_token  = $creds['access_token']  ?? '';
 
 $name = htmlspecialchars($_POST['Name'] ?? '', ENT_NOQUOTES, 'UTF-8');
 $phone = htmlspecialchars($_POST['Phone'] ?? $_POST['WhatsApp'] ?? '', ENT_NOQUOTES, 'UTF-8');
@@ -171,48 +188,50 @@ $data = [
     ]
 ];
 
-$method = "/api/v4/leads/complex";
+if (MFS_AMO_ENABLED) {
+    $method = "/api/v4/leads/complex";
 
-$headers = [
-    'Content-Type: application/json',
-    'Authorization: Bearer ' . $access_token,
-];
+    $headers = [
+        'Content-Type: application/json',
+        'Authorization: Bearer ' . $access_token,
+    ];
 
-$curl = curl_init();
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($curl, CURLOPT_USERAGENT, 'amoCRM-API-client/1.0');
-curl_setopt($curl, CURLOPT_URL, "https://$subdomain.amocrm.ru".$method);
-curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
-curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($curl, CURLOPT_HEADER, false);
-curl_setopt($curl, CURLOPT_COOKIEFILE, 'amo/cookie.txt');
-curl_setopt($curl, CURLOPT_COOKIEJAR, 'amo/cookie.txt');
-curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-$out = curl_exec($curl);
-$code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-$code = (int) $code;
-$errors = [
-    301 => 'Moved permanently.',
-    400 => 'Wrong structure of the array of transmitted data, or invalid identifiers of custom fields.',
-    401 => 'Not Authorized. There is no account information on the server. You need to make a request to another server on the transmitted IP.',
-    403 => 'The account is blocked, for repeatedly exceeding the number of requests per second.',
-    404 => 'Not found.',
-    500 => 'Internal server error.',
-    502 => 'Bad gateway.',
-    503 => 'Service unavailable.'
-];
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_USERAGENT, 'amoCRM-API-client/1.0');
+    curl_setopt($curl, CURLOPT_URL, "https://$subdomain.amocrm.ru".$method);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_COOKIEFILE, 'amo/cookie.txt');
+    curl_setopt($curl, CURLOPT_COOKIEJAR, 'amo/cookie.txt');
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+    $out = curl_exec($curl);
+    $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $code = (int) $code;
+    $errors = [
+        301 => 'Moved permanently.',
+        400 => 'Wrong structure of the array of transmitted data, or invalid identifiers of custom fields.',
+        401 => 'Not Authorized. There is no account information on the server. You need to make a request to another server on the transmitted IP.',
+        403 => 'The account is blocked, for repeatedly exceeding the number of requests per second.',
+        404 => 'Not found.',
+        500 => 'Internal server error.',
+        502 => 'Bad gateway.',
+        503 => 'Service unavailable.'
+    ];
 
-if ($code < 200 || $code > 204) die( "Error $code. " . (isset($errors[$code]) ? $errors[$code] : 'Undefined error') );
+    if ($code < 200 || $code > 204) die( "Error $code. " . (isset($errors[$code]) ? $errors[$code] : 'Undefined error') );
 
 
-$Response = json_decode($out, true);
-$Response = array_key_exists('_embedded', $Response) ? $Response['_embedded']['items'] : null;
-// $output = 'ID добавленных элементов списков:' . PHP_EOL;
-// foreach ($Response as $v)
-//     if (is_array($v))
-//         $output .= $v['id'] . PHP_EOL;
-// return $output;
+    $Response = json_decode($out, true);
+    $Response = array_key_exists('_embedded', $Response) ? $Response['_embedded']['items'] : null;
+    // $output = 'ID добавленных элементов списков:' . PHP_EOL;
+    // foreach ($Response as $v)
+    //     if (is_array($v))
+    //         $output .= $v['id'] . PHP_EOL;
+    // return $output;
+}
 
 echo "Success";
