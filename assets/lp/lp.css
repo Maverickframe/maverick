@@ -151,12 +151,14 @@
 .mfs-lp .qa2 h3{font-size:17px;font-weight:500;margin-bottom:8px;color:var(--ink)}
 .mfs-lp .qa2 p{font-size:14.5px}
 
-/* closing band */
-.mfs-lp .band{background:var(--accent);text-align:center;padding:66px 0}
+/* closing band — dark, not a solid blue slab: the page already carries accent in
+   the hero, eyebrows and buttons, so a full-width blue block was too much of it.
+   Dark navy gives the close a strong contrast moment and leaves blue to the CTA. */
+.mfs-lp .band{background:var(--navy);text-align:center;padding:80px 0}
 .mfs-lp .band h2{color:#fff;font-size:clamp(26px,3.4vw,38px)}
-.mfs-lp .band p{color:rgba(255,255,255,.82);margin-top:12px;font-size:17px}
-.mfs-lp .band .btn{width:auto;background:#fff;color:var(--accent);margin-top:26px;padding:15px 40px}
-.mfs-lp .band .btn:hover{background:#eef1ff}
+.mfs-lp .band p{color:#cfd3de;margin-top:12px;font-size:17px}
+.mfs-lp .band .btn{width:auto;background:var(--accent);color:#fff;margin-top:28px;padding:16px 42px;font-size:16px}
+.mfs-lp .band .btn:hover{background:var(--accent-hover)}
 
 /* privacy-only footer (shell-level) */
 .mfs-lp__foot{background:#fff;border-top:1px solid #e6e8ee;padding:24px 22px;text-align:center;font-family:-apple-system,"system-ui","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
