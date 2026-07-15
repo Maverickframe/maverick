@@ -60,6 +60,18 @@
     if (!$ar_w || !$ar_h) { $ar_w = 16; $ar_h = 9; }
     $ar_style = ' style="aspect-ratio:' . $ar_w . '/' . $ar_h . '"';
 
+    // Accessible name for the tile link (a11y "identical links" / discernible
+    // name): prefer the overlay title, then the image alt. Without it every
+    // tile is announced as a bare link and same-destination tiles get
+    // conflicting names.
+    $aria_label = $title;
+    if (!$aria_label && !empty($media['id'])) {
+        $aria_label = trim((string) get_post_meta($media['id'], '_wp_attachment_image_alt', true));
+    }
+    if (!$aria_label && !empty($media['title'])) {
+        $aria_label = $media['title'];
+    }
+
     // Video (iframe) cells: drop the fixed 16/9 aspect so the cell can stretch to
     // the grid row height and line up with its (often taller) image neighbours;
     // the player covers the cell (object-fit:cover). CSS gives a min-height floor
@@ -80,6 +92,7 @@
         data-fancybox="fancy-<?php echo esc_attr($galleryId); ?>"
     <?php endif; ?>
     class="js-reveal gallery-item <?php echo esc_attr($class); ?>"
+    <?php if ($aria_label): ?>aria-label="<?php echo esc_attr($aria_label); ?>"<?php endif; ?>
     <?php echo $ar_style; ?>
 >
 <?php endif; ?>
@@ -107,12 +120,16 @@
 
         <?php $poster = get_the_post_thumbnail_url($media['id'], 'large'); ?>
 
+        <?php // aria-hidden: muted decorative hover-preview — the tile link carries
+              // the accessible name; hiding the <video> also releases it from the
+              // captions-track a11y audit (no audio to caption). ?>
         <video
             class="js-video-item-hover lazyload"
             muted
             loop
             playsinline
             preload="none"
+            aria-hidden="true"
             poster="<?php echo esc_url($poster); ?>"
             data-src="<?php echo esc_url($media['url']); ?>"
         ></video>

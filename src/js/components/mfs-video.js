@@ -361,6 +361,11 @@ function build(root) {
   video.setAttribute('webkit-playsinline', '');
   video.setAttribute('disablepictureinpicture', '');
   video.setAttribute('disableremoteplayback', '');
+  // bg/hover players are muted decorative loops (no audio, no controls): hide
+  // them from the a11y tree — the surrounding tile/link carries the accessible
+  // name, and a muted loop has nothing to caption (a11y video-caption audit).
+  // Click players stay exposed: they have controls, sound and a title.
+  if (mode !== 'click') video.setAttribute('aria-hidden', 'true');
   posterJobs.set(root, () => setPoster(video, root.dataset.poster, root.dataset.posterFallback));
   posterIo.observe(root);
   if (root.dataset.title) video.setAttribute('title', root.dataset.title);
