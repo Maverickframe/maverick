@@ -1,0 +1,578 @@
+@use "../common/vars" as *;
+
+/* Press / "As Featured In" page (templates/template-press.php).
+   Quote-led featured block + preview-image cards; chrome + tokens from base.scss. */
+
+.press-page {
+    margin-top: var(--header-height);
+    background-color: var(--white-color);
+    color: var(--text-middle-grey-color);
+}
+
+.press {
+    padding: 40px 0 88px;
+
+    @media (min-width: $md) {
+        padding: 56px 0 128px;
+    }
+
+    &__breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+
+        font-size: 14px;
+        color: var(--text-grey-color);
+
+        a {
+            color: var(--text-grey-color);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--accent-color);
+            }
+        }
+
+        &-sep {
+            color: var(--stroke-light-grey-color);
+        }
+
+        &-current {
+            color: var(--text-middle-grey-color);
+        }
+    }
+
+    &__head {
+        max-width: 820px;
+        margin-top: 32px;
+
+        @media (min-width: $md) {
+            margin-top: 48px;
+        }
+    }
+
+    /* H1 sizes = legal-page convention (34/52) */
+    &__title {
+        margin: 0;
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--black-color);
+
+        @media (min-width: $md) {
+            font-size: 52px;
+        }
+    }
+
+    &__intro {
+        max-width: 620px;
+        margin: 20px 0 0;
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text-grey-color);
+
+        @media (min-width: $md) {
+            margin-top: 24px;
+            font-size: 18px;
+        }
+    }
+
+    &__date {
+        font-size: inherit;
+        color: inherit;
+    }
+
+    /* Shared logo element (feature block + cards) */
+    &__logo {
+        display: flex;
+        align-items: center;
+        height: 36px;
+
+        img {
+            max-height: 36px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+
+            filter: grayscale(1);
+            opacity: 0.75;
+            transition:
+                filter 0.3s ease,
+                opacity 0.3s ease;
+        }
+
+        &--text {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--black-color);
+        }
+
+        &--feature {
+            height: 32px;
+
+            img {
+                max-height: 32px;
+                max-width: 160px;
+            }
+        }
+    }
+
+    // NB: margin lives on `.press ul.press__grid` below — the theme's global
+    // reset `ul:not(.list) { margin: 0 }` (0-1-1) beats a bare class (0-1-0).
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+
+        padding: 0;
+        list-style: none;
+
+        @media (min-width: $sm) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        @media (min-width: $md) {
+            gap: 36px;
+            margin-top: 64px;
+        }
+
+        @media (min-width: $lg) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+/* Beats the theme reset `ul:not(.list) { margin: 0 }` — see note above. */
+.press ul.press__grid {
+    margin: 48px 0 0;
+
+    @media (min-width: $md) {
+        margin-top: 64px;
+    }
+
+    /* Filter bar already provides the top spacing */
+    &.press__grid--filtered {
+        margin-top: 28px;
+
+        @media (min-width: $md) {
+            margin-top: 32px;
+        }
+    }
+}
+
+/* ---- Category filter chips ---- */
+
+.press-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 40px;
+
+    @media (min-width: $md) {
+        margin-top: 56px;
+    }
+
+    &__btn {
+        margin: 0;
+        padding: 8px 16px;
+
+        font-family: inherit;
+        font-size: 13px;
+        line-height: 1.4;
+        color: var(--text-grey-color);
+
+        background: var(--white-color);
+        border: 1px solid var(--stroke-light-grey-color);
+        border-radius: 100px;
+        cursor: pointer;
+
+        transition:
+            color 0.25s ease,
+            border-color 0.25s ease,
+            background-color 0.25s ease;
+
+        &:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        &.is-active {
+            background: var(--black-color);
+            border-color: var(--black-color);
+            color: var(--white-color);
+        }
+    }
+}
+
+/* ---- Batched reveal ("Show more") ---- */
+
+.press-more {
+    margin-top: 40px;
+    text-align: center;
+
+    @media (min-width: $md) {
+        margin-top: 48px;
+    }
+
+    &__btn {
+        margin: 0;
+        padding: 0 28px;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 44px;
+        color: var(--black-color);
+
+        background: transparent;
+        border: 1px solid var(--black-color);
+        border-radius: 2px;
+        cursor: pointer;
+
+        transition:
+            color 0.25s ease,
+            background-color 0.25s ease;
+
+        &:hover {
+            background: var(--black-color);
+            color: var(--white-color);
+        }
+    }
+}
+
+/* ---- Featured mention: full-width, quote-led (Studio McGee pattern) ---- */
+
+.press-feature {
+    margin-top: 48px;
+    padding: 40px 0;
+    border-top: 1px solid var(--stroke-light-grey-color);
+    border-bottom: 1px solid var(--stroke-light-grey-color);
+
+    @media (min-width: $md) {
+        margin-top: 72px;
+        padding: 64px 0;
+    }
+
+    &__eyebrow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px;
+        margin: 0;
+
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-grey-color);
+    }
+
+    &__eyebrow-label {
+        font-weight: 600;
+        color: var(--accent-color);
+    }
+
+    &__eyebrow-sep {
+        color: var(--stroke-light-grey-color);
+    }
+
+    &__quote {
+        max-width: 900px;
+        margin: 24px 0 0;
+        padding: 0;
+        border: none;
+        text-align: left; // theme's global blockquote is text-align:end
+
+        @media (min-width: $md) {
+            margin-top: 32px;
+        }
+
+        // theme's global blockquote draws a quote icon via ::before — not here
+        &::before,
+        &::after {
+            content: none !important;
+        }
+
+        p {
+            margin: 0;
+            text-align: left;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            color: var(--black-color);
+
+            @media (min-width: $md) {
+                font-size: 34px;
+                line-height: 1.3;
+            }
+        }
+    }
+
+    &__source {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 28px;
+
+        @media (min-width: $md) {
+            margin-top: 36px;
+        }
+    }
+
+    &__name {
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--text-middle-grey-color);
+    }
+
+    &__link-row {
+        margin: 20px 0 0;
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--accent-color);
+        text-decoration: none;
+
+        @media (min-width: $md) {
+            font-size: 17px;
+        }
+
+        svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            text-decoration: underline;
+
+            svg {
+                transform: translateX(4px);
+            }
+        }
+    }
+
+    &:hover .press__logo img {
+        filter: grayscale(0);
+        opacity: 1;
+    }
+}
+
+/* ---- Regular mention cards (preview render on top) ---- */
+
+.press-card {
+    &__inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+
+        border: 1px solid var(--stroke-light-grey-color);
+        border-radius: 2px;
+        background-color: var(--white-color);
+        transition: border-color 0.3s ease;
+    }
+
+    &__inner:hover {
+        border-color: var(--accent-color);
+    }
+
+    &__preview {
+        display: block;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+    }
+
+    &__inner:hover &__preview img {
+        transform: scale(1.03);
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 28px;
+
+        @media (min-width: $md) {
+            padding: 32px;
+        }
+    }
+
+    &__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 36px;
+    }
+
+    &__inner:hover .press__logo img {
+        filter: grayscale(0);
+        opacity: 1;
+    }
+
+    /* Same pill as .case-item__tag (blog/case cards) */
+    &__tag {
+        flex-shrink: 0;
+        padding: 8px 16px;
+
+        font-size: 10px;
+        line-height: 1.4;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: var(--purple-color-dark);
+
+        background-color: var(--purple-color);
+        border-radius: 100px;
+    }
+
+    /* Date sizes/color = .case-item__date */
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 12px;
+        margin-top: 24px;
+
+        font-size: 14px;
+        color: #585858;
+
+        @media (min-width: $lg) {
+            font-size: 16px;
+        }
+    }
+
+    &__name {
+        font-weight: 500;
+        color: var(--text-middle-grey-color);
+    }
+
+    /* Title sizes = .case-item__title (24 → 32 on $lg) */
+    &__title {
+        margin: 10px 0 0;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 1.3;
+        color: var(--black-color);
+
+        @media (min-width: $lg) {
+            font-size: 32px;
+        }
+    }
+
+    /* Stretched link: the whole card is clickable, one anchor in the DOM. */
+    &__link {
+        color: inherit;
+        text-decoration: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        &:hover {
+            color: var(--accent-color);
+        }
+    }
+
+    /* Excerpt size = .case-item__excerpt */
+    &__excerpt {
+        margin: 14px 0 0;
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text-grey-color);
+    }
+
+    &__arrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 28px;
+
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--accent-color);
+
+        svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+    }
+
+    &__inner:hover &__arrow svg {
+        transform: translateX(4px);
+    }
+}
+
+/* ---- Bottom CTA ---- */
+
+.press-cta {
+    padding: 0 0 88px;
+
+    @media (min-width: $md) {
+        padding-bottom: 128px;
+    }
+
+    &__inner {
+        padding: 40px 24px;
+        border: 1px solid var(--stroke-light-grey-color);
+        border-radius: 2px;
+        text-align: center;
+
+        @media (min-width: $md) {
+            padding: 64px 48px;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 1.2;
+        color: var(--black-color);
+
+        @media (min-width: $md) {
+            font-size: 32px;
+        }
+    }
+
+    &__text {
+        max-width: 560px;
+        margin: 14px auto 0;
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--text-grey-color);
+
+        @media (min-width: $md) {
+            font-size: 16px;
+        }
+    }
+
+    &__btn {
+        margin-top: 28px;
+        text-decoration: none;
+    }
+}

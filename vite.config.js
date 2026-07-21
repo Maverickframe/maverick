@@ -59,6 +59,7 @@ export default defineConfig(({ mode }) => {
                     team: resolve(__dirname, "src/scss/bundles/team.scss"),
                     contacts: resolve(__dirname, "src/scss/bundles/contacts.scss"),
                     legal: resolve(__dirname, "src/scss/bundles/legal.scss"),
+                    press: resolve(__dirname, "src/scss/bundles/press.scss"),
                     error: resolve(__dirname, "src/scss/bundles/error.scss"),
                 },
             },
