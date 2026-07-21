@@ -44,6 +44,7 @@ function mfs_page_bundle_key() {
     if (is_page_template('templates/presentation-design-page.php')) return 'src/scss/bundles/presentation.scss';
     if (is_page_template('templates/template-contacts.php')) return 'src/scss/bundles/contacts.scss';
     if (is_page_template('templates/template-legal.php')) return 'src/scss/bundles/legal.scss';
+    if (is_page_template('templates/template-press.php')) return 'src/scss/bundles/press.scss';
     if (is_404()) return 'src/scss/bundles/error.scss';
     // Plain content pages on the default template (page.php): /app/, DE legal pages,
     // any future plain page. Replaces the retired old-design main.scss for them.
