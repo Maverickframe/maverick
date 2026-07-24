@@ -126,8 +126,7 @@ async function loadItems(append) {
   // }
 
   const currentPage = append ? +params.current_page + 1 : params.current_page;
-  const body = new URLSearchParams({
-    action: 'loadmore_articles',
+  const qs = new URLSearchParams({
     post_type: params.post_type,
     current_page: currentPage,
     cat: params.cat || 'all',
@@ -138,7 +137,7 @@ async function loadItems(append) {
     lang: params.lang || 'en'
   });
 
-  const res = await fetch(params.ajaxurl, { method: 'POST', body });
+  const res = await fetch('/mfs-loadmore/?' + qs.toString());
   const json = await res.json();
 
   if (json.data) {
