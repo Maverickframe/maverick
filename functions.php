@@ -463,6 +463,7 @@ require_once __DIR__ . '/inc.prefetch.php';
 require_once __DIR__ . '/inc.lp.php';
 require_once __DIR__ . '/inc.delay.php';
 require_once __DIR__ . '/inc.svg.php';
+require_once __DIR__ . '/inc.canonical-case.php';
 
 // GTM + HubSpot tracking are loaded by the self-hosted delayed loader in
 // inc.delay.php (first-interaction gate + 4s timeout fallback), which replaced
