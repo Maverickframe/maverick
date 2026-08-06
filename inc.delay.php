@@ -55,15 +55,6 @@ function mfs_print_delayed_thirdparty() {
     var g=document.createElement('script');
     g.async=true;g.src='https://gw.maverickframe.com/metrics/gtm.js?id='+GTM;
     document.head.appendChild(g);
-    /* TEST: load the Google Ads tag as its own first-party gtag through our
-       gateway, so its endpoints are first-party too. Remove if it does not
-       change where Ads hits go. */
-    var a=document.createElement('script');
-    a.async=true;a.src='https://gw.maverickframe.com/metrics/gtag/js?id=AW-18300801444';
-    document.head.appendChild(a);
-    window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
-    window.gtag('js',new Date());
-    window.gtag('config','AW-18300801444');
     var h=document.createElement('script');
     h.id='hs-script-loader';h.async=true;h.defer=true;
     h.src='https://js-eu1.hs-scripts.com/'+HS+'.js';
