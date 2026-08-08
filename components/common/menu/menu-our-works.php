@@ -39,8 +39,12 @@
                         }
                     }
 
-                    $video_url = wp_get_attachment_url($hero_data['video']) ?? '';
-                    $poster_id = get_post_thumbnail_id() ?? $hero_data['background'];
+                    // NB: `wp_get_attachment_url($hero_data['video']) ?? ''` evaluated the
+                    // array access eagerly, so every case without a hero video logged
+                    // "Undefined array key video" (~3-4k warnings/day). Guard the key first.
+                    $video_id  = ! empty($hero_data['video']) ? $hero_data['video'] : 0;
+                    $video_url = $video_id ? ( wp_get_attachment_url($video_id) ?: '' ) : '';
+                    $poster_id = get_post_thumbnail_id();
                 ?>
 
                 <?php if ($poster_id): ?>
