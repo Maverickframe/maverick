@@ -5,13 +5,28 @@
  * Replaces WP Rocket's "Delay JS" for the only two third-party scripts the site
  * loads: Google Tag Manager and the HubSpot tracking loader. Vanilla JS, ~1 KB,
  * no plugin. Fires them on the FIRST user interaction (scroll / mousemove /
- * touch / key / pointer / click) OR after a timeout fallback, so zero-interaction
- * sessions still register a GA4 pageview and set the HubSpot `hubspotutk` cookie.
+ * touch / key / pointer / click) OR after a timeout fallback.
  * The gate is idempotent (fires once) and self-removes its listeners.
  *
- * Why delaying loses nothing: GTM events pushed to window.dataLayer before gtm.js
- * evaluates are queued (dataLayer is a plain array) and replayed on load. The GTM
- * <noscript> iframe stays in header.php for the JS-off case.
+ * IMPORTANT — what the fallback actually costs (measured 10.08.2026):
+ * a visitor who leaves BEFORE the fallback fires without ever touching the page
+ * is never measured at all: no GA4 pageview, no `hubspotutk` cookie. On mobile
+ * there is no `mousemove`, so a read-and-back visit produces zero events. With
+ * the default 10 s fallback this silently dropped ~35% of Google Ads clicks
+ * (Ads clicks vs GA4 sessions: Display 27%, cold Search ~60%, engaged UK ~80%),
+ * which repeatedly got misread as "half the clicks never reach the site".
+ *
+ * PAID FAST PATH: when the URL carries a paid click id (gclid / gbraid / wbraid /
+ * msclkid) the fallback drops to MFS_DELAY_PAID_MS. The check is done in JS, not
+ * PHP, on purpose — the served HTML stays byte-identical for every visitor, so
+ * edge caching is unaffected and no per-gclid cache entries are created.
+ * Lighthouse / PSI lab runs request URLs without a click id, so they keep the
+ * full 10 s delay and the score is untouched.
+ *
+ * Why delaying loses nothing (once the script does load): GTM events pushed to
+ * window.dataLayer before gtm.js evaluates are queued (dataLayer is a plain
+ * array) and replayed on load. The GTM <noscript> iframe stays in header.php
+ * for the JS-off case.
  *
  * Because GTM + HubSpot are injected here via createElement (not present in the
  * HTML buffer), WP Rocket's "Delay JS" cannot re-catch them — so once this loader
@@ -26,6 +41,7 @@ defined( 'ABSPATH' ) || exit;
 if ( ! defined( 'MFS_GTM_ID' ) )            define( 'MFS_GTM_ID', 'GTM-T4JS5BJV' );
 if ( ! defined( 'MFS_HS_PORTAL_ID' ) )      define( 'MFS_HS_PORTAL_ID', '148670517' );
 if ( ! defined( 'MFS_DELAY_FALLBACK_MS' ) ) define( 'MFS_DELAY_FALLBACK_MS', 10000 );
+if ( ! defined( 'MFS_DELAY_PAID_MS' ) )     define( 'MFS_DELAY_PAID_MS', 800 );
 
 add_action( 'wp_footer', 'mfs_print_delayed_thirdparty', 20 );
 
@@ -41,10 +57,16 @@ function mfs_print_delayed_thirdparty() {
 	$gtm = wp_json_encode( MFS_GTM_ID );
 	$hs  = wp_json_encode( MFS_HS_PORTAL_ID );
 	$fb  = $immediate ? 0 : (int) MFS_DELAY_FALLBACK_MS;
+	$pfb = $immediate ? 0 : (int) MFS_DELAY_PAID_MS;
 	?>
 <script id="mfs-delay">
 (function(){
-  var GTM=<?php echo $gtm; ?>,HS=<?php echo $hs; ?>,FB=<?php echo $fb; ?>,fired=false;
+  var GTM=<?php echo $gtm; ?>,HS=<?php echo $hs; ?>,FB=<?php echo $fb; ?>,PFB=<?php echo $pfb; ?>,fired=false;
+  // Paid click landing? Measure it almost immediately — a bounce before the
+  // default fallback would otherwise never be recorded at all.
+  try{
+    if(PFB<FB&&/[?&](gclid|gbraid|wbraid|msclkid)=/i.test(window.location.search)){FB=PFB;}
+  }catch(e){}
   var evts=['scroll','mousemove','touchstart','keydown','pointerdown','click'];
   function load(){
     if(fired){return;}
