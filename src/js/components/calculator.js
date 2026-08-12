@@ -126,7 +126,11 @@ function initCalculator() {
       })(fd);
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'lead_form', form_name: 'calculator', form_type: 'calculator' });
+      // user_data feeds Google Ads Enhanced Conversions; GTM hashes it in-browser.
+      window.dataLayer.push({
+        event: 'lead_form', form_name: 'calculator', form_type: 'calculator',
+        user_data: email ? { email: String(email).trim().toLowerCase() } : {}
+      });
     } catch (e) { /* ignore */ }
     sent = true;
     noteEl.textContent = 'Thanks — we’ll email your fixed quote shortly.';

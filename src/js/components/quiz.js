@@ -249,7 +249,11 @@ function initQuiz() {
       })(fd);
       fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'lead_form', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch });
+      // user_data feeds Google Ads Enhanced Conversions; GTM hashes it in-browser.
+      window.dataLayer.push({
+        event: 'lead_form', form_name: 'quiz', form_type: 'quiz', quiz_branch: branch,
+        user_data: email ? { email: String(email).trim().toLowerCase() } : {}
+      });
     } catch (e) { /* ignore */ }
   }
 

@@ -194,7 +194,14 @@ var STUDIO_TZ = 'Europe/London';            // studio reference tz (studio-time 
                 .then(function (res) {
                     btn.removeAttribute('disabled');
                     if (res && res.success) {
-                        if (window.dataLayer) window.dataLayer.push({ event: 'book_call', form_name: 'book_call', form_type: 'consultation' });
+                        if (window.dataLayer) {
+                            // user_data feeds Google Ads Enhanced Conversions; GTM hashes it in-browser.
+                            var bcEmail = String(fd.get('Email') || '').trim().toLowerCase();
+                            window.dataLayer.push({
+                                event: 'book_call', form_name: 'book_call', form_type: 'consultation',
+                                user_data: bcEmail ? { email: bcEmail } : {}
+                            });
+                        }
                         root.querySelector('[data-done-text]').textContent =
                             fmtDayLabel(state.day) + ' at ' + fmtTime(state.instant, state.tz) + ' (' + tzShort(state.tz) + ')';
                         go(3);

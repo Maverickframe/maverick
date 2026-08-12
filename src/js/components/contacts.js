@@ -101,6 +101,15 @@ async function sendForm(contactsForm) {
   if (responseData === 'Success') {
     window.dataLayer = window.dataLayer || [];
 
+    // Enhanced Conversions: read the fields BEFORE reset() blanks them.
+    // Phone only when it is already E.164 — Google drops anything else, and a
+    // half-formatted number is worse than no number at all.
+    const userData = {};
+    const ecEmail = (emailInput?.value || '').trim().toLowerCase();
+    if (ecEmail) userData.email = ecEmail;
+    const ecPhone = (phoneInput?.value || '').replace(/[^\d+]/g, '');
+    if (ecPhone.charAt(0) === '+') userData.phone_number = ecPhone;
+
     contactsForm.reset();
 
     phoneInput?.closest('label').classList.remove('error');
@@ -108,7 +117,9 @@ async function sendForm(contactsForm) {
 
     // GA4 conversion event uses the per-form identity computed above
     // (lead_event / form_name / form_type), shared with the HubSpot payload.
-    window.dataLayer.push({ event: gaEvent, form_name: gaForm, form_type: gaType });
+    // user_data rides along for Google Ads Enhanced Conversions; GTM hashes it
+    // (SHA-256) before it leaves the browser.
+    window.dataLayer.push({ event: gaEvent, form_name: gaForm, form_type: gaType, user_data: userData });
 
     if (isDownload) {
       const link = document.createElement('a');
