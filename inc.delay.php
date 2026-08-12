@@ -28,6 +28,15 @@
  * array) and replayed on load. The GTM <noscript> iframe stays in header.php
  * for the JS-off case.
  *
+ * GTM is loaded from edge.maverickframe.com — our own self-hosted server-side
+ * GTM (sGTM), not googletagmanager.com and no longer the gw.maverickframe.com
+ * Cloudflare Worker. That server also receives the GA4 hits and issues the
+ * first-party FPID / FPGCLAW cookies over Set-Cookie, which is what keeps a
+ * gclid alive past Safari ITP's 7-day cap on JS-written cookies.
+ * Rollback: swap the URL back to https://gw.maverickframe.com/metrics/gtm.js
+ * AND revert server_container_url in the GTM web container — both, or hits and
+ * scripts end up on different hosts.
+ *
  * Because GTM + HubSpot are injected here via createElement (not present in the
  * HTML buffer), WP Rocket's "Delay JS" cannot re-catch them — so once this loader
  * is live and excluded from delay, WP Rocket's Delay JS can be turned off.
@@ -75,7 +84,7 @@ function mfs_print_delayed_thirdparty() {
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});
     var g=document.createElement('script');
-    g.async=true;g.src='https://gw.maverickframe.com/metrics/gtm.js?id='+GTM;
+    g.async=true;g.src='https://edge.maverickframe.com/gtm.js?id='+GTM;
     document.head.appendChild(g);
     var h=document.createElement('script');
     h.id='hs-script-loader';h.async=true;h.defer=true;
