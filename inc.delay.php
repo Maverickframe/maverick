@@ -2,15 +2,24 @@
 /**
  * inc.delay.php — self-hosted "delay third-party JS until first interaction".
  *
- * Replaces WP Rocket's "Delay JS" for the only two third-party scripts the site
- * loads: Google Tag Manager and the HubSpot tracking loader. Vanilla JS, ~1 KB,
- * no plugin. Fires them on the FIRST user interaction (scroll / mousemove /
- * touch / key / pointer / click) OR after a timeout fallback.
+ * Replaces WP Rocket's "Delay JS" for the only third-party script the site still
+ * loads: Google Tag Manager. Vanilla JS, ~1 KB, no plugin. Fires it on the FIRST
+ * user interaction (scroll / mousemove / touch / key / pointer / click) OR after
+ * a timeout fallback.
  * The gate is idempotent (fires once) and self-removes its listeners.
+ *
+ * 2026-08-16: the HubSpot tracking loader (js-eu1.hs-scripts.com/<portal>.js) was
+ * removed from here. HubSpot is being retired — its portal stopped accepting new
+ * contacts on 2026-08-15 — and the loader only pulled in hs-analytics, hs-banner
+ * and the __ptq.gif beacon plus the `hubspotutk` cookie. Nothing on the site read
+ * any of it: leads are delivered by forms/notify.php (journal + email), and the
+ * Google Ads remarketing lists are fed by our own first-party tag, not by HubSpot.
+ * ⚠️ Do NOT take this as licence to delete forms/hubspot.php — mfs_lead_notify()
+ * is called from inside it, so removing that file silently kills lead notifications.
  *
  * IMPORTANT — what the fallback actually costs (measured 10.08.2026):
  * a visitor who leaves BEFORE the fallback fires without ever touching the page
- * is never measured at all: no GA4 pageview, no `hubspotutk` cookie. On mobile
+ * is never measured at all: no GA4 pageview at all. On mobile
  * there is no `mousemove`, so a read-and-back visit produces zero events. With
  * the default 10 s fallback this silently dropped ~35% of Google Ads clicks
  * (Ads clicks vs GA4 sessions: Display 27%, cold Search ~60%, engaged UK ~80%),
@@ -37,25 +46,24 @@
  * AND revert server_container_url in the GTM web container — both, or hits and
  * scripts end up on different hosts.
  *
- * Because GTM + HubSpot are injected here via createElement (not present in the
+ * Because GTM is injected here via createElement (not present in the
  * HTML buffer), WP Rocket's "Delay JS" cannot re-catch them — so once this loader
  * is live and excluded from delay, WP Rocket's Delay JS can be turned off.
  *
  * Kill-switch: ?mfs_delay=0 (per-request) or define('MFS_DELAY', false) (global)
- * → load both immediately, no gating (for debugging / PSI measurement).
+ * → load immediately, no gating (for debugging / PSI measurement).
  */
 
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'MFS_GTM_ID' ) )            define( 'MFS_GTM_ID', 'GTM-T4JS5BJV' );
-if ( ! defined( 'MFS_HS_PORTAL_ID' ) )      define( 'MFS_HS_PORTAL_ID', '148670517' );
 if ( ! defined( 'MFS_DELAY_FALLBACK_MS' ) ) define( 'MFS_DELAY_FALLBACK_MS', 10000 );
 if ( ! defined( 'MFS_DELAY_PAID_MS' ) )     define( 'MFS_DELAY_PAID_MS', 800 );
 
 add_action( 'wp_footer', 'mfs_print_delayed_thirdparty', 20 );
 
 function mfs_print_delayed_thirdparty() {
-	// No tracking in local Vite dev (mirrors the old footer.php / HubSpot guards).
+	// No tracking in local Vite dev (mirrors the old footer.php guards).
 	if ( defined( 'IS_VITE_DEVELOPMENT' ) && IS_VITE_DEVELOPMENT == true ) {
 		return;
 	}
@@ -64,13 +72,12 @@ function mfs_print_delayed_thirdparty() {
 	          || ( defined( 'MFS_DELAY' ) && MFS_DELAY === false );
 
 	$gtm = wp_json_encode( MFS_GTM_ID );
-	$hs  = wp_json_encode( MFS_HS_PORTAL_ID );
 	$fb  = $immediate ? 0 : (int) MFS_DELAY_FALLBACK_MS;
 	$pfb = $immediate ? 0 : (int) MFS_DELAY_PAID_MS;
 	?>
 <script id="mfs-delay">
 (function(){
-  var GTM=<?php echo $gtm; ?>,HS=<?php echo $hs; ?>,FB=<?php echo $fb; ?>,PFB=<?php echo $pfb; ?>,fired=false;
+  var GTM=<?php echo $gtm; ?>,FB=<?php echo $fb; ?>,PFB=<?php echo $pfb; ?>,fired=false;
   // Paid click landing? Measure it almost immediately — a bounce before the
   // default fallback would otherwise never be recorded at all.
   try{
@@ -86,10 +93,6 @@ function mfs_print_delayed_thirdparty() {
     var g=document.createElement('script');
     g.async=true;g.src='https://edge.maverickframe.com/gtm.js?id='+GTM;
     document.head.appendChild(g);
-    var h=document.createElement('script');
-    h.id='hs-script-loader';h.async=true;h.defer=true;
-    h.src='https://js-eu1.hs-scripts.com/'+HS+'.js';
-    document.head.appendChild(h);
   }
   for(var i=0;i<evts.length;i++){window.addEventListener(evts[i],load,{passive:true});}
   setTimeout(load,FB);

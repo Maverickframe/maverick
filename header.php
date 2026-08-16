@@ -13,15 +13,14 @@ $classes = trim($classes);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#2d40ae">
 
-    <?php // Connect hints for third-party origins. GTM + HubSpot are now DELAYED
-          // (WP Rocket "Delay JS" — they load on first user interaction, not at
-          // paint), so eager `preconnect` for them would sit unused and PSI would
-          // flag it — dropped. Keep cheap dns-prefetch (DNS only, no socket) for the
-          // HubSpot/Google origins the delayed scripts eventually hit. hs-banner
-          // removed: the cookie-consent banner is turned off in the HubSpot portal. ?>
-    <link rel="dns-prefetch" href="https://js-eu1.hs-scripts.com">
-    <link rel="dns-prefetch" href="https://js-eu1.hs-analytics.net">
-    <link rel="dns-prefetch" href="https://track-eu1.hubspot.com">
+    <?php // Connect hints for third-party origins. GTM is DELAYED (inc.delay.php —
+          // it loads on first user interaction, not at paint), so an eager
+          // `preconnect` would sit unused and PSI would flag it — dropped. Keep the
+          // cheap dns-prefetch (DNS only, no socket) for the Google origins the
+          // delayed script eventually hits.
+          // 2026-08-16: the three HubSpot hints (js-eu1.hs-scripts.com,
+          // js-eu1.hs-analytics.net, track-eu1.hubspot.com) were removed together
+          // with the HubSpot loader itself — see inc.delay.php. ?>
     <link rel="dns-prefetch" href="https://www.google.com">
 
     <link rel="manifest" href="<?= get_template_directory_uri(); ?>/site.webmanifest">
