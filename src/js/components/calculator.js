@@ -1,7 +1,7 @@
 // Price Calculator — interior-rendering instant estimate. Engine works in HOURS
 // (first view ~8h, each extra ~4h); percent add-ons add hours; hours × rate
 // ($39) = price. Animation is a flat deliverable price. Subscription −30%.
-// Config comes from data-* on the card. Email + selections POST to amo.php.
+// Config comes from data-* on the card. Email + selections POST to lead.php.
 
 function mfcMoney(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
 function mfcRound50(x) { return Math.round(x / 50) * 50; }
@@ -15,7 +15,8 @@ function initCalculator() {
   var EXTRAH = parseFloat(card.getAttribute('data-extrah')) || 4;
   var RATE = parseFloat(card.getAttribute('data-rate')) || 39;
   var SUB = parseFloat(card.getAttribute('data-sub')) || 0.7;
-  var amoUrl = card.getAttribute('data-amo');
+  // data-endpoint is the current name; data-amo stays for cached bundles.
+  var leadUrl = card.getAttribute('data-endpoint') || card.getAttribute('data-amo');
 
   var viewsEl = card.querySelector('[data-views]');
   var viewsOut = card.querySelector('[data-views-out]');
@@ -119,12 +120,11 @@ function initCalculator() {
           var ck = function (n) { return (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || ''; };
           var m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
           if (m) f.set('ga_client_id', m[1]);
-          var utk = ck('hubspotutk'); if (utk) f.set('hubspotutk', utk);
           var gc = new URLSearchParams(location.search).get('gclid') || ((ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '');
           if (gc) f.set('gclid', gc);
         } catch (e) {}
       })(fd);
-      fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
+      fetch(leadUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
       // user_data feeds Google Ads Enhanced Conversions; GTM hashes it in-browser.
       window.dataLayer.push({

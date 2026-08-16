@@ -2,11 +2,12 @@
 /**
  * Mirrors EVERY site lead to the studio inbox and to a local journal.
  *
- * Why: HubSpot stays the CRM, but a lead must not depend on any external
- * system — not on its subscription, not on its uptime. Two independent layers:
+ * Why: a lead must not depend on any external system — not on its subscription,
+ * not on its uptime. That held when the CRM was HubSpot and it holds now that
+ * the CRM is ours. Two independent layers:
  *   1) wp-content/mfs-leads.jsonl — written FIRST, local, needs no network.
- *      This is the real guarantee: it survives an outage of both mail and
- *      HubSpot, and every field is stored verbatim.
+ *      This is the real guarantee: it survives an outage of both the mail and
+ *      the CRM, and every field is stored verbatim.
  *   2) an email to the studio inbox over Google Workspace SMTP.
  *
  * ⚠️ Why SMTP and not mail() / wp_mail(): the domain's MX is Google Workspace
@@ -15,7 +16,7 @@
  * its own SPF. Sending through smtp.gmail.com with authentication produces valid
  * SPF and DKIM, so the message lands in the inbox instead of spam.
  *
- * ⚠️ Why PHPMailer from core and not wp_mail(): forms/amo.php is a standalone
+ * ⚠️ Why PHPMailer from core and not wp_mail(): forms/lead.php is a standalone
  * endpoint — it does NOT boot WordPress, so wp_mail() does not exist there. The
  * PHPMailer classes are self-contained and load directly from wp-includes.
  *
@@ -26,7 +27,7 @@
  * ⚠️ English only in everything the recipient can see. These emails get
  * forwarded, and a forwarded message must be readable by anyone on the thread.
  *
- * Called from hubspot.php inside the shutdown function, i.e. AFTER the response
+ * Called from lead-dispatch.php inside the shutdown function, i.e. AFTER the response
  * to the visitor has already been flushed. It never delays the visitor and never
  * throws: every error is caught and written to mfs-notify.log.
  */
@@ -36,8 +37,9 @@ if (!defined('MFS_NOTIFY_ERRLOG'))  define('MFS_NOTIFY_ERRLOG', __DIR__ . '/../.
 // forms -> maverickframe -> themes -> wp-content -> public_html
 if (!defined('MFS_NOTIFY_WP_ROOT')) define('MFS_NOTIFY_WP_ROOT', dirname(__DIR__, 4));
 
-// SMTP credentials. Out of git (same as hubspot-credentials.php), placed on the
-// server by hand.
+// SMTP credentials, plus the CRM intake token read by forms/crm.php. Out of git,
+// placed on the server by hand — so the recipient list and the token change
+// without a deploy.
 $mfs_notify_creds = @include __DIR__ . '/notify-credentials.php';
 if (!is_array($mfs_notify_creds)) { $mfs_notify_creds = []; }
 if (!defined('MFS_NOTIFY_SMTP_USER'))   define('MFS_NOTIFY_SMTP_USER',   trim((string) ($mfs_notify_creds['smtp_user']   ?? '')));
@@ -73,15 +75,15 @@ function mfs_notify_log($msg) {
 /**
  * Everything known about the lead, in three groups.
  *
- * The point of the raw group: amo.php appends unknown form fields into the
+ * The point of the raw group: lead.php appends unknown form fields into the
  * message body, which means a new lead magnet needs no handler changes — but it
  * also means the original field names are lost by the time we see them. So we
  * capture $_POST verbatim as well. Whatever a new form starts posting shows up
  * in the email on its own, with no code change here.
  */
 function mfs_notify_fields(array $lead) {
-    // Mapped properties — the same set HubSpot receives (UTM, _ga, _gcl_aw included).
-    $mapped = function_exists('mfs_hs_props') ? mfs_hs_props($lead) : $lead;
+    // Mapped properties — the shared shape of a lead (UTM, _ga, _gcl_aw included).
+    $mapped = function_exists('mfs_lead_props') ? mfs_lead_props($lead) : $lead;
 
     // Raw POST, minus purely technical keys that carry no information.
     $skip = ['action', '_wpnonce', 'nonce', 'dry_run'];
@@ -105,6 +107,9 @@ function mfs_notify_fields(array $lead) {
     } catch (\Throwable $e) { /* keep UTC */ }
 
     $meta = [
+        // Same id the CRM gets as its idempotency key: one submission can be
+        // followed across the journal, the inbox and the CRM without guessing.
+        'lead_id'        => function_exists('mfs_lead_id') ? mfs_lead_id() : '',
         'page_url'       => trim((string) ($lead['page_uri'] ?? ($_SERVER['HTTP_REFERER'] ?? ''))),
         'received_local' => $local,
         'received_utc'   => $utc,
@@ -112,9 +117,8 @@ function mfs_notify_fields(array $lead) {
         'user_agent'     => mb_substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 300),
         'language'       => mb_substr((string) ($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? ''), 0, 100),
         // Tracking cookies: what the attribution is actually stitched to. Worth
-        // having in writing — when a lead shows up in HubSpot with the wrong
+        // having in writing — when a lead shows up in the CRM with the wrong
         // source, this is the first thing to check.
-        'hubspotutk'     => trim((string) ($_COOKIE['hubspotutk'] ?? '')),
         '_ga'            => trim((string) ($_COOKIE['_ga'] ?? '')),
         '_gcl_aw'        => trim((string) ($_COOKIE['_gcl_aw'] ?? '')),
     ];
@@ -124,8 +128,8 @@ function mfs_notify_fields(array $lead) {
 
 /**
  * Layer 1 — the on-disk journal. One lead per line of JSON, everything verbatim.
- * Written before any network call, so it survives an outage of both mail and
- * HubSpot. Read with: tail -n 20 wp-content/mfs-leads.jsonl
+ * Written before any network call, so it survives an outage of both the mail
+ * and the CRM. Read with: tail -n 20 wp-content/mfs-leads.jsonl
  */
 function mfs_notify_record(array $all) {
     $row = json_encode($all, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
@@ -200,12 +204,12 @@ function mfs_notify_body(array $all) {
     $html .= mfs_notify_table('All submitted fields', $r);
 
     $html .= mfs_notify_table('Request', $x, [
+        'lead_id'        => 'Lead id',
         'received_local' => 'Received',
         'received_utc'   => 'Received (UTC)',
         'ip'             => 'IP',
         'language'       => 'Browser language',
         'user_agent'     => 'User agent',
-        'hubspotutk'     => 'hubspotutk cookie',
         '_ga'            => '_ga cookie',
         '_gcl_aw'        => '_gcl_aw cookie',
     ]);

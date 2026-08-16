@@ -1,6 +1,6 @@
 // When a button that opens a shared form modal carries a data-offer (e.g. the
 // pricing tariff a visitor clicked — Per Project / Hourly / Subscription /
-// Undecided), reflect it in that form's hidden `title` field so the amoCRM deal
+// Undecided), reflect it in that form's hidden `title` field so the CRM deal
 // name shows which option the lead came from. Buttons without data-offer reset
 // the title back to its base value.
 

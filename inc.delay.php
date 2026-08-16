@@ -14,8 +14,9 @@
  * and the __ptq.gif beacon plus the `hubspotutk` cookie. Nothing on the site read
  * any of it: leads are delivered by forms/notify.php (journal + email), and the
  * Google Ads remarketing lists are fed by our own first-party tag, not by HubSpot.
- * ⚠️ Do NOT take this as licence to delete forms/hubspot.php — mfs_lead_notify()
- * is called from inside it, so removing that file silently kills lead notifications.
+ * ⚠️ The lead path is a different thing entirely and is very much alive:
+ * forms/lead.php → forms/lead-dispatch.php → journal, studio email, our CRM.
+ * Nothing in this file may be taken as licence to touch it.
  *
  * IMPORTANT — what the fallback actually costs (measured 10.08.2026):
  * a visitor who leaves BEFORE the fallback fires without ever touching the page

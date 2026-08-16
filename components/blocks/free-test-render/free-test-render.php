@@ -23,7 +23,7 @@ $ftr_success_txt  = get_field('ftr_success_text') ?: mfs_t('Our team will review
 // Offer variant — styling hook + lead-attribution preset (does NOT swap copy; copy lives in the fields above).
 $ftr_variant = get_field('offer_variant') ?: 'render';
 
-// Lead tag → hidden "title" field = the lead source recorded in amoCRM (forms/amo.php maps title => form_page).
+// Lead tag → hidden "title" field = the lead source recorded in the CRM (forms/lead.php maps title => form_page).
 // Must be unique per page so the 28 placements don't collapse into one source.
 // Empty + homepage  => keep the original "Homepage / Free Test Render" (homepage stays untouched).
 // Empty elsewhere   => auto-build a unique tag from the variant + page slug.

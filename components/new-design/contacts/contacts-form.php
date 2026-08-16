@@ -1,7 +1,7 @@
 <?php
 /**
  * Contacts page lead form (new design) — matches the Figma form card.
- * Submits through the shared `js-contacts-form` handler (forms/amo.php).
+ * Submits through the shared `js-contacts-form` handler (forms/lead.php).
  */
 $privacy_url = function_exists('mfs_privacy_url') ? mfs_privacy_url() : get_privacy_policy_url();
 if (!$privacy_url) {

@@ -4,7 +4,7 @@
  * Compact single-column card, brand blue accent on a light section.
  * Engine works in HOURS: first view ~8h, each extra ~4h; percent add-ons add
  * hours; hours × rate ($39) = price. Animation is a flat deliverable price.
- * Subscription takes -30% off. Email + selections POST to forms/amo.php.
+ * Subscription takes -30% off. Email + selections POST to forms/lead.php.
  * Prices/hours come from data-* (ACF-ready — swap later without JS edits).
  */
 
@@ -14,7 +14,11 @@ $cfg = array(
     'rush'   => 0.25,'mkt'    => 0.20,'pano' => 0.10,
     'anim'   => 2500,
 );
-$amo = esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') );
+// Lead endpoint. ⚠️ Printed TWICE below (data-endpoint + legacy data-amo): the
+// calculator's JS lives in the shared bundle, and the copy cached in visitors'
+// browsers still reads data-amo. Drop the legacy attribute only after the
+// bundle hash has had time to roll over everywhere.
+$lead_endpoint = esc_url( home_url('/wp-content/themes/maverickframe/forms/lead.php') );
 ?>
 
 <section class="mfcalc">
@@ -27,7 +31,8 @@ $amo = esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') );
             </div>
 
             <div class="mfcalc__card js-mfcalc"
-                 data-amo="<?php echo $amo; ?>"
+                 data-endpoint="<?php echo $lead_endpoint; ?>"
+                 data-amo="<?php echo $lead_endpoint; ?>"
                  data-firsth="<?php echo (int) $cfg['firsth']; ?>"
                  data-extrah="<?php echo (int) $cfg['extrah']; ?>"
                  data-rate="<?php echo (int) $cfg['rate']; ?>"
