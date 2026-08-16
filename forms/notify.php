@@ -267,9 +267,9 @@ function mfs_notify_plain($html) {
  *   from_name  string  display name ONLY. The address is always the authenticated
  *                      mailbox — Gmail rewrites anything else and DKIM alignment
  *                      breaks with it.
- *   ics        string  raw iCalendar text. Goes in both as a text/calendar part
- *                      (this is what draws the invite card in Gmail/Outlook) and
- *                      as an .ics attachment, for clients that read only files.
+ *   ics        string  raw iCalendar text. Rides as a text/calendar part — that
+ *                      is what draws the invite card in Gmail/Outlook, and mail
+ *                      clients list it as invite.ics on their own.
  *   log        string  how this message is labelled in mfs-notify.log
  *
  * Returns true once the message is accepted. Never throws.
@@ -319,11 +319,15 @@ function mfs_notify_smtp(array $args) {
         $mail->Body    = $html;
         $mail->AltBody = trim((string) ($args['alt'] ?? '')) ?: mfs_notify_plain($html);
 
+        // ⚠️ Ical ONLY — do not also addStringAttachment() the same text. PHPMailer
+        // puts the calendar in as a text/calendar part, which is both what makes
+        // Gmail draw the RSVP card AND what mail clients list as invite.ics. Adding
+        // the attachment on top shows the client "2 Attachments: invite.ics,
+        // invite.ics" (seen live on 2026-08-16).
         $ics = trim((string) ($args['ics'] ?? ''));
         if ($ics !== '') {
             $mail->Ical = $ics;
             if (property_exists($mail, 'IcalMethod')) { $mail->IcalMethod = 'REQUEST'; }
-            $mail->addStringAttachment($ics, 'invite.ics', 'base64', 'text/calendar; charset=UTF-8; method=REQUEST');
         }
 
         $mail->send();
