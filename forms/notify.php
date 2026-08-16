@@ -226,9 +226,17 @@ function mfs_notify_send(array $all) {
         return false;
     }
 
+    // Each file is guarded by ITS OWN class. Guarding all three on PHPMailer
+    // alone silently skipped SMTP.php once PHPMailer.php was loaded, and the
+    // send then died on "Class PHPMailer\PHPMailer\SMTP not found".
     $base = MFS_NOTIFY_WP_ROOT . '/wp-includes/PHPMailer/';
-    foreach (['Exception.php', 'PHPMailer.php', 'SMTP.php'] as $file) {
-        if (!class_exists('\\PHPMailer\\PHPMailer\\PHPMailer', false) && is_readable($base . $file)) {
+    $needed = [
+        'Exception.php' => '\\PHPMailer\\PHPMailer\\Exception',
+        'PHPMailer.php' => '\\PHPMailer\\PHPMailer\\PHPMailer',
+        'SMTP.php'      => '\\PHPMailer\\PHPMailer\\SMTP',
+    ];
+    foreach ($needed as $file => $class) {
+        if (!class_exists($class, false) && is_readable($base . $file)) {
             require_once $base . $file;
         }
     }
