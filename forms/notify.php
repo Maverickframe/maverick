@@ -217,18 +217,13 @@ function mfs_notify_body(array $all) {
 }
 
 /**
- * Layer 2 — email over Google Workspace SMTP.
- * Returns true once the message is accepted. Never throws.
+ * Loads the PHPMailer classes out of WordPress core.
+ *
+ * ⚠️ Every file gets ITS OWN class guard. Guarding all three on PHPMailer alone
+ * silently skipped SMTP.php once PHPMailer.php was already loaded, and the send
+ * then died on "Class PHPMailer\PHPMailer\SMTP not found".
  */
-function mfs_notify_send(array $all) {
-    if (MFS_NOTIFY_SMTP_USER === '' || MFS_NOTIFY_SMTP_PASS === '') {
-        mfs_notify_log('SKIP - no SMTP credentials (forms/notify-credentials.php); lead is in the journal only');
-        return false;
-    }
-
-    // Each file is guarded by ITS OWN class. Guarding all three on PHPMailer
-    // alone silently skipped SMTP.php once PHPMailer.php was loaded, and the
-    // send then died on "Class PHPMailer\PHPMailer\SMTP not found".
+function mfs_notify_load_phpmailer() {
     $base = MFS_NOTIFY_WP_ROOT . '/wp-includes/PHPMailer/';
     $needed = [
         'Exception.php' => '\\PHPMailer\\PHPMailer\\Exception',
@@ -240,15 +235,61 @@ function mfs_notify_send(array $all) {
             require_once $base . $file;
         }
     }
-    if (!class_exists('\\PHPMailer\\PHPMailer\\PHPMailer')) {
-        mfs_notify_log('FAIL - PHPMailer not found in ' . $base);
+    if (class_exists('\\PHPMailer\\PHPMailer\\PHPMailer')) { return true; }
+    mfs_notify_log('FAIL - PHPMailer not found in ' . $base);
+    return false;
+}
+
+/** Plain-text part derived from the HTML body. */
+function mfs_notify_plain($html) {
+    return trim(preg_replace('/\n{3,}/', "\n\n",
+        html_entity_decode(strip_tags(str_replace(['</tr>', '</td>'], ["\n", ': '], $html)), ENT_QUOTES, 'UTF-8')));
+}
+
+/**
+ * THE transport. Every email this site sends goes through here — the lead
+ * notification below and the booking invite in book-call-handler.php alike.
+ *
+ * ⚠️ Do not put wp_mail() / mail() next to it. Mail sent straight from the host
+ * fails the domain's SPF (see the file header). The booking invites that went
+ * out through wp_mail() between 2026-06 and 2026-08-16 are the evidence: almost
+ * certainly not a single one was delivered.
+ *
+ * $args
+ *   to         string|array  comma-separated or array; required
+ *   cc         string|array
+ *   subject    string  required — keep it unique per message, Gmail collapses
+ *                      identical subjects into one thread
+ *   html       string  required
+ *   alt        string  plain-text part; derived from the HTML when omitted
+ *   reply_to   string  where the recipient's reply goes
+ *   reply_name string
+ *   from_name  string  display name ONLY. The address is always the authenticated
+ *                      mailbox — Gmail rewrites anything else and DKIM alignment
+ *                      breaks with it.
+ *   ics        string  raw iCalendar text. Goes in both as a text/calendar part
+ *                      (this is what draws the invite card in Gmail/Outlook) and
+ *                      as an .ics attachment, for clients that read only files.
+ *   log        string  how this message is labelled in mfs-notify.log
+ *
+ * Returns true once the message is accepted. Never throws.
+ */
+function mfs_notify_smtp(array $args) {
+    $label = trim((string) ($args['log'] ?? ($args['subject'] ?? 'message')));
+
+    if (MFS_NOTIFY_SMTP_USER === '' || MFS_NOTIFY_SMTP_PASS === '') {
+        mfs_notify_log('SKIP - no SMTP credentials (forms/notify-credentials.php) :: ' . $label);
         return false;
     }
+    if (!mfs_notify_load_phpmailer()) { return false; }
 
-    $m       = $all['mapped'];
-    $label   = mfs_notify_label($m);
-    $form    = trim((string) ($m['form_name'] ?? '')) ?: 'form';
-    $replyTo = trim((string) ($m['email'] ?? ''));
+    $list = function ($v) { return mfs_notify_addresses(is_array($v) ? implode(',', $v) : (string) $v); };
+    $to   = $list($args['to'] ?? '');
+    $cc   = $list($args['cc'] ?? '');
+    if (!$to && !$cc) { mfs_notify_log('SKIP - no recipient :: ' . $label); return false; }
+    // If the main mailbox is somehow unset, the copy becomes the primary
+    // recipient: Gmail will not accept a message with no To at all.
+    if (!$to) { $to = $cc; $cc = []; }
 
     try {
         $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
@@ -262,38 +303,59 @@ function mfs_notify_send(array $all) {
         $mail->CharSet    = 'UTF-8';
         $mail->Timeout    = 12;
 
-        // From must match the authenticated mailbox, otherwise Gmail rewrites the
-        // address and DKIM alignment breaks.
-        $mail->setFrom(MFS_NOTIFY_SMTP_USER, 'Maverick Frame Leads');
+        $mail->setFrom(MFS_NOTIFY_SMTP_USER, trim((string) ($args['from_name'] ?? '')) ?: 'Maverick Frame Studio');
 
-        $to = mfs_notify_addresses(MFS_NOTIFY_TO);
-        $cc = mfs_notify_addresses(MFS_NOTIFY_CC);
-        if (!$to && !$cc) { mfs_notify_log('SKIP - no recipient configured'); return false; }
-        // If the main mailbox is somehow unset, the copy becomes the primary
-        // recipient: Gmail will not accept a message with no To at all.
-        if (!$to) { $to = $cc; $cc = []; }
         foreach ($to as $addr) { $mail->addAddress($addr); }
         foreach ($cc as $addr) { if (!in_array($addr, $to, true)) { $mail->addCC($addr); } }
 
+        $replyTo = trim((string) ($args['reply_to'] ?? ''));
         if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
-            $mail->addReplyTo($replyTo, trim((string) ($m['firstname'] ?? '')) ?: $replyTo);
+            $mail->addReplyTo($replyTo, trim((string) ($args['reply_name'] ?? '')) ?: $replyTo);
         }
 
-        $html = mfs_notify_body($all);
+        $html = (string) ($args['html'] ?? '');
         $mail->isHTML(true);
-        $mail->Subject = 'New lead: ' . $label . ' - ' . $form;
+        $mail->Subject = (string) ($args['subject'] ?? '');
         $mail->Body    = $html;
-        $mail->AltBody = trim(preg_replace('/\n{3,}/', "\n\n",
-            html_entity_decode(strip_tags(str_replace(['</tr>', '</td>'], ["\n", ': '], $html)), ENT_QUOTES, 'UTF-8')));
+        $mail->AltBody = trim((string) ($args['alt'] ?? '')) ?: mfs_notify_plain($html);
+
+        $ics = trim((string) ($args['ics'] ?? ''));
+        if ($ics !== '') {
+            $mail->Ical = $ics;
+            if (property_exists($mail, 'IcalMethod')) { $mail->IcalMethod = 'REQUEST'; }
+            $mail->addStringAttachment($ics, 'invite.ics', 'base64', 'text/calendar; charset=UTF-8; method=REQUEST');
+        }
 
         $mail->send();
-        mfs_notify_log('OK sent :: ' . $label . ' / ' . $form
+        mfs_notify_log('OK sent :: ' . $label
             . ' :: to=' . implode(',', $to) . ($cc ? ' cc=' . implode(',', $cc) : ''));
         return true;
     } catch (\Throwable $e) {
         mfs_notify_log('FAIL send :: ' . $label . ' :: ' . $e->getMessage());
         return false;
     }
+}
+
+/**
+ * Layer 2 — the lead itself, mailed to the studio inbox.
+ * Returns true once the message is accepted. Never throws.
+ */
+function mfs_notify_send(array $all) {
+    $m     = $all['mapped'];
+    $label = mfs_notify_label($m);
+    $form  = trim((string) ($m['form_name'] ?? '')) ?: 'form';
+    $reply = trim((string) ($m['email'] ?? ''));
+
+    return mfs_notify_smtp([
+        'to'         => MFS_NOTIFY_TO,
+        'cc'         => MFS_NOTIFY_CC,
+        'from_name'  => 'Maverick Frame Leads',
+        'subject'    => 'New lead: ' . $label . ' - ' . $form,
+        'html'       => mfs_notify_body($all),
+        'reply_to'   => $reply,
+        'reply_name' => trim((string) ($m['firstname'] ?? '')) ?: $reply,
+        'log'        => $label . ' / ' . $form,
+    ]);
 }
 
 /**
