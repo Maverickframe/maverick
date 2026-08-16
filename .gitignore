@@ -12,3 +12,6 @@ forms/hubspot-credentials.php
 
 # Retired amoCRM credentials (2026-07-15) — never re-add.
 forms/amo-credentials.php
+
+# SMTP App Password + lead recipients — out of git, lives on the server
+forms/notify-credentials.php

@@ -37,6 +37,10 @@ if (!defined('MFS_HS_PRIVATE_TOKEN')) {
 }
 if (!defined('MFS_HS_CRM_HOST')) define('MFS_HS_CRM_HOST', 'https://api.hubapi.com');
 
+// Mirrors the lead to the studio inbox and to a local journal. A layer that does
+// not depend on HubSpot at all: its subscription, uptime and limits cannot touch it.
+require_once __DIR__ . '/notify.php';
+
 // --- Hardening config -------------------------------------------------------
 // Durable log lives in wp-content/ (this file is themes/<theme>/forms/).
 if (!defined('MFS_HS_LOG_FILE'))        define('MFS_HS_LOG_FILE', __DIR__ . '/../../../mfs-hubspot.log');
@@ -299,6 +303,10 @@ function mfs_hubspot_submit(array $contact) {
         @ignore_user_abort(true);
         @set_time_limit(45);
         if ($how === 'none') { mfs_hs_log('WARN: no finish_request() on this host - visitor is waiting for the dispatch'); }
+        // Notify FIRST and always: on-disk journal + email to the studio inbox.
+        // Deliberately ahead of HubSpot — a lead must not be lost even when
+        // HubSpot is down, and its retry cycle can take ~15 seconds.
+        if (function_exists('mfs_lead_notify')) { mfs_lead_notify($contact); }
         mfs_hubspot_do_submit($contact);
     });
     return true;
