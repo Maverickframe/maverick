@@ -478,7 +478,7 @@ function assets()
     // global $wp_query;
     wp_localize_script('main', 'contacts', array(
         // Use the unfiltered site root (get_option('home')) so the form endpoint
-        // resolves to /wp-content/.../amo.php even on Polylang /es/ pages
+        // resolves to /wp-content/.../lead.php even on Polylang /es/ pages
         // (home_url() is rewritten to /es/ there, which 404s the handler).
         'home_url' => get_option('home')
     ));

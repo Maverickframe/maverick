@@ -2,9 +2,9 @@
 /**
  * Book-a-call CALENDAR — server handler (admin-ajax).
  * Action: mfs_book_call. Emails the visitor an .ics calendar invite and hands
- * the booking to mfs_hubspot_submit(), which journals the lead and notifies the
- * studio. Slots are all "free" for now (no real availability check — stage
- * decision).
+ * the booking to mfs_lead_submit(), which journals the lead, notifies the studio
+ * and delivers it to our CRM. Slots are all "free" for now (no real availability
+ * check — stage decision).
  *
  * ⚠️ Both emails go through mfs_notify_smtp() (forms/notify.php), never through
  * wp_mail(). The domain's MX is Google Workspace and its SPF only authorises
@@ -15,7 +15,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-require_once __DIR__ . '/hubspot.php';
+require_once __DIR__ . '/lead-dispatch.php';
 
 add_action('wp_ajax_mfs_book_call', 'mfs_book_call_handler');
 add_action('wp_ajax_nopriv_mfs_book_call', 'mfs_book_call_handler');
@@ -71,8 +71,7 @@ function mfs_book_call_handler() {
         ]);
     }
 
-    // 1) Lead text for the CRM (HubSpot — the only one since amoCRM was retired
-    //    on 2026-07-15).
+    // 1) Lead text for the CRM (ours, crm.maverickframe.com, since 2026-08-16).
     $crmText = "Requested call: {$slotSummary}";
     if ($studioStr) $crmText .= " | studio time: {$studioStr}";
     $crmText .= " | duration: {$duration} min";
@@ -80,27 +79,28 @@ function mfs_book_call_handler() {
 
     // 2) The visitor's invite — sent at shutdown, once the response is out.
     //
-    // ⚠️ Registered BEFORE mfs_hubspot_submit(): shutdown callbacks run in
-    //    registration order, and the HubSpot one waits ~6s before its own work
-    //    (MFS_HS_FORMS_SETTLE_SECS) plus retries. The invite must not queue up
-    //    behind that — a booking confirmation is expected within seconds.
+    // ⚠️ Registered BEFORE mfs_lead_submit(): shutdown callbacks run in
+    //    registration order, and the dispatch does the journal, the studio email
+    //    and the CRM call before it returns. The invite must not queue up behind
+    //    that — a booking confirmation is expected within seconds. (Historically
+    //    the queue ahead of it was worse: HubSpot slept ~6s and then retried.)
     // ⚠️ Deferred and not sent inline because an SMTP handshake costs the visitor
     //    a second or two, and the booking screen has to answer instantly.
     register_shutdown_function(function () use ($email, $name, $slotSummary, $ics) {
-        if (function_exists('mfs_hs_finish_request')) { mfs_hs_finish_request(); }
+        if (function_exists('mfs_finish_request')) { mfs_finish_request(); }
         @ignore_user_abort(true);
         @set_time_limit(45);
         mfs_book_call_send_invite($email, $name, $slotSummary, $ics);
     });
 
-    // 3) HubSpot + the studio's own notification. Fire-and-forget: hubspot.php
+    // 3) The lead itself. Fire-and-forget: lead-dispatch.php
     //    defers to shutdown and ends the response first, so the booking reply is
     //    not held by it. Inside that shutdown mfs_lead_notify() writes the lead
     //    to mfs-leads.jsonl and emails the studio inbox — slot, timezone,
     //    duration and page included, because that email prints every posted
     //    field. THAT is the studio's booking notification; this handler does not
     //    send a second one (it used to, over wp_mail, and it never arrived).
-    mfs_hubspot_submit([
+    mfs_lead_submit([
         'email'      => $email,
         'phone'      => $whatsapp,
         'firstname'  => $name,

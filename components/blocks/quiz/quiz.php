@@ -3,7 +3,7 @@
  * Lead Quiz — interactive, branching client quiz (homepage section).
  * Routes the visitor into one of three service lines (CGI / Web / Creative),
  * then runs a short tailored path. Self-contained: copy + style-step images
- * baked in. Lead + all answers POST to forms/amo.php via quiz.js.
+ * baked in. Lead + all answers POST to forms/lead.php via quiz.js.
  *
  * Per-page config via ACF (block acf/quiz): quiz_mode = 'router' (homepage,
  * branching) | 'service' (single linear path for a service/landing page).
@@ -85,7 +85,14 @@ foreach ( $looks as $mfsq_subj => $mfsq_set ) {
             <p class="mfsq__sub"><?php echo esc_html( $mfsq_intro ); ?></p>
         </div>
 
-        <div class="mfsq__card js-mfsq" data-mode="<?php echo esc_attr( $mfsq_mode ); ?>" data-title="<?php echo esc_attr( $mfsq_lead_title ); ?>" data-amo="<?php echo esc_url( home_url('/wp-content/themes/maverickframe/forms/amo.php') ); ?>">
+        <?php
+        // ⚠️ The endpoint is printed twice: data-endpoint is the name we use now,
+        // data-amo is kept for the copy of quiz.js already cached in visitors'
+        // browsers. Both point at forms/lead.php. Remove the legacy one only
+        // after the bundle hash has rolled over everywhere.
+        $mfsq_endpoint = esc_url( home_url('/wp-content/themes/maverickframe/forms/lead.php') );
+        ?>
+        <div class="mfsq__card js-mfsq" data-mode="<?php echo esc_attr( $mfsq_mode ); ?>" data-title="<?php echo esc_attr( $mfsq_lead_title ); ?>" data-endpoint="<?php echo $mfsq_endpoint; ?>" data-amo="<?php echo $mfsq_endpoint; ?>">
             <?php if ( $mfsq_mode === 'service' ) {
                 $mfsq_res = array(
                     'head'    => get_field('quiz_result_head') ?: '',

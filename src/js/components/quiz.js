@@ -1,6 +1,6 @@
 // Lead Quiz — branching stepper, contact gate, personalised result. The visitor
 // is routed into one of three service lines (CGI / Web / Creative); each runs a
-// short tailored path. Lead + all answers POST to forms/amo.php (same handler
+// short tailored path. Lead + all answers POST to forms/lead.php (same handler
 // as the site forms).
 
 function escapeHtml(s) {
@@ -37,7 +37,7 @@ var SEQ = {
   creative: ['route', 'crtype', 'crgoal', 'crstage', 'gate', 'result']
 };
 
-// Human labels for each answer key (for the amoCRM note).
+// Human labels for each answer key (for the lead note in the CRM).
 var LABELS = {
   route: 'Need', subject: 'Subject', look: 'Look', goal: 'Goal', stage: 'Stage', volume: 'Volume',
   webtype: 'Need', webgoal: 'Goal', webstage: 'Stage',
@@ -141,7 +141,9 @@ function initQuiz() {
   var count = card.querySelector('[data-count]');
   var back = card.querySelector('[data-back]');
   var gateSub = card.querySelector('[data-gate-sub]');
-  var amoUrl = card.getAttribute('data-amo');
+  // data-endpoint is the current name; data-amo is the legacy one still printed
+  // by the template for bundles cached in visitors' browsers.
+  var leadUrl = card.getAttribute('data-endpoint') || card.getAttribute('data-amo');
   var mode = card.getAttribute('data-mode') || 'router';
   var leadTitle = card.getAttribute('data-title') || 'Homepage / Quiz';
 
@@ -242,12 +244,11 @@ function initQuiz() {
           var ck = function (n) { return (document.cookie.match('(^|; )' + n + '=([^;]+)') || [])[2] || ''; };
           var m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
           if (m) f.set('ga_client_id', m[1]);
-          var utk = ck('hubspotutk'); if (utk) f.set('hubspotutk', utk);
           var gc = new URLSearchParams(location.search).get('gclid') || ((ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '');
           if (gc) f.set('gclid', gc);
         } catch (e) {}
       })(fd);
-      fetch(amoUrl, { method: 'POST', body: fd }).catch(function () {});
+      fetch(leadUrl, { method: 'POST', body: fd }).catch(function () {});
       window.dataLayer = window.dataLayer || [];
       // user_data feeds Google Ads Enhanced Conversions; GTM hashes it in-browser.
       window.dataLayer.push({

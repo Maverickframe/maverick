@@ -5,8 +5,8 @@ const contactsForms = document.querySelectorAll('.js-contacts-form');
 // load site-wide. We stash the acquisition UTM in a 90-day first-touch cookie the
 // first time a pageview carries them, then a submit on any later page reads the
 // URL first (last touch on that page), else this cookie. The 5 values are posted
-// as utm_source/…/content and land in the matching HubSpot contact properties
-// (forms/hubspot.php → mfs_hs_props reads them straight from $_POST).
+// as utm_source/…/content and are read straight from $_POST downstream
+// (forms/lead-dispatch.php → mfs_lead_props).
 const MFS_UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
 const MFS_UTM_COOKIE = 'mfs_utm';
 
@@ -46,15 +46,13 @@ function mfsUtmFromCookie() {
   } catch (e) {}
 })();
 
-// Read HubSpot/GA attribution from cookies + URL and attach to the POST so the
-// PHP handler can forward it to HubSpot (hutk, GA client_id, gclid, utm_*).
-function mfsHsAttr(fd) {
+// Read the Google attribution from cookies + URL and attach it to the POST, so
+// the PHP handler can pass it on to the CRM (GA client_id, gclid, utm_*).
+function mfsAttribution(fd) {
   try {
     const ck = mfsReadCookie;
     const m = (ck('_ga') || '').match(/GA\d\.\d\.(\d+\.\d+)/);
     if (m) fd.set('ga_client_id', m[1]);
-    const utk = ck('hubspotutk');
-    if (utk) fd.set('hubspotutk', utk);
     const fromUrl = new URLSearchParams(location.search).get('gclid');
     const fromCk = (ck('_gcl_aw').match(/GCL\.\d+\.(.+)$/) || [])[1] || '';
     const gclid = fromUrl || fromCk;
@@ -73,7 +71,7 @@ async function sendForm(contactsForm) {
   const formData = new FormData(contactsForm);
   const formBtn = contactsForm.querySelector('button');
 
-  // Lead identity (mirrors the GA event naming) + attribution for HubSpot.
+  // Lead identity (mirrors the GA event naming) + attribution for the CRM.
   const isDownload = !!contactsForm.getAttribute('data-link');
   const gaEvent = contactsForm.getAttribute('data-ga-event') || (isDownload ? 'download_catalog' : 'lead_form');
   const gaForm = contactsForm.getAttribute('data-ga-form') || (isDownload ? 'download_catalog' : 'contact');
@@ -81,7 +79,7 @@ async function sendForm(contactsForm) {
   formData.set('lead_event', gaEvent);
   formData.set('form_name', gaForm);
   formData.set('form_type', gaType);
-  mfsHsAttr(formData);
+  mfsAttribution(formData);
   const formSuccess = contactsForm.querySelector('.contacts-form__success');
 
   const phoneInput = contactsForm.querySelector('input[type="tel"]');
@@ -89,7 +87,7 @@ async function sendForm(contactsForm) {
 
   formBtn.setAttribute('disabled', 'disabled');
 
-  const response = await fetch(`${contacts.home_url}/wp-content/themes/maverickframe/forms/amo.php`, {
+  const response = await fetch(`${contacts.home_url}/wp-content/themes/maverickframe/forms/lead.php`, {
     method: 'POST',
     body: formData
   });
@@ -116,7 +114,7 @@ async function sendForm(contactsForm) {
     emailInput.closest('label').classList.remove('error');
 
     // GA4 conversion event uses the per-form identity computed above
-    // (lead_event / form_name / form_type), shared with the HubSpot payload.
+    // (lead_event / form_name / form_type), shared with the CRM payload.
     // user_data rides along for Google Ads Enhanced Conversions; GTM hashes it
     // (SHA-256) before it leaves the browser.
     window.dataLayer.push({ event: gaEvent, form_name: gaForm, form_type: gaType, user_data: userData });
