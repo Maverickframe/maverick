@@ -1,9 +1,16 @@
 <?php
 /**
  * Book-a-call CALENDAR — server handler (admin-ajax).
- * Action: mfs_book_call. Creates an amoCRM deal, emails the visitor an
- * .ics calendar invite, and notifies the studio. Slots are all "free"
- * for now (no real availability check — stage decision).
+ * Action: mfs_book_call. Emails the visitor an .ics calendar invite and hands
+ * the booking to mfs_hubspot_submit(), which journals the lead and notifies the
+ * studio. Slots are all "free" for now (no real availability check — stage
+ * decision).
+ *
+ * ⚠️ Both emails go through mfs_notify_smtp() (forms/notify.php), never through
+ * wp_mail(). The domain's MX is Google Workspace and its SPF only authorises
+ * Google, so mail sent straight from the host fails SPF at a Google recipient.
+ * This handler used wp_mail() from 2026-06 until 2026-08-16 and the invites
+ * almost certainly never arrived.
  */
 
 if (!defined('ABSPATH')) exit;
@@ -41,8 +48,12 @@ function mfs_book_call_handler() {
     $whenClient = $clientStr ?: $whenStudio;
     $slotSummary = $whenClient . ($tz ? ' (' . $tz . ')' : '');
 
-    $studioEmail = get_field('footer_email', 'options') ?: 'sale@maverickframe.com';
-    $organizer   = 'sale@maverickframe.com';
+    // ORGANIZER has to be the mailbox the invite is actually sent from. Point it
+    // at sale@ while the message leaves through team@ and Gmail reads the invite
+    // as spoofed: no RSVP buttons, and the replies bounce.
+    $organizer = (defined('MFS_NOTIFY_SMTP_USER') && MFS_NOTIFY_SMTP_USER !== '')
+        ? MFS_NOTIFY_SMTP_USER
+        : 'team@maverickframe.com';
 
     $ics = mfs_build_ics($start, $end, 'Intro call — Maverick Frame Studio',
         'Online call with Maverick Frame Studio. We will send a meeting link before the call.',
@@ -67,8 +78,28 @@ function mfs_book_call_handler() {
     $crmText .= " | duration: {$duration} min";
     if ($pageUrl) $crmText .= " | page: {$pageUrl}";
 
-    // HubSpot — the CRM. Fire-and-forget: hubspot.php defers to shutdown and ends
-    // the response first, so the booking reply is not held by it.
+    // 2) The visitor's invite — sent at shutdown, once the response is out.
+    //
+    // ⚠️ Registered BEFORE mfs_hubspot_submit(): shutdown callbacks run in
+    //    registration order, and the HubSpot one waits ~6s before its own work
+    //    (MFS_HS_FORMS_SETTLE_SECS) plus retries. The invite must not queue up
+    //    behind that — a booking confirmation is expected within seconds.
+    // ⚠️ Deferred and not sent inline because an SMTP handshake costs the visitor
+    //    a second or two, and the booking screen has to answer instantly.
+    register_shutdown_function(function () use ($email, $name, $slotSummary, $ics) {
+        if (function_exists('mfs_hs_finish_request')) { mfs_hs_finish_request(); }
+        @ignore_user_abort(true);
+        @set_time_limit(45);
+        mfs_book_call_send_invite($email, $name, $slotSummary, $ics);
+    });
+
+    // 3) HubSpot + the studio's own notification. Fire-and-forget: hubspot.php
+    //    defers to shutdown and ends the response first, so the booking reply is
+    //    not held by it. Inside that shutdown mfs_lead_notify() writes the lead
+    //    to mfs-leads.jsonl and emails the studio inbox — slot, timezone,
+    //    duration and page included, because that email prints every posted
+    //    field. THAT is the studio's booking notification; this handler does not
+    //    send a second one (it used to, over wp_mail, and it never arrived).
     mfs_hubspot_submit([
         'email'      => $email,
         'phone'      => $whatsapp,
@@ -80,40 +111,39 @@ function mfs_book_call_handler() {
         'page_uri'   => $pageUrl,
     ]);
 
-    // 2) email the visitor an invite
-    $icsPath = trailingslashit(get_temp_dir()) . 'mfs-invite-' . wp_generate_password(8, false) . '.ics';
-    @file_put_contents($icsPath, $ics);
+    wp_send_json_success(['message' => 'Booked', 'when' => $slotSummary]);
+}
 
-    $fromName = 'Maverick Frame Studio';
-    $headers = [
-        'Content-Type: text/html; charset=UTF-8',
-        'From: ' . $fromName . ' <' . $organizer . '>',
-        'Reply-To: ' . $organizer,
-    ];
-    $clientBody =
+/**
+ * The visitor's confirmation, with the calendar invite attached.
+ *
+ * ⚠️ The sender is the authenticated mailbox (team@), NOT sale@. Gmail rewrites
+ * a From it did not authenticate, which breaks DKIM alignment on the way out —
+ * and an invite that fails alignment is exactly what a spoofed one looks like.
+ * The client sees "Maverick Frame Studio", and their reply lands in the same
+ * studio inbox that already receives every lead.
+ *
+ * ⚠️ The subject carries the slot: Gmail collapses identical subjects into one
+ * thread, and two bookings by the same person must not merge.
+ */
+function mfs_book_call_send_invite($email, $name, $slotSummary, $ics) {
+    if (!function_exists('mfs_notify_smtp')) { return false; }
+
+    $html =
         '<p>Hi ' . esc_html($name ?: 'there') . ',</p>' .
         '<p>Your call with Maverick Frame Studio is booked for <strong>' . esc_html($slotSummary) . '</strong>.</p>' .
         '<p>The calendar invite is attached. We will send a meeting link before the call. ' .
         'Need to reschedule? Just reply to this email.</p>' .
         '<p>— Maverick Frame Studio</p>';
-    $sent = wp_mail($email, 'Your call with Maverick Frame Studio is booked', $clientBody, $headers,
-        file_exists($icsPath) ? [$icsPath] : []);
 
-    // 3) notify the studio
-    $studioBody =
-        '<p><strong>New call booking</strong></p>' .
-        '<p>When (client): ' . esc_html($whenClient) . ($tz ? ' (' . esc_html($tz) . ')' : '') . '<br>' .
-        ($studioStr ? 'When (studio): ' . esc_html($studioStr) . '<br>' : '') .
-        'Name: ' . esc_html($name) . '<br>' .
-        'Email: ' . esc_html($email) . '<br>' .
-        'WhatsApp: ' . esc_html($whatsapp) . '<br>' .
-        'Duration: ' . $duration . ' min<br>' .
-        ($pageUrl ? 'Page: <a href="' . esc_url($pageUrl) . '">' . esc_html($pageUrl) . '</a>' : '') . '</p>';
-    wp_mail($studioEmail, 'New call booking — ' . ($name ?: $email), $studioBody, $headers);
-
-    if (file_exists($icsPath)) @unlink($icsPath);
-
-    wp_send_json_success(['message' => 'Booked', 'when' => $slotSummary]);
+    return mfs_notify_smtp([
+        'to'        => $email,
+        'from_name' => 'Maverick Frame Studio',
+        'subject'   => 'Your call with Maverick Frame Studio is booked - ' . $slotSummary,
+        'html'      => $html,
+        'ics'       => $ics,
+        'log'       => 'book_call invite -> ' . $email,
+    ]);
 }
 
 /**
