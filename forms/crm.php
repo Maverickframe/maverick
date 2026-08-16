@@ -19,9 +19,14 @@
  *    CRM is not configured (or is being rebuilt).
  */
 
-// Credentials live in forms/notify-credentials.php — OUT of git, placed on the
-// server by hand, same as the SMTP password. Keys: crm_intake_url, crm_token.
-$mfs_crm_creds = @include __DIR__ . '/notify-credentials.php';
+// Credentials — OUT of git, placed on the server by hand, same idea as the SMTP
+// password. Own file (crm-credentials.php) so that rotating or revoking the CRM
+// token never touches the mail config: the two are edited by different people at
+// different times, and one careless overwrite of notify-credentials.php would
+// take the studio's lead emails down with it.
+// Falls back to notify-credentials.php if someone put the keys there instead.
+$mfs_crm_creds = @include __DIR__ . '/crm-credentials.php';
+if (!is_array($mfs_crm_creds)) { $mfs_crm_creds = @include __DIR__ . '/notify-credentials.php'; }
 if (!defined('MFS_CRM_INTAKE_URL')) {
     define('MFS_CRM_INTAKE_URL', trim((string) (
         is_array($mfs_crm_creds) ? ($mfs_crm_creds['crm_intake_url'] ?? '') : ''
