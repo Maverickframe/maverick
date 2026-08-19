@@ -367,13 +367,33 @@ function mfs_notify_send(array $all) {
 }
 
 /**
- * Entry point. Journal FIRST (it is local and cannot fail on the network),
- * email second. Fire-and-forget, nothing escapes.
+ * The journal, and nothing else. Local, needs no network, cannot be skipped —
+ * this is the guarantee that a lead is never lost, whatever happens to the CRM
+ * or to the mail afterwards.
+ *
+ * Returns the full picture of the lead, so the caller can hand the very same
+ * data to the email without building it a second time.
  */
-function mfs_lead_notify(array $lead) {
+function mfs_lead_journal(array $lead) {
     try {
         $all = mfs_notify_fields($lead);
         mfs_notify_record($all);
+        return $all;
+    } catch (\Throwable $e) {
+        mfs_notify_log('FATAL :: ' . $e->getMessage());
+        return null;
+    }
+}
+
+/**
+ * Journal + email in one call. Kept for anything that wants the old behaviour;
+ * the lead dispatch does NOT use it, because since 2026-08-19 the email is a
+ * fallback for a failed CRM delivery, not a routine copy of every lead.
+ */
+function mfs_lead_notify(array $lead) {
+    $all = mfs_lead_journal($lead);
+    if (!is_array($all)) return false;
+    try {
         return mfs_notify_send($all);
     } catch (\Throwable $e) {
         mfs_notify_log('FATAL :: ' . $e->getMessage());
