@@ -12,7 +12,7 @@
  * removed from here. HubSpot is being retired — its portal stopped accepting new
  * contacts on 2026-08-15 — and the loader only pulled in hs-analytics, hs-banner
  * and the __ptq.gif beacon plus the `hubspotutk` cookie. Nothing on the site read
- * any of it: leads are delivered by forms/notify.php (journal + email), and the
+ * any of it: leads are delivered to our own CRM and to the journal, and the
  * Google Ads remarketing lists are fed by our own first-party tag, not by HubSpot.
  * ⚠️ The lead path is a different thing entirely and is very much alive:
  * forms/lead.php → forms/lead-dispatch.php → journal, studio email, our CRM.

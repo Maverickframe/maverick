@@ -7,11 +7,22 @@
  * 402. The names went with it — nothing on this site is "hs" any more.
  *
  * Order inside the shutdown hook, and it is deliberate:
- *   1) mfs_lead_notify()  — on-disk journal (wp-content/mfs-leads.jsonl) FIRST,
- *                           then the email to the studio inbox. Local, no network
- *                           for the journal, so a lead survives everything else.
- *   2) mfs_crm_send()     — POST to our own CRM. Last on purpose: it is the
- *                           newest link in the chain and the least proven one.
+ *   1) mfs_lead_journal() — wp-content/mfs-leads.jsonl. Local, no network, never
+ *                           skipped. The guarantee that a lead is never lost,
+ *                           whatever happens next.
+ *   2) mfs_crm_send()     — POST to our own CRM. This is where a lead becomes a
+ *                           deal with an owner and a task on it.
+ *   3) the email to the studio inbox — ONLY IF the CRM refused (2026-08-19).
+ *
+ * Why the email stopped being routine: for three days every lead arrived twice,
+ * as a deal and as a letter, and people read the letter. A duplicate that is
+ * never wrong teaches everyone to ignore the CRM.
+ *
+ * Why it did not disappear entirely: the CRM has no alerting yet. If delivery
+ * breaks, a letter in the inbox is the only thing that makes it visible — and it
+ * carries the whole lead, so nothing is lost while we fix it.
+ * ⚠️ Turning the email back on for every lead is a one-line switch on the server
+ * (`email_always` in forms/crm-credentials.php), no deploy needed.
  *
  * Everything here runs AFTER the response is closed (see mfs_finish_request —
  * this host is LiteSpeed, not php-fpm), so the visitor is never held by it.
@@ -22,6 +33,16 @@
 require_once __DIR__ . '/notify.php';
 // Layer 2: our own CRM.
 require_once __DIR__ . '/crm.php';
+
+/*
+  Дублировать ли заявку письмом ВСЕГДА. По умолчанию нет: письмо уходит только
+  тогда, когда CRM не приняла. Переключается на сервере, в
+  forms/crm-credentials.php, ключом `email_always` — без выката темы.
+*/
+if (!defined('MFS_LEAD_EMAIL_ALWAYS')) {
+    $mfs_lead_flags = @include __DIR__ . '/crm-credentials.php';
+    define('MFS_LEAD_EMAIL_ALWAYS', is_array($mfs_lead_flags) && !empty($mfs_lead_flags['email_always']));
+}
 
 // Durable log lives in wp-content/ (this file is themes/<theme>/forms/).
 if (!defined('MFS_LEAD_LOG_FILE')) define('MFS_LEAD_LOG_FILE', __DIR__ . '/../../../mfs-lead-dispatch.log');
@@ -120,12 +141,26 @@ function mfs_lead_submit(array $contact) {
             mfs_lead_log('WARN: no finish_request() on this host - visitor is waiting for the dispatch');
         }
 
-        // 1. Journal + studio email. Never skipped, never conditional.
-        if (function_exists('mfs_lead_notify')) { mfs_lead_notify($contact); }
+        // 1. Журнал. Первым и всегда: он локальный и ни от чего не зависит.
+        $all = function_exists('mfs_lead_journal') ? mfs_lead_journal($contact) : null;
 
-        // 2. Our CRM. Deliberately last: a lead that reached the journal and the
-        //    inbox is already safe, and this call must not be able to change that.
-        if (function_exists('mfs_crm_send')) { mfs_crm_send($contact); }
+        // 2. Наша CRM. Здесь заявка становится сделкой с владельцем и задачей.
+        $delivered = function_exists('mfs_crm_send') ? mfs_crm_send($contact) : false;
+
+        /*
+          3. Письмо студии — страховка, а не копия каждой заявки.
+
+          Уходит, когда CRM не приняла: тогда письмо и есть сигнал о поломке, и в
+          нём лежит вся заявка целиком. Флаг `email_always` возвращает прежнее
+          поведение без выката.
+        */
+        $always = defined('MFS_LEAD_EMAIL_ALWAYS') && MFS_LEAD_EMAIL_ALWAYS;
+        if (is_array($all) && function_exists('mfs_notify_send') && (!$delivered || $always)) {
+            mfs_notify_send($all);
+            if (!$delivered) {
+                mfs_lead_log('письмо студии отправлено: CRM заявку не приняла');
+            }
+        }
     });
     return true;
 }

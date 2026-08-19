@@ -95,11 +95,10 @@ function mfs_book_call_handler() {
 
     // 3) The lead itself. Fire-and-forget: lead-dispatch.php
     //    defers to shutdown and ends the response first, so the booking reply is
-    //    not held by it. Inside that shutdown mfs_lead_notify() writes the lead
-    //    to mfs-leads.jsonl and emails the studio inbox — slot, timezone,
-    //    duration and page included, because that email prints every posted
-    //    field. THAT is the studio's booking notification; this handler does not
-    //    send a second one (it used to, over wp_mail, and it never arrived).
+    //    not held by it. Inside that shutdown the booking lands in the journal
+    //    and in the CRM as a deal — slot, timezone, duration and page included,
+    //    because the CRM keeps the whole payload. Письма студии на каждую бронь
+    //    больше нет (2026-08-19): оно уходит только если CRM не приняла.
     mfs_lead_submit([
         'email'      => $email,
         'phone'      => $whatsapp,
