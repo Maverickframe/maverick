@@ -19,7 +19,7 @@
                     class="skip-lazy" data-no-lazy="1" fetchpriority="high">
             </span>
         <?php else: ?>
-            <a href="<?php echo home_url(); ?>" class="header__logo logo">
+            <a href="<?php echo home_url('/'); ?>" class="header__logo logo">
                 <img src="<?php echo get_template_directory_uri_vite(); ?>/img//logo.svg"
                     alt="Maverick Frame Studio logo" width="44" height="44"
                     class="skip-lazy" data-no-lazy="1">
