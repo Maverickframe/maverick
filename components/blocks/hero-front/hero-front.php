@@ -16,13 +16,13 @@
             $hf_home = $hf_lang === 'es' ? home_url('/es/') : ( $hf_lang === 'de' ? home_url('/de/') : home_url('/') );
             $hf_crumbs = [1 => ['link' => esc_url($hf_home), 'name' => mfs_t('Home', 'Inicio', 'Startseite')]];
             $hf_pos = 2;
-            // Solutions CPT singles have no page parent — add the section crumb manually.
-            // The `solutions` CPT has no archive index; on /de/ (no Lösungen landing either) the
-            // section crumb points at the DE hub instead of a 404 /de/loesungen/.
-            if (is_singular('solutions')) {
-                $hf_sol = $hf_lang === 'de' ? home_url('/de/') : home_url('/solutions/');
-                $hf_crumbs[$hf_pos++] = ['link' => esc_url($hf_sol), 'name' => mfs_t('Solutions', 'Soluciones', 'Lösungen')];
-            }
+            // Solutions CPT singles have no page parent AND there is no Solutions hub page in any
+            // language: EN /solutions/ is a Rank Math 301 to the homepage, /es/soluciones/ and
+            // /de/loesungen/ do not exist. The old section crumb therefore linked every solutions
+            // page to a redirect — and on ES it leaked to the EN URL (cross-language) and carried
+            // the redirecting URL inside the BreadcrumbList schema. Crumb dropped until a real hub
+            // exists; breadcrumb is Home → page title. If a hub is ever built, re-add it here with
+            // a per-language URL.
             foreach (array_reverse(get_post_ancestors(get_the_ID())) as $hf_anc) {
                 $hf_crumbs[$hf_pos++] = ['link' => get_permalink($hf_anc), 'name' => get_the_title($hf_anc)];
             }
