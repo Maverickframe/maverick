@@ -32,7 +32,16 @@
         <div class="hero__main hero-front__main <?php echo $hf_reveal; ?>">
             <div class="hero-front__titles">
                 <div class="hero-front__subtitle"><?php the_field('subtitle'); ?></div>
-                <h1 class="hero__title js-highlight text-highlight"><?php the_field('title'); ?></h1>
+                <?php
+                    // On the front page and on /solutions/ this block IS the page
+                    // hero, so it owns the <h1>. The services hub template prints
+                    // its own <h1> above the content and then drops this block in
+                    // mid-page, which gave /services/ and /es/servicios/ two H1s.
+                    // First heading on the page wins; later ones degrade to <h2>.
+                    $hf_h_tag = empty($GLOBALS['mfs_h1_printed']) ? 'h1' : 'h2';
+                    $GLOBALS['mfs_h1_printed'] = true;
+                ?>
+                <<?php echo $hf_h_tag; ?> class="hero__title h1 js-highlight text-highlight"><?php the_field('title'); ?></<?php echo $hf_h_tag; ?>>
             </div>
             <div class="hero-front__desc"><?php the_field('description'); ?></div>
     

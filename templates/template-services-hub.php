@@ -24,6 +24,8 @@
 
             <section class="hero__main">
                 <h1 class="hero__title"><?php echo esc_html(get_post_meta(get_the_ID(), 'hero_title', true)); ?></h1>
+                <?php // Claim the page H1: hero blocks inside the_content() below fall back to <h2>.
+                      $GLOBALS['mfs_h1_printed'] = true; ?>
 
                 <?php $hub_hero_desc = get_post_meta(get_the_ID(), 'hero_description', true); ?>
                 <?php if ($hub_hero_desc): ?>
