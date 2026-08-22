@@ -73,15 +73,18 @@
 </li>
 
 <li class="menu__desktop-links">
+    <?php // Thumbnails are decorative: the link label sits next to them as text, so
+          // alt="" is set explicitly here and never inherited from the media library
+          // (otherwise the link's accessible name doubles: "Gallery Gallery"). ?>
     <?php foreach ($our_works['items'] as $link): ?>
         <a href="<?php echo get_permalink($link['link']); ?>" class="menu__desktop-link">
-            <?php lazy_attachment($link['image'], 'full'); ?>
+            <?php lazy_attachment($link['image'], 'full', 'lazy', '', 'auto', ''); ?>
             <?php echo $link['title']; ?>
         </a>
     <?php endforeach; ?>
 
     <button class="menu-desktop-links__download js-modal-open" data-modal="download" type="button">
-        <?php lazy_attachment($our_works['download_image'], 'full'); ?>
+        <?php lazy_attachment($our_works['download_image'], 'full', 'lazy', '', 'auto', ''); ?>
         <span><?php echo $our_works['download_title']; ?></span>
     </button>
 </li>

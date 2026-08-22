@@ -507,7 +507,13 @@ function my_filter_head()
 
 // Lazy load
 
-function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '', $sizes = 'auto')
+// $alt: null (default) — alt comes from the media library, previous behaviour.
+//       ''   — image is DECORATIVE: empty alt + role=presentation, whatever the
+//              media library holds. Needed where the same link/button already has
+//              visible text next to it, otherwise the accessible name doubles up
+//              ("Gallery Gallery"). WCAG H2 / failure F39.
+//       string — explicit alt, overrides the media library.
+function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '', $sizes = 'auto', $alt = null)
 {
     // Native lazy-loading. wp_get_attachment_image() emits the real src + srcset,
     // so the browser fetches the correct variant directly — no lazysizes
@@ -523,11 +529,16 @@ function lazy_attachment($attachment_id, $size, $nativeLazy = 'lazy', $class = '
     ];
     if ($class) $attrs['class'] = $class;
     if ($sizes) $attrs['sizes'] = $sizes;
+    if ($alt !== null) {
+        $attrs['alt'] = $alt;
+        if ($alt === '') $attrs['role'] = 'presentation';
+    }
 
     echo wp_get_attachment_image($attachment_id, $size, false, $attrs);
 }
 
-function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority = false)
+// $alt: same contract as lazy_attachment() above.
+function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority = false, $alt = null)
 {
     // data-no-lazy + skip-lazy: WP Rocket's LazyLoad ignores loading="eager" and
     // rewrote these images to JS lazyload for logged-out visitors anyway — the
@@ -541,6 +552,10 @@ function eager_attachment($attachment_id, $size, $sizes = null, $fetchpriority =
     ];
     if ($sizes) $attrs['sizes'] = $sizes;
     if ($fetchpriority) $attrs['fetchpriority'] = 'high';
+    if ($alt !== null) {
+        $attrs['alt'] = $alt;
+        if ($alt === '') $attrs['role'] = 'presentation';
+    }
     echo wp_get_attachment_image($attachment_id, $size, false, $attrs);
 }
 
