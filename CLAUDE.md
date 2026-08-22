@@ -257,6 +257,17 @@ maverickframe/
   `eager_attachment()` adds them. (Removing fetchpriority from the logo made
   Rocket lazyload it → the logo became the mobile LCP element.)
 
+- **Decorative images: `alt=""` belongs in the template, not the media
+  library.** `lazy_attachment()` takes a 6th arg `$alt`, `eager_attachment()`
+  a 5th: `null` = alt from the media library (default, unchanged), `''` =
+  `alt="" role="presentation"` regardless of the library, string = explicit
+  override. Pass `''` whenever the image sits inside an `<a>`/`<button>` that
+  already carries visible text, otherwise the accessible name doubles
+  ("Gallery Gallery") — WCAG H2 / failure F39. Live example: the three
+  mega-menu thumbnails in `menu-our-works.php` (2026-08-22). A crawler
+  reporting these as `images_without_alt` is **wrong** — do not "fix" it by
+  filling `_wp_attachment_image_alt`.
+
 - **Splide is GONE (2026-07-09)** — so are GSAP and three.js, and with
   them the whole family of Splide gotchas (role="group" a11y patch,
   delayAutoScrollStart, clones seams). Sliders are `.mfs-snap` (CSS
